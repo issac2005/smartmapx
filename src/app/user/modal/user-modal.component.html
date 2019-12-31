@@ -1,0 +1,274 @@
+<div id="user-modal">
+  <!--标题区-->
+  <div id="header" [ngSwitch]="type">
+    <div *ngSwitchDefault>
+      <div class="modal-header">
+        <h4 class="modal-title">{{config.title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!--主体区-->
+  <div id="body">
+    <!--升级方案-->
+    <div *ngIf="type === 31" style="width: 450px">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="modal-body-title">选择方案</label>
+          <div class="modal-body-value">
+            <smx-select-button [options]="products" [(ngModel)]="product_id"
+                               (onChange)="checkedProduct($event);">
+            </smx-select-button>
+          </div>
+        </div>
+
+        <div>
+          <label class="modal-body-title">选择时长</label>
+          <div class="modal-body-value" style="height: auto">
+            <smx-select-button [options]="productOptions" [(ngModel)]="product_option_id"
+                               [optionLabel]="'description'" [optionValue]="'product_options_id'"
+                               [tip]="'discount'"
+                               (onChange)="calculatePrice($event)">
+            </smx-select-button>
+          </div>
+
+        </div>
+        <div *ngIf="modalData.type === 1">
+          <label class="modal-body-title">到期时间</label>
+          <div class="modal-body-value" style="line-height: 33px">
+            <span>{{ maturedTime * 1000 | date:'yyyy-MM-dd'}}</span>
+            <span style="color: red;font-size: 12px;margin-left: 10px;">(剩余时长已为您等价换算为新方案时长)</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="modal-footer" style="text-align: right;padding: 15px 15px 0px;">
+        应付款:<i style="font-size: 16px;margin: 0 0 0 5px;" class="fa fa-cny"></i><span
+        style="font-size:16px;color: red;font-weight: bold;">{{price}}</span>元
+      </div>
+      <div class="modal-footer" style="text-align: right">
+        <span style="font-size: 12px">已优惠<span style="color: red">{{reduced_price}}</span>元</span>
+      </div>
+      <div class="modal-footer" style="text-align: right">
+        <button type="button" class="btn btn-secondary" (click)="submitOrder()">提交订单</button>
+      </div>
+    </div>
+
+
+    <!--添加应用-->
+    <div *ngIf="type === 32" style="width: 400px">
+      <div class="smx_deleteoverflow smx-modal-body">
+        <div *ngFor="let m of config.view">
+
+          <div *ngIf="m.type === 'input'" class="form-group">
+            <label class="modal-body-title">{{m.title}}</label>
+            <input name="itemName" [type]="m.isNum?'number':'text'" class="smx-control modal-body-value"
+                   [(ngModel)]="m.value"
+                   [maxlength]="m.maxLength ? m.maxLength : 256"
+                   [placeholder]="m.placeholder?m.placeholder:''">
+          </div>
+
+          <!--添加应用-->
+          <div *ngIf="m.type === 'select'" class="form-group">
+            <label class="modal-body-title">{{m.title}}</label>
+            <select class="smx-control modal-body-value" name="select" [(ngModel)]="m.value"
+                    (ngModelChange)="selectApp=$event;">
+              <option value="-1">请选择...</option>
+              <option *ngFor="let v of m.options" [value]="v.value">{{v.name}}</option>
+            </select>
+
+            <div class="form-group"
+                 style="left: 85px;position: relative;top: 10px;margin-bottom: 0;">
+              <div class="fom_check_power form-check form-check-inline" *ngFor="let v of m.items[selectApp]"
+                   style="width: 140px;">
+                <input class="smx-checkbox" type="checkbox" [(ngModel)]="v.checked"
+                       (change)="checkApp($event,v,m)"
+                       [disabled]="m.items[selectApp].length > 1?false:true">
+                <label class="form-check-label">{{v.name}}</label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="smx-modal-footer">
+        <button type="button" class="smx-btn smx-outline-default smx-grid" (click)="activeModal.dismiss('close')">取消
+        </button>
+        <button type="button" class="smx-btn smx-default smx-grid" (click)="sbmit()" id="smx-user">确定</button>
+      </div>
+    </div>
+
+
+    <!--上传图片-->
+    <div *ngIf="type === 33">
+      <div class="modal-body">
+        <div class="form-group" id="uploadIcon">
+          <div class="uploadIcon-fileinput-button" *ngIf="!modalData">
+            <div *ngIf="!imgFile" style="height: 100%">
+              <div class="uploadIcon-icon_u">
+                <span class="uploadIcon-plus"></span>
+                <span class="uploadIcon-title">上传支付凭证</span>
+              </div>
+              <input type="file" accept="image/*" (change)="fileChangeEvent($event)">
+            </div>
+            <div *ngIf="imgFile" style="height: 100%">
+              <div class="uploadIcon-icon_u">
+                <span class="uploadIcon-icon_uc fa fa-close" (click)="cancelFileChange()"></span>
+                <img [src]="imgFile" style="vertical-align:unset;height: 100%;" loading="lazy">
+              </div>
+            </div>
+          </div>
+
+          <div class="uploadIcon-fileinput-button" *ngIf="modalData" style="width: 500px;height: 400px;">
+            <div style="height: 100%">
+              <div class="uploadIcon-icon_u">
+                <img [src]="modalData" style="vertical-align:unset;height: 100%;cursor: pointer;" loading="lazy">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" *ngIf="!modalData">
+        <button type="button" class="wwwvbbb btn btn-secondary"
+                (click)="activeModal.close({img_url: imgFile,file:this.inputFile})" id="smx-user">确定
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('close')">取消</button>
+      </div>
+    </div>
+
+
+    <!--开具发票-->
+    <div *ngIf="type === 34" class="invoice">
+      <div class="modal-body">
+        <div>
+          <div>
+            <label class="modal-body-caption">开票信息</label>
+            <div>
+              <label class="modal-body-title">用户类型</label>
+              <div class="modal-body-value">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="user"
+                         [checked]="config.view.user_type === 1?true:false"
+                         (click)="changeRadio('user',1)">
+                  <label class="form-check-label">企业</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="user"
+                         [checked]="config.view.user_type === 10?true:false"
+                         (click)="changeRadio('user',10)">
+                  <label class="form-check-label">个人</label>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label class="modal-body-title">发票类型</label>
+              <div class="modal-body-value">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="bill"
+                         [disabled]="billType === 3?true:false"
+                         [checked]="config.view.type === 1?true:false"
+                         (click)="changeRadio('bill',1)">
+                  <label class="form-check-label">普通发票</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="bill"
+                         [disabled]="billType === 3?true:false"
+                         [checked]="config.view.type === 2?true:false"
+                         (click)="changeRadio('bill',2)">
+                  <label class="form-check-label">增值税专用发票</label>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="form-group" *ngFor="let v of config.view.invoiceInfo">
+                <label class="modal-body-title">{{v.title}}</label>
+                <input class="form-control modal-body-value" [(ngModel)]="v.value">
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-body-line"></div>
+
+          <div>
+            <label class="modal-body-caption">快递信息</label>
+            <div>
+              <div class="form-group" *ngFor="let v of config.view.expressInfo">
+                <label class="modal-body-title">{{v.title}}</label>
+                <input class="form-control modal-body-value" [(ngModel)]="v.value">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" style="width: 300px;height: 38px;line-height: 38px;"
+                (click)="verifyData(config.view)">提交
+        </button>
+      </div>
+    </div>
+
+
+    <!--信息-->
+    <div *ngIf="type === 35">
+      <div class="modal-body">
+        <div id="info">
+          <table cellpadding="5" style="width: 100%;">
+            <div *ngFor="let m of config.view">
+              <div [ngSwitch]="m.type">
+                <tr *ngSwitchCase="'button'">
+                  <!--标题-->
+                  <td class="t1" align="right">{{m.title}}</td>
+                  <td class="t2">{{m.value}}</td>
+                  <td class="t3"><span class="btn btn-primary btn-copy"
+                                       (click)="activeModal.close(m.button[1])">{{m.button[0]}}</span>
+                  </td>
+                </tr>
+                <tr *ngSwitchCase="'pipe'">
+                  <!--标题-->
+                  <td class="t1" align="right">{{m.title}}</td>
+                  <td class="t2" colspan="2">{{m.value | SmxPipe: m.pipe}}</td>
+                </tr>
+                <tr *ngSwitchCase="'time'">
+                  <!--标题-->
+                  <td class="t1" align="right">{{m.title}}</td>
+                  <td class="t2" colspan="2">{{m.value * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+                <tr *ngSwitchDefault>
+                  <!--标题-->
+                  <td class="t1" align="right">{{m.title}}</td>
+                  <td class="t2" colspan="2">{{m.value}}</td>
+                </tr>
+              </div>
+            </div>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="type === 36">
+      <div class="modal-body">
+        <div id="confime">
+          <div class="form-group">
+            <span class="fa fa-shopping-cart" style="    font-size: 20px;"></span>
+            <span class="control-label" style="top: 0;    font-size: 16px;">{{config.view}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="activeModal.close(config.view)">支付完成
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('close')">遇到问题</button>
+      </div>
+    </div>
+  </div>
+</div>
+

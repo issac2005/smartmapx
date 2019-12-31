@@ -1,0 +1,49 @@
+<div class="smx-main">
+  <nz-layout style="background: unset">
+    <nz-header>
+      <div class="title-header">
+        <div class="container">
+          <header class="navbar navbar-fixed-top navbar-toggleable-md">
+            <a class="navbar-brand" href="#/">Sm@rtMapX</a>
+            <div class="navbar-collapse collapse" id="navbarContent">
+              <ul class="navbar-nav mr-auto">
+                <li *ngFor="let classItem of classModule" class="nav-item"
+                    [ngClass]="{'active': classItem.name == classThis}">
+                  <a class="nav-link" (click)="changeClass($event)">{{classItem.name}}</a>
+                </li>
+              </ul>
+
+              <div class="col text-right" *ngIf="!isLogin.val">
+                <span class="space-line"></span>
+                <a (click)="signIn()" class="btn">注册</a>
+                <button (click)="login()" class="btn btn-secondary btn-round">登录</button>
+              </div>
+              <div class="col text-right" *ngIf="isLogin.val">
+                <span class="space-line"></span>
+                <div class="d-inline-block c-main-account">
+                  <nz-dropdown [nzTrigger]="'click'">
+                    <button nz-dropdown class="btn btn-outline-primary">{{userName}}</button>
+                    <ul nz-menu>
+                      <li (click)="userCenter()" nz-menu-item>用户中心</li>
+                      <li (click)="logout()" nz-menu-item>退出</li>
+                    </ul>
+                  </nz-dropdown>
+                </div>
+                <!--任务中心-->
+                <div style="display: inline-block">
+                  <task-manager></task-manager>
+                </div>
+              </div>
+            </div>
+          </header>
+          <div *ngIf="httpLoading" class="smx-loading">
+            <nz-spin nzSimple></nz-spin>
+          </div>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</div>

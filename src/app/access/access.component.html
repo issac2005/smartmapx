@@ -1,0 +1,32 @@
+<div class="access-box">
+
+    <div class="title-box">
+        <h3 class="float-left">访问分析</h3>
+        <div class="float-right">
+            <!--原本的select-->
+            <!-- <p-multiSelect [filter]="false" [options]="cities1" [(ngModel)]="selectedCity1" [selectedItemsLabel]="'{0}模块已选取'"
+                           (onPanelHide)="changeTime($event)" [defaultLabel]="'选择统计条件'" [style]="{'height':'30px'}"></p-multiSelect> -->
+            <!--Ljy替换原本的select-->
+            <nz-select  (nzBlur)="changeTime($event)" [(ngModel)]="selectedCity1" [nzAllowClear]="true"[nzMaxTagCount]="1" [nzMaxTagPlaceholder]="tagPlaceHolder" style="width: 350px;" nzPlaceHolder="选择统计条件" nzMode="multiple" >
+                <nz-option *ngFor="let option of cities1 " [nzValue]="option.value" [nzLabel]="option.label"  ></nz-option>
+                <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
+            </nz-select>
+            <!--原本的button-->
+            <!-- <p-selectButton [options]="cities2" [(ngModel)]="selectedCity2" (onChange)="changeTime($event)" [style]="{'top': '-1px', 'position': 'relative'}"></p-selectButton> -->
+            <!--Ljy替换原本的button-->
+            <nz-radio-group [(ngModel)]="selectedCity2" [nzButtonStyle]="'solid'" (ngModelChange)="changeTime($event)">
+                <label nz-radio-button [nzValue]="cities2[0].value">{{cities2[0].label}}</label>
+                <label nz-radio-button [nzValue]="cities2[1].value">{{cities2[1].label}}</label>
+                <label nz-radio-button [nzValue]="cities2[2].value">{{cities2[2].label}}</label>
+                <label nz-radio-button [nzValue]="cities2[3].value">{{cities2[3].label}}</label>
+            </nz-radio-group>
+        </div>
+    </div>
+
+    <div class="chart-box" *ngIf="showType==1">
+        <div class="each-box">
+            <smx-chart type="line" [data]="data" [options]="data.options" [height]="'100px'"></smx-chart>
+        </div>
+    </div>
+
+</div>

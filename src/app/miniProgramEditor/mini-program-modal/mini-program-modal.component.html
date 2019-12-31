@@ -1,0 +1,165 @@
+<!-- 弹框头部 -->
+<div class="smx-modal-header">
+  <h4 class="modal-title">{{keyConfig.title}}</h4>
+  <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+</div>
+
+<!-- 弹框主体 -->
+<div class="smx-modal-body">
+  <!-- 版本列表 -->
+  <div class="versionWrap" *ngIf="type === 'version-list'">
+    <p style="text-align: center" *ngIf="!modalData">正在加载数据...</p>
+    <ul class="versionList">
+      <li *ngFor="let item of modalData; let i=index;">
+        <dl>
+          <dt [title]="item.version">
+            <span [ngClass]="{'red': item.recommend, 'blue': item.type === 1, 'current': item.current }"> {{item.version}} </span>
+            <span *ngIf="item.recommend">(推荐)</span>
+            <span *ngIf="!item.recommend && item.current">(当前)</span>
+          </dt>
+          <dd>{{item.update_time*1000 | date:'yyyy-MM-dd HH:mm'}}</dd>
+          <dd class="versionDesc">由<span *ngIf="!item.fork">{{item.user_name}}</span><span *ngIf="item.fork">{{item.update_user_name}}在{{item.fork}}基础上</span><span *ngIf="item.type === 0">提交</span><span *ngIf="item.type === 1">发布</span></dd>
+          <dd class="btnWrap">
+            <button class="versionDelete smx-btn smx-default" [disabled]="item.recommend || item.current" (click)="deleteVersion(item, i)">删除</button>
+            <button class="smx-btn smx-default" [disabled]="item.recommend" *ngIf="item.type !== 0" (click)="setRecomd(item, i)">设为推荐</button>
+            <button class="smx-btn smx-default" [disabled]="item.current" (click)="edit(item,i)">编辑</button>
+          </dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 发布 -->
+  <div class="publishWrap" *ngIf="type === 'publish'" style="padding:10px;">
+    <table class="versionTable">
+      <tbody>
+        <tr>
+          <td style="text-align: right;">版本号：</td>
+          <td>
+            <smx-dropdown id="dropdown"
+            [options]="versionList"
+            [(ngModel)]="versionNo" maxlength="40"
+            [editable]="true"
+            [style]="{'width':'233px'}"
+            placeholder="40个字符以内"
+           ></smx-dropdown>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top">版本描述：</td>
+          <td><textarea cols="30" rows="5" maxlength="256" [(ngModel)]="textareaValue" placeholder="256个字符以内"></textarea></td></tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <input type="checkbox" class="smx-checkbox" [disabled]="!keyConfig.isPublished" checked [(ngModel)]="inputValue" >&nbsp;设置为推荐版本</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 提交代码 -->
+
+  <div class="submitWrap" *ngIf="type === 'submit'">
+    <table class="versionTable">
+      <tbody>
+        <tr>
+          <td style="text-align: right;">版本号：</td><td>系统将会自动生成临时版本号</td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top">版本描述：</td>
+          <td>
+            <textarea class="submit-body-text" rows="5" cols="30" maxlength="256" [(ngModel)]="value" placeholder="256个字符以内"></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 退出提示 -->
+  <div *ngIf="type === 'quit-tip'" style="width:320px;text-align: center;">
+    您还有代码未提交或发布，直接退出会造成代码丢失，确认退出吗？
+  </div>
+</div>
+
+<!-- 弹框底部 -->
+<div class="smx-modal-footer">
+  <div *ngIf="type === 'version-list'" style="text-align: right;padding-right: 2rem;">
+      <button type="button"  class="smx_not_div_w top_data_newmap_w smx-btn smx-default"
+              (click)="activeModal.dismiss('close')">关闭
+      </button>
+  </div>
+
+  <div *ngIf="type === 'publish'">
+    <button type="button" class="smx_not_div_w top_data_newmap_ws smx-btn smx-grid smx-outline-default"
+            (click)="activeModal.dismiss('close')">取消
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" class="top_data_newmap_wss smx-btn smx-grid smx-default"
+            (click)="publishConfirm()" id="smx-miniProgrampopule">确定
+    </button>
+  </div>
+  <!--提交代码尾部-->
+  <div  class="submit-footer" *ngIf="type === 'submit'">
+    <button type="button" class="smx_not_div_w smx-btn smx-grid smx-outline-default"
+            (click)="activeModal.dismiss('close')">取消
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" class="smx-btn smx-grid smx-default" (click)="submit()" id="smx-miniProgrampopule">确定
+    </button>
+  </div>
+
+
+  <div *ngIf="type === 'quit-tip'">
+    <button type="button" class="smx_not_div_w top_data_newmap_ws smx-btn smx-grid smx-outline-default"
+            (click)="activeModal.dismiss('close')">取消
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" class="top_data_newmap_wss smx-btn smx-grid smx-default"
+           (click)="quitConfirm()" id="smx-miniProgrampopule">确定
+    </button>
+  </div>
+</div>
+
+
+<!-- 确认删除弹出框 -->
+<div class="layer-smartMapX-select-cover mini-program" *ngIf="promptBoolean"></div>
+<div class="layer-smartMapX-select-waringdirector mini-program" *ngIf="promptBoolean">
+  <div class="layer-smartMapX-select-waringtitle">
+    <span class="layer-smartMapX-select-waringworld">
+      <span *ngIf="confirmType === 'version-delete'">删除提示</span>
+      <span *ngIf="confirmType === 'version-choose'">版本覆盖提示</span>
+      <span *ngIf="confirmType === 'before-edit'">编辑提示</span>
+    </span>
+    <span class="layer-smartMapX-select-waringXcancel" style="cursor: pointer;" (click)="ButtonDisDelete()">×</span>
+  </div>
+  <div class="layer-smartMapX-select-waringmessage">
+    <span *ngIf="confirmType === 'version-delete'">删除后数据将不可恢复，您确定要删除吗?</span>
+    <span *ngIf="confirmType === 'version-choose'">历史版本将被覆盖，确定要继续吗？</span>
+    <span *ngIf="confirmType === 'before-edit'">您还有代码未提交或发布，继续当前操作可能会造成代码丢失，是否确认继续？</span>
+  </div>
+  <div class="smx-modal-footer">
+    <!-- 版本删除按钮 -->
+    <div *ngIf="confirmType === 'version-delete'">
+      <button class="smx-btn smx-grid smx-outline-default" (click)="ButtonDisDelete()">取消</button>
+      &nbsp;&nbsp;
+      <button class="smx-btn smx-default smx-grid" (click)="ButtonSuerDelete()" id="smx-miniProgrampopule">确定</button>
+    </div>
+
+    <!-- 版本覆盖提示按钮 -->
+    <div *ngIf="confirmType === 'version-choose'">
+      <button class="smx-btn smx-grid smx-outline-default" (click)="ButtonDisDelete()">取消</button>
+      &nbsp;&nbsp;
+      <button class="smx-btn smx-default smx-grid" (click)="versionChooseConfirm()" id="smx-miniProgrampopule">确定</button>
+    </div>
+
+    <!-- 编辑版本- -->
+    <div *ngIf="confirmType === 'before-edit'">
+      <button class="smx-btn smx-grid smx-outline-default" (click)="ButtonDisDelete()">取消</button>
+      &nbsp;&nbsp;
+      <button class="smx-btn smx-default smx-grid" (click)="editConfirm()" id="smx-miniProgrampopule">确定</button>
+    </div>
+
+
+  </div>
+</div>
+

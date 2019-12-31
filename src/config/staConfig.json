@@ -1,0 +1,442 @@
+{
+    "id": "2018-0403-0906",
+    "version": "1.0.0",
+    "norm": [
+        {
+            "id": "7154b538-3257-4c51-b1ec-cbfacafb05e5",
+            "name": "流向图",
+            "attributes": [
+                {
+                    "id": 1,
+                    "componentId": 7,
+                    "componentType": 1
+                }
+            ]
+        },
+        {
+            "id": "cb1a9c12-e64a-11e8-b3e0-0242ac120002",
+            "name": "图标符号图",
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "分段",
+                    "attribute": "staLegend",
+                    "default": 4,
+                    "start": 1,
+                    "stop": 10,
+                    "componentId": 1,
+                    "componentType": 1
+                },
+                {
+                    "id": 2,
+                    "title": "渲染类型",
+                    "attribute": "RenderType",
+                    "default": "interval",
+                    "value": [
+                        {
+                            "label": "等于",
+                            "value": "categorical"
+                        },
+                        {
+                            "label": "间隔",
+                            "value": "interval"
+                        }
+                    ],
+                    "componentId": 3,
+                    "parentKey": [
+                        [
+                            "layout",
+                            "icon-image",
+                            "type"
+                        ],
+                        [
+                            "layout",
+                            "icon-size",
+                            "type"
+                        ]
+                    ]
+                },
+                {
+                    "id" : 3 ,
+                    "title": [
+                        "显示",
+                        "分段值",
+                        "图标",
+                        "图标大小"
+                    ],
+                    "attribute": [
+                        "icon-image",
+                        "icon-size",
+                        "text-field"
+                    ],
+                    "componentId":6,
+                    "componentType":1
+                }
+
+            ]
+        },
+        {
+            "id": "70d9e333-a40c-49d0-a88c-fbf156a37766",
+            "name": "定点符号图",
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "分段",
+                    "attribute": "grade",
+                    "default": 4,
+                    "start": 1,
+                    "stop": 10,
+                    "componentId": 1,
+                    "componentType": 1
+                },
+                {
+                    "id": 2,
+                    "title": "不透明度",
+                    "attribute": "circle-opacity",
+                    "default": 0.75,
+                    "start": 0,
+                    "stop": 1,
+                    "componentId": 2,
+                    "componentType": 2,
+                    "parentKey": [
+                        "paint",
+                        "circle-opacity"
+                    ]
+                },
+                {
+                    "id": 3,
+                    "title": "渲染类型",
+                    "attribute": "RenderType",
+                    "default": "exponential",
+                    "value": [
+                        {
+                            "label": "等于",
+                            "value": "categorical"
+                        },
+                        {
+                            "label": "渐变",
+                            "value": "exponential"
+                        },
+                        {
+                            "label": "间隔",
+                            "value": "interval"
+                        }
+                    ],
+                    "componentId": 3,
+                    "parentKey": [
+                        [
+                            "paint",
+                            "circle-color",
+                            "type"
+                        ],
+                        [
+                            "paint",
+                            "circle-radius",
+                            "type"
+                        ]
+                    ]
+                },
+                {
+                    "id": 4,
+                    "title": [
+                        "显示",
+                        "分段值",
+                        "取色",
+                        "符号大小"
+                    ],
+                    "attribute": [
+                        "circle-color",
+                        "circle-radius"
+                    ],
+                    "gradeDefault": 3,
+                    "componentId": 4,
+                    "componentType": 1
+                }
+            ]
+        },
+        {
+            "id": "1b42b204-a0a7-47a9-8ad3-934f03d2ed49",
+            "name": "热力图",
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "分段",
+                    "attribute": "grade",
+                    "default": 3,
+                    "start": 3,
+                    "stop": 10,
+                    "componentId": 1,
+                    "componentType": 1
+                },
+                {
+                    "id": 5,
+                    "title": "插值方法",
+                    "attribute": "interpolation",
+                    "default": 0,
+                    "value": [
+                        {
+                            "label": "线性插值",
+                            "value": 0
+                        },
+                        {
+                            "label": "指数插值",
+                            "value": 1
+                        }
+                    ],
+                    "componentId": 5
+                },
+                {
+                    "id": 2,
+                    "title": "不透明度",
+                    "attribute": "heatmap-opacity",
+                    "default": 0.75,
+                    "start": 0,
+                    "stop": 1,
+                    "componentId": 2,
+                    "componentType": 2,
+                    "parentKey": [
+                        "paint",
+                        "heatmap-opacity"
+                    ]
+                },
+                {
+                    "id": 3,
+                    "title": "辐射半径",
+                    "attribute": "heatmap-radius",
+                    "default": 25,
+                    "start": 0,
+                    "stop": 50,
+                    "componentId": 2,
+                    "componentType": 1,
+                    "parentKey": [
+                        "paint",
+                        "heatmap-radius"
+                    ]
+                },
+                {
+                    "id": 4,
+                    "title": "热点强度",
+                    "attribute": "heatmap-intensity",
+                    "default": 5,
+                    "start": 1,
+                    "stop": 10,
+                    "componentId": 2,
+                    "componentType": 1,
+                    "parentKey": [
+                        "paint",
+                        "heatmap-intensity"
+                    ]
+                },
+                {
+                    "id": 6,
+                    "title": [
+                        "分段值",
+                        "填充色"
+                    ],
+                    "attribute": [
+                        "heatmap-color",
+                        "heatmap-weight"
+                    ],
+                    "gradeDefault": 3,
+                    "componentId": 4,
+                    "componentType": 2
+                }
+            ]
+        },
+        {
+            "id": "6a66b3a7-d49a-44a4-bd5f-374dc9a06c9c",
+            "name": "等级设色",
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "分段",
+                    "attribute": "grade",
+                    "default": 4,
+                    "start": 1,
+                    "stop": 10,
+                    "componentId": 1,
+                    "componentType": 1
+                },
+                {
+                    "id": 2,
+                    "title": "不透明度",
+                    "attribute": "circle-opacity",
+                    "default": 0.75,
+                    "start": 0,
+                    "stop": 1,
+                    "componentId": 2,
+                    "componentType": 2,
+                    "parentKey": [
+                        "paint",
+                        "fill-opacity"
+                    ]
+                },
+                {
+                    "id": 3,
+                    "title": "渲染类型",
+                    "attribute": "RenderType",
+                    "default": "exponential",
+                    "value": [
+                        {
+                            "label": "等于",
+                            "value": "categorical"
+                        },
+                        {
+                            "label": "渐变",
+                            "value": "exponential"
+                        },
+                        {
+                            "label": "间隔",
+                            "value": "interval"
+                        }
+                    ],
+                    "componentId": 3,
+                    "parentKey": [
+                        [
+                            "paint",
+                            "fill-color",
+                            "type"
+                        ],
+                        [
+                            "paint",
+                            "fill-outline-color",
+                            "type"
+                        ]
+                    ]
+                },
+                {
+                    "id": 5,
+                    "title": "显示轮廓",
+                    "attribute": "outLine",
+                    "default": true,
+                    "value": [
+                        {
+                            "label": "显示",
+                            "value": true
+                        },
+                        {
+                            "label": "隐藏",
+                            "value": false
+                        }
+                    ],
+                    "componentId": 3,
+                    "componentType": 1,
+                    "parentKey": [
+                        "paint",
+                        "fill-antialias"
+                    ]
+                },
+                {
+                    "id": 4,
+                    "title": [
+                        "显示",
+                        "分段值",
+                        "填充色",
+                        "边框颜色"
+                    ],
+                    "attribute": [
+                        "fill-color",
+                        "fill-outline-color"
+                    ],
+                    "gradeDefault": 4,
+                    "componentId": 4,
+                    "componentType": 1
+                }
+            ]
+        },
+        {
+            "id": "05e20d72-c000-4f59-af97-8adb31bcc522",
+            "name": "聚合图",
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "分段",
+                    "attribute": "grade",
+                    "default": 3,
+                    "start": 3,
+                    "stop": 8,
+                    "componentId": 1,
+                    "componentType": 2
+                },
+                {
+                    "id": 2,
+                    "title": "不透明度",
+                    "attribute": "circle-opacity",
+                    "default": 0.75,
+                    "start": 0,
+                    "stop": 1,
+                    "componentId": 2,
+                    "componentType": 2,
+                    "parentKey": [
+                        "paint",
+                        "circle-opacity"
+                    ]
+                },
+                {
+                    "id": 3,
+                    "title": "聚合距离",
+                    "attribute": "clusterRadius",
+                    "default": 50,
+                    "start": 0,
+                    "stop": 100,
+                    "componentId": 2,
+                    "componentType": 3,
+                    "parentKey": [
+                        "clusterRadius"
+                    ]
+                },
+                {
+                    "id": 4,
+                    "title": "最大级别",
+                    "attribute": "clusterMaxZoom",
+                    "default": 17,
+                    "start": 1,
+                    "stop": 22,
+                    "componentId": 2,
+                    "componentType": 3,
+                    "parentKey": [
+                        "clusterMaxZoom"
+                    ]
+                },
+                {
+                    "id": 5,
+                    "title": "聚合数量",
+                    "attribute": "clusterNum",
+                    "default": "visible",
+                    "value": [
+                        {
+                            "label": "显示",
+                            "value": "visible"
+                        },
+                        {
+                            "label": "隐藏",
+                            "value": "none"
+                        }
+                    ],
+                    "componentId": 3,
+                    "componentType": 2,
+                    "parentKey": [
+                        "layout",
+                        "visibility"
+                    ]
+                },
+                {
+                    "id": 7,
+                    "title": [
+                        "显示",
+                        "聚合个数",
+                        "聚合颜色",
+                        "聚合半径"
+                    ],
+                    "attribute": [
+                        "circle-color",
+                        "circle-radius"
+                    ],
+                    "gradeDefault": 4,
+                    "componentId": 4,
+                    "componentType": 1
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+<div class="boolean">
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <div class="beyond">{{label}}</div>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <div style="float: left;height: 26.19px;">
+          <span style="float: left;padding-top: 1px">
+            <svg  fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14" width="14" size="14" color="#8e8e8e" viewBox="0 0 40 40" style="vertical-align: middle; color: rgb(142, 142, 142);">
+                <g>
+                    <path d="m30 6.6v5h-11.6l8.2 8.4-8.2 8.4h11.6v5h-20v-3.4l10.9-10-10.9-10v-3.4h20z"></path>
+                </g>
+            </svg>
+          </span>
+
+        <label class="checkbox" style="margin-left: 10px;">
+          <input type="checkbox"  [(ngModel)]="value">
+          <i class="icon-checkbox"></i>
+        </label>
+      </div>
+      <!--<div *ngIf="showStyle === 'object'" style="float: left">
+        <div *ngFor="let num of layerInfo[attribute].stops index as i" style="height: 30px;">
+          <i class="fa fa-trash" (click)="remove(i)"></i>
+          <input type="number" (keyup)="test($event, i)" [value]="num[0]" [(ngModel)]="num[0]" class="form-control form-control-xs" style="width: 29px;display: inline;padding: 0.15rem 0.35rem;font-size: 0.175rem"/>
+          <label class="checkbox" style="margin-left: 10px;">
+            <input type="checkbox"  [checked]="layerInfo[attribute].stops[i][1]" (change)="onChecked($event,i)">
+            <i style="bottom: -6px" class="icon-checkbox"></i>
+          </label>
+        </div>
+        <button (click)="buttomAdd()" class="btn btn-info btn-xs" style="margin-left: 128px">添加</button>
+      </div>-->
+
+    </div>
+  </div>
+</div>

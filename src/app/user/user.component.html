@@ -1,0 +1,291 @@
+<div class="user-center" *ngIf="platformType && userInfo">
+  <div class="user-toobar">
+    <div class="user-toolbar-category">
+      <div *ngFor="let v of titleInfo">
+      <span class="btn user-toolbar-category-btn" [ngClass]="leftChecked === v.type? 'btn-primary' : 'btn-secondary'"
+            (click)="switchData(v.type)">
+        <span>{{v.title}}</span>
+      </span>
+        <i class="fa" [ngClass]="leftChecked === v.type? 'fa-caret-down2' : ''"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="user-body">
+
+    <div [ngStyle]="{'display':leftChecked === 1?'':'none'}" class="user-body-info">
+      <table class="table user-body-info-table" style="width: 60%">
+        <tbody>
+        <tr>
+          <th>用户名</th>
+          <td>{{userInfo.login_name}}</td>
+          <td>
+            <button class="smx-btn smx-default" (click)="changePs()">修改密码</button>
+          </td>
+        </tr>
+        <tr>
+          <th>昵称</th>
+          <td>{{userInfo.user_name}}</td>
+          <td>
+            <button class="smx-btn smx-default" (click)="updateUserName()">修&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;改
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="platformType === 'saas'">
+          <th>绑定微信</th>
+          <td *ngIf="userInfo && (!userInfo['source_id'] || userInfo['source_id'] === '')">未绑定</td>
+          <td *ngIf="userInfo && userInfo['source_id'] && userInfo['source_id'] !== ''">已绑定</td>
+          <td *ngIf="userInfo && userInfo['source_id'] && userInfo['source_id'] !== ''">
+            <button class="smx-btn smx-default" (click)="unbindWechat()">解&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;绑</button>
+          </td>
+          <td *ngIf="userInfo && (!userInfo['source_id'] || userInfo['source_id'] === '')">
+            <button class="smx-btn smx-default" (click)="bindWechat()">绑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;定</button>
+          </td>
+        </tr>
+        <tr *ngIf="platformType === 'saas'">
+          <th>方案类型</th>
+          <td>{{userInfo.product_id | SmxPipe: 'orderType'}}</td>
+          <td>
+            <button class="smx-btn smx-default" (click)="renewal(1)">升级服务</button>
+          </td>
+        </tr>
+        <tr *ngIf="platformType === 'saas'">
+          <th>到期时间</th>
+          <td>{{userInfo.expire_time * 1000 | date:'yyyy-MM-dd'}}</td>
+          <td>
+            <button class="smx-btn smx-default" (click)="renewal(2)"
+                    [disabled]="this.subDay >= 30? true:false">续&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div [ngStyle]="{'display':leftChecked === 2?'':'none'}" class="user-body-manage">
+      <button class="smx-btn smx-default" style="margin: 15px 0" (click)="addApplication()">新建应用</button>
+      <table class="table" style="text-align: center">
+        <thead class="table-dark">
+        <tr>
+          <th scope="col">应用名称</th>
+          <th scope="col">类型</th>
+          <th scope="col">应用AK</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let v of applications;index as i">
+          <th scope="row">{{v.name}}</th>
+          <td>{{v.type | SmxPipe: 'appType'}}{{data_type[i]}}</td>
+          <td>
+            <span class="user-body-manage-ak">{{v.token}}</span>
+            <span class="smx-btn smx-default smx-xs" ngxClipboard [cbContent]="v.token"
+                  (cbOnSuccess)="copySuccess()">复制</span>
+          </td>
+          <td>
+            <button class="smx-btn smx-default" (click)="removeApplication(i)">删除</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="platformType === 'saas'" [ngStyle]="{'display':leftChecked === 3?'':'none'}" class="user-body-pay">
+      <div class="djtc">
+        <div class="container">
+          <ul class="priceList">
+            <li class="djtc-li djtc-li-a"
+                [ngClass]="{'djtc-li-disabled':userInfo.product_id !== 'c4985149-6e9a-4f3b-8c8f-f35fc05dbbef'}">
+              <h4>基础版</h4>
+              <span *ngIf="userInfo.product_id === 'c4985149-6e9a-4f3b-8c8f-f35fc05dbbef'" class="post-header-cate"><i
+                class="fa fa-star-o"></i>当前方案</span>
+              <div class="infoWrap">
+                <div class="defaultWrap">
+                  <ul class="defaultList">
+                    <li>存储空间500M</li>
+                    <li>页面访问50000次</li>
+                  </ul>
+                </div>
+                <div class="hoverWrap">
+                  <a class="price"><span>免费</span></a>
+                  <ul class="hoverList fullWidth">
+                    <li>
+                      <span class="priceTitle"><i class="priceIcon cc"></i>存储空间</span>存储空间500M
+                    </li>
+                    <li>
+                      <span class="priceTitle"><i class="priceIcon fw"></i>访问次数</span>页面访问次数50000次
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <a class="tipModal"
+                 [ngStyle]="{'cursor':this.subDay >= 30? 'no-drop':'pointer'}"
+                 (click)="userInfo.product_id === 'c4985149-6e9a-4f3b-8c8f-f35fc05dbbef' && this.subDay < 30? renewal(2):''">续期</a>
+            </li>
+            <li class="djtc-li djtc-li-b"
+                [ngClass]="{'djtc-li-disabled':userInfo.product_id === '9c5893d7-b025-405e-9fe0-4ee5d25d6ef8'}">
+              <h4>高级版</h4>
+              <span *ngIf="userInfo.product_id === 'a997aa02-550c-40b2-95fc-160dd265d738'" class="post-header-cate"><i
+                class="fa fa-star-o"></i>当前方案</span>
+              <div class="infoWrap">
+                <div class="defaultWrap">
+                  <ul class="defaultList">
+                    <li>存储空间50G</li>
+                    <li>页面访问次数50000次</li>
+                    <li>地址匹配接口10000次</li>
+                    <li>逆地理接口10000次</li>
+                    <li>导航接口10000次</li>
+                    <li>搜索接口10000次</li>
+                  </ul>
+                </div>
+                <div class="hoverWrap">
+                  <a class="price"><span>￥1999元</span>/月</a>
+                  <ul class="hoverList">
+                    <li>
+                      <span class="priceTitle"><i class="priceIcon cc"></i>存储空间</span>存储空间50G
+                    </li>
+                    <li>
+                      <span class="priceTitle"><i class="priceIcon fw"></i>访问次数</span>页面访问50000次
+                    </li>
+                    <li>
+                      <span class="priceTitle"><i class="priceIcon jk"></i>接口调用</span>
+                      <dl class="dlLayout">
+                        <dd>地址匹配接口10000次</dd>
+                        <dd>导航接口10000次</dd>
+                        <dd>逆地理接口10000次</dd>
+                        <dd>搜索接口10000次</dd>
+                      </dl>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <a class="tipModal" *ngIf="userInfo.product_id !== 'c4985149-6e9a-4f3b-8c8f-f35fc05dbbef'"
+                 (click)="userInfo.product_id === '9c5893d7-b025-405e-9fe0-4ee5d25d6ef8'? '':renewal(2)">续期</a>
+              <a class="tipModal" *ngIf="userInfo.product_id === 'c4985149-6e9a-4f3b-8c8f-f35fc05dbbef'"
+                 (click)="userInfo.product_id === '9c5893d7-b025-405e-9fe0-4ee5d25d6ef8'? '':renewal(1,'advanced')">升级</a>
+            </li>
+            <li class="djtc-li djtc-li-c">
+              <h4>专业版</h4>
+              <span *ngIf="userInfo.product_id === '9c5893d7-b025-405e-9fe0-4ee5d25d6ef8'" class="post-header-cate"><i
+                class="fa fa-star-o"></i>当前方案</span>
+              <div class="infoWrap">
+                <div class="defaultWrap">
+                  <ul class="defaultList">
+                    <li>存储空间5T</li>
+                    <li>页面访问50000次</li>
+                    <li>地址匹配接口50000次</li>
+                    <li>逆地理接口50000次</li>
+                    <li>导航接口50000次</li>
+                    <li>搜索接口50000次</li>
+                  </ul>
+                </div>
+                <div class="hoverWrap">
+                  <a class="price"><span>￥5999元</span>/月</a>
+                  <ul class="hoverList">
+                    <li>
+                      <span class="priceTitle"><i class="priceIcon cc"></i>存储空间</span>存储空间5T
+                    </li>
+                    <li>
+                      <span class="priceTitle"><i class="priceIcon fw"></i>访问次数</span>页面访问50000次
+                    </li>
+                    <li>
+                      <span class="priceTitle"><i class="priceIcon jk"></i>接口调用</span>
+                      <dl class="dlLayout">
+                        <dd>地址匹配接口50000次</dd>
+                        <dd>导航接口50000次</dd>
+                        <dd>逆地理接口50000次</dd>
+                        <dd>搜索接口50000次</dd>
+                      </dl>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <a class="tipModal" *ngIf="userInfo.product_id === '9c5893d7-b025-405e-9fe0-4ee5d25d6ef8'"
+                 (click)="renewal(2)">续期</a>
+              <a class="tipModal" *ngIf="userInfo.product_id !== '9c5893d7-b025-405e-9fe0-4ee5d25d6ef8'"
+                 (click)="renewal(1,'major')">升级</a>
+            </li>
+            <li class="djtc-li djtc-li-d">
+              <h4>企业部署</h4>
+              <div class="infoWrap">
+                <div class="defaultWrap">
+                  <ul class="defaultList">
+                    <li>数据安装</li>
+                    <li>应用定制</li>
+                    <li>地图定制</li>
+                    <li>运维培训</li>
+                    <li>技术支持</li>
+                    <li>数据服务</li>
+                  </ul>
+                </div>
+                <div class="hoverWrap">
+                  <p class="deploy"><i class="priceIcon2 bs"></i>运维人员现场部署</p>
+                  <p class="deploy"><i class="priceIcon2 kf"></i>针对应用场景定制开发</p>
+                  <p class="deploy"><i class="priceIcon2 pz"></i>按业务场景需求配置地图</p>
+                  <p class="deploy"><i class="priceIcon2 px"></i>软件使用以及运维培训</p>
+                  <p class="deploy"><i class="priceIcon2 zc"></i>专业人员现场技术支持</p>
+                  <p class="deploy"><i class="priceIcon2 rk"></i>初始化多源数据入库</p>
+                </div>
+              </div>
+              <div class="zx">
+                <p>服务咨询</p>
+                010-62975588-6666
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="platformType === 'saas'" [ngStyle]="{'display':leftChecked === 4?'':'none'}"
+         class="user-body-order">
+      <div>
+        <table class="table user-body-order-filter">
+          <tbody>
+          <tr>
+            <td style="width: 25%">
+              <span>订单号: </span>
+              <input type="text" class="smx-control modal-body-value" [(ngModel)]="orderFilter">
+            </td>
+            <td style="width: 25%">
+              <span>支付状态: </span>
+
+              <smx-select
+                class="modal-body-value"
+                [(ngModel)]="statusFilter"
+                [options]="statusOptions"
+                [optionLabel]="'title'"
+                [optionValue]="'value'">
+              </smx-select>
+            </td>
+            <td style="width: 25%">
+              <span>支付方式: </span>
+              <smx-select
+                class="modal-body-value"
+                [(ngModel)]="payFilter"
+                [optionLabel]="'title'"
+                [optionValue]="'value'"
+                [options]="payOptions">
+              </smx-select>
+            </td>
+            <td style="width: 25%">
+              <span>开票状态: </span>
+              <smx-select
+                class="modal-body-value"
+                [(ngModel)]="billFilter"
+                [optionLabel]="'title'"
+                [optionValue]="'value'"
+                [options]="billOptions">
+              </smx-select>
+            </td>
+            <td>
+              <button class="smx-btn smx-default" (click)="setfilter()">订单查询</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <smx-table #stable [cols]="cols" [datas]="datas" [config]="config"
+                   (sBtnClick)="btnClick($event)"></smx-table>
+      </div>
+    </div>
+  </div>
+</div>

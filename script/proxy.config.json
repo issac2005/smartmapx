@@ -1,0 +1,53 @@
+{
+  "/services": {
+    "target": "http://172.17.13.30:580/",
+    "secure": false
+  },
+  "/em": {
+    "target": "http://172.17.13.30:580/",
+    "secure": false
+  },
+  "/mapservices": {
+    "target": "http://172.17.4.64:889/",
+    "secure": false
+  },
+  "/uploadfile": {
+    "target": "http://172.17.13.30:580/",
+    "secure": false
+  },
+  "/downloadfile": {
+    "target": "http://172.17.13.30:580/",
+    "secure": false
+  },
+  "/upload": {
+    "target": "http://172.17.13.30:580/",
+    "secure": false
+  },
+  "/geomap": {
+    "target": "http://172.17.13.30:580/",
+    "secure": false
+  },
+  "/handler": {
+    "target": "http://172.17.13.30:580/",
+    "secure": false
+  },
+  "/help": {
+    "target": "http://172.17.13.30:580/",
+    "secure": false
+  },
+  "/map": {
+    "target": "http://172.17.13.30:580/",
+    "secure": false
+  },
+  "/fonts": {
+    "target": "http://172.17.13.30:580/",
+    "secure": false
+  },
+  "/basemap": {
+    "target": "http://172.17.13.30:580/",
+    "secure": false
+  }
+}
+
+
+

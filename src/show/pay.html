@@ -1,0 +1,199 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>微信支付收银台</title>
+  <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="https://wx.gtimg.com/pay_h5/12306/pindex/css/pindex.css?v=20170921_1">
+  <script src="qrcode.min.js"></script>
+</head>
+
+<body>
+<div class="wrap order-info  ">
+  <div id="logo" class="logo-wechatpay"></div>
+  <div id="T_orderDetailContainer" class="payment-qrcode  ">
+    <div class="data-record">
+      <div class="order-amount">
+        <dl>
+          <dt>SmartMapX订单</dt>
+          <dd><span class="wechatrmb">¥</span><span id="total_price" class="wechatnum"></span></dd>
+        </dl>
+      </div>
+      <div id="T_tradeInfo" class="order-detail">
+        <div class="datum">
+          <dl>
+            <dt>收款方</dt>
+            <dd>北京灵图软件技术有限公司</dd>
+          </dl>
+          <dl>
+            <dt>下单时间</dt>
+            <dd id="time"></dd>
+          </dl>
+          <dl>
+            <dt>订单号</dt>
+            <dd id="orderId"></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div id="T_qrContainer" class="scan-qrcode">
+      <div id="T_qrText" class="qrcode-tit">为防止订单关闭,请您尽快付款</div>
+      <div class="qrcode-img" id="qrcode">
+        <!--<img alt="Scan me!" src="" style="display: block;">-->
+      </div>
+      <div class="qrcode-msg">
+        <p id="T_qrCodeMsg">请使用微信扫一扫完成支付</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+
+
+<script type="text/javascript">
+  var id;
+  var path;
+  window.onload = function () {
+    var url = getQueryString('code');
+    id = getQueryString('orderId');
+    new QRCode(document.getElementById("qrcode"), {
+      text: url,
+      width: 208,
+      height: 208,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+    showJson();
+  }
+
+
+  function initOrder(url, tag) {
+    var id = getQueryString('orderId');
+    const token = localStorage.getItem('id_token');
+
+    ajax({
+      url: url + "/services/1.0.0/execute/10805e03-afde-4a31-85d7-7cfead0705e5",
+      type: "get",
+      data: {
+        order_id: id,
+        token: token
+      },        //请求参数
+      dataType: "json",
+      success: function (res) {
+
+        var data = JSON.parse(res)
+        if (tag === 1) {
+          document.getElementById("total_price").innerHTML = data.data.total_price;
+          document.getElementById("time").innerHTML = dateForm(data.data.create_time);
+          document.getElementById("orderId").innerHTML = data.data.order_no;
+        }
+
+        if (data.data.status === 30 || data.data.status === '30') {
+          window.opener = null;
+          window.open('', '_self');
+          window.close();
+
+        }
+
+
+        setTimeout(function () {
+          initOrder(path, 2);
+        }, 3000);
+      },
+      fail: function (status) {
+      }
+    });
+
+  }
+
+
+  function showJson() {
+    var test;
+    if (window.XMLHttpRequest) {
+      test = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+      test = new window.ActiveXObject();
+    } else {
+      alert("请升级至最新版本的浏览器");
+    }
+    if (test != null) {
+      test.open("GET", "../config/config.json", true);
+      test.send(null);
+      test.onreadystatechange = function () {
+        if (test.readyState == 4 && test.status == 200) {
+          var obj = JSON.parse(test.responseText);
+          path = obj.showMap;
+          // path = 'http://localhost:4200';
+          initOrder(path, 1);
+        }
+      };
+
+    }
+  }
+
+  function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+  }
+
+  function ajax(options) {
+    options = options || {};
+    options.type = (options.type || "GET").toUpperCase();
+    options.dataType = options.dataType || "json";
+    var params = formatParams(options.data);
+
+    //创建 - 非IE6 - 第一步
+    if (window.XMLHttpRequest) {
+      var xhr = new XMLHttpRequest();
+    } else { //IE6及其以下版本浏览器
+      var xhr = new ActiveXObject('Microsoft.XMLHTTP');
+    }
+
+    //接收 - 第三步
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        var status = xhr.status;
+        if (status >= 200 && status < 300) {
+          options.success && options.success(xhr.responseText, xhr.responseXML);
+        } else {
+          options.fail && options.fail(status);
+        }
+      }
+    }
+
+    //连接 和 发送 - 第二步
+    if (options.type == "GET") {
+      xhr.open("GET", options.url + "?" + params, true);
+      xhr.send(null);
+    } else if (options.type == "POST") {
+      xhr.open("POST", options.url, true);
+      //设置表单提交时的内容类型
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.send(params);
+    }
+  }
+
+  //格式化参数
+  function formatParams(data) {
+    var arr = [];
+    for (var name in data) {
+      arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(data[name]));
+    }
+    arr.push(("v=" + Math.random()).replace(".", ""));
+    return arr.join("&");
+  }
+
+
+  function dateForm(time) {
+    var time = new Date(time * 1000);
+    // commonTime = unixTimestamp.toLocaleString();
+    return time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate() + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
+  }
+
+</script>

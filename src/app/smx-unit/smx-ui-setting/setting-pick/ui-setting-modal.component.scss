@@ -1,0 +1,166 @@
+.ui-setting {
+  .left {
+    width: 100px;
+    border: 1px solid #ccc;
+    text-align: center;
+    display: inline-block;
+  }
+
+  .right {
+    width: calc(100% - 100px);
+    text-align: center;
+    border: 1px solid #ccc;
+    border-left: 0;
+    display: inline-block;
+  }
+
+  &-header {
+    width: 100%;
+
+    &-left {
+      @extend .left;
+    }
+
+    &-right {
+      @extend .right;
+    }
+  }
+
+  &-body {
+    width: 100%;
+    //max-height: 200px;
+    //overflow: hidden;
+
+    &-left {
+      @extend .left;
+      border-top: 0 !important;
+      height: 300px;
+      overflow-y: auto;
+    }
+
+    //&-left::-webkit-scrollbar {
+    //  width: 1px;
+    //  height: 5px;
+    //}
+
+    &-right {
+      @extend .right;
+      border-top: 0 !important;
+      position: relative;
+      //padding: 5px;
+      height: 300px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      text-align: left;
+      padding: 5px;
+
+      &-li {
+        margin: 5px 0;
+
+        & .label {
+          display: inline-block;
+          width: 100px;
+        }
+
+        & .component {
+          display: inline-block;
+          width: 230px;
+
+          i {
+            position: absolute;
+            //right: 10px;
+            right: 0px;
+            line-height: 30px;
+          }
+        }
+
+
+        & .ck {
+          margin-right: 5px;
+        }
+
+        & .html {
+          height: 100%;
+
+          i {
+            line-height: 200px;
+          }
+        }
+      }
+
+
+    }
+  }
+
+  &-ul {
+    list-style: none;
+
+
+
+    li, span {
+      cursor: pointer;
+      padding: 5px 0;
+    }
+
+    li:hover {
+      background: #ccc;
+    }
+  }
+
+  //&-panel {
+  //
+  //  &-dt {
+  //    ul {
+  //      border: 1px solid #ccc;
+  //      text-align: center;
+  //    }
+  //
+  //  }
+  //
+  //  &-text {
+  //    &-h {
+  //      position: relative;
+  //      height: 20px;
+  //
+  //      i {
+  //        position: absolute;
+  //      }
+  //    }
+  //
+  //    &-b {
+  //      padding: 5px;
+  //      height: 200px;
+  //      overflow-y: auto;
+  //      border: 1px solid #ccc;
+  //      text-align: left;
+  //
+  //      li {
+  //        padding-left: 10px;
+  //        position: relative;
+  //
+  //        i {
+  //          position: absolute;
+  //          display: none;
+  //        }
+  //      }
+  //
+  //      li:hover {
+  //        i {
+  //          display: inline-block;
+  //          line-height: 20px;
+  //        }
+  //      }
+  //    }
+  //
+  //  }
+  //}
+
+  &-checked {
+    background: #0ab1f7;
+
+    &:hover {
+      background: #0ab1f7 !important;
+    }
+  }
+
+}

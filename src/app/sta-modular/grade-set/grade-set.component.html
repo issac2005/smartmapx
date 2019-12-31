@@ -1,0 +1,202 @@
+<div class="gradeSet">
+    <div class="row" style="border-bottom: 1px solid #ccc">
+        <div class="col-md-12">分段区间</div>
+    </div>
+    <!--________________________-->
+    <div *ngIf="config.componentType === 1">
+
+        <div class="row">
+            <div class="col-md-2">
+                <div>{{config.title[0]}}</div>
+            </div>
+            <div class="col-md-3">
+                <div style="margin-left: -4px">{{config.title[1]}}</div>
+            </div>
+            <div class="col-md-3">
+                <div>{{config.title[2]}}</div>
+            </div>
+            <div class="col-md-4">
+                <div>{{config.title[3]}}</div>
+            </div>
+        </div>
+        <div *ngIf="fieldType === 'text'">
+            <div class="row" *ngFor="let item of style.metadata.statistics.layer_info[0]; index as i">
+                <div class="col-md-2">
+                    <div style="line-height: 26px; text-align: center;margin-top: -4px">
+                        <input type="checkbox" class="smx-checkbox" (click)="checkbox($event, i)"
+                               [checked]="style.metadata.statistics.layer_info[2][i]">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <input type="text"
+                           [(ngModel)]="item[0]"
+                           (change)="fieldChange(1)"
+                           class="form-control form-control-xs"
+                           style="margin-left: -15px; width: 60px;text-align: center"/>
+                </div>
+                <div class="col-md-3">
+                    <div style="border: 2px solid #dde4ec; width: 74px;margin-left: -20px;padding-left: 10px">
+                        <!--<input type="text"
+                               [(colorPicker)]="item[1]"
+                               [value]="item[1]"
+                               [cpOutputFormat]="'hex'"
+                               (colorPickerChange)="fieldChange(1)"
+                               [style.background]="item[1]"
+                               [cpPositionRelativeToArrow]="false"
+                               class="form-control form-control-xs sta-text-border"
+                               style="margin-left: -10px; height: 20px; width: 70px"/>-->
+                      <smart-color [(color)]="item[1]"
+                                   [background]="true"
+                                   [cpOutputFormat]="'hex'"
+                                   style="display: inline-block;margin-left: -10px"
+                                   [inputStyle]="{'height':'20px', 'width': '70px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0'}"
+                                   (onChangeComplete)="fieldChange(1)">
+                      </smart-color>
+                    </div>
+                </div>
+                <div *ngIf="style.type !== 'fill'" class="col-md-4">
+                    <smx-slider2 [(ngModel)]="style.metadata.statistics.layer_info[1][i][1]" (onSlideEnd)="fieldChange(0)"
+                              [min]="0" [max]="50" class="p-slides"></smx-slider2>
+                    {{style.metadata.statistics.layer_info[1][i][1]}}
+                </div>
+                <div *ngIf="style.type === 'fill'" class="col-md-4">
+                    <div style="border: 2px solid #dde4ec; width: 64px;margin-left: -8px;padding-left: 10px">
+                      <smart-color [(color)]="style.metadata.statistics.layer_info[1][i][1]"
+                                   [background]="true"
+                                   [cpOutputFormat]="'hex'"
+                                   style="display: inline-block;margin-left: -10px"
+                                   [inputStyle]="{'height':'20px', 'width': '60px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0'}"
+                                   (onChangeComplete)="fieldChange(0)">
+                      </smart-color>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="fieldType === 'number'">
+            <div class="row" *ngFor="let item of style.metadata.statistics.layer_info[0]; index as i">
+                <div class="col-md-2">
+                    <div style="line-height: 26px; text-align: center;margin-top: -4px">
+                        <input type="checkbox" class="smx-checkbox" (click)="checkbox($event, i)"
+                               [checked]="style.metadata.statistics.layer_info[2][i]">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <input type="number"
+                           [(ngModel)]="item[0]"
+                           (change)="gradeCommon(i)"
+                           class="form-control form-control-xs"
+                           style="margin-left: -15px; width: 60px;text-align: center"/>
+                </div>
+                <div class="col-md-3">
+                    <div style="border: 2px solid #dde4ec; width: 74px;margin-left: -20px;padding-left: 10px">
+                      <smart-color [(color)]="item[1]"
+                                   [background]="true"
+                                   [cpOutputFormat]="'hex'"
+                                   style="display: inline-block;margin-left: -10px"
+                                   [inputStyle]="{'height':'20px', 'width': '70px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0'}"
+                                   (onChangeComplete)="gradeCommon(i)">
+                      </smart-color>
+                    </div>
+                </div>
+                <div *ngIf="style.type !== 'fill'" class="col-md-4">
+                    <smx-slider2 [(ngModel)]="style.metadata.statistics.layer_info[1][i][1]" [animate]="true" (onChange)="gradeCommon(i)"
+                              [min]="0" [max]="50" class="p-slides"></smx-slider2>
+                    {{style.metadata.statistics.layer_info[1][i][1]}}
+                </div>
+                <div *ngIf="style.type === 'fill'" class="col-md-4">
+                    <div style="border: 2px solid #dde4ec; width: 64px;margin-left: -8px;padding-left: 10px">
+                      <smart-color [(color)]="style.metadata.statistics.layer_info[1][i][1]"
+                                   [background]="true"
+                                   [cpOutputFormat]="'hex'"
+                                   style="display: inline-block;margin-left: -10px"
+                                   [inputStyle]="{'height':'20px', 'width': '60px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0'}"
+                                   (onChangeComplete)="gradeCommon(i)">
+                      </smart-color>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="staType !== '05e20d72-c000-4f59-af97-8adb31bcc522' && (fieldType === 'text' || style.metadata.statistics.RenderType !== 'exponential')">
+            <div class="col-md-2">
+                <div style="line-height: 26px; text-align: center">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div style="line-height: 26px; margin-left: -3px">其它值</div>
+            </div>
+            <div class="col-md-3">
+                <div style="border: 2px solid #dde4ec; width: 74px;margin-left: -20px;padding-left: 10px">
+                  <smart-color [(color)]="style.metadata.statistics.otherValue[0]"
+                               [background]="true"
+                               [cpOutputFormat]="'hex'"
+                               style="display: inline-block;margin-left: -10px"
+                               [inputStyle]="{'height':'20px', 'width': '70px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0'}"
+                               (onChangeComplete)="otherChange()">
+                  </smart-color>
+                </div>
+            </div>
+            <div *ngIf="style.type !== 'fill'" class="col-md-4">
+                <smx-slider2 [(ngModel)]="style.metadata.statistics.otherValue[1]" (onSlideEnd)="otherChange()" [min]="0"
+                          [max]="50" class="p-slides"></smx-slider2>
+                {{style.metadata.statistics.otherValue[1]}}
+            </div>
+            <div *ngIf="style.type === 'fill'" class="col-md-4">
+                <div style="border: 2px solid #dde4ec; width: 64px;margin-left: -8px;padding-left: 10px">
+                  <smart-color [(color)]="style.metadata.statistics.otherValue[2]"
+                               [background]="true"
+                               [cpOutputFormat]="'hex'"
+                               style="display: inline-block;margin-left: -10px"
+                               [inputStyle]="{'height':'20px', 'width': '60px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0'}"
+                               (onChangeComplete)="otherChange()">
+                  </smart-color>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--___________热力图_____________-->
+    <div *ngIf="config.componentType === 2">
+        <div class="row">
+            <div class="col-md-4">
+                <div style="text-align: center">分段值</div>
+            </div>
+            <div class="col-md-4">
+                <div style="text-align: center">权重</div>
+            </div>
+            <div class="col-md-4">
+                <div (click)="clicks()" style="text-align: center">填充色</div>
+            </div>
+        </div>
+        <div class="row" *ngFor="let item of style.metadata.statistics.layer_info[0]; index as i">
+
+            <div class="col-md-4">
+                <div>
+                    <input type="number"
+                           [(ngModel)]="style.metadata.statistics.layer_info[1][i][0]"
+                           (change)="weightChange()"
+                           [disabled]="style.metadata.statistics.nofield === 'noField'"
+                           class="form-control form-control-xs" style="width: 70px;text-align:center"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <input type="number"
+                           [(ngModel)]="item[0]"
+                           (change)="colorChange()"
+                           (keyup)="colorCommon(i)"
+                           class="form-control form-control-xs" style="width: 70px;text-align:center"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div style="border: 2px solid #dde4ec; width: 70px;padding-left: 10px">
+                  <smart-color [(color)]="item[1]"
+                               [background]="true"
+                               [cpOutputFormat]="'hex'"
+                               style="display: inline-block;margin-left: -10px"
+                               [inputStyle]="{'height':'20px', 'width': '66px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0'}"
+                               (onChangeComplete)="colorChange()">
+                  </smart-color>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

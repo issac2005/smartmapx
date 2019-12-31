@@ -1,0 +1,83 @@
+{
+  "group": [
+    {
+      "title": "搜索小程序",
+      "description": "定位地点及相关信息",
+      "type": "object",
+      "modal": "angular",
+      "properties": [
+        {
+          "attribute": "lng",
+          "title": "经度标题名",
+          "description": "经度的标题名称",
+          "type": "string",
+          "default": "100.4231034823"
+        },
+        {
+          "attribute": "color",
+          "title": "颜色",
+          "type": "string",
+          "default": "rgba(164, 198, 224, 1)"
+        },
+        {
+          "attribute": "opacity",
+          "title": "透明度",
+          "type": "number",
+          "default": 0.45
+        },
+        {
+          "attribute": "fill-outline-color",
+          "title": "边框颜色",
+          "type": "string",
+          "default": "rgba(40, 60, 224, 1)"
+        },
+        {
+          "attribute": "line-width",
+          "title": "边框宽度",
+          "type": "number",
+          "default": 2
+        }
+      ]
+    },
+    {
+      "title": "第二个面板",
+      "description": "第二条信息",
+      "type": "object",
+      "modal": "angular",
+      "properties": [
+        {
+          "attribute": "lng",
+          "title": "经度标题名",
+          "description": "经度的标题名称",
+          "type": "string",
+          "default": "100.4231034823"
+        },
+        {
+          "attribute": "color",
+          "title": "颜色",
+          "type": "string",
+          "default": "rgba(164, 198, 224, 1)"
+        },
+        {
+          "attribute": "opacity",
+          "title": "透明度",
+          "type": "number",
+          "default": 0.45
+        },
+        {
+          "attribute": "fill-outline-color",
+          "title": "边框颜色",
+          "type": "string",
+          "default": "rgba(40, 60, 224, 1)"
+        },
+        {
+          "attribute": "line-width",
+          "title": "边框宽度",
+          "type": "number",
+          "default": 2
+        }
+      ]
+    }
+  ]
+}
+

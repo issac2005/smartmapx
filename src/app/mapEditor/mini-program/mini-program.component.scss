@@ -1,0 +1,286 @@
+@mixin rotate($deg) {
+  transform: $deg;
+  -webkit-transform: $deg;
+  -o-transform: $deg;
+  -moz-transform: $deg;
+}
+
+.minProCont {
+  width: 220px;
+  height: calc(100% - 70px);
+  background: #f4f7fb;
+  position: absolute;
+  z-index: 10;
+
+  .minProgramList {
+    height: calc(100% - 31px);
+    overflow: hidden;
+
+    &:hover {
+      overflow-y: auto;
+    }
+  }
+}
+
+.minProTitle {
+  height: 32px;
+  line-height: 32px;
+  padding-left: 24px;
+  color: #fff;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: #3b8cd0;
+}
+
+.addProgram, .saveProgram {
+  float: right;
+  height: 24px;
+  line-height: 24px;
+  margin: 4px 5px 0 0;
+  padding: 0 8px;
+  font-size: 14px;
+  color: #fff;
+  border-radius: 3px;
+  background: #065fa9;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  .fa {
+    margin-right: 5px;
+  }
+}
+
+.saveProgram {
+  margin-top: 3px;
+}
+
+ul.programList li {
+  height: 32px;
+  line-height: 32px;
+  padding-left: 10px;
+  padding-right: 14px;
+  font-size: 12px;
+  color: #273d56;
+  border-bottom: 1px solid #e8edef;
+  background: #f4f7fb;
+  overflow: hidden;
+  cursor: pointer;
+
+  .programIcon {
+    display: inline-block;
+    width: 20px;
+    height: 30px;
+    margin-bottom: 4px;
+    vertical-align: middle;
+    background-image: url(/assets/img/sprites.png);
+    background-repeat: no-repeat;
+  }
+
+  .type1 {
+    background-position: -141px -227px
+  }
+
+  .type2 {
+    background-position: -201px -227px
+  }
+
+  .type3 {
+    background-position: -111px -227px
+  }
+
+  .type4 {
+    background-position: -170px -227px
+  }
+
+  .btnGroup {
+    display: none;
+    float: right;
+
+    .hide {
+      display: none;
+    }
+
+    span {
+      display: inline-block;
+      width: 22px;
+      height: 10px;
+      border-radius: 5px;
+      vertical-align: middle;
+      background: #afb2b3;
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 1px;
+        left: 2px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #fff;
+      }
+    }
+
+    .enable {
+      background: #0ab1f7;
+
+      &:after {
+        left: 12px;
+      }
+    }
+
+    .fa {
+      color: #999;
+
+      &:hover {
+        color: #333;
+      }
+    }
+  }
+
+  img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .title {
+    display: inline-block;
+    padding-left: 5px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+
+    .name {
+      font-size: 12px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: inline-block;
+      max-width: 80%;
+      position: absolute;
+    }
+  }
+
+  &:hover {
+    background: #e8edef;
+
+    .title {
+      //width: 135px;
+      //white-space: nowrap;
+      //text-overflow: ellipsis;
+
+      .name {
+        //font-size: 12px;
+        //white-space: nowrap;
+        //text-overflow: ellipsis;
+        //overflow: hidden;
+        //display: inline-block;
+        max-width: 50%;
+        //position: absolute;
+      }
+    }
+
+    .btnGroup {
+      display: block;
+    }
+  }
+}
+
+ul.programList li.on {
+  background: #e8edef;
+
+  .btnGroup {
+    display: block;
+  }
+}
+
+.programPreview {
+  width: 300px;
+  height: 100%;
+  border-left: 1px solid #ccc;
+  position: absolute;
+  top: 0;
+  left: -315px;
+  border-right: 1px solid #ccc;
+  background: #f4f7fb;
+  box-sizing: border-box;
+  z-index: 2;
+  -webkit-transition: all .6s;
+
+  .programCover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    color: #273D56;
+    text-align: center;
+    background: rgba(244, 247, 251, 0.7);
+    z-index: 99999;
+
+    span {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+  }
+
+  .previewTitle {
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px 0 15px;
+    color: #273D56;
+    background: #e7ecee;
+    overflow: hidden;
+  }
+
+  .row {
+    margin: 0 !important;
+  }
+}
+
+.jsonContainer {
+  height: calc(100% - 30px);
+  padding: 5px;
+  overflow: auto;
+}
+
+.programPreview.open {
+  left: 220px;
+}
+
+.programPreview {
+  .slideBtn {
+    position: absolute;
+    right: -18px;
+    width: 18px;
+    height: 100px;
+    line-height: 100px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    border: 0;
+    top: 60%;
+    z-index: 999;
+    background: url(/assets/img/sprites.png) no-repeat -366px -180px;
+
+  }
+
+  .slideBtn.left {
+    background: url(/assets/img/sprites.png) no-repeat -398px -180px;
+  }
+}
+
+.previewWrap {
+  height: calc(100% - 30px);
+  overflow-y: auto;
+  padding-top: 10px;
+}
+
+
+

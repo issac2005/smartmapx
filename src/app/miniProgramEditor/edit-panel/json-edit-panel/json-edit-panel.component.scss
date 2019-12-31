@@ -1,0 +1,78 @@
+@mixin rotate($deg) {
+  transform: $deg;
+  -webkit-transform: $deg;
+  -moz-transform: $deg;
+  -o-transform: $deg;
+}
+
+//.jsonEditCont {
+//  height: 100%;
+//}
+
+//.jsonEditor {
+//  height: calc(100% - 30px);
+//  overflow-y: auto;
+//}
+
+.saveBar {
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  color: #333;
+  padding: 0 10px;
+  text-align: right;
+  background: #e7ecee;
+  overflow: hidden;
+
+  button{
+    border:none;
+    background: none;
+  }
+
+  span.show {
+    display: inline-block;
+    font-size: 14px;
+    color: #3aa4fc;
+    float: left;
+    margin-left: 20px;
+  }
+}
+
+.saveBar .fa {
+  font-size: 20px;
+  margin-right: 5px;
+  color: #3aa4fc;
+  cursor: pointer;
+}
+
+
+.jsonWrap {
+  height: 100%;
+  transition: all 0.3s;
+  position: relative;
+
+}
+
+.jsonWrap.fullScreen {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 99999;
+  transition: all 0.3s;
+}
+
+.jsondiv {
+  position: relative;
+  height: calc(100% - 30px);
+  width: 100%;
+}
+
+#jsonEditor {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}

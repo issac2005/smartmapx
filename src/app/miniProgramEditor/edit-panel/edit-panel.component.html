@@ -1,0 +1,25 @@
+<div class="editPanel">
+  <div class="editPanelTitle">
+    <span class="back" (click)="back()"></span>
+    <span class="miniProgramTitle" title="{{title}}">{{title}}</span>
+    <div class="versionInfo" *ngIf="version" >
+      <span class="versionStatus" *ngIf="JSedit?.jsStatus === 'changed' || JsonEdit?.jsonStatus === 'changed' || Resource?.resoruceStatus === 'changed'"></span>
+      <i class="version" title="{{version}}">当前版本: {{version}}</i>
+      <span class="versionIcon" title="版本设置" (click)="openVersionModal()"></span>
+    </div>
+  </div>
+  <div class="editTab">
+    <button *ngIf="isEdit" (click)="perform()" [disabled]="mapLoaded"><i class="fa fa-play-circle-o"></i>运行</button>
+    <ul class="editList">
+      <li *ngFor="let v of tabTitle;let i = index" [ngClass]="{'on': i === oind}" (click)="liClick(i)"><a routerLinkActive="active">{{v.name}}</a></li>
+    </ul>
+  </div>
+  <div class="editCont">
+    <app-js-edit-panel  [index]="oind" [ngStyle]="{'display':oind === 0? 'unset':'none'}" [dataInfo]="dataInfo" (event)="setFullScreen($event)"></app-js-edit-panel>
+    <app-json-edit-panel [index]="oind" [ngStyle]="{'display':oind === 1? 'unset':'none'}" [dataInfo]="dataInfo" (event)="setFullScreen($event)" [mapObj]="mapObj" (send)="listenChild()"></app-json-edit-panel>
+    <app-source-panel [index]="oind" [hidden]="oind !== 2"  [dataInfo]="dataInfo"></app-source-panel>
+    <app-setting-panel [index]="oind" [hidden]="oind !== 3" [dataInfo]="dataInfo" [mapObj]="mapObj" (sendJsonEditorData)="receiveJsonEditorData()" (sendJsonChange)="receiveJsonChange()"
+(valueChange)="receiveJsonChange()"
+    ></app-setting-panel>
+  </div>
+</div>

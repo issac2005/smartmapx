@@ -1,0 +1,194 @@
+<div class="ui-setting">
+  <div class="smx-modal-header">
+    <h4 class="modal-title">{{smxConfig.title}}</h4>
+    <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+  </div>
+  <div class="smx-modal-body" style="width: 550px;height: 380px;">
+    <div *ngIf="uiComponents">
+      <div class="ui-setting-header">
+        <div class="ui-setting-header-left">类型</div>
+        <div class="ui-setting-header-right">控件设置</div>
+      </div>
+      <div class="ui-setting-body">
+        <div class="ui-setting-body-left">
+          <ul class="ui-setting-ul">
+            <ng-container *ngFor="let v of uiComponents">
+              <li (click)="checkcomponent(v)" [ngClass]="{'ui-setting-checked': v.baseid === componentId}">
+                <span>{{v.item_name}}</span>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="ui-setting-body-right" style="text-align: left">
+          <ng-container *ngFor="let v of controls">
+            <div class="ui-setting-body-right-li">
+
+              <div nz-row nzType="flex" nzAlign="middle">
+                <div nz-col nzSpan="1">
+                  <input class="ck" type="radio" (change)="checkControl($event)" [value]="v.baseid"
+                         [checked]="component_id === v.baseid">
+                </div>
+                <div nz-col nzSpan="7">
+                  <span class="label">{{v.item_name}}:</span>
+                </div>
+                <div nz-col nzSpan="16">
+                  <!--              文本输入框-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_input_text'">
+                    <div class="component input">
+                      <smx-input [(ngModel)]="defaultText"></smx-input>
+                    </div>
+                  </ng-container>
+
+                  <!--              下拉列表框-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_select_text'">
+                    <div class="component select">
+                      <smx-select [options]="controlConfig?.options"
+                                  [smxLabelMode]="false"></smx-select>
+                      <i class="smx-icon icon-Setting" (click)="openSetPanel('text')"></i>
+                    </div>
+                  </ng-container>
+
+                  <!--              多行文本-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_textarea_text'">
+                    <div class="component textarea">
+                      <smx-input [smxMode]="'textarea'" [(ngModel)]="defaultTextarea"></smx-input>
+                    </div>
+                  </ng-container>
+
+                  <!--              html-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_html_text'">
+                    <div class="component html">
+                      <smx-editor
+                        [(ngModel)]="defaultHtml"
+                        [mode]="'html'"
+                        [smxFontSize]="12"
+                        [smxStyle]="{height:'150px'}">
+                      </smx-editor>
+                    </div>
+                  </ng-container>
+
+                  <!--              多选下拉框-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_select_json'">
+                    <div class="component input-select">
+                      <smx-select-checkbox
+                        [options]="controlConfig?.options"
+                        [smxLabelMode]="false">
+                      </smx-select-checkbox>
+                      <i class="smx-icon icon-Setting" (click)="openSetPanel('text')"></i>
+                    </div>
+                  </ng-container>
+
+                  <!--              数值输入框(整数)-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_input_integer'">
+                    <div class="component select">
+                      <smx-input-number
+                        *ngIf="!hiddenDT"
+                        [smxPlaceholder]="'数字输入框(整数)'"
+                        [smxStep]="controlConfig?.smxStep"
+                        [smxThousands]="controlConfig?.smxThousands"
+                        [smxPrecision]="controlConfig?.smxPrecision">
+                      </smx-input-number>
+                      <i class="smx-icon icon-Setting" (click)="openSetPanel('integer')"></i>
+                    </div>
+                  </ng-container>
+
+                  <!--              数值输入框(浮点)-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_input_decimal'">
+                    <div class="component select">
+                      <smx-input-number
+                        *ngIf="!hiddenDT"
+                        [smxPlaceholder]="'数字输入框(小数)'"
+                        [smxDecimal]="true"
+                        [smxStep]="controlConfig?.smxStep"
+                        [smxThousands]="controlConfig?.smxThousands"
+                        [smxDecimalPrecision]="controlConfig?.smxDecimalPrecision"
+                        [smxPrecision]="controlConfig?.smxPrecision">
+                      </smx-input-number>
+                      <i class="smx-icon icon-Setting" (click)="openSetPanel('decimal')"></i>
+                    </div>
+                  </ng-container>
+
+                  <!--              下拉列表框(布尔)-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_select_boolean'">
+                    <div class="component select">
+                      <smx-select [ngModel]="true" [options]="controlConfig?.options"></smx-select>
+                      <i class="smx-icon icon-Setting" (click)="openSetPanel('boolean')"></i>
+                    </div>
+                  </ng-container>
+
+                  <!--              单选按钮-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_radio_boolean'">
+                    <div class="component radio">
+                      <smx-radio [ngModel]="true" [options]="controlConfig?.options"></smx-radio>
+                      <i class="smx-icon icon-Setting" (click)="openSetPanel('boolean')"></i>
+                    </div>
+                  </ng-container>
+
+                  <!--              开关-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_switch_boolean'">
+                    <div class="component select">
+                      <smx-switch *ngIf="!hiddenDT" [ngModel]="true"
+                                  [smxOptions]="controlConfig?.options"></smx-switch>
+                      <i class="smx-icon icon-Setting" (click)="openSetPanel('boolean')"></i>
+                    </div>
+                  </ng-container>
+
+                  <!--              时间-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_pick_time'">
+                    <div class="component dt">
+                      <smx-date-time-pick
+                        *ngIf="!hiddenDT"
+                        [mode]="'time'"
+                        [(ngModel)]="defaultDt"
+                        [smxFormat]="controlConfig?.smxFormat">
+                      </smx-date-time-pick>
+                      <i class="smx-icon icon-Setting" (click)="openSetPanel('time')"></i>
+                    </div>
+                  </ng-container>
+                  <!--              日期-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_pick_date'">
+                    <div class="component dt">
+                      <smx-date-time-pick
+                        *ngIf="!hiddenDT"
+                        [mode]="'date'"
+                        [(ngModel)]="defaultDt"
+                        [smxFormat]="controlConfig?.smxFormat">
+                      </smx-date-time-pick>
+                      <i class="smx-icon icon-Setting" (click)="openSetPanel('date')"></i>
+                    </div>
+                  </ng-container>
+                  <!--              时间日期-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_pick_datetime'">
+                    <div class="component dt">
+                      <smx-date-time-pick
+                        *ngIf="!hiddenDT"
+                        [mode]="'date-time'"
+                        [(ngModel)]="defaultDt"
+                        [smxFormat]="controlConfig?.smxFormat">
+                      </smx-date-time-pick>
+                      <i class="smx-icon icon-Setting" (click)="openSetPanel('date_time')"></i>
+                    </div>
+                  </ng-container>
+                  <!--              图片上传-->
+                  <ng-container *ngIf="v.baseid === 'fm_ui_image_upload'">
+                    <div class="component dt">
+                      <smx-upload [smxFile]="'image'" [smxMaxSize]="10"></smx-upload>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="smx-modal-footer">
+    <button class="smx-btn smx-outline-default smx-grid" type="button" (click)="activeModal.dismiss()">取消
+    </button>
+    <button class="smx-btn smx-default smx-grid" type="button" (click)="submit()"  id="smx-uiModal">确定
+    </button>
+  </div>
+</div>

@@ -1,0 +1,515 @@
+/**
+ * @author LLCN(KerferJu)
+ * @Date 2019/3/8 15:25
+ * @desc smartmapx主题样式
+ *
+ */
+.smx-btn {
+  display: inline-block;
+  padding: 0.25rem 1.35rem;
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: center;
+  outline: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.smx-default {
+  color: #ffffff;
+  background-color: $smx-color-defalut;
+
+  &:hover {
+    background-color: $smx-color-defalut-hover;
+  }
+
+  &:active {
+    background-color: $smx-color-defalut-active;
+  }
+
+  &[disabled] {
+    background-color: $smx-color-disabled;
+  }
+
+  &[disabled]:hover {
+    background-color: $smx-color-disabled;
+  }
+}
+
+.smx-outline-default {
+  color: $smx-color-defalut;
+  background-color: #ffffff;
+  border: 1px solid $smx-color-defalut !important;
+
+  &:hover {
+    color: #ffffff;
+    border: 1px solid $smx-color-defalut-hover !important;
+    background-color: $smx-color-defalut-hover;
+  }
+
+  &:active {
+    color: #ffffff;
+    border: 1px solid $smx-color-defalut-active !important;
+    background-color: $smx-color-defalut-active;
+  }
+
+  &:visited {
+    color: $smx-color-defalut;
+    background-color: #ffffff;
+    border: 1px solid $smx-color-defalut !important;
+  }
+
+  &[disabled]:hover {
+    color: $smx-color-defalut;
+    border: 1px solid $smx-color-defalut !important;
+    background-color: #ffffff;
+  }
+}
+
+.smx-lg {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 800;
+}
+
+.smx-sm {
+  padding: 0.25rem 1.35rem;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.smx-xs {
+  padding: 3px 5px;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+//.smx-xs {
+//  padding: 0.25rem 0.5rem;
+//  font-size: 0.5rem;
+//  line-height: 1.3;
+//}
+
+@mixin smx-grid($value1, $value2) {
+  　　　　padding: $value1 $value2;
+}
+
+.smx-grid {
+  padding: 0.25rem 1.85rem;
+}
+
+.smx-btn[disabled] {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+
+/*————————————————————输入框2——————————————————————————*/
+.smx-control {
+  display: block;
+  width: 100%;
+  height: 1.8rem;
+  font-size: 0.75rem;
+  line-height: 1.42857143;
+  color: #555;
+  padding-left: 5px;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ced4da;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+
+  &:focus {
+    border-color: #66afe9;
+    outline: none !important;
+  }
+
+  &[disabled], &[readonly] {
+    cursor: not-allowed;
+    background-color: #f5f5f5;
+    opacity: 1;
+    color: rgba(0, 0, 0, .33);
+  }
+
+  option {
+    padding: 0.2rem 0;
+  }
+}
+
+textarea.smx-control {
+  height: auto;
+  /*padding: 0.3rem 0.6rem;*/
+}
+
+select {
+  cursor: pointer;
+}
+
+/*select {
+  !*Chrome和Firefox里面的边框是不一样的，所以复写了一下*!
+  border: solid 1px #000;
+  !*很关键：将默认的select选择框样式清除*!
+  appearance:none;
+  -moz-appearance:none;
+  -webkit-appearance:none;
+
+  padding-right: 14px;
+}*/
+
+
+/*————————————————————————————————复选框3————————————————————————————————————*/
+
+.smx-checkbox {
+  appearance: none;
+  position: relative;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  vertical-align: -0.8rem;
+  transition: all .15s ease-out 0s;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin: .4rem;
+  outline: none;
+  border-radius: 10%;
+  border: 2px solid $smx-table-checkbox;
+
+  &:before {
+    position: absolute;
+    left: 2px;
+    top: 6px;
+    width: 0;
+    height: 2px;
+    content: "";
+    background: #fff;
+    transition: all .2s ease-in-out;
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    position: absolute;
+    right: 9px;
+    bottom: 3px;
+    width: 2px;
+    height: 0;
+    content: "";
+    background: #fff;
+    //transition: all .2s ease-in-out;
+    transform: rotate(40deg);
+    -webkit-transform: rotate(40deg);
+    -moz-transform: rotate(40deg);
+    -ms-transform: rotate(40deg);
+    -o-transform: rotate(40deg);
+    //transition-delay: .2s;
+  }
+
+  &:checked:before {
+    left: 0px;
+    top: 7px;
+    width: 5px;
+    height: 2px;
+  }
+
+  &:checked:after {
+    right: 3px;
+    bottom: 1px;
+    width: 2px;
+    height: 9px;
+  }
+
+  &:indeterminate:before, &:indeterminate:after {
+    width: 7px;
+    height: 2px;
+    transform: rotate(0);
+  }
+
+  &:indeterminate:before {
+    left: 1px;
+    top: 7px;
+  }
+
+  &:indeterminate:after {
+    right: 1px;
+    bottom: 7px;
+  }
+
+  &:checked, &:indeterminate {
+    background: $smx-color-defalut;
+    border: 2px solid $smx-color-defalut;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+/*————————————————————————————单选框4————————————————————————————————*/
+.smx-radio {
+  appearance: none;
+  position: relative;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  vertical-align: -0.6rem;
+  transition: all .15s ease-out 0s;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin: .4rem;
+  outline: none;
+  border-radius: 50%;
+  border: 1px solid $smx-color-defalut;
+
+  &:checked:before {
+    transform: scale(1);
+    background: $smx-color-defalut;
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin: 2px;
+    transform: scale(0);
+    transition: all ease-out 250ms;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.smx-check-lg {
+  height: 20px;
+  width: 20px;
+
+  &:checked:before {
+    left: 1px;
+    top: 10px;
+    width: 6px;
+    height: 2px;
+  }
+
+  &:checked:after {
+    right: 5px;
+    bottom: 1px;
+    width: 2px;
+    height: 14px;
+  }
+}
+
+.smx-radio-lg {
+  height: 20px;
+  width: 20px;
+
+  &:before {
+    width: 10px;
+    height: 10px;
+    margin: 3px;
+  }
+}
+
+.smx-checkbox.green, .smx-radio.green {
+  border: 2px solid #4caf50;
+}
+
+.smx-checkbox.green:checked, .smx-checkbox.green:indeterminate, .smx-radio.green:checked:before {
+  background: #4caf50;
+}
+
+.smx-checkbox.red, .smx-radio.red {
+  border: 2px solid #f44336;
+}
+
+.smx-checkbox.red:checked, .smx-checkbox.red:indeterminate, .smx-radio.red:checked:before {
+  background: #f44336;
+}
+
+.smx-checkbox.orange, .smx-radio.orange {
+  border: 2px solid #ffc107;
+}
+
+.smx-checkbox.orange:checked, .smx-checkbox.orange:indeterminate, .smx-radio.orange:checked:before {
+  background: #ffc107;
+}
+
+/*.table-hover tbody tr:hover {
+  background-color: #e7fcff;
+}*/
+/*————————————————————表格5——————————————————————————————*/
+.smx-table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  border-spacing: 0;
+  border-collapse: collapse;
+  background-color: transparent;
+
+  thead {
+    tr {
+      th {
+        padding: 8px;
+        line-height: 1.42;
+        vertical-align: bottom;
+        border-bottom: 2px solid #ddd;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        padding: 8px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+      }
+    }
+  }
+}
+
+.smx-table-border {
+  thead {
+    tr {
+      td {
+        border: 1px solid #ddd;
+        border-bottom-width: 2px;
+      }
+
+      th {
+        @extend td;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        border: 1px solid #ddd;
+      }
+
+      th {
+        @extend td;
+      }
+    }
+  }
+}
+
+.smx-table-hover {
+  tbody {
+    tr:hover {
+      background-color: #e7fcff;
+    }
+  }
+}
+
+.smx-table-center {
+  th {
+    text-align: center;
+  }
+
+  td {
+    text-align: center;
+  }
+}
+
+.table-hover tbody tr:hover {
+  background: rgb(231, 252, 255);
+}
+
+/*________图标6___________*/
+.smx-icon-pen {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url($icon-pen) no-repeat; //图片现在背景是base64的形式，后续更改为splite 形式定位的图标
+}
+
+.smx-icon-output {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: url($icon-output) no-repeat;
+  vertical-align: -4px;
+}
+
+.smx-rotate {
+  transform: rotate(360deg);
+  transition: 2s;
+}
+
+.toast-wrap {
+  width: 470px;
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  z-index: 999999;
+}
+
+.toast-info {
+  width: 470px;
+  height: 46px;
+  margin-left: -235px;
+  margin-bottom: 10px;
+  padding: 0.75rem 1.25rem;
+  color: #ffc107;
+  border: 0px;
+  background: #fff;
+  box-shadow: 1px 1px 3px rgba(100, 100, 100, 0.3);
+  -moz-box-shadow: 1px 1px 3px rgba(100, 100, 100, 0.3);
+  border-radius: 8px;
+  transition: all 0.6s;
+
+  &.hide {
+    margin-left: 300px;
+    opacity: 0;
+  }
+
+  i {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    vertical-align: text-bottom;
+    margin: auto 3px;
+    background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNTUzNzU4ODkxMDY4IiBjbGFzcz0iaWNvbiIgc3R5bGU9IiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI1NTQiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTUxMiAwQzIyOS43IDAgMCAyMjkuNyAwIDUxMmMwIDI4Mi4zIDIyOS43IDUxMiA1MTIgNTEyIDI4Mi4zIDAgNTEyLTIyOS43IDUxMi01MTJDMTAyNCAyMjkuNyA3OTQuMyAwIDUxMiAwek01MTMuOCAxOTAuM2MyOC4xIDIuNCA0My4zIDE2LjQgNDUuNyA0Mi4ybC0xMC41IDQzNS45Yy00LjcgMTguOC0xNi40IDI4LjEtMzUuMiAyOC4xLTE4LjggMC0zMC41LTkuMy0zNS4yLTI4LjFsLTEwLjUtNDM1LjlDNDcwLjQgMjA2LjcgNDg1LjYgMTkyLjcgNTEzLjggMTkwLjN6TTUxMC4yIDgzMy43Yy0zMC41LTIuNC00Ni45LTE3LjYtNDkuMi00NS43IDIuMy0zMi44IDE4LjctNTAuNCA0OS4yLTUyLjcgMzIuOCAyLjQgNTAuNCAxOS45IDUyLjcgNTIuN0M1NjMgODE4LjUgNTQ1LjQgODMzLjcgNTEwLjIgODMzLjd6IiBwLWlkPSIyNTU1IiBmaWxsPSIjZmZjMTA3Ij48L3BhdGg+PC9zdmc+DQo=");
+    background-size: 100% 100%;
+  }
+
+  span {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    position: relative;
+    top: -2px;
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNTUzNzYwMTM3MTQ2IiBjbGFzcz0iaWNvbiIgc3R5bGU9IiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI4MDciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTg4Ny4yIDc3NC4yIDYyNC44IDUxMC44bDI2My0yNjBjMTAuOC0xMC44IDEwLjgtMjguNCAwLTM5LjJsLTc0LjgtNzUuMmMtNS4yLTUuMi0xMi4yLTgtMTkuNi04LTcuNCAwLTE0LjQgMy0xOS42IDhMNTEyIDM5NS42IDI0OS44IDEzNi42Yy01LjItNS4yLTEyLjItOC0xOS42LTgtNy40IDAtMTQuNCAzLTE5LjYgOEwxMzYgMjExLjhjLTEwLjggMTAuOC0xMC44IDI4LjQgMCAzOS4ybDI2MyAyNjBMMTM2LjggNzc0LjJjLTUuMiA1LjItOC4yIDEyLjItOC4yIDE5LjYgMCA3LjQgMi44IDE0LjQgOC4yIDE5LjZsNzQuOCA3NS4yYzUuNCA1LjQgMTIuNCA4LjIgMTkuNiA4LjIgNyAwIDE0LjItMi42IDE5LjYtOC4yTDUxMiA2MjYuMmwyNjEuNCAyNjIuMmM1LjQgNS40IDEyLjQgOC4yIDE5LjYgOC4yIDcgMCAxNC4yLTIuNiAxOS42LTguMmw3NC44LTc1LjJjNS4yLTUuMiA4LjItMTIuMiA4LjItMTkuNkM4OTUuNCA3ODYuNCA4OTIuNCA3NzkuNCA4ODcuMiA3NzQuMnoiIHAtaWQ9IjI4MDgiIGZpbGw9IiMyYzJjMmMiPjwvcGF0aD48L3N2Zz4=");
+    background-size: 100% 100%;
+    cursor: pointer;
+  }
+
+}

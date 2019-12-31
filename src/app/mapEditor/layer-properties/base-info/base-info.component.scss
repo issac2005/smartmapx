@@ -1,0 +1,102 @@
+.container-fluid {
+    font-size: 12px;
+    font-family: '微软雅黑';
+}
+.com-beyond{
+    cursor: help;
+}
+.base-info {
+    //.imgPosition {
+    //    width:24px;
+    //    height:24px;
+    //    position:absolute;
+    //    top:1px;
+    //    left:5px;
+    //    display:inline-block;
+    //    background: url("../../../../assets/img/sprite2@2x.png") 0 0 no-repeat;
+    //    /*background-position: -15px -15px;*/
+    //}
+    //.imgPosition1 {
+    //    width:24px;
+    //    height:24px;
+    //    vertical-align:middle;
+    //    display:inline-block;
+    //    background: url("../../../../assets/img/sprite2@2x.png") 0 0 no-repeat;
+    //    /*background-position: -15px -15px;*/
+    //}
+    .ui-dropdown-items-wrapper {
+        max-width: 125px;
+    }
+    .btn-xs {
+        padding: 0.15rem 0.28rem;
+        font-size: 0.575rem;
+        line-height: 1.4;
+        border-radius: 3px;
+        height: 24px;
+        width: 64px;
+        position: relative;
+        margin-right: 14px;
+    }
+    .form-control-xs {
+        padding: 0.10rem 0.5rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        border-radius: 0.2rem;
+        height: 26.19px;
+    }
+    textarea{
+        width:285px;
+        height:350px;
+        outline:none;
+        resize:none;
+        background-attachment:fixed;
+        background-repeat:no-repeat;
+        border-style:solid;
+        border-color:#F4F7FB;
+        color: #8f9d6a;
+        background-color:#F4F7FB;
+    }
+    .beyond {
+        height: 26.19px;
+        width: 90px;
+        text-align: left;
+        font-size: 12px;
+        cursor: help;
+    }
+    .row {
+        margin-bottom: 4px;
+        line-height: 1.8rem;
+    }
+    .p-slide {
+        width: 103px;
+        display: inline-block;
+        margin-right: 13px;
+        position: relative;
+        margin-left: 7px;
+        //left: 5px;
+    }
+    @media (min-width: 168px) {
+        .col-xs-4 {
+            flex: 33%;
+            max-width:33%;
+        }
+        .col-xs-8 {
+            flex: 67%;
+            max-width:67%;
+            float: right;
+            padding-right: 14px;
+        }
+
+    }
+    .ui-slider .ui-slider-handle.ui-slider-handle-active {
+        z-index:0 !important;
+    }
+    .filter_margin > :not(:last-child) {
+      margin-right: 4px;
+    }
+    .filter_margin {
+      margin-left: 17px;
+      text-align: right;
+    }
+}
+

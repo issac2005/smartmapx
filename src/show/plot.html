@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'/>
+  <title></title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+  <script src='/map/assets/smartmapx.js'></script>
+  <script src='/map/assets/plot.js'></script>
+  <script src='/map/assets/drawControl.js'></script>
+  <script src='/map/assets/jquery.min.js'></script>
+  <link href='/map/assets/smartmapx.css' rel='stylesheet'/>
+  <link href='/map/assets/iconfont/iconfont.css' rel='stylesheet'/>
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .mapLoading {
+      background-image: url(./loading.png);
+      height: 38px;
+      width: 228px;
+      position: absolute;
+      bottom: calc(50% - 19px);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      left: calc(50% - 114px);
+    }
+
+    .plotmap-plotlist-view {
+      width: 32px;
+      height: 32px;
+      background-color: #e7ecee;
+      left: 32px;
+      position: absolute;
+      top: 32px;
+      border-radius: 3px;
+      font-size: 30px;
+      text-align: center;
+      line-height: 32px;
+      cursor: pointer;
+    }
+
+    .mapplot-list.plot-information-list-view {
+      left: 32px;
+      position: absolute;
+      top: 74px;
+      height: 100%;
+      max-height: 418px;
+      width: 220px;
+      background-color: #f4f7fc;
+      border-radius: 3px;
+      display: none;
+      z-index: 4;
+    }
+
+    .map-record {
+      height: 34px;
+      line-height: 34px;
+      padding: 0 15px;
+      font-size: 14px;
+      font-weight: 400;
+      text-align: left;
+      color: rgba(0, 0, 0, .65);
+    }
+
+    .plot-map-container .createMapModal-search {
+      text-align: center;
+      width: 220px;
+      height: 43px;
+      background-color: #fff;
+    }
+
+    .plot-map-container #searchInput {
+      width: 128px;
+      height: 22px;
+      padding-left: 10px;
+      margin-left: 8px;
+      margin-top: 8px;
+      display: inline-block;
+      border: 1px solid #ddd;
+      color: #555;
+      border-radius: 2px;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    }
+
+    .plot-map-container #clearInput {
+      margin-left: -23px;
+      margin-right: 19px;
+      cursor: pointer;
+      color: gray;
+      /* font-size: 20px; */
+      left: 2px;
+      top: 2px;
+    }
+
+    .plot-map-container .searchMessage {
+      width: 46px;
+      height: 25px;
+      float: right;
+      line-height: 25px;
+      text-align: center;
+      margin-right: 10px;
+      margin-top: 8px;
+      background-color: #388dd1;
+      border-radius: 4px;
+      font-size: 14px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .plot-map-container .left-side .left-wrap .list-wrap {
+      padding-bottom: 40px;
+      height: calc(100% - 146px);
+      overflow-y: auto;
+      position: relative;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+      /* background-color: rgba(255, 125, 125, 0.4); */
+      background-color: rgba(255, 125, 125, 0.4);
+    }
+
+    .layer-list {
+      position: absolute;
+      width: 90%;
+      height: calc(100% - 98px);
+    }
+
+    .layer-list li {
+      height: 32px;
+      width: 100%;
+      line-height: 32px;
+      font-size: 12px;
+      color: #273c57;
+      padding: 0 7px 0 15px;
+      border-bottom: 1px solid #eee;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      display: block;
+    }
+    .layer-list .on {
+      background: #dfecf5;
+    }
+
+    .layer-list li .layer-name {
+      width: 100%;
+      line-height: 32px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .layer-list li i {
+      margin-right: 7px;
+    }
+
+    .slide-drawer {
+      height: calc(100% - 514px);
+      position: absolute;
+      /* top: 74px;
+      left: -311px; */
+      top: 74px;
+      left: -551px;
+      border-left: 1px solid #ccc;
+      border-top: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      box-sizing: border-box;
+      background: #f4f7fc;
+      z-index: 3;
+      -webkit-transition: .6s;
+      /* display: none; */
+
+    }
+
+    .slide-drawer .slide-btn {
+      position: absolute;
+      right: -18px;
+      width: 20px;
+      height: 100px;
+      line-height: 100px;
+      color: #fff;
+      text-align: center;
+      cursor: pointer;
+      border: 0;
+      top: 60%;
+      background-image: url(/assets/img/sprites.png);
+      background-repeat: no-repeat;
+      background-position: -365px -179px;
+    }
+
+    .slide-drawer.show-view {
+      width: 300px;
+      top: 74px;
+      border-radius: 3px;
+    }
+
+
+    .plot-map-container .left-side .show-view.show {
+      left: 252px;
+    }
+
+    .pro-container.view {
+      width: 298px;
+      height: 418px;
+      position: absolute;
+      overflow-y: auto;
+      border-radius: 3px;
+      background-color: white;
+    }
+
+    .pro-name {
+      height: 32px;
+      line-height: 32px;
+      padding: 0 10px;
+      font-size: 14px;
+      color: #273d56;
+      border-bottom: 1px solid #ccc;
+      box-sizing: border-box;
+      background: #f6f6f6
+    }
+
+    .pro-container .pro-title {
+      height: 28px;
+      line-height: 28px;
+      padding: 0 10px;
+      font-size: 14px;
+      color: #333;
+      background: #e7ecee
+    }
+
+    .pro-container .input-wrap {
+      padding: 10px;
+      background: #fff;
+      font-size: 14px
+    }
+
+    .pro-container .input-wrap [type=text] {
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      padding-left: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px
+    }
+
+    .pro-container .input-wrap textarea {
+      width: 100%;
+      padding: 5px;
+      resize: none;
+      border: 1px solid #ccc;
+      border-radius: 3px
+    }
+
+    .pro-container .input-wrap .img-wrap {
+      display: inline-block;
+      width:220px;
+      margin-left: 24px;
+      position: relative;
+    }
+
+    .pro-container .input-wrap .img-wrap .img-container {
+      width: 220px;
+      overflow-x: auto
+    }
+
+    .pro-container .input-wrap .img-wrap .img-container::-webkit-scrollbar {
+      width: 0;
+      height: 0
+    }
+
+    .pro-container .input-wrap .img-wrap .next, .pro-container .input-wrap .img-wrap .prev {
+      position: absolute;
+      top: 40%;
+      margin-top: -10px;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .3);
+      z-index: 2;
+      cursor: pointer
+    }
+
+    .pro-container .input-wrap .img-wrap .next:hover, .pro-container .input-wrap .img-wrap .prev:hover {
+      background: rgba(0, 0, 0, .6)
+    }
+
+    .pro-container .input-wrap .img-wrap .prev {
+      display:none;
+      left: -10px
+    }
+
+    .pro-container .input-wrap .img-wrap .prev:after {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin: 0 0 0px 2px;
+      border: 2px solid #fff;
+      border-right: none;
+      border-bottom: none;
+      -webkit-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      transform: rotate(-45deg)
+    }
+
+    .pro-container .input-wrap .img-wrap .next {
+      right: -10px
+    }
+
+    .pro-container .input-wrap .img-wrap .next:after {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin: 0 2px 0px 0;
+      border: 2px solid #fff;
+      border-left: none;
+      border-bottom: none;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg)
+    }
+
+    .pro-container .input-wrap .img-wrap .sui-icon_u {
+      display: inline-block;
+      border: 1px solid #ccc;
+      padding: 10px;
+      width: 70px;
+      height: 70px;
+      text-align: center;
+      line-height: 70px;
+      position: relative;
+      cursor: pointer;
+      box-sizing:border-box;
+    }
+
+    .pro-container .input-wrap .img-wrap .sui-icon_uc {
+      display: inline-block;
+      cursor: pointer;
+      color: #fff;
+      margin: 5px
+    }
+
+    .pro-container .input-wrap .img-wrap .sui-plus {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background-image: url(/assets/img/sprites.png);
+      background-repeat: no-repeat;
+      background-position: -148px -50px
+    }
+
+    .pro-container .input-wrap .img-wrap .sui-icon-img img {
+      vertical-align: unset;
+      height: 100%;
+      width: 100%
+    }
+
+    .pro-container .input-wrap .img-wrap .sui-icon-img-btn {
+      display: none
+    }
+
+
+    .pro-container .input-wrap .img-wrap .sui-icon-img:hover .sui-icon-img-btn {
+      display: block !important;
+      position: absolute;
+      width: calc(100% - 20px);
+      height: calc(100% - 20px);
+      z-index: 100
+    }
+
+    .pro-container .input-wrap .img-wrap .sui-icon-img:hover .sui-icon-img-btn span:hover {
+      color: #d8d8d8
+    }
+
+    .pro-container .input-wrap .img-wrap .sui-icon-img:hover img {
+      opacity: 1
+    }
+
+    .pro-container .input-wrap .img-wrap .sui-fileinput-list {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      overflow-x: auto
+    }
+
+    .pro-container .input-wrap .img-wrap .sui-fileinput-list ul {
+      overflow-y: hidden;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 5px 0
+    }
+
+    .pro-container .input-wrap .img-wrap .sui-fileinput-list li {
+      display: inline-table;
+      vertical-align: top
+    }
+
+    .pro-container .input-wrap .img-wrap .sui-fileinput-list ul::-webkit-scrollbar {
+      width: 1px;
+      height: 1px
+    }
+
+    .pro-container .input-wrap .img-list {
+      overflow: hidden
+    }
+
+    .pro-container .input-wrap .img-list li {
+      float: left;
+      margin-right: 5px;
+      list-style-type: none
+    }
+
+    .pro-container .input-wrap .img-list li .img-name {
+      width: 70px;
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .pro-container .clearAttr {
+      width: 30px;
+      height: 28px;
+      float: right;
+      cursor: pointer;
+      border-radius: 0;
+      background-repeat: no-repeat;
+      padding-bottom: 5px;
+      border: 0;
+      margin-right: -10px;
+      margin-top: -27px;
+      background-image: url(/assets/img/sprites.png);
+      background-position: -380px -142px;
+      position: relative;
+      right: -6px
+    }
+
+    .pro-container .add-attribute {
+      width: 138px;
+      height: 24px;
+      margin-left: 80px;
+      margin-top: 26px;
+      margin-bottom: 26px;
+      cursor: pointer;
+      background-color: #3b8cd0;
+      color: #fff;
+      font-size: 15px;
+      text-align: center;
+      line-height: 24px;
+      border-radius: 4px
+    }
+
+    .pro-container #nameInput {
+      width: 97%;
+      height: 22px;
+      line-height: 22px;
+      padding-left: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px
+    }
+
+    .pro-container .addAttribute {
+      max-height: 206px;
+      overflow-y: auto;
+      overflow-x: hidden
+    }
+
+    .pro-container .getGeojson {
+      float: right;
+      width: 106px;
+      height: 22px;
+      margin-top: 4px;
+      text-align: center;
+      line-height: 22px;
+      background-color: #388dd1;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px
+    }
+    .geojsonpopue {
+      position: absolute;
+      left: calc(50% - 190px);
+      top: calc(50% - 150px);
+      line-height: 42px;
+      /* text-align: center; */
+      width: 400px;
+      height: 300px;
+      background-color: white;
+      z-index: 3;
+      border-radius: 5px;
+
+    }
+    .smx-modal-header {
+      background: #3887be;
+      height: 30px;
+      padding: 0px 11px 0px 12px;
+      line-height: 30px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid #e9ecef;
+      border-top-left-radius: 0.3rem;
+      border-top-right-radius: 0.3rem;
+      font-size: 16px;
+      color: white;
+    }
+    .smx-modal-header .modal-title {
+      position: relative;
+      color: #fff;
+      font-size: 12px;
+      padding-bottom: 0px;
+      line-height: 0px;
+      font-weight: 100;
+    }
+    .smx-modal-header .close {
+      color: #fff;
+      opacity: 1;
+      font-weight: normal;
+      position: relative;
+      font-size: 1.5rem;
+      bottom: 3px;
+      line-height: 30px;
+      cursor: pointer;
+    }
+    .smx-modal-body {
+      position: relative;
+      flex: 1 1 auto;
+      padding: 2rem;
+      padding-bottom: 1rem;
+      max-height: 550px;
+      overflow: auto !important;
+    }
+    .smx-modal-body .getGeojsoninput {
+      resize: none;
+      min-width: 330px;
+      min-height: 160px;
+      margin: 0;
+      color: inherit;
+      font-size: 14px;
+      font-family: inherit;
+
+    }
+    .smx-modal-footer {
+      text-align: center;
+      display: block;
+      border: 0;
+      padding: 1rem;
+      align-items: center;
+      justify-content: flex-end;
+      top: -30px;
+      position: relative;
+    }
+    .smx-modal-footer .smx-btn {
+      display: inline-block;
+      padding: 0.25rem 1.35rem;
+      margin-bottom: 0;
+      font-weight: 400;
+      line-height: 1.4;
+      text-align: center;
+      outline: none;
+      white-space: nowrap;
+      vertical-align: middle;
+      touch-action: manipulation;
+      cursor: pointer;
+      background-image: none;
+      border: 1px solid transparent;
+      border-radius: 0.25rem;
+
+    }
+    .smx-modal-footer .smx-btn:hover {
+      background-color: #32b6ff;
+      color: white;
+      border: 1px solid #32b6ff !important;
+    }
+    .smx-modal-footer .smx-default {
+      color: #ffffff;
+      background-color: #2282b7;
+    }
+    .smx-modal-footer .smx-grid {
+      padding: 0.25rem 1.85rem;
+    }
+    .smx-modal-footer .smx-outline-default {
+      color: #2282b7;
+      background-color: #ffffff;
+      border: 1px solid #2282b7 !important;
+    }
+
+  </style>
+</head>
+<body ontouchmove="return event.preventDefault()">
+
+<div id='map'></div>
+<div id="notice"></div>
+
+<div class="plot-map-container">
+  <div class="left-side">
+    <div class="left-wrap">
+      <!--查看地图--控制标绘信息列表显隐的按钮--Ljy-->
+      <div class="plotmap-plotlist-view icon smx-icon icon-plot_list" onclick="plotListView()" title="标绘信息列表"></div>
+
+      <div class="mapplot-list plot-information-list-view">
+        <div class="map-record">
+        </div>
+        <!--标绘信息查询--李景阳-->
+        <div class="createMapModal-search">
+          <input type="text" id="searchInput" class="smx_minp_lg smx-control" placeholder=" "
+                 (onkeyup)="searchMessage()" maxlength="12"/>
+          <a id="clearInput" class="createMapModal-search-clear" onclick="clearInput()" title="取消搜索"
+             [ngStyle]="{'opacity': searchKey? 1:0 }">×</a>
+          <div class="searchMessage" onclick="searchMessage()">查找</div>
+        </div>
+
+        <div class="list-wrap">
+          <ul class="layer-list" id="layer-list">
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <div id="slide-drawer" class="slide-drawer">
+      <div class="pro-container view">
+        <div class="pro-name">标绘信息
+          <!--获取geojson--Ljy-->
+          <div class="getGeojson">获取GEOJSON</div>
+        </div>
+
+        <!-- 编辑名称 -->
+        <div class="pro-title">名称</div>
+        <div class="input-wrap">
+          <span class="plotname" style="display:block;"></span>
+        </div>
+        <!-- 编辑描述 -->
+        <div class="pro-title">描述</div>
+        <div class="input-wrap">
+          <span class="plotdesc" style="display:block;word-break: break-word;"></span>
+        </div>
+
+        <!-- 上传图片 -->
+        <div class="pro-title">图片</div>
+        <div class="input-wrap">
+          <div>
+            <div style="height:88px;">
+              <div class="img-wrap">
+                <span class="prev" onclick="moveLeft()"></span>
+                <span class="next" onclick="moveRight(75)"></span>
+                <div class="img-container" id="img-conatiner">
+                  <ul id="img-list" class="img-list">
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="addAttribute"></div>
+      </div>
+      <span class="slide-btn" onclick="closeDrawer()"></span>
+    </div>
+  </div>
+
+  <!--获取GEOJSON的弹出框-->
+
+  <div class="geojsonpopue" style="display: none;">
+      <!--头部-->
+      <div class="smx-modal-header">
+        <h4 class="modal-title">获取geojson</h4>
+        <span aria-hidden="true" class="close" onclick="getgeojsonclose()">&times;</span>
+      </div>
+      <!--主体-->
+      <div class="smx-modal-body">
+        <div>
+          <textarea class="getGeojsoninput" readonly="readonly">{{modalData}}</textarea>
+        </div>
+      </div>
+      <!--尾部-->
+      <div class="smx-modal-footer">
+        <!--获取geojson--Ljy-->
+        <div>
+          <button type="button" class="smx-btn smx-grid smx-default" onclick="copygeojson()">复制
+          </button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button type="button" class="smx_not_div_close smx-btn smx-grid smx-outline-default"
+                  onclick="getgeojsonclose()">关闭
+          </button>
+          <!-- <button type="button" class="smx-btn smx-grid smx-default" (click)="submit(type, keyConfig.view)">确定</button> -->
+        </div>
+    </div>
+  </div>
+
+  <div class="right-side">
+    <!-- <div id="map" class="map" ></div> -->
+    <!-- <span class="maploading" ></span> -->
+  </div>
+</div>
+
+<span id='loadbar' class="mapLoading"></span>
+<div></div>
+<script>
+  var map;
+  let url = ''; // --Ljy
+  let plot_id = ''; // --Ljy
+  let draw = null;
+  let plot_source = null;
+  const geoId = 'f_system_id';
+  window.onload = function () {
+    showJson();
+  };
+
+  // 关闭获取geojson弹出框
+  function getgeojsonclose() {
+    const geojsonpopue = document.getElementsByClassName('geojsonpopue')[0];
+    geojsonpopue.style.display = "none";
+  }
+  // 复制geojson
+  function copygeojson() {
+    const getGeojsoninput = document.getElementsByClassName('getGeojsoninput')[0];
+    getGeojsoninput.select();
+    document.execCommand("Copy");
+  }
+  var param = {
+    imgNum: '',
+    showIconNext: true,
+    showIconPrev: false,
+    interval: null,
+    scrollDistance: 0
+  };
+  // 控制标绘信息列表的显隐
+  function plotListView() {
+    const slide_drawer = document.getElementById('slide-drawer');
+    const plotListView = document.getElementsByClassName('plot-information-list-view')[0];
+    const slidedrawe = document.getElementsByClassName('slide-drawer')[0];
+    const slidebtn = document.getElementsByClassName('slide-btn')[0];
+    const getGeojson = document.getElementsByClassName('getGeojson')[0];
+    const geojsonpopue = document.getElementsByClassName('geojsonpopue')[0];
+    slidebtn.onclick = function () {
+      slide_drawer.className = "slide-drawer";
+    }
+    if (plotListView.style.display === 'block') {
+      plotListView.style.display = 'none';
+      slide_drawer.className = "slide-drawer";
+      geojsonpopue.style.display = "none";
+    }else {
+      plotListView.style.display = 'block';
+
+      // 从接口中获取标绘信息数据
+      ajax({
+        url: url + '/geomap/plot_geojson/' + plot_id,
+        type: "get",
+        data: {},
+        dataType: "json",
+        success: function (res) {
+          const data = JSON.parse(res);
+          // 点击显示标绘信息列表按钮，初始状态显示的标绘信息列表
+          plotList(data.features);
+          var searchMessage = document.getElementsByClassName('searchMessage')[0];
+          let clearInput = document.getElementById('clearInput');
+          // 查找标绘信息列表中的功能，--缺少地图联动--地图联动未测试
+          searchMessage.onclick = function () {
+            let searchInput = document.getElementById('searchInput');
+            let array = [];
+            if (searchInput.value === '') {
+              plotList(data.features);
+            } else {
+              for (let i = 0; i < data.features.length; i++) {
+                const reg = RegExp(searchInput.value);
+                if (reg.test(data.features[i].properties.name)) {
+                  array.push(data.features[i]);
+                  map.setLayoutProperty(data.features[i].properties.f_system_id,'visibility','visible');
+                } else {
+                  if (data.features[i].geometry.type === 'Polygon') {
+                    map.setLayoutProperty(data.features[i].properties.f_system_id + '_copy', 'visibility', 'none');
+                  }
+                  map.setLayoutProperty(data.features[i].properties.f_system_id, 'visibility', 'none');
+                }
+              }
+              plotList(array);
+            }
+          }
+          // 清除标绘信息查找条件列表的功能，--缺少地图联动 --地图联动未测试
+          clearInput.onclick = function () {
+            searchInput.value = '';
+            for (let i = 0 ; i < data.features.length ; i++ ) {
+              if (data.features[i].geometry.type === 'Polygon') {
+                map.setLayoutProperty(data.features[i].properties.f_system_id + '_copy', 'visibility', 'visible');
+              }
+              map.setLayoutProperty(data.features[i].properties.f_system_id, 'visibility', 'visible');
+            }
+            plotList(data.features);
+          }
+          // 标绘信息列表的点击事件
+          let li = document.getElementsByClassName('layer-list')[0].getElementsByTagName('li');
+          for (let i = 0; i < li.length; i++) {
+            li[i].onclick = function () {
+              for (let j = 0; j < li.length; j++) {
+                li[j].className = ""
+              }
+              geojsonpopue.style.display = "none";
+              slide_drawer.className = "slide-drawer show-view show ";
+              li[i].className = "on";
+              let plotname = document.getElementsByClassName('plotname')[0];
+              plotname.innerHTML = data.features[i].properties.name;
+              let plotdesc = document.getElementsByClassName('plotdesc')[0];
+              plotdesc.innerHTML = data.features[i].properties.desc;
+              /**
+               * 传入选中数据进标会插件进行高亮显示
+               * */
+              clickList(data.features[i]);
+
+              if (data.features[i].properties.content.img.length > 0) {
+                var imgArr = data.features[i].properties.content.img,
+                  imgLength = imgArr.length;
+                param.imgNum = imgLength;
+                var imgWrap = document.getElementsByClassName('img-wrap')[0];
+                imgWrap.style.display = 'block';
+
+                var html = '';
+                for (var j = 0; j < imgLength; j++) {
+                  html += ' <li>\n' +
+                    '<div class="sui-icon_u  sui-icon-img">\n' +
+                    '<img src="'+ imgArr[j].url + '" class="sui-images" loading="lazy">\n' +
+                    '</div>\n' +
+                    '<div class="img-name">' + imgArr[j].name + '</div>\n' +
+                    '</li>';
+                }
+                var imgWrap = document.getElementById('img-list');
+                imgWrap.style.width = imgLength * 83 + 'px';
+                imgWrap.innerHTML = html;
+              } else {
+                var imgWrap = document.getElementsByClassName('img-wrap')[0];
+                imgWrap.style.display = 'none';
+              }
+
+              let addAttribute = document.getElementsByClassName('addAttribute')[0];
+              let plotAttrNameValue = '';
+              if (data.features[i].properties.content.hasOwnProperty('keys')) {
+                let plotAttr = data.features[i].properties.content.keys.split(',');
+                for (let j = 0; j < plotAttr.length; j++) {
+                  plotAttrNameValue += '<div class="plotAttribute"><div class="pro-title" ><span style="display:block;">' + plotAttr[j] + '</span></div><div class="input-wrap" ><span style="display:block;">' + data.features[i].properties.content[plotAttr[j]] + '</span></div></div>'
+                }
+                addAttribute.innerHTML = plotAttrNameValue;
+              } else {
+                addAttribute.innerHTML = '';
+              }
+              // 弹出获取GEOJSON弹出框
+              getGeojson.onclick = function () {
+                geojsonpopue.style.display = 'block';
+                let getGeojsoninput = document.getElementsByClassName('getGeojsoninput')[0];
+                getGeojsoninput.innerHTML = JSON.stringify(data.features[i],null,1);
+              }
+            }
+          }
+        },
+        fail: function (status) {
+        }
+      });
+    }
+  }
+
+  //标绘信息列表拼接标签--传入一个标绘数据的直接列表数据 data.features
+  function plotList(data) {
+    let plot_list = '';
+    let plotListHtml = '';
+    const map_record = document.getElementsByClassName('map-record')[0];
+    map_record.innerHTML = '共&nbsp;' + data.length + '&nbsp;条记录';
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].properties.mode_type === 'draw_point') {
+        plotListHtml = '<li ><div class="layer-name"><i class="icon smx-icon icon-smx-point" aria-hidden="true" title="点" ></i><span>'+ data[i].properties.name +'</span></div></li>';
+      } else if (data[i].properties.mode_type === 'draw_symbol') {
+        plotListHtml = '<li ><div class="layer-name"><i class="icon smx-icon icon-smx-symbol" aria-hidden="true" title="图标" ></i><span>'+ data[i].properties.name +'</span></div></li>';
+      } else if (data[i].properties.mode_type === 'draw_line') {
+        plotListHtml = '<li ><div class="layer-name"><i class="icon smx-icon icon-smx-line" aria-hidden="true" title="线" ></i><span>'+ data[i].properties.name +'</span></div></li>';
+      } else if (data[i].properties.mode_type === 'draw_box') {
+        plotListHtml = '<li ><div class="layer-name"><i class="icon smx-icon icon-smx-fill" aria-hidden="true" title="面" ></i><span>'+ data[i].properties.name +'</span></div></li>';
+      } else if (data[i].properties.mode_type === 'draw_circle') {
+        plotListHtml = '<li ><div class="layer-name"><i class="icon smx-icon icon-smx-fill" aria-hidden="true" title="面" ></i><span>'+ data[i].properties.name +'</span></div></li>';
+      } else if (data[i].properties.mode_type === 'draw_fill') {
+        plotListHtml = '<li ><div class="layer-name"><i class="icon smx-icon icon-smx-fill" aria-hidden="true" title="面" ></i><span>'+ data[i].properties.name +'</span></div></li>';
+      } else if (data[i].properties.mode_type === 'draw_arrow') {
+        plotListHtml = '<li ><div class="layer-name"><i class="icon smx-icon icon-smx-arrow" aria-hidden="true" title="箭头" ></i><span>'+ data[i].properties.name +'</span></div></li>';
+      } else if (data[i].properties.mode_type === 'draw_photo') {
+        plotListHtml = '<li ><div class="layer-name"><i class="icon smx-icon icon-smx-img" aria-hidden="true" title="图片" ></i><span>'+ data[i].properties.name +'</span></div></li>';
+      } else if (data[i].properties.mode_type === 'draw_words') {
+        plotListHtml = '<li ><div class="layer-name"><i class="icon smx-icon icon-smx-word" aria-hidden="true" title="注记" ></i><span>'+ data[i].properties.name +'</span></div></li>';
+      }
+
+      plot_list += plotListHtml;
+    }
+    const layer_list = document.getElementsByClassName('layer-list')[0];
+    layer_list.innerHTML = plot_list;
+  }
+
+
+  function initMap(url) {
+    plot_id = getQueryString('plotID'); // --Ljy
+    const token_id = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE1MzcxODM1OTgsImRhdGEiOiJ7XCJsb2dpbl9uYW1lXCI6XCJyb290XCIsXCJnZW5kZXJcIjoyLFwidXNlcl9pZFwiOlwiZm1fc3lzdGVtX3VzZXJfcm9vdFwiLFwidXNlcl9uYW1lXCI6XCJyb290XCIsXCJ1c2VyX29yaWdpbl9pZFwiOlwiZm1fbG9jYWxcIixcInByb2R1Y3RfaWRcIjpcIlwiLFwiZXhwaXJlX3RpbWVcIjpcIlwiLFwic291cmNlX2lkXCI6XCJcIixcInR5cGVcIjpcIlwiLFwiY29ycF9pZFwiOlwiZm1fc3lzdGVtX2NvcnBcIn0iLCJleHAiOjQwOTI1OTkzNDksImp0aSI6ImFfNjhmZjBhZGY5OTcxNDQ0NThjNzViZWFiN2FjNTkzYWYifQ.W122WkT6QR4HZWbpalkpmirV9JWkDYcCkmNZoxCB_z8';
+    ajax({
+      url: url + "/em/services/1.0.0/execute/showPlotStyle",
+      type: "get",
+      data: {
+        id: plot_id, //请求参数
+      },
+      dataType: "json",
+      success: function (res) {
+        const data = JSON.parse(res);
+        if (!data || data.status < 0) {
+          return;
+        }
+        let bounds;
+        if (data && data.config && data.config.bounds) {
+          bounds = data.config.bounds;
+        }
+        smartmapx.apikey = token_id;
+        smartmapx.mapbase = url;
+        // var map;   // Ljy注掉（735行）
+        if (bounds) {
+          var maxBounds;
+          if (typeof bounds == 'string') {
+            try { // json
+              maxBounds = JSON.parse(bounds);
+            } catch (e) {  // 字符串
+              var bound = bounds.split(',');
+              maxBounds = [[bound[3], bound[2]], [bound[1], bound[0]]]
+            }
+          }
+
+
+          map = new smartmapx.Map({
+            container: 'map',
+            style: data.data,
+            minZoom: data.config.minzoom,
+            maxZoom: data.config.maxzoom,
+            maxBounds: maxBounds
+          });
+        } else {
+          map = new smartmapx.Map({
+            container: 'map',
+            style: data.data,
+            minZoom: data.config.minzoom,
+            maxZoom: data.config.maxzoom
+          });
+        }
+
+        map.on('load', function () {
+          const label = new smartmapx.Label('未定义', {
+            position: [116.27378152938205, 40.04974276757861],
+            offset: [0, 14]
+          });
+          draw = new DrawControl ({
+            mode: 'draw_arrow',
+            custom: false,
+            continue: false,
+            edit: false,
+            id: 'id',
+            route: 'http://api.smartmapx.com/routing',
+          });
+          draw.setLabel(label);
+          document.getElementById('loadbar').style.display = 'none';
+          ajax({
+            url: url + '/geomap/plot_geojson/' + plot_id,
+            type: "get",
+            data: {},
+            dataType: "json",
+            success: function (res) {
+              const data = JSON.parse(res);
+              plot_source = data;
+              for (let i = 0; i < data.features.length; i++) {
+                addLayer(map, data.features[i], plot_id);
+              }
+              map.addControl(draw,'top-right');
+              map.on('click', clickMap);
+            },
+            fail: function (status) {
+            }
+          });
+        })
+
+      },
+      fail: function (status) {
+      }
+    });
+  }
+
+  // 图片-向右滑动
+  function moveRight(itemDistance) {
+    if (!param.interval) {
+      var e = document.getElementById('img-conatiner');
+      var next = document.getElementsByClassName('next')[0];
+      var prev = document.getElementsByClassName('prev')[0];
+      var imgWrapWidth = e.clientWidth;
+      prev.style.display = 'block';
+
+      var totalMove;
+      totalMove = param.imgNum * 75 - imgWrapWidth;
+      param.interval = setInterval(function () {
+        if (e.scrollLeft < totalMove && e.scrollLeft < (param.scrollDistance + itemDistance)) {
+          e.scrollLeft = e.scrollLeft + 6;
+        } else {
+          if (e.scrollLeft === totalMove) {
+            param.showIconNext = false;
+          }
+          if (!param.showIconPrev) {
+            param.showIconPrev = true;
+          }
+          clearInterval(param.interval);
+          param.interval = null;
+          next.style.display = 'none';
+        }
+      }, 20);
+      param.scrollDistance = e.scrollLeft;
+    }
+  }
+
+  // 图片向左滑动
+  function moveLeft() {
+    if (!param.interval) {
+      var e = document.getElementById('img-conatiner');
+      var next = document.getElementsByClassName('next')[0];
+      var prev = document.getElementsByClassName('prev')[0];
+      next.style.display = 'block';
+      param.interval = setInterval(function () {
+        if (e.scrollLeft > 0 && e.scrollLeft > param.scrollDistance - 75) {
+          e.scrollLeft = e.scrollLeft - 6;
+        } else {
+          if (e.scrollLeft === 0) {
+            param.showIconPrev = false;
+          }
+          if (!param.showIconNext) {
+            param.showIconNext = true;
+          }
+          clearInterval(param.interval);
+          param.interval = null;
+          prev.style.display = 'none';
+        }
+      }, 30);
+      param.scrollDistance = e.scrollLeft;
+    }
+  }
+
+  function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+  }
+
+  function ajax(options) {
+    options = options || {};
+    options.type = (options.type || "GET").toUpperCase();
+    options.dataType = options.dataType || "json";
+    var params = formatParams(options.data);
+
+    //创建 - 非IE6 - 第一步
+    if (window.XMLHttpRequest) {
+      var xhr = new XMLHttpRequest();
+    } else { //IE6及其以下版本浏览器
+      var xhr = new ActiveXObject('Microsoft.XMLHTTP');
+    }
+
+    //接收 - 第三步
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        var status = xhr.status;
+        if (status >= 200 && status < 300) {
+          options.success && options.success(xhr.responseText, xhr.responseXML);
+        } else {
+          options.fail && options.fail(status);
+        }
+      }
+    }
+
+    //连接 和 发送 - 第二步
+    if (options.type == "GET") {
+      xhr.open("GET", options.url + "?" + params, true);
+      xhr.send(null);
+    } else if (options.type == "POST") {
+      xhr.open("POST", options.url, true);
+      //设置表单提交时的内容类型
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      if (options.header) {
+        xhr.setRequestHeader('Authorization', options.header);
+      }
+      xhr.send(params);
+    }
+  }
+
+  //格式化参数
+  function formatParams(data) {
+    var arr = [];
+    for (var name in data) {
+      arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(data[name]));
+    }
+    arr.push(("v=" + Math.random()).replace(".", ""));
+    return arr.join("&");
+  }
+
+  function showJson() {
+    var test;
+    if (window.XMLHttpRequest) {
+      test = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+      test = new window.ActiveXObject();
+    } else {
+      alert("请升级至最新版本的浏览器");
+    }
+    if (test != null) {
+      test.open("GET", "../config/config.json", true);
+      test.send(null);
+      test.onreadystatechange = function () {
+        if (test.readyState == 4 && test.status == 200) {
+          var obj = JSON.parse(test.responseText);
+          url = obj.showMap;//  --Ljy
+          initMap(obj.showMap);
+        }
+      };
+
+    }
+  }
+
+  function clickList (feature) {
+    const geojson = {
+      type: 'FeatureCollection',
+      features: [feature]
+    };
+    draw.set(geojson, {
+      edit: true,
+      mode: feature.properties.mode_type
+    });
+    draw.disableEdit();
+  };
+
+  function clickMap(e) {
+    const diff = 1;
+    const leftTop = {x: e.point.x - diff, y: e.point.y - diff};
+    const rightBottom = {x: e.point.x + diff, y: e.point.y + diff};
+    const result = map.queryRenderedFeatures([leftTop, rightBottom], {
+      filter: ['has', 'mode_type']
+    });
+    if (result.length > 0) {
+      const selectId = result[0].properties[geoId];
+      for (let i = 0; i < plot_source.features.length; i++) {
+        if (selectId === plot_source.features[i].properties[geoId]) {
+          draw.set({
+            type: 'FeatureCollection',
+            features: [plot_source.features[i]]
+          }, {
+            edit: true,
+            mode: plot_source.features[i].properties.mode_type
+          });
+          let li = document.getElementsByClassName('layer-list')[0].getElementsByTagName('li');
+          for (let j = 0 ; j < li.length ; j++ ) {
+            li[j].className = "";
+          }
+          li[i].className = "on";
+
+          if(li[i]) {
+            li[i].scrollIntoView(false);
+          }
+          draw.disableEdit();
+          map.getCanvas().style.cursor = 'grab';
+
+        }
+      }
+    } else {
+      draw.set({type: 'FeatureCollection', features: []}, {edit: false});
+    }
+  };
+
+</script>
+
+</body>
+</html>

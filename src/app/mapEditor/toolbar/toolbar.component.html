@@ -1,0 +1,62 @@
+<div class="map_toolbar">
+  <div class="buttonWrap" style="background-color: #3b8cd0;height: 32px">
+
+
+    <button type="button" class="ToolbarButton mapMagnifying" aria-label="放大" title="放大" (click)="mapMagnifying()">
+    </button>
+    <button type="button" class="ToolbarButton mapReduce" aria-label="缩小" title="缩小" (click)="mapReduce()">
+    </button>
+    <button type="button" class="ToolbarButton allMap" aria-label="全图" title="全图" (click)="allMap()">
+    </button>
+    <button type="button" aria-label="漫游" [title]="mapWanderBoolean?'打开漫游':'禁用漫游'"
+            [ngClass]="{'mapWander':!mapWanderBoolean,'mapWander_hover':mapWanderBoolean}" (click)="mapWander()">
+    </button>
+    <button type="button" class="ToolbarButton northarrow" aria-label="正北" title="正北" (click)="northarrow()"
+            [ngStyle]="{'transform':rotateValue? 'rotate(' +rotateValue+ 'deg)':'rotate(0deg)'}">
+    </button>
+    <button type="button" class="ToolbarButton measureDistance" aria-label="测距" (click)="measureDistance()" title="测距">
+    </button>
+    <button type="button" class="ToolbarButton measureFill" aria-label="测面" title="测面" (click)="measureAre()"></button>
+    <button type="button" aria-label="地图和检视" (click)="changeMapViewStatus()"
+            [title]="!mapAndViewboolean ? '检视模式':'地图模式'"
+            [ngClass]="{'change_Map':!mapAndViewboolean,'change_View':mapAndViewboolean}">
+    </button>
+
+    <button class="ToolbarButton print" title="打印" (click)="print()"></button>
+    <button type="button" [title]="config.lock_max?'当前最大缩放级别为'+config.maxzoom:'设置最大缩放级别'" (click)="setMaxZoom()"
+            [ngClass]="{'max_zoom':!maxZoomBoolean,'max_zoom_hover':maxZoomBoolean}">
+    </button>
+
+    <button type="button" [title]="config.lock_min?'当前最小缩放级别是'+config.minzoom:'设置最小缩放级别'" (click)="setMinZoom()"
+            [ngClass]="{'min_zoom':!minZoomBoolean,'min_zoom_hover':minZoomBoolean}">
+    </button>
+
+
+    <button type="button" [title]="boundBoolean?'取消范围限制':'设置视窗范围'" (click)="setBound()"
+            [ngClass]="{'bound':!boundBoolean,'bound_hover':boundBoolean}"></button>
+
+
+    <button class="ToolbarButton setCenter" title="地图初始视窗" (click)="setCenter('map')"></button>
+
+
+    <button type="button" aria-label="当前缩放级别" title="当前缩放级别"
+            [ngClass]="{'ToolbarButton_class':info.type==='map','ToolbarButton_class1':info.type==='plot'}">
+      当前级别：{{zoomValue}}
+    </button>
+
+    <button class="icon smx-icon icon-smx-changemap" type="button" id="ToolbarButton_changeMap" *ngIf="info.type==='plot'"
+            (click)="changeMap()" [disabled]="loaded?false:true">&nbsp;&nbsp;切换底图
+
+    </button>
+
+    <button type="button" id="ToolbarButton_publish" (click)="publicMap()"
+            [disabled]="loaded?false:true">
+    </button>
+    <button type="button" title="全屏显示" (click)="changeScreenStatus()"
+            [ngClass]="{'ToolbarButton_screen_all':!screenStatus,'ToolbarButton_screen':screenStatus}">
+    </button>
+
+
+  </div>
+</div>
+

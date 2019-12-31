@@ -1,0 +1,88 @@
+<div class="d-toolbar" *ngIf="isShow" [style.padding-left.px]="paddingValue" [style.padding-right.px]="paddingValue">
+  <div class="d-toolbar-category">
+    <div style="text-align: center">
+      <span class="btn" [ngClass]="leftChecked? 'btn-primary' : 'btn-secondary'" (click)="switchData('mydata')">
+        <span>{{keyConfig.toolbar.left.title}}</span>({{leftNum}})
+      </span>
+      <i class="fa" [ngClass]="leftChecked? 'fa-caret-down2' : ''"></i>
+    </div>
+    <div style="text-align: center">
+      <span class="btn" [ngClass]="leftChecked? 'btn-secondary' : 'btn-primary'" (click)="switchData('sharedata')">
+        <span>{{keyConfig.toolbar.right.title}}</span>({{rightNum}})
+      </span>
+      <i class="fa" [ngClass]="leftChecked? '' : 'fa-caret-down2'"></i>
+    </div>
+  </div>
+
+  <div class="d-toolbar-search">
+    <div style="min-width: 50%">
+      <input type="text" id="searchInput" class="smx-control d-toolbar-search-input" placeholder="请输入关键字搜索"
+             (keyup.enter)="shareData()" [(ngModel)]="searchKey" maxlength="40"/>
+      <a id="clearInput" class="d-toolbar-search-clear" (click)="clearInput()" title="取消搜索"
+         [ngStyle]="{'opacity': searchKey? 1:0}">×</a>
+      <button class="smx-btn smx-default smx-lg" (click)="shareData()">搜索</button>
+
+      <!--服务发布中导入按钮  需加入服务发布模块判断和运维权限得判断--Ljy-->
+      <button *ngIf="keyConfig.type === 'service' && leftChecked && serviceUser" class="smx-btn smx-default smx-lg " style="margin-left: 15px;line-height: 26px;" (click)="importData(content, 'upload')">
+        <div class="icon smx-icon icon-plot_importdata" style="float: left;font-weight: 500;"></div>
+        导入</button>
+
+      <button *ngIf="keyConfig.type === 'icon'" [disabled]="tag !== 'mydata'" class="smx-btn smx-default smx-lg"
+              style="margin-left: 5px" (click)="release()">发布
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 点击发布的遮罩动画 -->
+<div id="shade" *ngIf="shadeBoolean">
+  <div id="circle" *ngIf="visableBoolean">
+  </div>
+  <label style="position: absolute;left: calc(50% - 40px);top: 50%;z-index: 1001;color: ghostwhite">图标发布中...</label>
+</div>
+
+<!-- 服务发布--导入服务弹框--Ljy -->
+<!-- <ng-template #content let-c="close" let-d="dismiss">
+  <div class="smx-modal-header">
+    <h4 class="modal-title">部署服务导入</h4>
+    <span aria-hidden="true" class="close" (click)="d('Cross click')">&times;</span>
+  </div>
+  <div class="smx-modal-body">
+    <div class="source-upload-wrap">
+      <a class="source-upload-file" [ngClass]="{'disabled': showFileName}">
+        导入文件
+        <input id='file' type="file" class="form-control" [disabled]="saveUpload" (change)="fileChangeEvent($event)"
+             placeholder="Upload file...">
+      </a>
+      <span class="source-file-name">{{showFileName? showFileName : null}}</span>
+    </div>
+  </div>
+  <div class="smx-modal-footer">
+    <button type="button" class="smx-btn smx-grid smx-outline-default" (click)="cancelUpload(c)">取消</button>
+    <button type="button" class="smx-btn smx-grid smx-default" [disabled]="!saveUpload" (click)="upploadSave(c)">确定</button>
+  </div>
+</ng-template> -->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="smx-modal-header">
+    <h4 class="modal-title">部署服务导入</h4>
+    <span aria-hidden="true" class="close" (click)="d('Cross click')">&times;</span>
+  </div>
+  <div class="smx-modal-body">
+    <div class="source-upload-wrap" style="width: 300px;">
+      <a class="source-upload-file" [ngClass]="{'disabled': showFileName}">
+        选择文件
+        <input id='file' type="file" class="form-control" [disabled]="saveUpload" (change)="fileChangeEvent($event)"
+             placeholder="Upload file...">
+      </a>
+      <span class="source-file-name">{{showFileName? showFileName : null}}</span>
+    </div>
+    <div>
+      <span>{{serviceUploadTip}}</span>
+    </div>
+  </div>
+  <div class="smx-modal-footer">
+    <button type="button" class="smx-btn smx-grid smx-outline-default" [disabled]="saveUpload" (click)="cancelUpload(c)">取消</button>
+    <button type="button" class="smx-btn smx-grid smx-default" [disabled]="!saveUpload" (click)="upploadSave(c)">确定</button>
+  </div>
+</ng-template>
+

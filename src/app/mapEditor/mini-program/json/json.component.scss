@@ -1,0 +1,12 @@
+textarea{
+    width: 100%;
+    font-size:12px;
+    color:#8f9d6a;
+    border: none;
+    background: none;
+    resize: none;
+    outline: none;
+    &::-webkit-scrollbar{
+        width: 0;
+    }
+}

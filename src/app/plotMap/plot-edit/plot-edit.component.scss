@@ -1,0 +1,97 @@
+.plot-edit {
+  span {
+    color: #cccccc;
+    font-size: 24px;
+    margin-left: 10px;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  span:hover {
+    color: #0ab1f7;
+  }
+
+  i {
+    position: absolute;
+    font-size: 24px;
+    color: #cccccc !important;
+  }
+
+  i:hover {
+    color: #0ab1f7 !important;
+  }
+}
+
+.select {
+  color: #075fa9 !important;
+}
+
+.plot-polygon {
+  width: 35px;
+  height: 110px;
+  background: #fff;
+  position: absolute;
+  top: 32px;
+  left: -6px;
+  z-index: 10;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.10);
+}
+
+.plot-line {
+  width: 35px;
+  height: 62px;
+  background: #fff;
+  position: absolute;
+  top: 32px;
+  left: -6px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.10);
+}
+
+.plot-pendant {
+  width: 35px;
+  height: 55px;
+  background: #fff;
+  position: absolute;
+  top: 32px;
+  left: -6px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.10);
+
+  .words {
+    position: absolute;
+    margin: 0px;
+    top: 5px;
+    left: 5px;
+    font-weight: bold;
+    font-size: 13px;
+  }
+
+  .image {
+    position: absolute;
+    margin: 0px;
+    top: 30px;
+    left: 5px;
+    font-weight: bold;
+    font-size: 13px;
+  }
+}
+
+.waterMarker {
+  padding: 5px;
+  background: #ccc;
+}
+
+.waterMarker div {
+  padding: 2px 0;
+  background: #ccc;
+}
+
+.smartmapx-popup-content {
+  padding: 0px !important;
+}
+
+.plot-disabled {
+  filter: grayscale(1);
+  color: #cccccc !important;
+  cursor: not-allowed !important;
+  //disabled: true
+}

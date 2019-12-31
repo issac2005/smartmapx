@@ -1,0 +1,1186 @@
+<div id="grid-modal">
+  <!--添加数据,修改数据-->
+  <div *ngIf="type === 1 || type === 3" class="add-modal" [ngStyle]="{'width': formConfig.tag === 2? '780px':'450px'}">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">数据源信息</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+
+    <div *ngIf="unionInfo === undefined;else union">
+      <div class="smx-modal-body">
+        <div class="form-signin">
+          <div class="form-group" *ngFor="let item of formConfig.key; index as i">
+
+            <div nz-row nzType="flex" nzAlign="middle">
+              <div nz-col nzSpan="5" style="text-align: end;line-height: 1;">
+                <span class="grid-modal-title" [title]="!item.null_able ? '必填项' : ''"
+                      [ngClass]="{'editor-c3': formConfig.tag === 2}"
+                      style="height: 16px;">
+                  {{item?.description}}
+                </span>
+              </div>
+              <div nz-col nzSpan="1">
+                <span *ngIf="!item.null_able" style="color: red;line-height: 1;">*</span>
+              </div>
+              <div nz-col nzSpan="18" [ngClass]="{'editor-c8': formConfig.tag === 2}" style="text-align: start">
+
+                <!--geom-->
+                <ng-container
+                  *ngIf="item?.component_data_type_id==='fm_ui_polygon_geo'||item?.component_data_type_id==='fm_ui_line_geo'||item?.component_data_type_id==='fm_ui_point_geo'">
+                  <div style="width: 100%;text-align: center">
+                    <a href="javascript:;"
+                       (click)="goCheck(item?.type, i, item.value)"
+                       (change)="item.value === '已选取'?checkNull():''"
+                       (blur)="item.value === '已选取'?checkNull():''">
+                      {{!item.value ? '图上选取' : '已选取'}}
+                    </a>
+                  </div>
+                </ng-container>
+
+
+                <!--              文本输入框-->
+                <ng-container *ngIf="item.type === 'fm_ui_input_text'">
+                  <div class="component input">
+                    <smx-input [(ngModel)]="item.value" (blur)="checkNull()" [smxDisabled]="item.isId"></smx-input>
+                  </div>
+                </ng-container>
+
+                <!--              下拉列表框-->
+                <ng-container *ngIf="item.type  === 'fm_ui_select_text'">
+                  <div class="component select">
+                    <smx-select
+                      [smxLabelMode]="false"
+                      [(ngModel)]="item.value"
+                      (blur)="checkNull()"
+                      [options]="item.config?.options">
+                    </smx-select>
+                  </div>
+                </ng-container>
+
+                <!--              多行文本-->
+                <ng-container *ngIf="item.type  === 'fm_ui_textarea_text'">
+                  <div class="component textarea">
+                    <smx-input [smxMode]="'textarea'" [(ngModel)]="item.value" (blur)="checkNull()"></smx-input>
+                  </div>
+                </ng-container>
+
+                <!--              html-->
+                <ng-container *ngIf="item.type  === 'fm_ui_html_text'">
+                  <div class="component html">
+                    <smx-editor
+                      [(ngModel)]="item.value"
+                      [mode]="'html'"
+                      [smxFontSize]="12"
+                      (blur)="checkNull()"
+                      [smxStyle]="{height:'150px'}">
+                    </smx-editor>
+                  </div>
+                </ng-container>
+
+                <!--              多选下拉框-->
+                <ng-container *ngIf="item.type  === 'fm_ui_select_json'">
+                  <div class="component input-select">
+                    <smx-select-checkbox
+                      [(ngModel)]="item.value"
+                      [options]="item.config?.options"
+                      [smxLabelMode]="false"
+                      (onChange)="checkNull()">
+                    </smx-select-checkbox>
+                  </div>
+                </ng-container>
+
+                <!--                            数值输入框(整数)-->
+                <ng-container *ngIf="item.type  === 'fm_ui_input_integer'">
+                  <div class="component select">
+                    <smx-input-number
+                      [(ngModel)]="item.value"
+                      [smxPlaceholder]="'数字输入框(整数)'"
+                      [smxStep]="item.config?.smxStep || 0"
+                      [smxThousands]="item.config?.smxThousands || false"
+                      [smxPrecision]="item.config?.smxPrecision || 9"
+                      (blur)="checkNull()">
+                    </smx-input-number>
+                  </div>
+                </ng-container>
+
+                <!--              数值输入框(浮点)-->
+                <ng-container *ngIf="item.type  === 'fm_ui_input_decimal'">
+                  <div class="component select">
+                    <smx-input-number
+                      [(ngModel)]="item.value"
+                      [smxPlaceholder]="'数字输入框(小数)'"
+                      [smxDecimal]="true"
+                      [smxStep]="item.config?.smxStep"
+                      [smxThousands]="item.config?.smxThousands"
+                      [smxDecimalPrecision]="item.config?.smxDecimalPrecision"
+                      [smxPrecision]="item.config?.smxPrecision"
+                      (blur)="checkNull()">
+                    </smx-input-number>
+                  </div>
+                </ng-container>
+
+                <!--              下拉列表框(布尔)-->
+                <ng-container *ngIf="item.type  === 'fm_ui_select_boolean'">
+                  <div class="component select">
+                    <smx-select
+                      [(ngModel)]="item.value"
+                      [options]="item.config?.options"
+                      (blur)="checkNull()">
+                    </smx-select>
+                  </div>
+                </ng-container>
+
+                <!--              单选按钮-->
+                <ng-container *ngIf="item.type  === 'fm_ui_radio_boolean'">
+                  <div class="component radio">
+                    <smx-radio
+                      [(ngModel)]="item.value"
+                      [options]="item.config?.options"
+                      (onChange)="checkNull()">
+                    </smx-radio>
+                  </div>
+                </ng-container>
+
+                <!--              开关-->
+                <ng-container *ngIf="item.type  === 'fm_ui_switch_boolean'">
+                  <div class="component select">
+                    <smx-switch
+                      [(ngModel)]="item.value"
+                      [smxOptions]="item.config?.options"
+                      (onChange)="checkNull()">
+                    </smx-switch>
+                  </div>
+                </ng-container>
+
+                <!--              时间-->
+                <ng-container *ngIf="item.type  === 'fm_ui_pick_time'">
+                  <div class="component dt">
+                    <smx-date-time-pick
+                      (onChange)="checkNull()"
+                      [mode]="'time'"
+                      [(ngModel)]="item.value"
+                      [smxFormat]="item.config?.smxFormat">
+                    </smx-date-time-pick>
+                  </div>
+                </ng-container>
+                <!--              日期-->
+                <ng-container *ngIf="item.type  === 'fm_ui_pick_date'">
+                  <div class="component dt">
+                    <smx-date-time-pick
+                      (onChange)="checkNull()"
+                      [mode]="'date'"
+                      [(ngModel)]="item.value"
+                      [smxFormat]="item.config?.smxFormat">
+                    </smx-date-time-pick>
+                  </div>
+                </ng-container>
+                <!--              时间日期-->
+                <ng-container *ngIf="item.type  === 'fm_ui_pick_datetime'">
+                  <div class="component dt">
+                    <smx-date-time-pick
+                      (onChange)="checkNull()"
+                      [mode]="'date-time'"
+                      [(ngModel)]="item.value"
+                      [smxFormat]="item.config?.smxFormat">
+                    </smx-date-time-pick>
+                  </div>
+                </ng-container>
+                <!--              图片上传-->
+                <ng-container *ngIf="item.type === 'fm_ui_image_upload'">
+                  <div class="component dt">
+                    <smx-upload
+                      [smxFile]="'image'"
+                      [smxMaxSize]="10"
+                      (uploadEnd)="uploadImages($event,item)">
+                    </smx-upload>
+                  </div>
+                </ng-container>
+
+
+                <!--            未知-->
+                <ng-container
+                  *ngIf="item?.type==='input'||item?.type===''||!item.type">
+                  <div class="component input">
+                    <smx-input [(ngModel)]="item.value" [smxDisabled]="true" (blur)="checkNull()"></smx-input>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="smx-modal-footer">
+        <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.dismiss()" type="button">取消
+        </button>
+        <button class="smx-btn smx-default smx-grid" [disabled]="!canSubmit"
+                [title]="canSubmit?'':'请输入必填项'" (click)="goAdd('submit')"
+                type="button" id="smx-gridModal">确定
+        </button>
+      </div>
+    </div>
+
+
+    <ng-template #union>
+      <div class="smx-modal-body" style="max-width: 2000px">
+        <div class="form-signin">
+          <div style="text-align: left">您可以选择要保留的属性记录：</div>
+          <table class="table table-bordered table-hover">
+            <tr>
+              <td *ngFor="let item of formConfig.key; index as i">
+                <div (click)="clicks()" [title]="!item.null_able ? '必填项' : ''"
+                     [ngClass]="{'editor-c3': formConfig.tag === 2}">
+                  {{item?.description}}
+                  <span *ngIf="!item.null_able">*</span>
+                </div>
+              </td>
+            </tr>
+            <tr *ngFor="let item of infoList; index as i" (click)="selectInfo(i)" class="union-select">
+              <td *ngFor="let info of item; index as m">
+                <div class="union-style">{{info}}</div>
+              </td>
+            </tr>
+          </table>
+          <div style="text-align: left">您可以编辑新要素的属性值：</div>
+          <table class="table table-bordered">
+            <tr>
+              <td *ngFor="let item of formConfig.key; index as i">
+                <div style="min-width: 80px;white-space: nowrap" (click)="clicks()"
+                     [title]="!item.null_able ? '必填项' : ''"
+                     [ngClass]="{'editor-c3': formConfig.tag === 2}">
+                  {{item?.description}}
+                  <span *ngIf="!item.null_able">*</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td *ngFor="let item of formConfig.key; index as i">
+                <div style="min-width: 80px;white-space: nowrap" style="text-align: center"
+                     [ngClass]="{'editor-c8': formConfig.tag === 2}">
+                  <!--输入框-->
+                  <!-- <input
+                     [type]="item.type=='postgres_bigint' ||item.type=='postgres_double_precision' ||item.type=='postgres_integer' ? 'number' : 'text'"
+                     class="form-control form-control-plaintext" *ngIf="item?.type === 'input'"
+                     [maxlength]="item?.precision"
+                     style="text-align: center"
+                     (input)="checkNull()" (change)="checkNull()" (blur)="checkNull()" [name]="item.name"
+                     [(ngModel)]="item.value">-->
+                  <!--geom-->
+                  <!--<a href="javascript:;" (click)="goCheck(item?.type, i)"
+                     style="width: 50px;display: inline-block"
+                     *ngIf="item?.type==='select_point'||item?.type==='select_line'||item?.type==='select_polygon'">{{item.value
+                  == '' ? '图上选取' : '已选取'}}</a>-->
+                  <!--geom-->
+                  <ng-container
+                    *ngIf="item?.component_data_type_id==='fm_ui_polygon_geo'||item?.component_data_type_id==='fm_ui_line_geo'||item?.component_data_type_id==='fm_ui_point_geo'">
+                    <div style="width: 100%;text-align: center">
+                      <a href="javascript:;"
+                         (click)="goCheck(item?.type, i, item.value)"
+                         (change)="item.value === '已选取'?checkNull():''"
+                         (blur)="item.value === '已选取'?checkNull():''">
+                        {{item.value == '' ? '图上选取' : '已选取'}}
+                      </a>
+                    </div>
+                  </ng-container>
+                  <!--              文本输入框-->
+                  <ng-container *ngIf="item.type === 'fm_ui_input_text'">
+                    <div class="component input">
+                      <smx-input [(ngModel)]="item.value" (blur)="checkNull()"></smx-input>
+                    </div>
+                  </ng-container>
+
+                  <!--              下拉列表框-->
+                  <ng-container *ngIf="item.type  === 'fm_ui_select_text'">
+                    <div class="component select">
+                      <smx-select
+                        [smxLabelMode]="false"
+                        [(ngModel)]="item.value"
+                        (blur)="checkNull()"
+                        [options]="item.config?.options">
+                      </smx-select>
+                    </div>
+                  </ng-container>
+
+                  <!--              多行文本-->
+                  <ng-container *ngIf="item.type  === 'fm_ui_textarea_text'">
+                    <div class="component textarea">
+                      <smx-input [smxMode]="'textarea'" [(ngModel)]="item.value" (blur)="checkNull()"></smx-input>
+                    </div>
+                  </ng-container>
+
+                  <!--              html-->
+                  <ng-container *ngIf="item.type  === 'fm_ui_html_text'">
+                    <div class="component html">
+                      <smx-editor
+                        [(ngModel)]="item.value"
+                        [mode]="'html'"
+                        [smxFontSize]="12"
+                        (blur)="checkNull()"
+                        [smxStyle]="{height:'150px'}">
+                      </smx-editor>
+                    </div>
+                  </ng-container>
+
+                  <!--              多选下拉框-->
+                  <ng-container *ngIf="item.type  === 'fm_ui_select_json'">
+                    <div class="component input-select">
+                      <smx-select-checkbox
+                        [options]="item.config?.options"
+                        [smxLabelMode]="false"
+                        (onChange)="checkNull()">
+                      </smx-select-checkbox>
+                    </div>
+                  </ng-container>
+
+                  <!--                            数值输入框(整数)-->
+                  <ng-container *ngIf="item.type  === 'fm_ui_input_integer'">
+                    <div class="component select">
+                      <smx-input-number
+                        [(ngModel)]="item.value"
+                        [smxPlaceholder]="'数字输入框(整数)'"
+                        [smxStep]="item.config?.smxStep || 0"
+                        [smxThousands]="item.config?.smxThousands || false"
+                        [smxPrecision]="item.config?.smxPrecision || 9"
+                        (blur)="checkNull()">
+                      </smx-input-number>
+                    </div>
+                  </ng-container>
+
+                  <!--              数值输入框(浮点)-->
+                  <ng-container *ngIf="item.type  === 'fm_ui_input_decimal'">
+                    <div class="component select">
+                      <smx-input-number
+                        [(ngModel)]="item.value"
+                        [smxPlaceholder]="'数字输入框(小数)'"
+                        [smxDecimal]="true"
+                        [smxStep]="item.config?.smxStep"
+                        [smxThousands]="item.config?.smxThousands"
+                        [smxDecimalPrecision]="item.config?.smxDecimalPrecision"
+                        [smxPrecision]="item.config?.smxPrecision"
+                        (blur)="checkNull()">
+                      </smx-input-number>
+                    </div>
+                  </ng-container>
+
+                  <!--              下拉列表框(布尔)-->
+                  <ng-container *ngIf="item.type  === 'fm_ui_select_boolean'">
+                    <div class="component select">
+                      <smx-select
+                        [(ngModel)]="item.value"
+                        [options]="item.config?.options"
+                        (blur)="checkNull()">
+                      </smx-select>
+                    </div>
+                  </ng-container>
+
+                  <!--              单选按钮-->
+                  <ng-container *ngIf="item.type  === 'fm_ui_radio_boolean'">
+                    <div class="component radio">
+                      <smx-radio
+                        [(ngModel)]="item.value"
+                        [options]="item.config?.options"
+                        (onChange)="checkNull()">
+                      </smx-radio>
+                    </div>
+                  </ng-container>
+
+                  <!--              开关-->
+                  <ng-container *ngIf="item.type  === 'fm_ui_switch_boolean'">
+                    <div class="component select">
+                      <smx-switch
+                        [(ngModel)]="item.value"
+                        [smxOptions]="item.config?.options"
+                        (onChange)="checkNull()">
+                      </smx-switch>
+                    </div>
+                  </ng-container>
+
+                  <!--              时间-->
+                  <ng-container *ngIf="item.type  === 'fm_ui_pick_time'">
+                    <div class="component dt">
+                      <smx-date-time-pick
+                        (onChange)="checkNull()"
+                        [mode]="'time'"
+                        [(ngModel)]="item.value"
+                        [smxFormat]="item.config?.smxFormat">
+                      </smx-date-time-pick>
+                    </div>
+                  </ng-container>
+                  <!--              日期-->
+                  <ng-container *ngIf="item.type  === 'fm_ui_pick_date'">
+                    <div class="component dt">
+                      <smx-date-time-pick
+                        (onChange)="checkNull()"
+                        [mode]="'date'"
+                        [(ngModel)]="item.value"
+                        [smxFormat]="item.config?.smxFormat">
+                      </smx-date-time-pick>
+                    </div>
+                  </ng-container>
+                  <!--              时间日期-->
+                  <ng-container *ngIf="item.type  === 'fm_ui_pick_datetime'">
+                    <div class="component dt">
+                      <smx-date-time-pick
+                        (onChange)="checkNull()"
+                        [mode]="'date-time'"
+                        [(ngModel)]="item.value"
+                        [smxFormat]="item.config?.smxFormat">
+                      </smx-date-time-pick>
+                    </div>
+                  </ng-container>
+                  <!--              图片上传-->
+                  <ng-container *ngIf="item.type === 'fm_ui_image_upload'">
+                    <div class="component dt">
+                      <smx-upload
+                        [smxFile]="'image'"
+                        [smxMaxSize]="10"
+                        (uploadEnd)="uploadImages($event,item)">
+                      </smx-upload>
+                    </div>
+                  </ng-container>
+
+
+                  <!--            未知-->
+                  <ng-container
+                    *ngIf="item?.type==='input'||item?.type===''||!item.type">
+                    <div class="component input">
+                      <smx-input [(ngModel)]="item.value" [smxDisabled]="true" (blur)="checkNull()"></smx-input>
+                    </div>
+                  </ng-container>
+
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="smx-modal-footer" style="padding: 1rem;">
+        <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.close('cancle')" type="button"
+        >取消
+        </button>
+        <button class="smx-btn smx-default smx-grid" [disabled]="!canSubmit"
+                [title]="canSubmit?'':'请输入必填项'" (click)="goAdd('submit')"
+                type="button" id="smx-gridModal">确定
+        </button>
+      </div>
+
+    </ng-template>
+  </div>
+
+  <!--选择地图-->
+  <div *ngIf="type === 2" class="choose-modal" style="width: 580px;">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">图上选取</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+    <div class="smx-modal-body">
+      <div id="choose_map" style="height: 300px;background: #ccc;"></div>
+    </div>
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.dismiss('cancel')" type="button">取消
+      </button>
+      <button class="smx-btn smx-default smx-grid" (click)="submitChoose()" type="button"   id="smx-gridModalMap">确定</button>
+    </div>
+
+  </div>
+
+  <!--转换数据-->
+  <div *ngIf="type === 4" class="transform-modal" style="width: 400px;">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">转换空间数据源</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+    <div class="smx-modal-body">
+
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="smx-radio" type="radio" (change)="nowGeoTypeSelect = null;changeColumnSelect()"
+                     [(ngModel)]="transformType"
+                     name="inlineRadioOptions" value="1"> 字段转换GEO
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="smx-radio" type="radio" (change)="changeColumnSelect()" [(ngModel)]="transformType"
+                     name="inlineRadioOptions" value="2"> 经纬度转换GEO
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="transformType==1">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">空间类型</label>
+          <div class="col-sm-8">
+            <smx-select
+              [(ngModel)]="nowGeoTypeSelect"
+              (ngModelChange)="changeColumnSelect()"
+              [options]="geoOptions"
+              placeholder="支持点、线、面空间类型">
+
+            </smx-select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">数据格式</label>
+          <div class="col-sm-8">
+            <smx-select [(ngModel)]="nowGeoType"
+                        [options]="nowGeoTypes"
+                        (ngModelChange)="changeColumnSelect()"
+                        [smxPlaceholder]="'支持geojson,wkb,wkt格式'">
+            </smx-select>
+          </div>
+        </div>
+        <div class="form-group row">
+
+          <label class="col-sm-4 col-form-label">选择字段</label>
+          <div class="col-sm-8">
+            <smx-select
+              [(ngModel)]="nowColumnSelect"
+              (ngModelChange)="changeColumnSelect()"
+              [options]="displayData"
+              [optionValue]="'entity_column_id'"
+              [optionLabel]="'description'">
+            </smx-select>
+          </div>
+        </div>
+
+      </div>
+
+      <div *ngIf="transformType==2">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">选择空间类型</label>
+          <div class="col-sm-8">
+            <smx-select
+              [smxDisabled]="true"
+              [(ngModel)]="nowGeoTypeSelect"
+              (ngModelChange)="changeColumnSelect()"
+              [options]="geoOptions">
+            </smx-select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">选择经度</label>
+          <div class="col-sm-8">
+            <smx-select
+              [(ngModel)]="nowColumnX"
+              (ngModelChange)="changeColumnSelect()"
+              [options]="displayData"
+              [optionLabel]="'description'"
+              [optionValue]="'entity_column_id'">
+            </smx-select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">选择纬度</label>
+          <div class="col-sm-8">
+            <smx-select
+              [(ngModel)]="nowColumnY"
+              (ngModelChange)="changeColumnSelect()"
+              [options]="displayData"
+              [optionValue]="'entity_column_id'"
+              [optionLabel]="'description'">
+            </smx-select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.dismiss('cancel')" type="button">
+        取消
+      </button>
+      <button class="smx-btn smx-default smx-grid" [disabled]="!canSubmit" [title]="canSubmit?'':'请输入必填项'"
+              (click)="goTransform()" type="button" id="smx-gridModal">确定
+      </button>
+    </div>
+  </div>
+
+  <!--查询方案测试-->
+  <div *ngIf="type === 5" class="s-modal" style="height: 635px;width: 800px;">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{config.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+    <div class="smx-modal-body" style="overflow-y: auto;height: 600px;text-align: left">
+      <test-panel [pageConfig]="mData.pageConfig" [eventData]="mData.eventData"
+                  [strucrtorData]="strucrtorData"></test-panel>
+    </div>
+  </div>
+
+
+  <!--添加方案-->
+  <div *ngIf="type === 6" class="add-modal">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{config.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+    <div class="smx-modal-body">
+      <div class="listbox">
+        <div *ngFor="let v of types" (click)="clickItem(v.value)"
+             [ngClass]="{'listbox-item-checked': selectedType === v.value, 'listbox-item': true}">{{v.label}}</div>
+      </div>
+
+    </div>
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.dismiss('cancel')" type="button">取消
+      </button>
+      <button class="smx-btn smx-default smx-grid" (click)="activeModal.close(selectedType)" type="button" id="smx-gridModal">确定</button>
+    </div>
+  </div>
+
+
+  <!--  方案类型-->
+  <div *ngIf="type === 7" class="s-modal" style="width: 380px;">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{config.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+    <div class="smx-modal-body" style="max-height: 400px;overflow-y: scroll;height: 200px">
+      <smx-listbox
+        [options]="cities1"
+        [style]="{'width':'100%','text-align': 'left'}"
+        [dataKey]="'entity_column_id'"
+        [(ngModel)]="selectedCities1" multiple="multiple"
+        [checkbox]="true" [filter]="true">
+      </smx-listbox>
+    </div>
+
+
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.dismiss('cancel')" type="button">取消
+      </button>
+      <button class="smx-btn smx-default smx-grid" (click)="activeModal.close(selectedCities1);" type="button" id="smx-gridModal">确定
+      </button>
+    </div>
+  </div>
+
+
+  <!--拆分合并数据过滤条件选矿-->
+  <div *ngIf="type === 8" id='split-modal' class="split-modal" style="width: 400px;">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{config.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+
+    <div class="smx-modal-body">
+      <div class="amm-toolbar" style="text-align: center">
+        <span class="amm-title">组合过滤方式:</span>
+        <smx-select
+          [smxDisabled]="true"
+          style="display: inline-block"
+          [(ngModel)]="mData.conjunction"
+          [options]="conjunctionSelect"
+          [smxStyle]="{'width':'200px','display':'inline-block','margin-right': '5px'}">
+        </smx-select>
+      </div>
+      <div class="amm-body">
+        <div class="amm-filter">
+          <c-filter #filter
+                    [style]="{'width':'80px'}"
+                    [filterWay]="'split_and'"
+                    [disabled]="true"
+                    [filterData]="mData.filterConfig"
+                    [filterArray]="mData.filterData"
+                    [conjunction]="mData.conjunction">
+          </c-filter>
+        </div>
+        <!--        <button type="button" class="smx-btn smx-default smx-xs" (click)="addFilterConAnd()">添加过滤</button>-->
+      </div>
+    </div>
+
+    <!--    <div class="smx-modal-body" style="max-height: 500px;overflow-y: scroll;">-->
+    <!--      &lt;!&ndash;<form class="form-signin" (submit)="goAdd('submit')">&ndash;&gt;-->
+    <!--      <smx-fieldset [toggleable]="true">-->
+    <!--        <smx-header style="font-size: 14px;position: relative;top: -15px;">AND</smx-header>-->
+    <!--        <c-filter #filter-->
+    <!--                  [style]="{'width':'80px'}"-->
+    <!--                  [filterWay]="'split_and'"-->
+    <!--                  [filterData]="mData.filterConfig"-->
+    <!--                  [filterArray]="mData.filterDataByAnd"-->
+    <!--                  [conjunction]="'and'"></c-filter>-->
+    <!--        <button type="button" class="smx-btn smx-default smx-xs" (click)="addFilterConAnd()">添加过滤</button>-->
+    <!--      </smx-fieldset>-->
+    <!--      <smx-fieldset [toggleable]="true">-->
+    <!--        <smx-header style="font-size: 14px;position: relative;top: -15px;">OR</smx-header>-->
+    <!--        <c-filter #filter2-->
+    <!--                  [style]="{'width':'80px'}"-->
+    <!--                  [filterWay]="'split_or'"-->
+    <!--                  [filterData]="mData.filterConfig"-->
+    <!--                  [filterArray]="mData.filterDataByOr"-->
+    <!--                  [conjunction]="'or'">-->
+    <!--        </c-filter>-->
+    <!--        <button type="button" class="smx-btn smx-default smx-xs" (click)="addFilterConOr()">添加过滤</button>-->
+    <!--      </smx-fieldset>-->
+    <!--      &lt;!&ndash;</form>&ndash;&gt;-->
+    <!--    </div>-->
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.close('cancle')" type="button">取消
+      </button>
+      <button class="smx-btn smx-default" (click)="activeModal.close('next')"
+              type="button" id="smx-gridModal">下一步
+      </button>
+    </div>
+
+  </div>
+
+  <!--拆分数据输出框-->
+  <div *ngIf="type === 9" class="add-modal" style="width: 600px;">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{config.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+    <div class="smx-modal-body">
+      <div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" style="top: 4px;">数据源名称</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control form-text" placeholder="请输入数据源名称" [(ngModel)]="splitName"
+                   maxlength="40">
+          </div>
+        </div>
+
+        <div class="" style="max-height: 300px;overflow: scroll;overflow-x: hidden;">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th>
+                <input class="smx-checkbox split-field"
+                       type="checkbox"
+                       [(ngModel)]="allChecked"
+                       title="全选/全不选"
+                       (change)="checkedAll($event);">
+              </th>
+              <th style="text-align: center">原始字段</th>
+              <th style="text-align: center" colspan="1">别名</th>
+              <!-- 取消主键-->
+              <!--<th style="text-align: center" colspan="2">是否主键</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of mData.splitFileds;"
+                [ngStyle]="{'background': item.use ? 'rgb(231, 252, 255)' : '#fff'}">
+              <th>
+                <input
+                  class="smx-checkbox split-field"
+                  type="checkbox"
+                  [checked]="item?.use"
+                  [(ngModel)]="item.use"
+                  (change)="checkFileds($event, item);">
+              </th>
+              <th>
+                <label class="form-check-label" style="position: relative;top: 2px;">{{item?.description}}</label>
+              </th>
+              <td>
+                <input [(ngModel)]="item.column_desc" type="text"
+                       class="form-control form-text" placeholder="请输入描述">
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.dismiss('Cross click');" type="button">
+        取消
+      </button>
+      <button class="smx-btn smx-default smx-grid" [disabled]="useStatus? false: true"
+              (click)="submit(activeModal)"
+              type="button" id="smx-gridModal">确定
+      </button>
+    </div>
+
+  </div>
+
+  <!--合并数据目标源-->
+  <div *ngIf="type === 10" class="combine-modal" style="width: 500px">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{config.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+
+    <div class="smx-modal-body" style="text-align: start">
+      <div class="combine-search">
+        <input type="text" id="searchInput" class="smx-control combine-search-input" placeholder="请输入关键字搜索"
+               (keyup.enter)="searchMap()" [(ngModel)]="searchKey" maxlength="40"/>
+        <a id="clearInput" class="combine-search-clear" (click)="clearInput()" title="取消搜索"
+           [ngStyle]="{'opacity': searchKey? 1:0 }">×</a>
+        <button class="smx-btn smx-default smx-lg" (click)="searchMap()">搜索</button>
+      </div>
+
+      <div class="combine-select">
+        <div class="combine-select-category">
+                <span class="btn" [ngClass]="mymapChecked? 'btn-primary' : 'btn-secondary'"
+                      (click)="tag='mymap';switchData()">我的数据</span>
+
+          <span class="btn" [ngClass]="mymapChecked? 'btn-secondary' : 'btn-primary'"
+                (click)="tag='sharemap';switchData()">共享数据</span>
+        </div>
+        <div class="combine-select-list" detect-scroll (onScroll)="handleScroll($event)" [bottomOffset]="0">
+          <ul style="padding: 0px">
+            <li *ngFor="let v of baseMapList">
+              <div (click)="checkedBaseMap(v)"
+                   class="layer-list-img-bg"
+                   [ngStyle]="{'background': v.service_event_id === checkedMapId ? 'rgb(231, 252, 255)': '#fff'}">
+                            <span class="layer-list-icon"
+                                  [ngStyle]="{'background': 'url('+ getUrl(v.geo_type) + ')'}"></span>
+                <span class="layer-list-name" title={{v.description}}}>{{ v.description }}</span>
+                <span class="layer-list-checked"
+                      [ngStyle]="{'opacity': v.service_event_id === checkedMapId ? '1': '0'}"></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.dismiss('cancel')" type="button">取消
+      </button>
+      <button type="button" class="smx-btn smx-default" type="button"
+              (click)="activeModal.close(sourceInfo)"
+              [disabled]="checkedMapId === '' || checkedMapId === null? true: false"
+              [title]="checkedMapId === '' || checkedMapId === null? '请选择数据': ''" id="smx-gridModal">下一步
+      </button>
+    </div>
+  </div>
+
+
+  <!--合并数据输出-->
+  <div *ngIf="type === 11" class="add-modal" style="width: 600px;">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">输出数据设置</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+    <div class="smx-modal-body">
+      <div>
+
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">数据源名称</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control form-text" placeholder="请输入数据源名称" [(ngModel)]="combineName"
+                   maxlength="40">
+          </div>
+        </div>
+
+        <div class="" style="max-height: 300px;overflow: scroll;overflow-x: hidden;">
+
+          <table class="table table-bordered">
+            <caption style="caption-side: top;text-align: center;font-weight: bold;font-size: 14px;color: #333;">
+              原始数据
+            </caption>
+            <thead>
+            <tr>
+              <th style="text-align: center;width: 55px">
+                <input
+                  class="smx-checkbox combine-field"
+                  type="checkbox"
+                  title="全选/全不选"
+                  [(ngModel)]="allChecked"
+                  (change)="checkedAll($event,'1')">
+              </th>
+              <th style="text-align: center">原始字段</th>
+              <th style="text-align: center">别名</th>
+              <th style="text-align: center">关联字段</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of mData.combineFileds;"
+                [ngStyle]="{'background': item.use ? 'rgb(231, 252, 255)' : '#fff'}">
+              <th><input class="smx-checkbox combine-field"
+                         type="checkbox"
+                         [checked]="item.use"
+                         [(ngModel)]="item.use"
+                         (change)="checkFileds($event, item, '1');"></th>
+              <th>
+                <label class="form-check-label" style="top: 2px;position: relative;">
+
+                  {{item.description}}
+                </label>
+              </th>
+              <td>
+                <input [(ngModel)]="item.column_desc" type="text"
+                       class="form-control form-text" placeholder="请输入描述">
+              </td>
+              <td>
+                <smx-dropdown
+                  [style]="{width: '100%'}"
+                  [options]="c_cities"
+                  (onChange)="checkKey($event, item)"
+                  [showClear]="true"
+                  [placeholder]="item.relation_desc ? item.relation_desc:'请选择关联外键'"
+                  [disabled]="item.use? false:true"
+                  [title]="item.use? '':'您还未选中此数据'"></smx-dropdown>
+              </td>
+            </tr>
+
+
+            </tbody>
+          </table>
+          <table class="table table-bordered">
+            <caption style="color:#333;caption-side: top;text-align: center;font-weight: bold;font-size: 14px;">
+              关联数据
+            </caption>
+            <thead>
+            <tr>
+              <th style="width: 55px">
+                <input
+                  class="smx-checkbox combine-field"
+                  type="checkbox"
+                  title="全选/全不选"
+                  (change)="checkedAll($event,'2')"
+                  [(ngModel)]="cAllChecked">
+              </th>
+              <th style="text-align: center;">原始字段</th>
+              <th style="text-align: center;">别名</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of keySoureData;" [ngStyle]="{'background': item.use ? 'rgb(231, 252, 255)' : '#fff'}">
+              <th>
+                <input
+                  class="smx-checkbox combine-field"
+                  type="checkbox"
+                  [checked]="item?.use"
+                  [(ngModel)]="item.use"
+                  (change)="checkFileds($event, item, '2');">
+              </th>
+              <th align="left">
+                <!-- whx修改 把下面的desc改成name 因为desc在源数据里是空的 -->
+                <label class="form-check-label" style="position: relative;top: 2px;">
+                  {{item?.description}}
+                </label>
+              </th>
+              <td>
+                <!-- whx修改item.column.desc为item.description -->
+                <input [(ngModel)]="item.description" type="text"
+                       class="form-control form-text" placeholder="请输入描述">
+              </td>
+              <!--<td>-->
+              <!--<p-dropdown [options]="c_cities" placeholder="请选择关联主键" disabled="true"-->
+              <!--title="暂不支持反向关联"></p-dropdown>-->
+              <!--</td>-->
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.dismiss('Cross click');" type="button">
+        取消
+      </button>
+      <button class="smx-btn smx-default smx-grid"
+              [disabled]="useStatus? false: true"
+              (click)="submit(activeModal,'com')"
+              type="button" id="smx-gridModal">确定
+      </button>
+    </div>
+  </div>
+
+  <!--地址匹配-->
+  <div *ngIf="type === 12" class="address-matching-modal">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{config.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+
+    <div class="smx-modal-body">
+      <div class="amm-toolbar" style="text-align: left">
+        <span class="amm-title">组合过滤方式:</span>
+        <smx-select
+          style="display: inline-block"
+          [(ngModel)]="conjunction"
+          [options]="conjunctionSelect"
+          [smxStyle]="{'width':'200px','display':'inline-block','margin-right': '5px'}">
+        </smx-select>
+      </div>
+      <div class="amm-body">
+        <div class="amm-filter">
+          <c-filter #filter
+                    [filterWay]="'split_and'"
+                    [filterData]="mData.filterConfig"
+                    [style]="{'width':'30%','height':'25px'}"
+                    [filterArray]="mData.filterData"
+                    [conjunction]="'and'">
+          </c-filter>
+        </div>
+        <button type="button" class="smx-btn smx-default smx-xs" (click)="addFilterConAnd()">添加过滤</button>
+      </div>
+    </div>
+
+
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-outline-default" (click)="activeModal.dismiss()" type="button">取消</button>
+      <button class="smx-btn smx-default" type="button" (click)="activeModal.close(mData)" id="smx-gridModal">下一步
+      </button>
+    </div>
+  </div>
+
+  <!--输入字段-->
+  <div *ngIf="type === 13" class="address-matching-modal">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{config.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+
+    <div class="smx-modal-body">
+      <div class="amm-body">
+        <div class="amm-toolbar">
+          <span class="amm-title" style="margin-left: -45px">输入字段</span>
+        </div>
+        <div class="amm-filed">
+          <label style="color: #0ab1f7;margin-right: 10px">地址字段</label>
+          <span style="color: red">*</span>
+          <smx-select
+            [(ngModel)]="mData.filed"
+            [options]="mData.filterConfig"
+            [optionLabel]="'description'"
+            [optionValue]="'entity_column_id'"
+            [smxStyle]="{'width':'200px','display':'inline-block','margin-right': '5px'}">
+          </smx-select>
+        </div>
+        <div class="amm-area">
+          <label style="color: #0ab1f7">行政区划参考字段<span style="color: #ccc">(选填)</span></label>
+          <div style="text-align: center;margin:10px">
+            <div class="amm-area-select">
+              <label style="width: 25px;">省 :</label>
+              <smx-select
+                [(ngModel)]="mData.province"
+                [options]="mData.filterConfig"
+                [optionLabel]="'description'"
+                [optionValue]="'entity_column_id'"
+                [smxStyle]="{'width':'90px','display':'inline-block','margin-right': '5px'}">
+              </smx-select>
+            </div>
+            <div class="amm-area-select">
+              <label style="width: 25px;">市 :</label>
+              <smx-select
+                [(ngModel)]="mData.city"
+                [options]="mData.filterConfig"
+                [optionLabel]="'description'"
+                [optionValue]="'entity_column_id'"
+                [smxStyle]="{'width':'90px','display':'inline-block','margin-right': '5px'}">
+              </smx-select>
+            </div>
+            <div class="amm-area-select">
+              <label style="width: 25px;">区 :</label>
+              <smx-select
+                [(ngModel)]="mData.country"
+                [options]="mData.filterConfig"
+                [optionLabel]="'description'"
+                [optionValue]="'entity_column_id'"
+                [smxStyle]="{'width':'90px','display':'inline-block','margin-right': '5px'}">
+              </smx-select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-outline-default" (click)="beforeAddress(activeModal)" type="button">上一步</button>
+      <button class="smx-btn smx-default" type="button" (click)="submitAddress(mData,activeModal)" id="smx-gridModal">确定</button>
+    </div>
+  </div>
+
+  <!-- 逆地理编码 -->
+  <!--输入字段-->
+  <div *ngIf="type === 15" class="address-matching-modal">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{config.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+
+    <div class="smx-modal-body">
+      <div class="amm-body">
+        <div class="amm-toolbar">
+          <span class="amm-title" style="margin-left: -45px">输出字段</span>
+        </div>
+        <div class="amm-filed">
+          <label style="color: #0ab1f7;margin-right: 10px">完整结果填入地址字段</label>
+          <span style="color: red">*</span>
+          <smx-select
+            [(ngModel)]="mData.filed"
+            [options]="mData.filterConfig"
+            [optionLabel]="'description'"
+            [optionValue]="'entity_column_id'"
+            [smxStyle]="{'width':'200px','display':'inline-block','margin-right': '5px'}">
+          </smx-select>
+        </div>
+        <div class="amm-area">
+          <label style="color: #0ab1f7">提取信息至以下字段<span style="color: #ccc">(选填)</span></label>
+          <div style="text-align: center;margin:10px">
+            <div class="amm-area-select">
+              <label style="width: 32px;">省 :</label>
+              <smx-select
+                [(ngModel)]="mData.province"
+                [options]="mData.filterConfig"
+                [optionLabel]="'description'"
+                [optionValue]="'entity_column_id'"
+                [smxStyle]="{'width':'90px','display':'inline-block','margin-right': '5px'}">
+              </smx-select>
+            </div>
+            <div class="amm-area-select">
+              <label style="width: 26px;">市 :</label>
+              <smx-select
+                [(ngModel)]="mData.city"
+                [options]="mData.filterConfig"
+                [optionLabel]="'description'"
+                [optionValue]="'entity_column_id'"
+                [smxStyle]="{'width':'90px','display':'inline-block','margin-right': '5px'}">
+              </smx-select>
+            </div>
+            <div class="amm-area-select">
+              <label style="width: 22px;">区 :</label>
+              <smx-select
+                [(ngModel)]="mData.country"
+                [options]="mData.filterConfig"
+                [optionLabel]="'description'"
+                [optionValue]="'entity_column_id'"
+                [smxStyle]="{'width':'90px','display':'inline-block','margin-right': '5px'}">
+              </smx-select>
+            </div>
+          </div>
+
+          <div style="text-align: -webkit-left;margin: 10px">
+            <div class="amm-area-select">
+              <label style="width: 32px;">道路:</label>
+              <smx-select
+                [(ngModel)]="mData.street"
+                [options]="mData.filterConfig"
+                [optionLabel]="'description'"
+                [optionValue]="'entity_column_id'"
+                [smxStyle]="{'width':'90px','display':'inline-block','margin-right': '5px'}">
+              </smx-select>
+            </div>
+
+            <div class="amm-area-select">
+              <label style="width: 32px;">POI :</label>
+              <smx-select
+                [(ngModel)]="mData.poi"
+                [options]="mData.filterConfig"
+                [optionLabel]="'description'"
+                [optionValue]="'entity_column_id'"
+                [smxStyle]="{'width':'90px','display':'inline-block','margin-right': '5px'}">
+              </smx-select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-outline-default" (click)="beforeReAddress(activeModal)" type="button">上一步</button>
+      <button class="smx-btn smx-default" type="button" (click)="submitReAddress(activeModal,mData)" id="smx-gridModal">确定</button>
+    </div>
+  </div>
+</div>
+
+
+

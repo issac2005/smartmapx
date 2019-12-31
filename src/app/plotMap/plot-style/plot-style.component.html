@@ -1,0 +1,508 @@
+<div class="circle-container">
+  <span style="display:inline-block; font-size: 16px; vertical-align: middle;">||&nbsp;&nbsp;</span>
+
+  <!----- 模板样式类型名称 - 开始 ------>
+
+  <span class="style-title" *ngIf="drawType === 'draw_point'">
+    点:
+    <span class="circle" *ngIf="recentUse.draw_point_item" [ngStyle]="{'background':recentUse.draw_point_item.style['circle-color'], 'border-width': recentUse.draw_point_item.style['circle-stroke-width'] === 0 ? '0px' : '1px', 'border-color': recentUse.draw_point_item.style['circle-stroke-color'], 'opacity': recentUse.draw_point_item.style['circle-opacity']}"></span>
+  </span>
+
+  <span class="style-title" *ngIf="drawType === 'draw_line' || drawType === 'draw_custom'">
+    线:
+    <span class="line" *ngIf="recentUse.draw_line_item" [ngStyle]="{'border-width': recentUse.draw_line_item.style['line-width']+'px', 'border-style': recentUse.draw_line_item.style['line-dasharray'] === 0 ? 'solid' : 'dashed' , 'border-color': recentUse.draw_line_item.style['line-color'], 'opacity': recentUse.draw_line_item.style['line-opacity']}"></span>
+  </span>
+
+  <span class="style-title" *ngIf="drawType === 'draw_words'">
+    注记:
+    <span class="words" *ngIf="recentUse.draw_words_item" [ngStyle]="{'font-size': '12px', 'margin-right': '5px', 'color': recentUse.draw_words_item.style['text-color'], 'font-weight': recentUse.draw_words_item.style['text-halo-width'] === 1 ? 'bold' : 'normal'}">文本</span>
+  </span>
+
+  <span class="style-title" *ngIf="drawType === 'draw_symbol'">
+    图标:
+    <span class="symbol" *ngIf="recentUse.draw_symbol_item" [ngStyle]="{'background-position': (-recentUse.draw_symbol_item.positionx)  + 'px' + ' ' + (-recentUse.draw_symbol_item.positiony)  + 'px', 'background-image': 'url('+ recentUse.draw_symbol_item['sprite']  +')', 'opacity': recentUse.draw_symbol_item['opacity'], 'background-size': recentUse.draw_symbol_item['iconSprite_width']*iconRatio + 'px' }" ></span>
+  </span>
+
+  <span class="style-title" *ngIf="drawType === 'draw_box' || drawType === 'draw_fill' || drawType === 'draw_circle'">
+    <span class="wrap">
+      <span *ngIf="drawType === 'draw_box'">矩形:</span>
+      <span *ngIf="drawType === 'draw_fill'">多边形:</span>
+      <span *ngIf="drawType === 'draw_circle'">圆形:</span>
+
+      <span class="fill" *ngIf="recentUse[drawType + '_item'] && recentUse[drawType + '_item'].style['fill-pattern'] === ''"  [ngStyle]="{'background': recentUse[drawType + '_item'].style['fill-color'], 'border-color': recentUse[drawType + '_item'].style['fill-outline-color'], 'border-width': recentUse[drawType + '_item'].style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': recentUse[drawType + '_item'].style['fill-opacity']}"></span>
+
+      <span class="fill" *ngIf="recentUse[drawType + '_item'] && recentUse[drawType + '_item'].style['fill-pattern'] === 'H00001'"  [ngStyle]="{'background-image': 'url(assets/img/001.png)', 'border-color': recentUse[drawType + '_item'].style['fill-outline-color'], 'border-width': recentUse[drawType + '_item'].style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': recentUse[drawType + '_item'].style['fill-opacity']}"></span>
+
+      <span class="fill" *ngIf="recentUse[drawType + '_item'] && recentUse[drawType + '_item'].style['fill-pattern'] === 'H00002'"  [ngStyle]="{'background-image': 'url(assets/img/002.png)', 'border-color': recentUse[drawType + '_item'].style['fill-outline-color'], 'border-width': recentUse[drawType + '_item'].style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': recentUse[drawType + '_item'].style['fill-opacity']}"></span>
+    </span>
+  </span>
+
+  <span class="style-title" *ngIf="drawType === 'draw_arrow'">
+    <span class="wrap">
+      箭头:
+      <div class="arrow-style" *ngIf="recentUse.draw_arrow_item">
+       <span class="arrow-fill" [ngStyle]="{'background': recentUse.draw_arrow_item.style['fill-color'], 'border-color': recentUse.draw_arrow_item.style['fill-outline-color'], 'border-width': recentUse.draw_arrow_item.style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': recentUse.draw_arrow_item.style['fill-opacity']}">
+        </span>
+      <i class="arrow" [ngStyle]="{'border-left':recentUse.draw_arrow_item.style['fill-outline-width'] === 0 ? 'none' : '9px solid' + ' '+recentUse.draw_arrow_item.style['fill-outline-color'], 'border-top': recentUse.draw_arrow_item.style['fill-outline-width'] === 0 ? 'none' : '7px solid' + ' '+ 'transparent', 'border-bottom': recentUse.draw_arrow_item.style['fill-outline-width'] === 0 ? 'none' :'7px solid' + ' '+ 'transparent','opacity': recentUse.draw_arrow_item.style['fill-opacity'] }"></i>
+      <i class="arrow-border" [ngStyle]="{'border-left':'8px solid' + ' '+recentUse.draw_arrow_item.style['fill-color'], 'opacity': recentUse.draw_arrow_item.style['fill-opacity']}"></i>
+      </div>
+    </span>
+  </span>
+
+  <span class="style-title" *ngIf="drawType === 'draw_photo'">
+    图片:
+    <div class="photo fa fa-picture-o" *ngIf="recentUse.draw_photo_item"  [ngStyle]="{ 'border-color': recentUse.draw_photo_item.style['fill-outline-color'], 'border-width': recentUse.draw_photo_item.style['fill-outline-width'] === 0 ? '0px' : '1px', 'border-style': 'solid'}"></div>
+  </span>
+
+  <span class="style-title" *ngIf="drawType === 'draw_pendant_words'">
+    文字:
+    <span class="words" *ngIf="recentUse.draw_pendant_words_item" [ngStyle]="{'font-size': '12px', 'margin-right': '5px', 'color': recentUse.draw_pendant_words_item.style['text-color'], 'font-weight': recentUse.draw_pendant_words_item.style['text-halo-width'] === 1 ? 'bold' : 'normal'}">文本</span>
+  </span>
+
+
+  <span class="style-title" *ngIf="drawType === 'draw_pendant_image'">
+    图片:
+    <div class="photo fa fa-picture-o" *ngIf="recentUse.draw_pendant_image_item"  [ngStyle]="{ 'border-color': recentUse.draw_pendant_image_item.style['borderColor'], 'border-width': recentUse.draw_pendant_image_item.style['borderWidth'] === '0px' ? '0px' : '1px', 'border-style': 'solid', 'border-radius': recentUse.draw_pendant_image_item.style['borderRadius'], 'box-shadow': recentUse.draw_pendant_image_item.style['boxShadow']}"></div>
+  </span>
+
+
+  <!----- 模板样式类型名称 - 结束 ------>
+
+
+
+<!------  模板样式 - 开始 -------->
+
+  <!-- 点类型样式模板 -->
+  <div class="cicle-template" *ngIf="drawType === 'draw_point'" (click)="$event.stopPropagation(); openStyle(drawType)">
+    <span class="circle" *ngFor="let icon of recentUse.draw_point_list" [ngStyle]="{'background':icon.style['circle-color'], 'opactiy': icon.style['circle-opacity'], 'border-width': (icon.style['circle-stroke-width'])/2 + 'px', 'border-color': icon.style['circle-stroke-color'], 'opacity': icon.style['circle-opacity']}" (click)="$event.stopPropagation(); chooseStyle(icon, null)"></span>
+    <span class="down-icon"></span>
+    <div class="style-wrap" *ngIf="showStyleList">
+      <div class="list-container">
+        <ul>
+          <li *ngFor="let item of styleList index as i;" (click)="chooseStyle(item, i)">
+            <div class="style-item" [ngClass]="{'on': i === itemIndex}">
+              <div class="circle"  [ngStyle]="{'background':item.style['circle-color'], 'border-width': item.style['circle-stroke-width'] + 'px', 'border-color': item.style['circle-stroke-color'], 'opacity': item.style['circle-opacity']}"></div>
+              <p class="style-name" title="{{item.style.name}}">{{item.style.name}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="style-mng">
+        <span (click)="createStyle(drawType)">新建样式</span>
+        <i>|</i>
+        <span (click)="styleManage(drawType)">样式管理</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 线类型样式模板 -->
+  <div class="cicle-template" *ngIf="drawType === 'draw_line' || drawType === 'draw_custom'" (click)="$event.stopPropagation(); openStyle()">
+    <span class="line" *ngFor="let lineIcon of recentUse.draw_line_list"  [ngStyle]="{'border-width': (lineIcon.style['line-width']) + 'px', 'border-color': lineIcon.style['line-color'], 'opactiy': lineIcon.style['line-opacity'], 'border-style': lineIcon.style['line-dasharray'] === 0 ? 'solid' : 'dashed'}" (click)="$event.stopPropagation(); chooseStyle(lineIcon, null)"></span>
+    <span class="down-icon"></span>
+    <div class="style-wrap" *ngIf="showStyleList">
+      <div class="list-container">
+        <ul>
+          <li *ngFor="let item of styleList index as i;" (click)="chooseStyle(item, i)">
+            <div class="style-item" [ngClass]="{'on': i === itemIndex}">
+              <div class="line"  [ngStyle]="{'border-width': item.style['line-width'] + 'px', 'border-color': item.style['line-color'],'opactiy': item.style['line-opacity'], 'border-style': item.style['line-dasharray'] === 0 ? 'solid' : 'dashed', 'opacity': item.style['line-opacity']}"></div>
+              <p class="style-name" title="{{item.style.name}}">{{item.style.name}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="style-mng">
+        <span (click)="createStyle(drawType)">新建样式</span>
+        <i>|</i>
+        <span (click)="styleManage(drawType)">样式管理</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 注记类型样式模板 -->
+  <div class="cicle-template" *ngIf="drawType === 'draw_words'" (click)="$event.stopPropagation(); openStyle()">
+    <span class="words" *ngFor="let icon of recentUse.draw_words_list"  [ngStyle]="{'font-size': '12px', 'color': icon.style['text-color'], 'font-weight': icon.style['text-halo-width'] === 1 ? 'bold' : 'normal'}" (click)="$event.stopPropagation(); chooseStyle(icon, null)">文本</span>
+    <span class="down-icon"></span>
+    <div class="style-wrap" *ngIf="showStyleList">
+      <div class="list-container">
+        <ul>
+          <li *ngFor="let item of styleList index as i;" (click)="chooseStyle(item, i)">
+            <div class="style-item" [ngClass]="{'on': i === itemIndex}">
+              <div class="words"  [ngStyle]="{'font-size': '16px', 'color': item.style['text-color'], 'font-weight': item.style['text-halo-width'] === 1 ? 'bold' : 'normal'}">文本</div>
+              <p class="style-name" title="{{item.style.name}}">{{item.style.name}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="style-mng">
+        <span (click)="createStyle(drawType)">新建样式</span>
+        <i>|</i>
+        <span (click)="styleManage(drawType)">样式管理</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 图标类型-无模板样式 -->
+  <div class="cicle-template" *ngIf="drawType === 'draw_symbol'" (click)="openSymbolModal($event)">
+    <span class="symbol" *ngFor="let icon of recentUse.draw_symbol;let i = index;" [ngStyle]="{'background-position': (-icon.positionx) + 'px' + ' ' + (-icon.positiony) + 'px', 'background-image': 'url('+ icon['sprite']  +')', 'background-size': icon['iconSprite_width']*iconRatio + 'px'}" (click)="$event.stopPropagation(); chooseSymbol(icon, i)"></span>
+    <span class="down-icon"></span>
+  </div>
+
+  <!-- 面类型样式模板 -->
+  <div class="cicle-template" *ngIf="drawType === 'draw_box' || drawType === 'draw_fill' || drawType === 'draw_circle'" (click)="$event.stopPropagation(); openStyle()">
+    <div *ngIf="drawType === 'draw_box' || drawType === 'draw_fill' || drawType === 'draw_circle'">
+      <span class="fill-item" *ngFor="let icon of recentUse[drawType + '_list']" (click)="$event.stopPropagation(); chooseStyle(icon, null)">
+        <span class="fill"  *ngIf="icon.style['fill-pattern'] === ''"  [ngStyle]="{'background': icon.style['fill-color'], 'border-color': icon.style['fill-outline-color'], 'border-style': 'solid', 'border-width': icon.style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': icon.style['fill-opacity']}"></span>
+
+        <span class="fill"  *ngIf="icon.style['fill-pattern'] === 'H00001' " [ngStyle]="{'background-image': 'url(assets/img/001.png)', 'border-color': icon.style['fill-outline-color'], 'border-style': 'solid', 'border-width': icon.style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': icon.style['fill-opacity']}"></span>
+
+        <span class="fill"  *ngIf="icon.style['fill-pattern'] === 'H00002' " [ngStyle]="{'background-image': 'url(assets/img/002.png)', 'border-color': icon.style['fill-outline-color'], 'border-style': 'solid', 'border-width': icon.style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': icon.style['fill-opacity']}"></span>
+
+      </span>
+    </div>
+
+    <span class="down-icon"></span>
+    <div class="style-wrap" *ngIf="showStyleList">
+      <div class="list-container">
+        <ul>
+          <li *ngFor="let item of styleList index as i;" (click)="chooseStyle(item, i)">
+            <div class="style-item" [ngClass]="{'on': i === itemIndex}">
+              <div class="fill" *ngIf="item.style['fill-pattern'] === ''" [ngStyle]="{'background': item.style['fill-color'], 'border-color': item.style['fill-outline-color'], 'border-style': 'solid', 'border-width': item.style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': item.style['fill-opacity']}"></div>
+
+              <div class="fill" *ngIf="item.style['fill-pattern'] === 'H00001' " [ngStyle]="{'background-image': 'url(assets/img/001.png)', 'border-color': item.style['fill-outline-color'], 'border-style': 'solid', 'border-width': item.style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': item.style['fill-opacity']}"></div>
+
+              <div class="fill" *ngIf="item.style['fill-pattern'] === 'H00002' " [ngStyle]="{'background-image': 'url(assets/img/002.png)', 'border-color': item.style['fill-outline-color'], 'border-style': 'solid', 'border-width': item.style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': item.style['fill-opacity']}"></div>
+
+              <p class="style-name" title="{{item.style.name}}">{{item.style.name}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="style-mng" >
+        <span (click)="createStyle(drawType)">新建样式</span>
+        <i>|</i>
+        <span (click)="styleManage(drawType)">样式管理</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 箭头类型样式模板 -->
+  <div class="cicle-template" *ngIf="drawType === 'draw_arrow'" (click)="$event.stopPropagation(); openStyle()">
+    <span class="arrowfill" *ngFor="let icon of recentUse.draw_arrow_list index as oind;" (click)="$event.stopPropagation(); chooseStyle(icon, null)">
+      <span class="arrow-fill" [ngStyle]="{'background': icon.style['fill-color'], 'border-color': icon.style['fill-outline-color'], 'border-width': icon.style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': icon.style['fill-opacity']}">
+        </span>
+      <i class="arrow" [ngStyle]="{'border-left':icon.style['fill-outline-width'] === 0 ? 'none' : '9px solid' + ' '+icon.style['fill-outline-color'], 'border-top': icon.style['fill-outline-width'] === 0 ? 'none' : '7px solid' + ' '+ 'transparent', 'border-bottom': icon.style['fill-outline-width'] === 0 ? 'none' :'7px solid' + ' '+ 'transparent','opacity': icon.style['fill-opacity'] }"></i>
+      <i class="arrow-border" [ngStyle]="{'border-left':'8px solid' + ' '+icon.style['fill-color'], 'opacity': icon.style['fill-opacity']}"></i>
+    </span>
+    <span class="down-icon"></span>
+    <div class="style-wrap" *ngIf="showStyleList">
+      <div class="list-container">
+        <ul>
+          <li *ngFor="let item of styleList index as i;" (click)="chooseStyle(item, i)">
+            <div class="style-item" [ngClass]="{'on': i === itemIndex}">
+              <div class="fill" >
+                <span class="arrow-fill" [ngStyle]="{'background': item.style['fill-color'], 'border-color': item.style['fill-outline-color'], 'border-width': item.style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': item.style['fill-opacity']}">
+        </span>
+                <i class="arrow" [ngStyle]="{'border-left':item.style['fill-outline-width'] === 0 ? 'none' : '14px solid' + ' '+item.style['fill-outline-color'], 'border-top': item.style['fill-outline-width'] === 0 ? 'none' : '9px solid' + ' '+ 'transparent', 'border-bottom': item.style['fill-outline-width'] === 0 ? 'none' :'9px solid' + ' '+ 'transparent','opacity': item.style['fill-opacity'] }">
+                </i>
+                <i class="arrow-border" [ngStyle]="{'border-left':'13px solid' + ' '+item.style['fill-color'], 'opacity': item.style['fill-opacity']}"></i>
+              </div>
+              <p class="style-name" title="{{item.style.name}}">{{item.style.name}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="style-mng" >
+        <span (click)="createStyle(drawType)">新建样式</span>
+        <i>|</i>
+        <span (click)="styleManage(drawType)">样式管理</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 图片类型样式模板 -->
+  <div class="cicle-template" *ngIf="drawType === 'draw_photo'" (click)="$event.stopPropagation(); openStyle()">
+    <span class="photo fa fa-picture-o" *ngFor="let icon of recentUse.draw_photo_list"  [ngStyle]="{ 'border-color': icon.style['fill-outline-color'], 'border-style': 'solid', 'border-width': icon.style['fill-outline-width'] === 0 ? '0px' : '1px'}" (click)="$event.stopPropagation(); chooseStyle(icon, null)"></span>
+    <span class="down-icon"></span>
+    <div class="style-wrap" *ngIf="showStyleList">
+      <div class="list-container">
+        <ul>
+          <li *ngFor="let item of styleList index as i;" (click)="chooseStyle(item, i)">
+            <div class="style-item" [ngClass]="{'on': i === itemIndex}">
+              <div class="photo fa fa-picture-o"  [ngStyle]="{ 'border-color': item.style['fill-outline-color'], 'border-style': 'solid', 'border-width': item.style['fill-outline-width'] === 0 ? '0px' : '1px'}"></div>
+              <p class="style-name" title="{{item.style.name}}">{{item.style.name}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="style-mng">
+        <span (click)="createStyle(drawType)">新建样式</span>
+        <i>|</i>
+        <span (click)="styleManage(drawType)">样式管理</span>
+      </div>
+    </div>
+  </div>
+
+  <!------  模板样式 - 结束 -------->
+
+
+
+
+  <!------ 具体样式类型-开始 -------->
+  <div class="style-info" *ngFor="let v of plotStyleArray;let i = index;">
+    <span style="display:inline-block; vertical-align:middle; font-size: 12px;" *ngIf="v.title">&nbsp;|&nbsp;&nbsp;{{v.title}}:&nbsp;</span>
+
+    <!-- 颜色-color -->
+    <smart-color
+      *ngIf="v.type === 'color'"
+      [(color)]="v.value"
+      [cpOutputFormat]="'rgba'"
+      [background]="true"
+      (onChange)="chooseColor(v)"
+      style="display: inline-block; margin-left: 0;"
+      [inputStyle]="{'height':'18px', 'width': '18px', 'font-size': 0,'border': 'none', 'border-radius': 0, 'margin-top': '-4px', 'cursor': 'pointer'}">
+    </smart-color>
+
+
+    <!-- 宽度-width -->
+    <div class="cicle-template" *ngIf="v.type === 'width'" >
+      <input class="select-input" *ngIf="v.name !== 'text-max-width'"  type="text" maxlength="2" [(ngModel)]="v.value" (change)="chooseWidth(v, $event, true)">
+      <input class="select-input" *ngIf="v.name === 'text-max-width'"  type="text" maxlength="3" [(ngModel)]="v.value" (change)="chooseMaxWidth(v, $event, true)">
+      <span class="down-icon" (click)="$event.stopPropagation(); openWidthSelect()"></span>
+      <div class="list-wrap" *ngIf="widthSelectShow">
+        <ul *ngIf="v.name !== 'text-max-width'">
+          <li [ngClass]="{'on': item === v.value}" *ngFor="let item of widthSelectData" (click)="chooseWidth(v, $event)">{{item}}</li>
+        </ul>
+        <ul *ngIf="v.name === 'text-max-width'">
+          <li [ngClass]="{'on': item === v.value}" *ngFor="let item of maxWidthSelectData" (click)="chooseMaxWidth(v, $event)">{{item}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 边框宽度-borderWidth -->
+    <div class="cicle-template" *ngIf="v.type === 'borderWidth'" >
+      <input class="select-input" type="text" maxlength="2" [(ngModel)]="v.value" (change)="chooseBorderWidth(v, $event, true)">
+      <span class="down-icon" (click)="$event.stopPropagation(); openBorderWidthSelect()"></span>
+      <div class="list-wrap" *ngIf="borderWidthSelectShow">
+        <ul>
+          <li [ngClass]="{'on': item === v.value}" *ngFor="let item of borderWidthSelectData" (click)="chooseBorderWidth(v, $event)">{{item}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 边框颜色- borderColor -->
+    <div class="border-color" *ngIf="v.type === 'borderColor'">
+      <div class="border-color-show" [ngStyle]="{'border-color': v.value}"></div>
+      <smart-color
+        [(color)]="v.value"
+        [cpOutputFormat]="'rgba'"
+        [background]="true"
+        (onChange)="chooseBorderColor(v)"
+        [inputStyle]="{'position': 'absolute', 'top': 0, 'width': '18px', 'height': '18px', 'opacity': 0, 'box-shadow': ' 1px 1px 3px #ccc', 'cursor': 'pointer'}">
+      </smart-color>
+    </div>
+
+    <!-- 透明度- opacity -->
+    <div class="cicle-template" *ngIf="v.type === 'opacity'">
+      <input class="select-input" type="text" maxlength="3" [(ngModel)]="v.value" (change)="chooseOpacity(v, $event, true)">
+      <!--<i class="show-radius">{{v.value}}</i>-->
+      <span class="down-icon" (click)="$event.stopPropagation(); openOpacitySelect()"></span>
+      <div class="list-wrap" *ngIf="opacitySelectShow">
+        <ul>
+          <li [ngClass]="{'on': item === v.value}" *ngFor="let item of opacitySelectData" (click)="chooseOpacity(v, $event)">{{item}}</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- 线型-lineType -->
+    <div class="cicle-template" *ngIf="v.type === 'lineType'" (click)="$event.stopPropagation(); openLineTypeSelect()">
+      <div class="show-line" [ngClass]="{'dashed': v.value === 1}"></div>
+      <span class="down-icon"></span>
+      <div class="list-wrap" *ngIf="lineTypeSelectShow">
+        <ul>
+          <li [ngClass]="{'on': i === v.value}" *ngFor="let item of lineTypeSelectData index as i;" (click)="chooseLineType(v, i)">
+            <span class="solid-line" *ngIf="i === 0"></span>
+            <span class="dashed-line" *ngIf="i === 1"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 文本-字体大小 -->
+    <div class="cicle-template" *ngIf="v.type === 'fontSize'" >
+      <input class="select-input" type="text" maxlength="2" [(ngModel)]="v.value" (change)="chooseFontSize(v, $event, true)">
+      <span class="down-icon" (click)="$event.stopPropagation(); openFontSizeSelect()"></span>
+      <div class="list-wrap" *ngIf="fontSizeSelectShow">
+        <ul>
+          <li [ngClass]="{'on': item === v.value}" *ngFor="let item of textSelectData" (click)="chooseFontSize(v, $event)">{{item}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 文本-行高 -->
+    <div class="cicle-template" *ngIf="v.type === 'lineHeight'" >
+      <input class="select-input" type="text" maxlength="3" [(ngModel)]="v.value" (change)="chooseLineHeight(v, $event, true)">
+      <span class="down-icon" (click)="$event.stopPropagation(); openLineHeightSelect()"></span>
+      <div class="list-wrap" *ngIf="lineHeightSelectShow">
+        <ul>
+          <li [ngClass]="{'on': item === v.value}" *ngFor="let item of lineSelectData" (click)="chooseLineHeight(v, $event)">{{item}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 文本-加粗 -->
+    <div class="text-bold" [ngClass]="{'bold': v.value === 1}" *ngIf="v.type === 'fontBold'" (click)="setTextBold(v)">B</div>
+
+    <!-- 面-填充图案 -->
+    <div class="cicle-template" *ngIf="v.type === 'fillPattern'" (click)="$event.stopPropagation(); openFillPatternSelect()">
+      <i class="show-radius">
+        <span class="fill-icon" *ngIf="v.value === 'H00001'" [ngStyle]="{'background-image': 'url(assets/img/001.png)'  }"></span>
+        <span class="fill-icon" *ngIf="v.value === 'H00002'" [ngStyle]="{'background-image': 'url(assets/img/002.png)'  }"></span>
+        <span class="fill-icon" *ngIf="v.value === ''">无</span>
+      </i>
+      <span class="down-icon"></span>
+      <div class="list-wrap" *ngIf="fillPatternSelectShow">
+        <ul>
+          <li [ngClass]="{'on': item.iconId === v.value}" *ngFor="let item of fillPaternSelectData" (click)="chooseFillPattern(v, item)">
+            <span class="fill-icon" [ngStyle]="{'background-image': 'url('+ item.url +')'  }">
+              <span *ngIf="item.iconId === ''">空</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- 挂件-边框颜色 -->
+    <div class="border-color" *ngIf="v.type === 'imageBorderColor'">
+      <div class="border-color-show" [ngStyle]="{'border-color': v.value}"></div>
+      <smart-color
+        [(color)]="v.value"
+        [cpOutputFormat]="'rgba'"
+        [background]="true"
+        (onChange)="chooseBorderColor(v)"
+        [inputStyle]="{'position': 'absolute', 'top': 0, 'width': '18px', 'height': '18px', 'opacity': 0, 'cursor': 'pointer'}">
+      </smart-color>
+    </div>
+
+    <!-- 挂件-边框宽度 -->
+    <div class="cicle-template" *ngIf="v.type === 'imageBorderWidth'" >
+      <i class="show-radius" *ngIf="!borderWidthInput" (click)="showBorderWidthInput()">{{v.value.replace('px', '')}}</i>
+      <input id="borderWidthInput" class="select-input"  *ngIf="borderWidthInput"type="text" maxlength="2" [value]="v.value.replace('px', '')" (blur)="hideInput()" (change)="chooseImageBorderWidth(v, $event, true)">
+      <span class="down-icon" (click)="$event.stopPropagation(); openImageBorderWidthSelect()"></span>
+      <div class="list-wrap" *ngIf="imageBorderWidthSelectShow">
+        <ul>
+          <li [ngClass]="{'on': item === v.value}" *ngFor="let item of borderWidthSelectData" (click)="chooseImageBorderWidth(v, $event)">{{item}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 挂件-圆角 -->
+    <div class="cicle-template" *ngIf="v.type === 'imageRadius'" >
+      <i class="show-radius" *ngIf="!radiusInput" (click)="showRadiusInput()">{{v.value.replace('px', '')}}</i>
+      <input class="select-input" id="radiusInput" *ngIf="radiusInput" type="text" maxlength="3" [(ngModel)]="v.value" (blur)="hideInput()" (change)="chooseImageRadius(v, $event, true)">
+      <span class="down-icon" (click)="$event.stopPropagation(); openImageRadiusSelect()"></span>
+      <div class="list-wrap" *ngIf="imageRaiudsSelectShow">
+        <ul>
+          <li [ngClass]="{'on': item === v.value}" *ngFor="let item of radiusSelectData" (click)="chooseImageRadius(v, $event)">{{item}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 挂件-宽度 -->
+    <div class="cicle-template" *ngIf="v.type === 'imageWidth'" >
+      <i class="show-radius" *ngIf="!widthInput" (click)="showWidthInput()">{{v.value.replace('px', '')}}</i>
+      <input class="select-input" id="widthInput" *ngIf="widthInput" type="text" maxlength="3" [value]="v.value.replace('px', '')" (blur)="hideInput()" (change)="chooseImageWidth(v, $event, true)">
+      <span class="down-icon" (click)="$event.stopPropagation(); openImageWidthSelect()"></span>
+      <div class="list-wrap" *ngIf="imageWidthSelectShow">
+        <ul>
+          <li [ngClass]="{'on': item === v.value}" *ngFor="let item of imageWidthSelectData" (click)="chooseImageWidth(v, $event)">{{item}}</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- 挂件-高度 -->
+    <div class="cicle-template" *ngIf="v.type === 'imageHeight'" >
+      <i class="show-radius" *ngIf="!heightInput" (click)="showHeightInput()">{{v.value.replace('px', '')}}</i>
+      <input class="select-input" id="heightInput" *ngIf="heightInput" type="text" maxlength="3" [value]="v.value.replace('px', '')" (blur)="hideInput()" (change)="chooseImageHeight(v, $event, true)">
+      <span class="down-icon" (click)="$event.stopPropagation(); openImageHeightSelect()"></span>
+      <div class="list-wrap" *ngIf="imageHeightSelectShow">
+        <ul>
+          <li [ngClass]="{'on': item === v.value}" *ngFor="let item of imageWidthSelectData" (click)="chooseImageHeight(v, $event)">{{item}}</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- 挂件-阴影 -->
+    <div class="cicle-template" *ngIf="v.type === 'imageBoxShadow'" >
+      <i class="show-radius">
+        <div class="photo fa fa-picture-o" *ngIf="recentUse.draw_pendant_image_item"  [ngStyle]="{ 'border-color': recentUse.draw_pendant_image_item.style['borderColor'], 'border-width': recentUse.draw_pendant_image_item.style['borderWidth'] === '0px' ? '0px' : '1px', 'border-radius': recentUse.draw_pendant_image_item.style['borderRadius'], 'box-shadow': recentUse.draw_pendant_image_item.style['boxShadow'], 'font-size': '14px', 'color': '#09c', 'border-style': 'solid', 'padding': '1px 3px', 'margin-top': '3px'}"></div>
+      </i>
+      <span class="down-icon" (click)="$event.stopPropagation(); openImageBoxShadowShow(v)"></span>
+      <div class="list-wrap" *ngIf="imageBoxShadowShow">
+        <div class="offset-wrap">
+          Offset:&nbsp;
+          <span>X:&nbsp;</span><input type="text" maxlength="4" [(ngModel)]="imageOffset[0]" (keyup)="offsetChange(v, $event, 'x')">&nbsp;
+          <span>Y:&nbsp;</span><input type="text" maxlength="4" [(ngModel)]="imageOffset[1]" (keyup)="offsetChange(v, $event, 'y')">
+        </div>
+        <div class="offset-wrap">
+          Blur:&nbsp;<input type="text" maxlength="4" [(ngModel)]="imageOffset[2]" (keyup)="offsetChange(v, $event, 'z')">&nbsp;
+          Color:&nbsp;
+          <smart-color
+            [(color)]="imageOffset[3]"
+            [cpOutputFormat]="'rgba'"
+            [background]="true"
+            style="display: inline-block; vertical-align: middle; margin-left: 0;"
+            [inputStyle]="{'height':'18px', 'width': '18px', 'font-size': 0,'border': 'none', 'border-radius': 0, 'margin-top': '-4px', 'box-shadow': ' 1px 1px 3px #ccc', 'cursor': 'pointer'}"
+            (onChange)="offsetChange(v, $event, 'c')"
+            ></smart-color>
+        </div>
+        <!--[inputStyle]="{'position': 'absolute', 'top': 0, 'width': '18px', 'height': '18px', 'opacity': 0}"-->
+      </div>
+    </div>
+
+
+  </div>
+  <!------ 具体样式类型-结束 -------->
+
+  <!-- 挂件-图片按钮-->
+  <div class="imgicon-wrap" *ngIf="drawType === 'draw_pendant_image' || drawType === 'draw_pendant_words'">
+    <i *ngIf="waterMark && !waterMark.isdrag" class="icon smx-icon icon-lock1" (click)="unlockPendantImage()" title="解锁"></i>
+    <i *ngIf="waterMark && waterMark.isdrag" class="icon smx-icon icon-unlock" (click)="lockPendantImage()" title="锁定" ></i>
+
+    <div class="set-position">
+      <i class="icon smx-icon icon-va-left" title="对齐位置" (click)="$event.stopPropagation(); showPositionSelect()"></i>
+      <div class="list-wrap" *ngIf="positionData.showDrop">
+        <ul>
+          <li *ngFor="let v of positionData.options; index as i"
+              [title]="positionData.title[i]"
+              [ngClass]="{'icon-select': waterMark && waterMark.getReferencePoint() === v}"
+              (click)="$event.stopPropagation();
+              choosePosition(v, drawType)"><i [ngClass]="'icon smx-icon icon-' + v" ><span style="font-size: 0">v</span></i></li>
+        </ul>
+      </div>
+    </div>
+    <div class="set-position">
+      <i class="icon smx-icon icon-top-layer" title="置顶" (click)="$event.stopPropagation(); showTopBottom()"></i>
+     <!-- <div class="list-wrap" *ngIf="setTopBottom.showDrop">
+        <ul>
+          <li *ngFor="let v of setTopBottom.options; index as i" [title]="setTopBottom.title[i]" (click)="$event.stopPropagation(); chooseTopBottom(v)"><i [ngClass]="'icon smx-icon icon-' + v"><span style="font-size: 0">v</span></i></li>
+        </ul>
+      </div>-->
+    </div>
+
+    <i class="icon smx-icon icon-delete" title="删除" (click)="deletePendantImage()"></i>
+  </div>
+
+  <!-- 图标弹框 -->
+ <app-legend
+    [mapObj]="map"
+    [plotFormat]='plotFormat'
+    [isPlotStyleCom]='isPlotStyleCom'
+    (circlestyleChange)='chooseSymbol($event, null)'
+  ></app-legend>
+
+</div>

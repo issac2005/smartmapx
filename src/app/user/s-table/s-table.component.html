@@ -1,0 +1,42 @@
+<ng-content></ng-content>
+<div>
+  <table [ngClass]="{'table':true}" [class]="config['TClass']" id="sTable">
+    <thead [class]="config['HClass']"
+           [ngStyle]="{'text-align': config['Halign']? config['Halign']: 'unset','background-color':config['HbgColor']? config['HbgColor']: 'auto'}">
+    <tr>
+      <th *ngIf="config.checkbox"></th>
+      <th *ngFor="let col of cols">{{col.header}}</th>
+    </tr>
+    </thead>
+
+    <tbody [class]="config['BClass']"
+           [ngStyle]="{'text-align': config['align']? config['align']: 'unset','background-color':config['bgColor']? config['bgColor']: 'auto'}">
+    <tr *ngFor="let data of arrays;index as i">
+      <td *ngIf="config.checkbox"><input type="checkbox" (change)="checkItem($event)"></td>
+      <td *ngFor="let col of cols">
+        <div [ngSwitch]="col.type">
+          <span *ngSwitchCase="'time'">{{data[col.field]*1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+          <span *ngSwitchCase="'custom_pipe'">{{ data[col.field] | SmxPipe:'orderType'}}</span>
+          <span *ngSwitchCase="'pipe'">{{col.pipe[data[col.field]] || col.pipe['d'] || ''}}</span>
+          <div *ngSwitchCase="'button'">
+            <div *ngIf="data[col.field]">
+              <button *ngFor="let b of data[col.field]" (click)="customClick(b.index,data)"
+                      class="btn btn-primary customBtn"
+                      [style.background-color]="b.theme? b.theme.bgColor:null"
+                      [style.border-color]="b.theme?b.theme.bdColor || b.theme.bgColor:null"
+                      [style.color]="b.theme?b.theme.color:null"
+                      [style.width]="b.theme?b.theme.width:null">
+                {{b.title}}
+              </button>
+            </div>
+          </div>
+          <span *ngSwitchDefault>{{data[col.field]}}</span>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div>
+  </div>
+</div>
+

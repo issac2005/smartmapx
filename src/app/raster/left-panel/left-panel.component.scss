@@ -1,0 +1,80 @@
+.left {
+
+    &-tab {
+      z-index: 10;
+      width: 240px;
+      background: #f8f7f5;
+      height: 100%;
+      overflow: hidden;
+      position: absolute;
+      //overflow-x: hidden;
+
+      ::-webkit-scrollbar {
+        width: 3px;
+      }
+
+      &-title {
+        height: 32px;
+        background: #fff;
+        line-height: 32px;
+        padding-left: 9px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 100%;
+      }
+
+      &-back {
+        font-size: 20px;
+        color: #0098cf;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+      &-panel {
+        font-size: 12px;
+        height: calc(100% - 32px);
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+        
+
+        .overflow-hidden {
+          display: inline-block;
+          width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          height: 100%;
+        }
+        
+        .container {
+          margin-bottom: -15px;
+          padding-top: 10px;
+          .row {
+            height: 30px;
+            line-height: 1;
+            div {
+              padding: 0;
+              input {
+                position: relative;
+                top: -5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (min-width: 168px) {
+    .col-xs-4 {
+        flex: 33%;
+        max-width:33%;
+    }
+    .col-xs-8 {
+        flex: 67%;
+        max-width:67%;
+        float: right;
+        padding-right: 14px;
+    }
+
+}

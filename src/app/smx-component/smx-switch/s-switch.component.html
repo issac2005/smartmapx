@@ -1,0 +1,13 @@
+<div
+  [ngClass]="{'s-switch-booleanBtn':!value,'s-switch-booleanBtn_open':value,'s-switch-disabled':smxDisabled, smxClass:true}"
+  (click)="smxDisabled?null:changeStatus()"
+  [ngStyle]="smxStyle">
+  <div *ngIf="value">
+    <div class="s-switch-trueText"><span class="s-switch-label">{{smxCheckedLabel || 'true'}}</span></div>
+    <div class="s-switch-circleBtn"></div>
+  </div>
+  <div *ngIf="!value">
+    <div class="s-switch-circleBtn_open"></div>
+    <div class="s-switch-trueText_open"><span class="s-switch-label">{{smxUnCheckedLabel || 'false'}}</span></div>
+  </div>
+</div>

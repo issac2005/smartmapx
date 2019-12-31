@@ -1,0 +1,98 @@
+<div class="plot-edit">
+  <!--图标-->
+  <span [ngClass]="{'select': mode_type === 'draw_symbol'}"
+        title="图标"
+        class="icon smx-icon icon-plot_symbol"
+        (click)="draw_mode('draw_symbol')"
+        title="图标">
+  </span>
+  <!--点-->
+  <span [ngClass]="{'select': mode_type === 'draw_point'}"
+        title="点"
+        class="icon smx-icon icon-plot_point"
+        (click)="draw_mode('draw_point')"
+        title="点">
+  </span>
+  <!--线-->
+  <span [ngClass]="{'select': mode_type === 'draw_line'}"
+        title="线类型"
+        class="icon smx-icon icon-plot_line"
+        style="position:relative;"
+        (mouseenter)="line_hover = true"
+        (mouseleave)="line_hover = false"
+        title="线">
+     <div *ngIf="line_hover" class="plot-line" [ngStyle]="{'height': plotStatus.routing ? '62px' : '37px'}">
+        <span title="线" (click)="draw_mode('draw_line')" [ngClass]="{'select': mode_type === 'draw_line'}"
+              class="icon smx-icon icon-smx-line" style="position: absolute; margin: 0px;top: 0px;left: 6px;"></span>
+        <span *ngIf="plotStatus.routing" nz-tooltip [nzTooltipTitle]="routingTooltip" title="沿路画线"
+              (click)="routingTooltip !== '' ? null: draw_mode('draw_route_line')"
+              [ngClass]="{'select': mode_type === 'draw_route_line', 'plot-disabled': routingTooltip !== ''}"
+              class="icon smx-icon icon-route_line" style="position: absolute; margin: 0px;top: 25px;left: 6px;"></span>
+    </div>
+  </span>
+  <!--面-->
+  <span
+    [ngClass]="{'select': (mode_type === 'draw_box' || mode_type === 'draw_fill' || mode_type === 'draw_circle') ? true : false}"
+    title="面类型"
+    class="icon smx-icon icon-plot_polygon"
+    style="position:relative;"
+    (mouseenter)="polygon_hover = true"
+    (mouseleave)="polygon_hover = false"
+    title="面">
+    <div *ngIf="polygon_hover" class="plot-polygon" [ngStyle]="{'height': plotStatus.routing ? '110px' : '85px'}">
+        <span title="矩形" (click)="draw_mode('draw_box')" [ngClass]="{'select': mode_type === 'draw_box'}"
+              class="icon smx-icon icon-plot_box" style="position: absolute; margin: 0px;top: 0px;left: 6px;"></span>
+        <span title="多边形" (click)="draw_mode('draw_fill')" [ngClass]="{'select': mode_type === 'draw_fill'}"
+              class="icon smx-icon icon-plot_fill" style="position: absolute; margin: 0px;top: 25px;left: 6px;"></span>
+        <span title="圆" (click)="draw_mode('draw_circle')" [ngClass]="{'select': mode_type === 'draw_circle'}"
+              class="icon smx-icon icon-plot_circle"
+              style="position: absolute; margin: 0px;top: 50px;left: 6px;"></span>
+        <span *ngIf="plotStatus.routing" nz-tooltip [nzTooltipTitle]="routingTooltip" title="沿路画面"
+              (click)="routingTooltip !== '' ? null: draw_mode('draw_route_fill')"
+              [ngClass]="{'select': mode_type === 'draw_route_fill', 'plot-disabled': routingTooltip !== ''}"
+              class="icon smx-icon icon-route_fill" style="position: absolute; margin: 0px;top: 75px;left: 6px;"></span>
+    </div>
+  </span>
+  <!--箭头-->
+  <span [ngClass]="{'select': mode_type === 'draw_arrow'}"
+        title="箭头"
+        class="icon smx-icon icon-plot_arrow"
+        (click)="draw_mode('draw_arrow')"
+        title="箭头">
+  </span>
+  <!--注记-->
+  <span [ngClass]="{'select': mode_type === 'draw_words'}"
+        title="注记"
+        class="icon smx-icon icon-plot_label"
+        (click)="draw_mode('draw_words')"
+        title="注记">
+  </span>
+  <!--图片-->
+  <span [ngClass]="{'select': mode_type === 'draw_photo'}"
+        title="图片"
+        class="icon smx-icon icon-plot_image"
+        (click)="addImage('draw_photo')"
+        title="图片">
+  </span>
+  <!--挂件-->
+  <!--<span [ngClass]="{'select': mode_type === 'draw_symbol'}"
+        class="icon smx-icon icon-plot_pendant"
+        (click)="draw_mode('draw_symbol')">
+  </span>-->
+  <span [ngClass]="{'select': mode_type === 'draw_pendant_words'}"
+        title="挂件"
+        class="icon smx-icon icon-plot_pendant"
+        style="position:relative;"
+        (mouseenter)="pendant_hover = true"
+        (mouseleave)="pendant_hover = false"
+        title="挂件">
+    <div *ngIf="pendant_hover" class="plot-pendant">
+        <span title="文字" (click)="addWaterMark('draw_pendant_words')"
+              [ngClass]="{'select': mode_type === 'draw_pendant_words'}" class="words">文字</span>
+        <span title="图片" (click)="addImage('draw_pendant_image')"
+              [ngClass]="{'select': mode_type === 'draw_pendant_image'}" class="image">图片</span>
+    </div>
+  </span>
+
+</div>
+

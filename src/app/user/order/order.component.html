@@ -1,0 +1,93 @@
+<div class="order-center">
+  <div class="order-toobar">
+    <span>支付中心</span>
+  </div>
+  <div style="min-height: 500px;position: relative;">
+    <div class="order-body">
+      <div style="background: #f8f8f8;padding: 20px 18px;">
+        <label class="order-title">订单信息</label>
+        <div class="order-info">
+
+          <div *ngFor="let v of info" style="margin-top: 20px;" [ngClass]="{'order-info-price':v.type === 'price'}">
+
+            <div [ngSwitch]="v.type" style="display: inline-block;width: 100px;">
+              <span *ngSwitchCase="'price'" style="font-size: 20px;color: #808080">{{v.title}}</span>
+              <span *ngSwitchDefault>{{v.title}}</span>
+            </div>
+
+
+            <div [ngSwitch]="v.type" style="display: inline-block">
+              <span *ngSwitchCase="'time'">{{ v.value*1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+              <span *ngSwitchCase="'custom_pipe'">{{ v.value | SmxPipe: 'orderType'}}</span>
+              <span *ngSwitchCase="'price'"
+                    style="font-weight: bold;font-size: 20px;color: #e7311a;">{{v.value}}元</span>
+              <span *ngSwitchDefault>{{v.value}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div style="background: #f8f8f8;padding: 20px 18px;margin-top: 20px">
+        <label class="order-title">支付方式</label>
+        <div class="order-pay">
+          <div class="order-pay-category">
+          <span class="btn" [ngClass]="payType === 1? 'btn-primary' : 'btn-secondary'"
+                (click)="changePayType(1)">在线支付</span>
+            <span class="btn" [ngClass]="payType === 2? 'btn-primary' : 'btn-secondary'"
+                  (click)="changePayType(2)">线下支付</span>
+          </div>
+        </div>
+
+
+        <div *ngIf="payType === 1">
+          <div class="order-pay-online">
+            <div class="form-check">
+              <input class="form-check-input order-pay-radio" type="radio" name="pay" id="ali" value="ali"
+                     (ngModelChange)="payMode = $event" disabled>
+              <span class="order-pay-online-icon order-pay-online-ali"></span>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input order-pay-radio" type="radio" name="pay" id="wechat" value="wechat"
+                     (ngModelChange)="payMode = $event" checked>
+              <span class="order-pay-online-icon order-pay-online-wechat"></span>
+            </div>
+          </div>
+          <div style="text-align: center;margin-top: 50px;">
+            <button class="btn btn-primary order-pay-btn" (click)="confirmPay()" [disabled]="pay_status?true:false">确认支付</button>
+          </div>
+        </div>
+
+
+        <div *ngIf="payType === 2">
+          <div class="order-pay-bank">
+            <span class="order-pay-bank-title">账户信息</span>
+            <div style="margin-top: 10px">
+              <div>
+                <span class="order-pay-bank-info">公司名称:北京灵图软件技术有限公司</span>
+                <span class="order-pay-bank-info">开户银行:中国建设银行上地支行</span>
+              </div>
+              <div style="margin-top: 8px">
+                <span class="order-pay-bank-info">公司账号:1100 1045 3000 5602 2502</span>
+                <span class="order-pay-bank-info">地址:北京市海淀区东北旺南路29号首农蓝海中心A座</span>
+              </div>
+            </div>
+            <div style="margin-top: 24px">
+              <span class="order-pay-bank-tag">通过银行账号进行线下汇款，我们会在汇款到账的三个工作日内为您开通服务。</span>
+              <span class="order-pay-bank-tag">如需所取发票或签订合同，请联系电话：010-62975588-6666</span>
+            </div>
+
+          </div>
+          <div class="order-pay-bank-footer">
+            <span>(付款成功后,请您上传支付凭证)</span>
+            <button class="btn btn-primary order-pay-btn" (click)="uploadPay()"  [disabled]="pay_status?true:false">上传支付凭证</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div>
+
+</div>

@@ -1,0 +1,22 @@
+.dropdown-component{
+  margin:5px 0;
+  label{
+    font-size:12px;
+    color:#273D56;
+    margin:0;
+    vertical-align: -webkit-baseline-middle;
+  }
+  .beyond{
+    position: relative;
+    top: 14px;
+  }
+  #dropdownId{
+    position: relative;
+    left: 115px;
+    top: -14px;
+  }
+  .ui-dropdown {
+    border: 1px solid #ced4da!important;
+  }
+}
+

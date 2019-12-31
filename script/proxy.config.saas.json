@@ -1,0 +1,45 @@
+{
+  "/services": {
+    "target": "http://dev.smartmapx.com/",
+    "secure": false
+  },
+  "/em": {
+    "target": "http://dev.smartmapx.com/",
+    "secure": false
+  },
+  "/uploadfile": {
+    "target": "http://dev.smartmapx.com/",
+    "secure": false
+  },
+  "/downloadfile": {
+    "target": "http://dev.smartmapx.com/",
+    "secure": false
+  },
+  "/upload": {
+    "target": "http://dev.smartmapx.com/",
+    "secure": false
+  },
+  "/geomap": {
+    "target": "http://dev.smartmapx.com/",
+    "secure": false
+  },
+  "/handler": {
+    "target": "http://dev.smartmapx.com/",
+    "secure": false
+  },
+  "/help": {
+    "target": "http://dev.smartmapx.com/",
+    "secure": false
+  },
+  "/map": {
+    "target": "http://dev.smartmapx.com/",
+    "secure": false
+  },
+  "/fonts": {
+    "target": "http://dev.smartmapx.com/",
+    "secure": false
+  }
+}
+
+
+

@@ -1,0 +1,191 @@
+.order {
+  &-center {
+    background: #eff3f5 100% 100%;
+    width: 100%;
+    height: auto;
+    padding: 30px 130px 0px;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+
+  }
+
+  &-toobar {
+    width: 100%;
+    background-color: #f8f8f8;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 3px #ccc;
+
+    span {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2396bd;
+    }
+  }
+
+  &-body {
+    //border: 1px dashed;
+    /* height: 90%; */
+    padding: 10px;
+    position: relative;
+    .table th, .table td {
+      border-top: 0px solid #dee2e6;
+    }
+    width: 100%;
+    display: inline-block;
+    min-height: 500px;
+    //box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  &-body-pay {
+    width: 50%;
+    transition: 1.5s;
+  }
+
+
+  &-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333;
+  }
+
+  &-info {
+    padding-left: 20px;
+    position: relative;
+
+    span {
+      font-size: 14px;
+      color: #585858;
+    }
+
+    &-price {
+      position: absolute;
+      bottom: 0;
+      right: 18px;
+    }
+  }
+
+  &-pay {
+    display: inline-flex;
+    width: 100%;
+    //min-width: 1000px;
+    margin-top: 22px;
+    background: #f8f8f8;
+    z-index: 5;
+
+    // 分类条目
+    &-category {
+      display: inline-flex;
+      position: relative;
+      //left: 5px;
+      .btn {
+        display: block;
+        cursor: pointer;
+        border-radius: 0;
+        width: 130px;
+        line-height: 25px;
+      }
+
+      .btn-primary {
+        background: #454545;
+        border-color: #454545;
+
+      }
+
+      .btn-secondary {
+        color: #666666;
+        background-color: #ffffff;
+        border-color: #ffffff;
+      }
+
+    }
+
+    &-radio {
+      position: relative;
+      bottom: 18px;
+    }
+
+    &-btn {
+      width: 210px;
+      height: 50px;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 6px;
+      background-color: #1a7da6;
+    }
+
+
+    // 线上付款
+    &-online {
+      padding-top: 20px;
+      border: 1px solid #e4e4e4;
+      height: 166px;
+      padding-left: 30px;
+
+      &-icon {
+        margin: 5px 15px;
+        display: inline-block;
+        width: 120px;
+        height: 40px;
+      }
+
+      &-ali {
+        background-image: url(/assets/img/sprites.png);
+        background-repeat: no-repeat;
+        background-position: -370px -480px;
+      }
+
+      &-wechat {
+        background-image: url(/assets/img/sprites.png);
+        background-repeat: no-repeat;
+        background-position: -370px -520px;
+      }
+    }
+
+    //线下付款
+    &-bank {
+      padding: 20px 30px;
+      border: 1px solid #e4e4e4;
+
+      &-title {
+        font-size: 20px;
+        font-weight: bold;
+        display: block;
+        color: #f09819
+      }
+
+      &-info {
+        width: 45%;
+        display: inline-block;
+        color: #1a7da5;
+        font-size: 14px;
+      }
+
+      &-tag {
+        display: block;
+        font-size: 12px;
+        color: #666666;
+      }
+
+      &-footer {
+        text-align: center;
+        margin-top: 50px;
+
+        span {
+          color: #e7311a;
+          font-size: 14px;
+          display: block;
+          margin-bottom: 10px
+        }
+      }
+    }
+
+  }
+
+}

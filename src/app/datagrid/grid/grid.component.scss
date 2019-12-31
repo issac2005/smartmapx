@@ -1,0 +1,349 @@
+.grid {
+  //::-webkit-scrollbar {
+  //  width: 3px;
+  //  height: 5px;
+  //}
+  padding: 0 15px;
+  width: 100%;
+  height: 595px;
+  background: #fff;
+
+  .grid-box {
+    font-size: 12px;
+    background: #fff;
+    /* padding: 15px;*/
+    //padding-top: 0;
+    overflow: scroll;
+    width: 100%;
+    //margin: 0 15px
+    //padding: 0 15px;;
+    border-left: 1px solid #eee;
+
+    .btn {
+      padding: 4px 20px;
+      font-size: 12px;
+      margin-right: 10px;
+    }
+
+    .table {
+      text-align: center;
+      background: #fff;
+      margin-top: 0;
+
+      th {
+        text-align: center;
+        width: 120px;
+        line-height: 1;
+        vertical-align: inherit;
+        padding: 0.75rem;
+        height: 40px;
+      }
+
+      td {
+        width: 120px;
+        line-height: 1;
+        vertical-align: inherit;
+        height: 40px;
+
+        span {
+          width: 100px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          display: inline-block;
+          height: 20px;
+          margin-top: 0.9rem;
+        }
+      }
+
+      .change-name-input {
+        line-height: 1;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+
+
+      //.check-thead, .check-tbody {
+      //  width: 50px;
+      //}
+    }
+
+    table tbody {
+      display: block;
+      height: 520px;
+      //   overflow: scroll;
+      //overflow-x: auto;
+    }
+
+    table thead, tbody tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+      border-bottom: 1px solid #eee;
+    }
+
+    .data-geo-icon {
+      width: 20px !important;
+      height: 20px;
+      //background-size: 100% 100%;
+      /* line-height: 30px; */
+      vertical-align: middle;
+
+      &-point {
+        background-image: url(/assets/img/sprites.png);
+        background-position: -440px -64px;
+        background-repeat: no-repeat;
+      }
+
+      &-line {
+        background-image: url(/assets/img/sprites.png);
+        background-position: -440px -42px;
+        background-repeat: no-repeat;
+      }
+
+      &-poygon {
+        background-image: url(/assets/img/sprites.png);
+        background-position: -440px -20px;
+        background-repeat: no-repeat;
+      }
+    }
+
+  }
+
+
+  .grid-box-header {
+    font-size: 12px;
+    background: #fff;
+    height: 43px;
+    width: 100%;
+    //margin: 0 auto;
+    overflow: hidden;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+
+    .table {
+      text-align: center;
+      background: #fff;
+      margin-top: 0;
+      // width: 800px;
+      th {
+        text-align: center;
+        width: 120px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+
+        div {
+          display: inline-block;
+        }
+
+      }
+
+      //.check-thead, .check-tbody {
+      //  width: 50px;
+      //}
+    }
+
+    &-span {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      display: block;
+    }
+
+    table thead, tbody tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* table thead, tbody tr:hover {
+       background: rgb(231, 252, 255);
+     }*/
+    table thead {
+      position: relative;
+      background-color: white;
+    }
+  }
+
+
+  //数据加载
+  .data-loading {
+    .spinner {
+      margin: 0 auto 10px;
+      width: 20px;
+      height: 20px;
+      position: relative;
+    }
+
+    .container1 > div, .container2 > div, .container3 > div {
+      width: 6px;
+      height: 6px;
+      background-color: #333;
+
+      border-radius: 100%;
+      position: absolute;
+      -webkit-animation: bouncedelay 1.2s infinite ease-in-out;
+      animation: bouncedelay 1.2s infinite ease-in-out;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+    }
+
+    .spinner .spinner-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .container2 {
+      -webkit-transform: rotateZ(45deg);
+      transform: rotateZ(45deg);
+    }
+
+    .container3 {
+      -webkit-transform: rotateZ(90deg);
+      transform: rotateZ(90deg);
+    }
+
+    .circle1 {
+      top: 0;
+      left: 0;
+    }
+
+    .circle2 {
+      top: 0;
+      right: 0;
+    }
+
+    .circle3 {
+      right: 0;
+      bottom: 0;
+    }
+
+    .circle4 {
+      left: 0;
+      bottom: 0;
+    }
+
+    .container2 .circle1 {
+      -webkit-animation-delay: -1.1s;
+      animation-delay: -1.1s;
+    }
+
+    .container3 .circle1 {
+      -webkit-animation-delay: -1.0s;
+      animation-delay: -1.0s;
+    }
+
+    .container1 .circle2 {
+      -webkit-animation-delay: -0.9s;
+      animation-delay: -0.9s;
+    }
+
+    .container2 .circle2 {
+      -webkit-animation-delay: -0.8s;
+      animation-delay: -0.8s;
+    }
+
+    .container3 .circle2 {
+      -webkit-animation-delay: -0.7s;
+      animation-delay: -0.7s;
+    }
+
+    .container1 .circle3 {
+      -webkit-animation-delay: -0.6s;
+      animation-delay: -0.6s;
+    }
+
+    .container2 .circle3 {
+      -webkit-animation-delay: -0.5s;
+      animation-delay: -0.5s;
+    }
+
+    .container3 .circle3 {
+      -webkit-animation-delay: -0.4s;
+      animation-delay: -0.4s;
+    }
+
+    .container1 .circle4 {
+      -webkit-animation-delay: -0.3s;
+      animation-delay: -0.3s;
+    }
+
+    .container2 .circle4 {
+      -webkit-animation-delay: -0.2s;
+      animation-delay: -0.2s;
+    }
+
+    .container3 .circle4 {
+      -webkit-animation-delay: -0.1s;
+      animation-delay: -0.1s;
+    }
+
+    @-webkit-keyframes bouncedelay {
+      0%, 80%, 100% {
+        -webkit-transform: scale(0.0)
+      }
+      40% {
+        -webkit-transform: scale(1.0)
+      }
+    }
+
+    @keyframes bouncedelay {
+      0%, 80%, 100% {
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+      }
+      40% {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+      }
+    }
+  }
+
+  .fa {
+    cursor: pointer;
+
+    &.fa-edit {
+      color: #506371;
+    }
+  }
+
+
+  .geo_filter {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+  }
+
+
+}
+
+.s-custom {
+
+  &-ui {
+    text-align: left;
+    position: relative;
+
+    span {
+      display: inline-block;
+      width: 130px;
+      height: 30px;
+      line-height: 30px;
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 5px;
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    i {
+      vertical-align: unset;
+      line-height: 1;
+      margin-left: 3px;
+      position: absolute;
+      top: calc(50% - 8px);
+    }
+  }
+}
+

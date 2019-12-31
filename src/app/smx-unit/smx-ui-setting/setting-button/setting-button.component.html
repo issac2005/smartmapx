@@ -1,0 +1,6 @@
+<div class="setting-button-ui" [ngClass]="{'grid': type === 'grid'}">
+  <span (dblclick)="smxUiItem.disabled?null:openUiPanel(smxUiItem)">{{smxUiItem.type | sOutputCsv: 'type'}}
+    /{{smxUiItem.component_data_type_id| sOutputCsv: 'control'}}</span>
+  <i [ngStyle]="{'color':smxUiItem.disabled?'#ccc':''}" class="smx-icon icon-Setting"
+     (click)="smxUiItem.disabled?null: openUiPanel(smxUiItem)"></i>
+</div>

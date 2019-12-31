@@ -1,0 +1,13 @@
+<div [ngClass]="{'jsonWrap':true,'fullScreen':isFull}" id="jsonWrap">
+  <div class="saveBar">
+    <i class="fa fa-code" (click)="codeFormat()" title="代码格式化"></i>
+    <button [disabled]="jsonStatus === 'default'" *ngIf="isEdit" class="fa fa-save" title="保存" (click)="saveJson()"></button>
+    <i class="fa fa-expand" (click)="setFullScreen()" title="全屏" *ngIf="!isFull"></i>
+    <i class="fa fa-compress" (click)="setOriginScreen()" title="小屏" *ngIf="isFull"></i>
+  </div>
+  <div class="jsondiv">
+    <!--    <div id="jsonEditor"></div>-->
+    <smx-editor #editor [mode]="'json'" [(ngModel)]="textjson" [smxReadOnly]="!isEdit" (onChange)="receiveChange($event)"></smx-editor>
+  </div>
+</div>
+

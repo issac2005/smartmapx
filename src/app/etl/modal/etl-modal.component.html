@@ -1,0 +1,302 @@
+<div class="etl-modal" [style]="{'width': mData && mData.inputData && mData.inputData.upload_file ? '590px' : '400px'}">
+  <div class="smx-modal-header">
+    <h4 class="modal-title">{{config.title}}</h4>
+    <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+  </div>
+  <!--  导出-->
+  <div *ngIf="type === 1">
+    <!--自定义及csv-->
+    <div *ngIf="mData && mData.uploadClass === 1">
+      <div class="smx-modal-body">
+        <div class="etl-modal-output-action form-group row">
+          <div class="col-sm-12">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="smx-radio" type="radio" (change)="changeOutputtype($event)"
+                       [(ngModel)]="outputType" name="inlineRadioOptions" value="1"> 选择已有数据源
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="smx-radio" type="radio" (change)="changeOutputtype($event)"
+                       [(ngModel)]="outputType" name="inlineRadioOptions" value="2"> 创建新的数据源
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="etl-modal-output-name">
+          <div class="form-group" *ngIf="outputType==1" style="text-align: center">
+            <label class="col-form-label" style="margin-right: 10px">选择数据源</label>
+            <select class="smx-control mb-2 mr-sm-2 mb-sm-0 smx-text"
+                    [(ngModel)]="outputTableSelect"
+                    (ngModelChange)="changeOutputSelect($event)">
+              <option *ngFor="let item of (tableList)" [value]="item?.entity_id">{{item.table_desc}}
+              </option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="outputType==2" style="text-align: center">
+            <label class="col-form-label" style="margin-right: 10px">数据源名称</label>
+            <input type="text" class="smx-control form-text  smx-text"
+                   placeholder="请输入数据源名称"
+                   [(ngModel)]="createTableName" (keyup)="createTable()"
+                   maxlength="40">
+          </div>
+        </div>
+        <div class="etl-modal-output-csv" *ngIf="outputTableSelect || createTableNameStatus">
+          <smx-output-csv [outputType]="outputType" [mData]="mData" [outputData]="outputData"></smx-output-csv>
+        </div>
+      </div>
+      <div class="smx-modal-footer">
+        <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.dismiss('cancel')" type="button">取消
+        </button>
+        <button class="smx-btn smx-default smx-grid"
+                [disabled]="outputType && outputBtn?false:true"
+                [title]="outputType?'':'请选择输出方式'"
+                (click)="submitOutput()" type="button" id="smx-eltModal">确定
+        </button>
+      </div>
+    </div>
+
+    <!--shp-->
+    <div *ngIf="mData && mData.uploadClass === 2">
+      <div class="smx-modal-body">
+        <div style="max-height: 300px;overflow: scroll;overflow-x: hidden;">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th style="text-align: center">编号</th>
+              <th style="text-align: center">SHP文件</th>
+              <th colspan="1" style="text-align: center">数据源名称</th>
+              <th style="text-align: center">导入</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of shpList; index as i">
+              <td>
+                <label class="form-check-label">
+                  {{i + 1}}
+                </label>
+              </td>
+              <td>
+                <label class="form-check-label">
+                  {{item.substr(0, item.length - 4)}}
+                </label>
+              </td>
+              <td>
+                <label class="form-check-label">
+                  <input type="text" [(ngModel)]="sourceName[i].entity_desc" (keyup)="updateSource(i)"
+                         [value]="item.substr(0, item.length - 4)"
+                         class="form-control">
+                </label>
+              </td>
+              <td>
+                <label class="form-check-label">
+                  <input (click)="selectSource($event, i)" type="checkbox" class="smx-checkbox" checked>
+                </label>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="smx-modal-footer">
+        <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.dismiss('cancel')" type="button">取消
+        </button>
+        <button class="smx-btn smx-default smx-grid" (click)="submitOutput()" type="button" id="smx-eltModal">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <!--  导入-->
+  <div *ngIf="type === 2">
+
+    <div class="smx-modal-body" style="overflow-y: hidden;">
+      <div class="form-group row" style="text-align: center">
+        <div class="col-sm-12">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="smx-radio" type="radio" (change)="changeInputType($event)"
+                     [(ngModel)]="inputType" name="inlineRadioOptions" value="1"> 数据库迁移
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="smx-radio" type="radio" (change)="changeInputType($event)"
+                     [(ngModel)]="inputType" name="inlineRadioOptions" value="2"> csv文件上传
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="smx-radio" type="radio" (change)="changeInputType($event)"
+                     [(ngModel)]="inputType" name="inlineRadioOptions" value="3"> shp文件上传
+            </label>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="inputType==1">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">连接名称</label>
+          <div class="col-sm-8">
+          <span class="form-control"
+                style="width: 230px;display: block"
+                (click)="isCollapsed = !isCollapsed"
+                aria-controls="collapseExample">{{nowDatabaseName}}</span>
+            <div id="collapseExample" *ngIf="isCollapsed">
+              <div class="card">
+                <div class="card-body" style="padding: 0">
+                  <ul class="card-ul">
+                    <li class="card-database-list" *ngFor="let item of (databaseArray)"
+                        (click)="changeDatabaseSelect(item);">
+                      <span class="card-database-name">{{(item)?.name}}</span>
+                      <span class="fa fa-trash card-database-trash"
+                            title="删除此连接"
+                            (click)="removeDatabase($event,item)"></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <span class="fa fa-plus-circle" (click)="openAddDatabase()" title="添加数据库"
+                style="cursor: pointer;font-size: 20px;color: #2282b7;position: relative;top: 5px;"></span>
+        </div>
+        <div class="card-container">
+          <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+            <nz-tab nzTitle="选择表" (nzClick)="changeOutputType()">
+              <div class="input-database">
+                <div *ngIf="!tableList" class="no-data">请先选择数据库</div>
+                <div *ngIf="tableList" class="col-sm-10">
+                  <div *ngFor="let item of tableList">
+                    <label class="form-check-label" style="margin-bottom: 5px;white-space:nowrap">
+                      <input class="smx-radio" type="radio" name="tavleRadios"
+                             (change)="changeTableSelect()" [(ngModel)]="selectTable"
+                             [value]="item?.value">
+                      {{item?.text}}
+                    </label>
+                  </div>
+
+                </div>
+
+              </div>
+            </nz-tab>
+            <nz-tab nzTitle="SQL语句" (nzClick)="changeOutputType()">
+              <div *ngIf="!tableList" class="no-data">请先选择数据库</div>
+              <textarea *ngIf="tableList" class="sql" [(ngModel)]="sqlText" (input)="sqlChange()"></textarea>
+            </nz-tab>
+          </nz-tabset>
+        </div>
+      </div>
+      <div *ngIf="inputType==2">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">导入文件</label>
+          <div class="col-sm-8">
+            <smx-upload
+              [smxStyle]="{width:'100%'}"
+              (uploadEnd)="fileChangeEvent($event)"
+              [smxMaxSize]="20"
+              [smxAccept]="['csv']" [smxTip]="'上传最大文件限制为20M'">
+            </smx-upload>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">编码格式</label>
+          <div class="col-sm-8">
+            <smx-select [(ngModel)]="bianmaModel" [options]="bianmas"></smx-select>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="inputType==3">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">导入文件</label>
+          <div class="col-sm-8">
+            <smx-upload
+              [smxStyle]="{width:'100%'}"
+              (uploadEnd)="fileChangeEvent($event)"
+              [smxMaxSize]="20"
+              [smxAccept]="['zip']" [smxTip]="'上传最大文件限制为20M'">
+            </smx-upload>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-sm-3 col-form-label">编码格式</label>
+          <div class="col-sm-8">
+            <smx-select [(ngModel)]="bianmaModel" [options]="bianmas"></smx-select>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-sm-1"></label>
+          <label class="col-sm-11" style="font-size: 12px; color: #999">若导入不成功或数据表中出现乱码，请换个编码格式试试</label>
+        </div>
+      </div>
+    </div>
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-outline-default smx-grid" (click)="activeModal.dismiss('cancel')" type="button"
+              style="">取消
+      </button>
+      <button class="smx-btn smx-default smx-grid" [disabled]="!canSubmit" [title]="canSubmit?'':'请输入必填项'"
+              (click)="goAdd('submit')"
+              type="button" id="smx-eltModal">确定
+      </button>
+    </div>
+  </div>
+
+  <!--  数据库连接-->
+  <div *ngIf="type === 3">
+    <div class="smx-modal-body">
+      <div style="min-height: 360px;">
+
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">连接名称</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" [(ngModel)]="connectName" (input)="checkValue()"
+                   (change)="checkValue()" placeholder="请输入连接名称">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">数据库类型</label>
+          <div class="col-sm-8">
+            <select class="form-control mb-2 mr-sm-2 mb-sm-0"
+                    [(ngModel)]="newDatabaseSelect" (ngModelChange)="changeDatabase($event)">
+              <option *ngFor="let item of (databaseType)" [value]="item?.code">{{(item)?.description}}
+              </option>
+            </select>
+            <!--<select [(ngModel)]="filter.rule" (ngModelChange)="changeFilter($event)">
+                <option *ngFor="let item of (selectTwoGroup)" [value]="item.data_type_rule_id">{{(item)?.name}}</option>
+            </select>-->
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">连接类型</label>
+          <div class="col-sm-8">
+            <select class="form-control mb-2 mr-sm-2 mb-sm-0"
+                    [(ngModel)]="newMethodSelect" (ngModelChange)="changeMethod($event)">
+              <option *ngFor="let item of (methodType)" [value]="item?.code">{{(item)?.description}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" *ngFor="let item of testConfig">
+          <label class="col-sm-4 col-form-label">{{item?.text}}</label>
+          <div class="col-sm-8">
+            <input [type]="item?.type == 'password' ? 'password' : 'text'" [name]="item?.name"
+                   (input)="checkValue()" (change)="checkValue()"
+                   [(ngModel)]="item['value']" class="form-control" [value]="item?.value ? item?.value : ''">
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-default smx-grid" [disabled]="!canSubmit" [title]="canSubmit?'':'请输入完整'"
+              (click)="testConnect('test')" type="button">测试
+      </button>
+      <button class="smx-btn smx-outline-default smx-grid"
+              (click)="activeModal.close('cancle')" type="button">取消
+      </button>
+      <button class="smx-btn smx-default smx-grid" [disabled]="!canSubmit" [title]="canSubmit?'':'请输入完整'"
+              (click)="testConnect('save')" type="button" id="smx-eltModal">确定
+      </button>
+    </div>
+  </div>
+</div>

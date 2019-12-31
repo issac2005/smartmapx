@@ -1,0 +1,73 @@
+.task {
+  height: 65px;
+  //position: absolute;
+  width: 100%;
+  margin: 5px auto;
+  border-bottom: 1px solid #ccc;
+
+
+  &-add-animal {
+    animation: fadeInRight 500ms both;
+  }
+
+  &-remove-animal {
+    animation: fadeOutRight 500ms both;
+  }
+
+  &-item {
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+  }
+
+  &-header {
+    @extend .task-item;
+
+
+    &-name {
+      float: left;
+      font-size: 12px;
+    }
+
+    &-router {
+      background: #2282b7;
+      border-radius: 3px;
+      padding: 0 5px;
+      min-width: 50px;
+      display: inline-block;
+      color: #fff;
+      text-align: center;
+      margin: auto 5px;
+      font-size: 12px;
+    }
+
+    &-delete {
+      color: #848484;
+    }
+  }
+
+  &-body {
+    @extend .task-item;
+    height: 25px;
+    line-height: 25px;
+    padding: 5px 0;
+  }
+
+  &-footer {
+    @extend .task-item;
+
+
+    &-ct {
+      float: left;
+      color: #ccc;
+      font-size: 10px;
+    }
+
+    &-st {
+      color: #ccc;
+      font-size: 10px;
+    }
+  }
+}
+
+

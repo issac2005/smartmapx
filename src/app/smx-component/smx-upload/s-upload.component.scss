@@ -1,0 +1,204 @@
+.smx-upload {
+  display: inline-block;
+
+  .suc {
+    display: inline-block;
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 2px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+
+
+    &-upload {
+      //margin-left: 10px;
+      display: inline-block;
+      cursor: pointer;
+      background-color: #0c80fe;
+      width: 70px;
+      height: 30px;
+      text-align: center;
+
+      &-btn {
+        width: 70px;
+        opacity: 0;
+        height: 30px;
+        position: absolute;
+        cursor: pointer;
+        font-size: 0;
+      }
+
+      &-span {
+        line-height: 30px;
+        cursor: pointer;
+        color: #fff;
+      }
+    }
+
+    &-file {
+      display: inline-block;
+      width: calc(100% - 70px);
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      position: relative;
+      top: 5px;
+    }
+
+    &-tip {
+      position: absolute;
+
+      span {
+        font-size: 10px;
+        color: #848484;
+      }
+    }
+  }
+
+  //图片
+  .sui {
+
+    //覆写系统上传(图标)
+    &-icon_u {
+      display: inline-block;
+      border: 1px solid #ccc;
+      padding: 10px;
+      width: 70px;
+      height: 70px;
+      text-align: center;
+      line-height: 70px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    &-icon_uc {
+      display: inline-block;
+      /* top: 0; */
+      /* right: 2px; */
+      cursor: pointer;
+      color: #fff;
+      margin: 5px;
+
+    }
+
+    &-plus {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background-image: url(/assets/img/sprites.png);
+      background-repeat: no-repeat;
+      background-position: -148px -50px;
+    }
+
+
+    &-icon-img {
+      img {
+        vertical-align: unset;
+        height: 100%;
+        width: 100%;
+      }
+
+      &-btn {
+        display: none;
+      }
+
+      &-left {
+        position: absolute;
+        bottom: 0;
+        left: 3px;
+        display: none;
+        z-index: 100;
+        cursor: pointer;
+
+        &:hover {
+          color: #000;
+        }
+      }
+
+      &-right {
+        position: absolute;
+        bottom: 0;
+        right: 3px;
+        display: none;
+        z-index: 100;
+        cursor: pointer;
+
+        &:hover {
+          color: #000;
+        }
+      }
+
+      &-li {
+        display: inline-table;
+        vertical-align: top;
+        margin-right: 5px;
+      }
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.7);
+
+        .sui-icon-img-btn {
+          display: block !important;
+          position: absolute;
+          width: calc(100% - 20px);
+          height: calc(100% - 20px);
+          z-index: 100;
+
+          span:hover {
+            color: #d8d8d8;
+          }
+        }
+
+        img {
+          opacity: .3;
+        }
+      }
+
+
+    }
+
+    &-fileinput-list {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+
+
+      ul {
+        overflow-y: hidden;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 5px 0;
+        list-style: none;
+      }
+
+      //ul::-webkit-scrollbar {
+      //  width: 0;
+      //  height: 0;
+      //}
+
+      &:hover {
+        .sui-icon-img-left, .sui-icon-img-right {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .imgName{
+    width:70px;
+    font-size:12px;
+    color:#666;
+    text-align: center;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+}
+
+.ant-modal-close {
+  height: 30px;
+  width: 30px;
+  top: -15px;
+  right: 15px;
+}

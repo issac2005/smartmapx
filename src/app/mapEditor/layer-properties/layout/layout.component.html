@@ -1,0 +1,172 @@
+<div class=" layouts" style="font-size: 12px">
+  <div class="row" >
+      <div class="col-md-4 col-xs-4">
+        <!-- <div class="beyond">{{title}}</div> -->
+        <div  pTooltip="{{tooltip}}"
+            positionStyle='relitive'
+            hideDelay="100"
+            tooltipPosition="bottom"
+            class="beyond">{{title}}</div>
+      </div>
+      <div class="col-md-8 col-xs-8" *ngIf="type === 0">
+        <div *ngIf="showStyle === 'string' || showStyle === 'undefined'" style="float: left">
+          <span style="float: left;padding-top: 3px">
+                <svg (click)="clickAdd()" fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14" width="14" size="14" color="#8e8e8e" viewBox="0 0 40 40" style="vertical-align: middle; color: rgb(142, 142, 142);">
+                    <g>
+                        <path d="m30 6.6v5h-11.6l8.2 8.4-8.2 8.4h11.6v5h-20v-3.4l10.9-10-10.9-10v-3.4h20z"></path>
+                    </g>
+                </svg>
+            </span>
+          <div class="btn-group btn-group-toggle btn-sm" ngbRadioGroup name="radioBasic" >
+              <label *ngFor="let pat of pattern index as i" ngbButtonLabel class="btn-primary btn-xs" [ngClass]="{'btn-info':this.layerInfo[attribute] == pat}">
+                <input ngbButton type="radio"  [value]="pat" (click)="clickButtom(pat)">{{defau[i]}}
+              </label>
+          </div>
+        </div>
+        <div *ngIf="showStyle === 'object'" style="float: left">
+          <div *ngFor="let num of layerInfo[attribute].stops index as i">
+            <i class="fa fa-trash" (click)="remove(attribute,i)"></i>
+            <input type="number" (keyup)="test($event,attribute,i)" [value]="num[0]" [(ngModel)]="num[0]" class="smx-control" style="width: 29px;display: inline;padding: 0.15rem 0.35rem;font-size: 0.175rem"/>
+            <div class="btn-group btn-group-toggle btn-sm" ngbRadioGroup [name]="'radioBasic'+i" [(ngModel)]="layerInfo[attribute].stops[i][1]">
+              <label *ngFor="let pat of pattern index as i" ngbButtonLabel class="btn-primary btn-xs" [ngClass]="{'btn-info':this.layerInfo[attribute] == pat}">
+                <input ngbButton type="radio"  [value]="pat">{{defau[i]}}
+              </label>
+            </div>
+          </div>
+          <button (click)="buttomAdd(attribute)" class="smx-btn smx-default smx-xs" style="margin-left: 120px;margin-bottom: 4px">添加</button>
+        </div>
+      </div>
+      <div class="col-md-8 col-xs-8" *ngIf="type === 1">
+        <div *ngIf="showStyle === 'string' || showStyle === 'undefined'" style="float: left">
+          <span style="float: left;padding-top: 3px" >
+            <svg [ngClass]="{'svg-disabled' : !enclick}" (click)="clickAdd(attribute)" fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14" width="14" size="14" color="#8e8e8e" viewBox="0 0 40 40" style="vertical-align: middle; color: rgb(142, 142, 142);">
+              <g>
+                <path d="m30 6.6v5h-11.6l8.2 8.4-8.2 8.4h11.6v5h-20v-3.4l10.9-10-10.9-10v-3.4h20z"></path>
+              </g>
+            </svg>
+          </span>
+          <select *ngIf="attribute !== 'text-field'" [(ngModel)]="layerInfo[attribute]"  
+                  (change)="change()" class="smx-control" 
+                  style="width: 139px; height:26px; margin-left: 9px;display: inline">
+            <option *ngFor="let num of pattern index as i" [value]="num" >{{defau[i]}}</option>
+          </select>
+          <!-- 字段添加表达式 -->
+          <div class="smx_Allen_EX" *ngIf = "attribute === 'text-field'" style="display: inline;">
+            <input type="text"
+                    [(ngModel)]="ExpressionEdite"
+                    (focus)="focusFun()"
+                    (ngModelChange)="changeEXstyle()"
+                    class="smx-Allen-styleEX smx-control">
+            <span [ngStyle]="{'display':styleDisplay ?'block':'none'}" 
+            (click)="chageEvent($event)" class="smx-Allen-styleAdd fa fa-plus-circle" 
+            [attr.aria-expanded]="!layerEditCheckBoolan"
+            aria-controls="collapseExample"></span>
+            <!-- [(ngModel)]="layer.metadata.textField" -->
+            <!-- checkbox相关 -->
+            <div class="layerEdit-smartMapX-select-checkAll" [ngStyle]="{'display':!layerEditCheckBoolan ?'block':'none'}" >
+              <div class="layerEdit-smartMapX-select-tableTitle">
+                <span class="layerEdit-smartMapX-select-titleTop">选择字段</span> 
+              </div>
+              <div class="layerEdit-smartMapX-select-info">
+                <div style="height: 143px;">
+                   <!-- 图层checkbox框  -->
+                  <table>
+                    <tr *ngFor="let item of pattern ; index as i;">
+                      <td class="layerEdit-smartMapX-select-trtd">
+                        <label class="layerEdit-checkbox-label" (click)="layerEditclicks($event, i)">{{defau[i]}}</label>
+                        <div class="layerEdit-smartMapX-select-tranline"></div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="layerEdit-smartMapX-select-button" style="position: relative; top: 5px; left: 2px;">
+                <span class="layerEdit-smartMapx-button jia" (click)="buttonClickAnd()">&</span>
+                <span class="layerEdit-smartMapx-button jian" (click)="buttonClickAdd()"
+                      title="请用英文括号将四则运算表达式括起来,例如:({序号}+1)"
+                >+</span>
+                <span class="layerEdit-smartMapx-button cheng" (click)="buttonClickSub()"
+                      title="请用英文括号将四则运算表达式括起来,例如:({序号}-1)">-</span>
+                <span class="layerEdit-smartMapx-button chu" (click)="buttonClickMult()"
+                      title="请用英文括号将四则运算表达式括起来,例如:({序号}*1)">*</span>
+                <span class="layerEdit-smartMapx-button and" (click)="buttonClickDivi()"
+                      title="请用英文括号将四则运算表达式括起来,例如:({序号}/1)">/</span>
+             </div>
+            </div>
+          </div>
+          <div>
+          </div>
+        </div>
+        <!-- 多缩放级别 -->
+        <div *ngIf="showStyle === 'object' && attribute !== 'text-field'  " style="float: left">
+          <div *ngFor="let num of layerInfo[attribute].stops index as i" style="margin:0 0 4px 3px">
+            <i class="fa fa-trash" (click)="remove(attribute,i)"></i>
+            <input type="number" (keyup)="test($event,attribute,i)" [value]="num[0]" [(ngModel)]="num[0]" class="smx-control" style="width: 29px;display: inline;padding: 0.15rem 0.35rem;font-size: 0.175rem"/>
+            <select  style="width: 105px; height:26px; margin-left: 9px;display: inline" 
+                    (change)="change()" [(ngModel)]="num[1]" class="smx-control">
+              <option *ngFor="let num of pattern index as i" [value]="num">{{defau[i]}}</option>
+            </select>
+           </div>
+          <button (click)="buttomAdd(attribute)" class="smx-btn smx-default smx-xs" style="margin-left: 120px;margin-bottom: 4px">添加</button>
+        </div>
+        <!-- 字段表达式 -->
+        <div *ngIf="showStyle === 'object' && attribute === 'text-field' " style="float: left">
+          <div class="smx_Allen_EX">
+            <div *ngFor="let num of layer.metadata.formulaOptons[attribute] index as i" style="margin:0 -6px 4px 3px">
+            <!-- 删除按钮 -->
+            <i class="fa fa-trash" (click)="remove(attribute,i)"></i>
+            <!-- 缩放级别输入框 -->
+            <input type="number" (keyup)="test($event,attribute, i)" [value]="num[0]" [(ngModel)]="num[0]" 
+            class="smx-control" 
+            style="width: 29px;display: inline;padding: 0.15rem 0.35rem;font-size: 0.175rem"/>
+            <div  *ngIf = "attribute === 'text-field'" style="display: inline;">
+              <!-- Input框 -->
+              <input type="text"
+                      (focus)="focusFun()"
+                      (ngModelChange)="changeEXstyle()"
+                      [(ngModel)]="num[1]"
+                      class="smx-control"
+                      style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;width: 105px;margin-left: 9px;display: inline;">
+              <!-- 加号按钮 -->
+              <span [ngStyle]="{'display':styleDisplay ?'block':'none'}" (click)="chageEventMore($event,i)" class="fa fa-plus-circle"
+                    style="float: right;position: relative;left: 6px;top: 7px;font-size: 12px;cursor: pointer;"></span>
+            </div>
+            </div>
+              <!-- checkbox相关 -->
+              <div class="layerEdit-smartMapX-select-checkAll" [ngStyle]="{'display':!layerEditCheckBoolan ?'block':'none'}" >
+                <div class="layerEdit-smartMapX-select-tableTitle">
+                  <span class="layerEdit-smartMapX-select-titleTop">字段公式</span> 
+                </div>
+                <div class="layerEdit-smartMapX-select-info">
+                  <div style="height: 143px;">
+                    <!-- 图层checkbox框  -->
+                    <table>
+                      <tr *ngFor="let item of pattern ; index as j;">
+                        <td class="layerEdit-smartMapX-select-trtd">
+                          <label class="layerEdit-checkbox-label" (click)="layerEditclicks($event, j)">{{defau[j]}}</label>
+                          <div class="layerEdit-smartMapX-select-tranline"></div>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="layerEdit-smartMapX-select-button" style="position: relative; top: 5px; left: 2px;">
+                  <span class="layerEdit-smartMapx-button jia" (click)="buttonClickAnd()">&</span>
+                  <span class="layerEdit-smartMapx-button jian" (click)="buttonClickAdd()"
+                        title="请用英文括号将四则运算表达式括起来,例如:({序号}+1)"  
+                  >+</span>
+                  <span class="layerEdit-smartMapx-button cheng" (click)="buttonClickSub()"
+                        title="请用英文括号将四则运算表达式括起来,例如:({序号}-1)">-</span>
+                  <span class="layerEdit-smartMapx-button chu" (click)="buttonClickMult()"
+                        title="请用英文括号将四则运算表达式括起来,例如:({序号}*1)">*</span>
+                  <span class="layerEdit-smartMapx-button and" (click)="buttonClickDivi()"
+                        title="请用英文括号将四则运算表达式括起来,例如:({序号}/1)">/</span>
+              </div>
+              </div>
+            </div> 
+            <button (click)="buttomAdd(attribute)" class="smx-btn smx-default smx-xs" style="margin-left: 120px;margin-bottom: 4px">添加</button>
+        </div>
+      </div>
+  </div>
+</div>
+

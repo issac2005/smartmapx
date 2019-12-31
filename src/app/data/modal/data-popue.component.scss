@@ -1,0 +1,1127 @@
+// 标题
+.modal-header {
+  background: #3887be;
+  height: 30px;
+  //padding-bottom: 20px;
+  //padding-top: 20px;
+  padding: 0px 11px 0px 12px;
+  line-height: 30px;
+
+  .modal-title {
+    color: #fff;
+    font-size: 12px;
+    //position: relative;
+    //top: 3px;
+    padding-bottom: 0px;
+    line-height: 30px;
+  }
+
+  .close {
+    color: #fff;
+    opacity: 1;
+    font-weight: normal;
+    position: relative;
+    bottom: 3px;
+    line-height: 30px;
+  }
+}
+
+// 内容
+.smx-modal-body {
+  .form-group {
+    .control-label {
+      margin-bottom: 0px;
+      vertical-align: middle;
+      width: 75px;
+      text-align: end;
+
+    }
+
+    .form-control {
+      display: inline-block;
+      vertical-align: top;
+      width: calc(100% - 85px);
+    }
+  }
+
+  //
+  //&-desc {
+  //    width: 75px;
+  //    text-align: end;
+  //}
+
+  //小程序
+  &-apps {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 5px;
+    margin-top: 15px;
+    right: -6px;
+    position: relative;
+    float: right;
+
+    &-ul {
+      list-style: none;
+    }
+
+    &-li {
+      float: left;
+      margin: 0 8px 10px 0;
+      cursor: pointer;
+
+    }
+
+    &-type {
+
+      //display: inline-block;
+      width: 55px;
+      height: 55px;
+      text-align: center;
+      //line-height: 80px;
+      background-size: 100% 100%;
+      display: table;
+
+      &:hover {
+        //background: rgba(0, 0, 0, 0.5);
+        //transition: all .3s;
+        //color: #ffffff;
+        transform: scale(1.1, 1.1);
+        -ms-transform: scale(1.1, 1.1);
+        -webkit-transform: scale(1.1, 1.1);
+        -o-transform: scale(1.1, 1.1);
+        -moz-transform: scale(1.1, 1.1);
+
+      }
+
+      &-mark {
+        //box-shadow: 0px 0px 20px #0a0a0a;
+        border: 2px solid #2787f8;
+        transform: scale(1.1, 1.1);
+        -ms-transform: scale(1.1, 1.1);
+        -webkit-transform: scale(1.1, 1.1);
+        -o-transform: scale(1.1, 1.1);
+        -moz-transform: scale(1.1, 1.1);
+        //filter: grayscale(0.8)
+        //background: rgba(0, 0, 0, 0.5);
+        //transition: all .3s;
+        //color: #ffffff;
+      }
+
+      &-h {
+
+        opacity: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        //line-height: 56px;
+        display: table-cell;
+        vertical-align: middle;
+
+        &:hover {
+          opacity: 1;
+
+        }
+      }
+    }
+
+    &-ck {
+      display: inline-block;
+      width: 35px;
+      height: 35px;
+
+      &-checked {
+        background-image: url(/assets/img/sprites.png);
+        background-position: -58px -48px;
+        background-repeat: no-repeat;
+
+      }
+    }
+
+  }
+}
+
+// 尾部
+.modal-footer {
+  text-align: center;
+  display: block;
+  border: 0px;
+  padding: 0px 15px 15px;
+
+  .btn-secondary {
+    background: #3887be;
+    color: #ffffff;
+    width: 80px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0px;
+    border: 1px #eeeeee;
+
+    &:hover {
+      background: #3887be;
+      color: #eeeeee;
+    }
+
+    &[disabled] {
+      background: #3887be;
+      color: #ffffff;
+
+      &:hover {
+        background: #3887be;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .button-disabled {
+    disabled: true;
+    opacity: 0;
+  }
+}
+
+// 共享数据
+.shareDataModal {
+  // 搜索
+  &-addU {
+    //width: 566px;
+    //height: 43px;
+
+    &-input {
+      width: 301px;
+      height: 28px;
+      padding-left: 10px;
+      margin-right: 10px;
+      border: 1px solid #dddddd;
+      position: relative;
+      top: 2px;
+    }
+
+    .btn-primary {
+      //display: inline-block;
+      height: 32px;
+      width: 65px;
+      vertical-align: bottom;
+      blackground: #3887be;
+
+    }
+  }
+
+  &-Ulist {
+    margin-top: 20px;
+
+    th, td {
+      text-align: center;
+      padding: 0px !important;
+      height: 26px !important;
+      vertical-align: super;
+    }
+
+    .footer-ds-delete {
+      cursor: pointer;
+      display: inline-block;
+      /* vertical-align: super; */
+      //background-image: url(./assets/img/icon.png);
+      //background-repeat: no-repeat;
+      //background-position: -170px -34px;
+      background-image: url(/assets/img/sprites.png);
+      background-repeat: no-repeat;
+      background-position: -345px -56px;
+      width: 15px;
+      height: 20px;
+      position: relative;
+      top: 5px;
+    }
+  }
+
+}
+
+// 创建框
+.createMapModal {
+  // 搜索
+  &-search {
+    width: 566px;
+    height: 43px;
+    text-align: center;
+
+    &-input {
+      width: 420px;
+      float: left;
+      position: relative;
+      height: 36px;
+      padding-left: 10px;
+      margin-right: 10px;
+      border: 1px solid #dddddd;
+      right: -17px;
+      top: 2px;
+    }
+
+    &-clear {
+      margin-left: -35px;
+      margin-right: 15px;
+      cursor: pointer;
+      color: gray;
+      font-size: 20px;
+      position: relative;
+      left: 2px;
+      top: 4px;
+    }
+
+    .btn-primary {
+      //display: inline-block;
+      height: 40px;
+      width: 100px;
+      vertical-align: bottom;
+
+    }
+  }
+
+  .layer-select {
+    padding: 15px 16px;
+    //border-top: 1px solid #eceeef;
+    border-bottom: 1px solid #eceeef;
+
+    .toolbar-category1 {
+      display: flex;
+      border-bottom: 1px solid #eceeef;
+      margin-bottom: 10px;
+
+      .btn {
+        border-radius: 0;
+        cursor: pointer;
+        color: #666666;
+        padding: 0 5px;
+        height: 25px;
+        line-height: 25px;
+        /* width: 95px; */
+      }
+
+      .btn-primary {
+        color: #6b9dce;
+        background: #ffffff;
+        border-top: 2px solid #4a8bc6;
+        border-left: 1px solid #e5e5e5;
+        border-right: 1px solid #e5e5e5;
+        border-bottom: 1px solid #ffffff;
+        position: relative;
+        top: 1px;
+
+        &:hover {
+          color: #6b9dce;
+          background: #ffffff;
+        }
+      }
+
+      .btn-secondary {
+        background: #ffffff;
+        color: #666666;
+        border-top: 1px solid #e5e5e5;
+        border-left: 1px solid #e5e5e5;
+        border-right: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
+
+        &:hover {
+          background: #ffffff;
+        }
+      }
+    }
+
+    .layer-list {
+      height: 337px;
+      overflow-y: auto;
+
+      ul {
+        padding: 0px;
+
+        li {
+          list-style: none;
+          display: inline-block;
+
+          .layer-list-img-bg {
+            height: 107px;
+            width: 122px;
+            margin: 6px 5px;
+            position: relative;
+
+            .service-check{
+              position: absolute;
+              left: 90px;
+              top: 76px;
+            }
+
+          }
+
+          .layer-list-img-bg-checked {
+            height: 107px;
+            width: 122px;
+            margin: 6px 5px;
+            border: 3px solid #2787f8;
+
+          }
+
+          .container-center {
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            padding: 5px;
+            cursor: pointer;
+
+            &-hover {
+              max-width: 100%;
+              max-height: 100%;
+              overflow: hidden;
+
+              span {
+                font-size: 12px;
+              }
+            }
+          }
+
+          .container-center:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.5);
+            transition: all .3s;
+            color: #ffffff;
+          }
+
+        }
+      ;
+      }
+    }
+
+    .layer-list-footer {
+      margin-left: 5px;
+
+      .layer-list-footer-custom-ck {
+        opacity: 1;
+      }
+
+      .layer-list-footer-custom {
+        opacity: 0;
+      }
+
+      .footer-user-title {
+        //font-weight: bold;
+        //display: block;
+        //font-weight: bold;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        display: inline-block;
+        max-width: 125px;
+        cursor: default;
+      }
+
+      .layer-list-footer-custom-title {
+        cursor: default;
+        position: relative;
+        bottom: 2px;
+        left: -7px;
+      }
+
+    }
+
+
+    &-nodata {
+      text-align: center;
+      line-height: 300px;
+      display: block;
+    }
+  }
+}
+
+// 企业方案
+.addSqlModal {
+  &-title {
+    font-family: Roboto, "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    color: #404c51;
+    -webkit-font-smoothing: antialiased;
+    font-size: 18px;
+  }
+
+  &-addParam {
+    //::-webkit-scrollbar {
+    //  width: 1px;
+    //  height: 5px;
+    //}
+  }
+}
+
+//***************************************************************************//
+
+
+// 扩展系统样式
+.smx-modal-body {
+  &-title {
+    margin-right: 10px;
+    width: 70px;
+    text-align: center;
+
+    &-textarea {
+      position: relative;
+      bottom: 65px
+    }
+  }
+
+
+  //覆写系统上传(图标)
+  &-icon_u {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+    position: relative;
+  }
+
+  &-icon_uc {
+    position: absolute;
+    display: block;
+    top: 0px;
+    right: 2px;
+    cursor: pointer;
+    color: #bb2727f2;
+  }
+
+  &-plus {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-image: url(/assets/img/sprites.png);
+    background-repeat: no-repeat;
+    background-position: -148px -50px;
+  }
+
+  &-fileinput-button {
+    position: relative;
+    display: inline-block;
+    left: 5px;
+    top: 10px;
+  }
+
+
+  // 信息框
+  .show_top {
+    background: #eee;
+  }
+
+  .show_bottom {
+    color: #999;
+    height: 25px;
+  }
+
+  .viewInfo {
+    padding: 0 20px;
+
+    tr {
+      height: 30px;
+      line-height: 30px;
+    }
+
+    .t1 {
+      width: 90px;
+      padding-right: 10px;
+    }
+
+    .t2 {
+      width: 250px;
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+
+    /*.t3 {
+      width: 100px;
+    }*/
+    .t4 {
+      border: 1px solid rgba(205, 203, 203, 0.5) !important;
+      width: 260px;
+      overflow: auto;
+      word-break: break-all;
+    }
+
+    .info_t_span {
+      float: right;
+    }
+
+    .btn {
+      cursor: pointer;
+      width: 50px;
+      height: 20px;
+      line-height: 20px;
+      padding: 0;
+      position: relative;
+      left: 30px;
+    }
+
+    .btn-copy {
+      background: #3bb2d0;
+    }
+
+    .btn-copy:hover {
+      color: #fff;
+      background-color: #1a93ea;
+      border-color: #158ee4;
+    }
+
+    .smx3 {
+      vertical-align: middle;
+    }
+
+    .url {
+      max-width: 180px;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+  }
+
+  // 删除框
+  #deleteDataModal {
+    .form-group {
+      text-align: center;
+
+      .deleteData-waring {
+        cursor: pointer;
+        display: inline-block;
+        background-image: url(/assets/img/sprites.png);
+        background-repeat: no-repeat;
+        background-position: -103px -51px;
+        width: 30px;
+        height: 30px;
+      }
+
+      .control-label {
+        position: relative;
+        top: -9px;
+        font-size: 12px;
+      }
+    }
+
+  }
+
+  // 创建
+  #pickModal,
+  #createMapModal {
+    // 搜索
+    &-search {
+      width: 566px;
+      height: 43px;
+      text-align: center;
+
+      &-input {
+        width: 420px;
+        height: 40px;
+        padding-left: 10px;
+        margin-right: 10px;
+        border: 1px solid #dddddd;
+      }
+
+      &-clear {
+        margin-left: -35px;
+        margin-right: 15px;
+        cursor: pointer;
+        color: gray;
+        font-size: 20px;
+      }
+
+      .btn-primary {
+        //display: inline-block;
+        height: 40px;
+        width: 100px;
+        vertical-align: bottom;
+
+      }
+    }
+
+    .layer-select {
+      padding: 15px 16px;
+      //border-top: 1px solid #eceeef;
+      border-bottom: 1px solid #eceeef;
+
+      .toolbar-category1 {
+        display: flex;
+        border-bottom: 1px solid #eceeef;
+        margin-bottom: 10px;
+
+        .btn {
+          border-radius: 0;
+          cursor: pointer;
+          color: #666666;
+          height: 25px;
+          line-height: 25px;
+          padding: 0;
+          /* width: 95px; */
+        }
+
+        .btn-primary {
+          color: #6b9dce;
+          background: #ffffff;
+          border-top: 1px solid #4a8bc6;
+          border-left: 1px solid #e5e5e5;
+          border-right: 1px solid #e5e5e5;
+          border-bottom: 1px solid #ffffff;
+          position: relative;
+          top: 1px;
+
+          &:hover {
+            color: #6b9dce;
+            background: #ffffff;
+          }
+        }
+
+        .btn-secondary {
+          background: #ffffff;
+          color: #666666;
+          border-top: 1px solid #e5e5e5;
+          border-left: 1px solid #e5e5e5;
+          border-right: 1px solid #e5e5e5;
+          border-bottom: 1px solid #e5e5e5;
+
+          &:hover {
+            background: #ffffff;
+          }
+        }
+      }
+
+      .layer-list {
+        height: 337px;
+        overflow-y: auto;
+
+        ul {
+          padding: 0px;
+
+          li {
+            list-style: none;
+            display: inline-block;
+
+            .layer-list-img-bg {
+              height: 107px;
+              width: 122px;
+              margin: 6px 5px;
+
+            }
+
+            .layer-list-img-bg-checked {
+              height: 107px;
+              width: 122px;
+              margin: 6px 5px;
+              border: 3px solid #2787f8;
+
+            }
+
+            .container-center {
+              opacity: 0;
+              width: 100%;
+              height: 100%;
+              padding: 5px;
+              cursor: pointer;
+
+              &-hover {
+                max-width: 100%;
+                max-height: 100%;
+                overflow: hidden;
+
+                span {
+                  font-size: 12px;
+                }
+              }
+            }
+
+            .container-center:hover {
+              opacity: 1;
+              background: rgba(0, 0, 0, 0.5);
+              transition: all .3s;
+              color: #ffffff;
+            }
+
+          }
+        ;
+        }
+      }
+
+
+      .layer-list-footer {
+        margin-left: 5px;
+
+        .layer-list-footer-custom-ck {
+          opacity: 1;
+        }
+
+        .layer-list-footer-custom {
+          opacity: 0;
+        }
+
+        .footer-user-title {
+          //font-weight: bold;
+          //display: block;
+          //font-weight: bold;
+          text-decoration: none;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          display: inline-block;
+          max-width: 125px;
+          cursor: default;
+        }
+
+        .layer-list-footer-custom-title {
+          cursor: default;
+          position: relative;
+          bottom: 2px;
+        }
+
+      }
+    }
+
+    //::-webkit-scrollbar {
+    //  width: 2px;
+    //  height: 10px;
+    //}
+
+  }
+
+  .ifram-copy {
+    position: absolute;
+    right: 5px;
+    border: 1px solid #ccc;
+    padding: 1px 3px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+
+  &-radio-title {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+  }
+
+}
+
+.smx_form_minpro {
+  float: right;
+  width: 248px;
+  margin-left: 6px;
+  height: 28px;
+  position: relative;
+  top: -2px;
+}
+
+.smx_form_mincontrol {
+  height: 80px;
+  float: right;
+  width: 248px;
+}
+
+.smx_modal_body_desc {
+  position: relative;
+  top: 68px;
+}
+
+.smx_deleteData-waring {
+  cursor: pointer;
+  display: inline-block;
+  background-image: url(/assets/img/sprites.png);
+  background-repeat: no-repeat;
+  background-position: -103px -51px;
+  width: 30px;
+  height: 30px;
+}
+
+.smx_center_text {
+  text-align: center;
+}
+
+.text_top_move {
+  position: relative;
+  top: -8px;
+}
+
+.smx_minp_lg {
+  width: 77%;
+  float: left;
+  position: relative;
+  left: 19px;
+  height: 37px;
+  top: 1px;
+}
+
+.smx_control_value_w {
+  width: 248px;
+  float: right;
+  right: -6px;
+  position: relative;
+  height: 28px;
+}
+
+.createMapModal_search_input_b {
+  float: left;
+  width: 446px;
+  position: relative;
+  left: 19px;
+  height: 36px;
+  top: 2px;
+  margin-right: 13px;
+}
+
+.smx_not_div_w {
+  margin-right: 1.5rem;
+}
+
+.smx_data_new_b {
+  width: 261px;
+  float: right;
+  position: relative;
+  right: 23px;
+}
+
+
+//.smx_data_new_bs {
+//  width: 248px;
+//  display: inline-block;
+//  height: 28px;
+//
+//}
+
+////文本域
+//.smx_textarea_newdata {
+//  @extend .smx_data_new_bs;
+//  height: 80px;
+//}
+
+
+.top_data_newmap_w {
+  margin-right: 1.5rem;
+}
+
+.smx_data_new_w {
+  /* width: 261px;
+  float: right;
+  right: 23px;
+  position: relative; */
+  width: 248px;
+  display: inline-block;
+}
+
+.top_data_newmap_ws {
+  margin-right: 1.5rem;
+}
+
+.smx_share_b_data {
+  width: 261px;
+  padding-left: 10px;
+  margin-right: 10px;
+  float: left;
+  height: 28px;
+  position: relative;
+}
+
+.data_w_zdy {
+  position: relative;
+  top: -5px;
+  left: -6px;
+}
+
+.smx_icon_ku {
+  position: relative;
+  right: -6px;
+}
+
+ngb-progressbar {
+  margin-top: 5rem;
+}
+
+
+//选择数据
+.smx-pick-data {
+  line-height: 37px;
+  height: 37px;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    background: #eeeeee;
+  }
+
+  .layer-list-icon {
+    display: inline-block;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    margin-right: 10px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+
+  }
+
+  .layer-list-name {
+    line-height: 35px;
+    display: inline-block;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    margin-left: 20px;
+    cursor: pointer;
+    position: absolute;
+    left: 25px;
+  }
+
+  .layer-list-checked {
+    display: inline-block;
+    background-image: url(/assets/img/sprites.png);
+    background-position: -21px -16px;
+    width: 15px;
+    position: absolute;
+    height: 15px;
+    top: 10px;
+    right: 20px;
+    background-repeat: no-repeat;
+  }
+
+  .layer-list-editor {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-bottom: -3px;
+    /*margin-left: 10px;*/
+    background-repeat: no-repeat;
+    background-image: url(/assets/img/sprites.png);
+    background-position: -639px -16px;
+  }
+}
+
+// 创建框2
+.createMapModal2 {
+  width: 450px;
+
+  .layer-select2 {
+    padding: 15px 15px 0px 15px;
+    //border-top: 1px solid #eceeef;
+    //border-bottom: 1px solid #eceeef;
+
+    .layer-list2 {
+      height: 400px;
+      overflow-y: auto;
+      border-bottom: 1px solid #eceeef;
+
+      ul {
+        padding: 0px;
+
+        li {
+          list-style: none;
+          display: inline-block;
+          cursor: pointer;
+
+          .layer-list2-sta {
+            width: 118px;
+            height: 83px;
+            margin: 10px;
+            background-size: 100% 100%;
+            background-repeat: repeat;
+          }
+
+          .layer-list2-sta-disabled {
+            filter: grayscale(1);
+          }
+        }
+      }
+    }
+
+  }
+
+  //::-webkit-scrollbar {
+  //  width: 2px;
+  //  height: 10px;
+  //}
+
+}
+
+
+// todo 后期需要修改
+.table1 {
+  width: 380px;
+  height: 32px;
+  background: #eeeeee;
+  border: 1px solid #bfbfbf;
+}
+
+.table2 {
+  width: 380px;
+  max-height: 160px;
+  border: 1px solid #bfbfbf;
+}
+
+.tr {
+  height: 32px;
+}
+
+.td {
+  width: 190px;
+}
+
+.div_table2 {
+  width: 380px;
+  max-height: 160px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.div_td {
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 182px;
+}
+
+.div_table {
+  top: 14px;
+  position: relative;
+  // height: 400px;
+}
+
+.a {
+  width: 100%;
+  height: 400px;
+}
+
+.b {
+  width: 100%;
+}
+
+.smx-modal-body {
+  overflow: -webkit-paged-x;
+}
+
+//获取geojson--李景阳
+.getGeojson {
+  resize: none;
+  min-width: 322px;
+  min-height: 180px
+}
+
+.layer-list::-webkit-scrollbar {
+  width: 2px;
+  height: 5px;
+}
+
+.div_td_div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 67%;
+  float: left;
+  margin-left: 10px;
+}

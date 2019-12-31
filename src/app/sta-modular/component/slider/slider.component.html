@@ -1,0 +1,16 @@
+<div class="staSlider">
+  <!--滑动条-->
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <div class="staSlider-title">{{config.title}}</div>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <div class="staSlider-slider">
+        <nz-slider [(ngModel)]="sValue" [nzMax]="max" [nzMin]="min" (nzOnAfterChange)="onSlideEnd($event)"></nz-slider>
+      </div>
+      <div class="staSlider-value">
+        <span class="staSlider-opacity-label">{{config.componentType === 2 ? (sValue / 100).toFixed(2) : sValue}}</span>
+      </div>
+    </div>
+  </div>
+</div>

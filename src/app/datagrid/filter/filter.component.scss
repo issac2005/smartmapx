@@ -1,0 +1,26 @@
+.filter-box {
+  min-width: 270px;
+  height: 35px;
+  font-size: 12px;
+  padding: 0 10px;
+  display: inline-block;
+  select {
+    width: 60px;
+    margin-right: 5px;
+    display: inline-block;
+  }
+  input {
+    width: 60px;
+    line-height: 16px;
+    border-radius: 2px;
+    display: inline-block;
+    //border-top: 1px solid #ccc;
+    //border-left: 1px solid #ccc;
+  }
+  .fa {
+    cursor: pointer;
+    font-size: 14px;
+    position: static;
+    color: #333;
+  }
+}

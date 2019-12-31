@@ -1,0 +1,277 @@
+@import "../../scss/smx-main";
+
+.smx-main {
+  display: flex;
+  align-items: center;
+  background: $smx-main-background;
+  min-height: 100%;
+  position: relative;
+
+  .ant-layout-header {
+    padding: 0;
+    height: 70px;
+    line-height: 70px;
+    background: $smx-main-background;
+  }
+
+}
+
+.smx-loading {
+  position: absolute;
+  top: 3px;
+  right: -30px;
+}
+
+.title-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+.title-header .container {
+
+  position: relative;
+  height: 70px;
+  line-height: 70px;
+  width: 960px;
+  //width:66%;
+  //min-width:660px;
+  padding-left: 10px;
+  padding-right: 10px;
+  z-index: 2;
+
+
+  a.navbar-brand {
+    color: #fff;
+    font-size: 20px;
+    padding: 0;
+  }
+
+
+  .navbar {
+    padding: 0;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    min-width: 720px;
+
+    #navbarContent {
+      position: relative;
+      float: right;
+      display: flex !important;
+      width: 100%;
+
+      ul {
+        position: absolute;
+        right: 200px;
+        z-index: 3;
+        flex-direction: row;
+        bottom: 20px; // ie
+        li {
+          margin-right: 5px;
+
+          a {
+            line-height: 30px;
+            //margin-top: 20px;
+            padding: 0 15px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 14px;
+
+            &:hover {
+              background: #2282b7;
+              border-radius: 5px;
+            }
+
+          }
+
+          &.active a {
+            background: #2282b7;
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+
+    button, a.btn {
+      cursor: pointer;
+      font-size: 14px;
+      width: 90px;
+      color: #fff;
+      background: rgba(0, 0, 0, 0);
+
+      &:hover {
+        color: #00cbe6;
+      }
+
+      &.btn-secondary {
+        width: 70px;
+
+        &:hover {
+          border-color: #00cbe6;
+        }
+      }
+    }
+
+    .space-line {
+      height: 1rem;
+      border-right: 1px solid #ccc;
+    }
+  }
+
+
+}
+
+.version {
+  font-size: 1px;
+  position: relative;
+  top: 5px;
+  color: #fff;
+}
+
+
+.input-group {
+  margin: 15px 0;
+}
+
+
+.show {
+  .dropdown-menu {
+    display: block;
+
+  }
+}
+
+.c-main {
+  &-account {
+    width: 150px;
+    position: relative;
+
+    .btn {
+      border-color: #fff;
+      width: 90px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      text-transform: inherit;
+
+      &:after {
+        position: absolute;
+        right: 10px;
+        top: 35px;
+      }
+
+      &:hover {
+        border-color: #00cbe6;
+      }
+    }
+
+    .dropdown-menu {
+      top: 51px;
+      right: 0;
+      width: 90px;
+      min-width: 90px;
+      left: auto;
+
+      .dropdown-item {
+        margin: 0;
+        height: 30px;
+        line-height: 25px;
+        color: #000 !important;
+
+        &:hover {
+          background: #ddd !important;
+        }
+      }
+    }
+  }
+
+
+  // 背景動畫(未启用)
+  &-bg {
+    width: 100%;
+    min-height: 100%;
+    color: #fff;
+    background: linear-gradient(-45deg, #EE7752, #e70a50, #044ad5, #06d596);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+  }
+
+  &-task {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    left: 15px;
+    top: 5px;
+
+    &-modal {
+      height: 320px;
+      overflow-y: auto;
+      width: 220px;
+      position: absolute;
+      right: 0;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+
+      &-open {
+        animation: pflipInUp 1000ms both;
+      }
+
+      &-close {
+        animation: pflipOutUp 1000ms both;
+      }
+
+      &-header {
+        height: 30px;
+        position: relative;
+        border-bottom: 1px solid;
+
+        div {
+          height: 30px;
+          line-height: 30px;
+          float: left;
+          margin: auto 5px;
+          font-weight: bold;
+
+          span {
+            margin: auto 5px;
+            display: inline-block;
+          }
+        }
+      }
+
+      &-body {
+
+      }
+
+      &-footer {
+        position: absolute;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+        bottom: 5px;
+        width: calc(100% - 15px);
+
+        span {
+          background: #2282b7;
+          border-radius: 5px;
+          height: 25px;
+          line-height: 25px;
+          width: 150px;
+          display: inline-block;
+          color: #fff;
+        }
+      }
+    }
+
+
+    //&-modal::-webkit-scrollbar {
+    //  width: 2px;
+    //  height: 2px;
+    //}
+  }
+}
+

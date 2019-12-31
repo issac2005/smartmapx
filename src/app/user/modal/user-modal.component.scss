@@ -1,0 +1,218 @@
+#user-modal {
+  // 标题
+  .modal-header {
+    background: #3887be;
+    height: 30px;
+    //padding-bottom: 20px;
+    //padding-top: 20px;
+    padding: 0px 11px 0px 12px;
+    line-height: 30px;
+    .modal-title {
+      color: #fff;
+      font-size: 12px;
+      //position: relative;
+      //top: 3px;
+      padding-bottom: 0px;
+      line-height: 30px;
+    }
+    .close {
+      color: #fff;
+      opacity: 1;
+      font-weight: normal;
+      position: relative;
+      bottom: 3px;
+      line-height: 30px;
+    }
+  }
+
+  // 尾部
+  .modal-footer {
+    text-align: center;
+    display: block;
+    border: 0px;
+    padding: 0px 15px 15px;
+    .btn-secondary {
+      background: #3887be;
+      color: #ffffff;
+      width: 80px;
+      height: 28px;
+      line-height: 28px;
+      padding: 0px;
+      border: 1px #eeeeee;
+      &:hover {
+        background: #3887be;
+        color: #eeeeee;
+      }
+      &[disabled] {
+        background: #3887be;
+        color: #ffffff;
+
+        &:hover {
+          background: #3887be;
+          color: #ffffff;
+        }
+      }
+    }
+
+    .button-disabled {
+      disabled: true;
+      opacity: 0;
+    }
+  }
+
+  // 内容
+  .modal-body {
+
+    &-title {
+      margin-right: 10px;
+      margin-bottom: 0;
+      //vertical-align: middle;
+      width: 75px;
+      text-align: end;
+      line-height: 33px;
+    }
+
+    &-value {
+      width: calc(100% - 90px);
+      height: 33px;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    &-span {
+      display: inline-block;
+      height: 33px;
+      line-height: 33px;
+    }
+
+    #confime {
+      .form-group {
+        text-align: center;
+        .deleteData-waring {
+          cursor: pointer;
+          display: inline-block;
+          background-image: url(/assets/img/sprites.png);
+          background-repeat: no-repeat;
+          background-position: -103px -51px;
+          width: 30px;
+          height: 30px;
+        }
+        .control-label {
+          position: relative;
+          top: -9px;
+          font-size: 12px;
+        }
+      }
+
+    }
+
+    // 信息框
+    #info {
+      .t1 {
+        width: 90px;
+        padding-right: 10px;
+      }
+      .t2 {
+        width: 150px;
+      }
+    }
+
+    // 上传凭证
+    #uploadIcon {
+      .uploadIcon {
+        &-fileinput-button {
+          position: relative;
+          display: inline-block;
+          width: 100%;
+          height: 150px;
+          input {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+          }
+        }
+
+        &-icon_u {
+          display: inline-block;
+          border: 1px solid #ccc;
+          padding: 10px;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          line-height: 70px;
+          position: relative;
+        }
+        &-icon_uc {
+          position: absolute;
+          display: block;
+          top: 0;
+          right: 2px;
+          cursor: pointer;
+          color: #bb2727f2;
+          font-size: 20px;
+        }
+
+        &-plus {
+          display: inline-block;
+          width: 30px;
+          height: 30px;
+          background-image: url(/assets/img/sprites.png);
+          background-repeat: no-repeat;
+          background-position: -148px -50px;
+        }
+
+        &-title {
+          display: block;
+          font-size: 26px;
+          color: #ccc;
+          font-weight: bold;
+          position: relative;
+          bottom: 20px;
+        }
+      }
+
+    }
+
+    //标题
+    &-caption {
+      margin-right: 10px;
+      margin-bottom: 0px;
+      vertical-align: middle;
+      width: 75px;
+      text-align: end;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    //分割线
+    &-line {
+      width: 100%;
+      border-bottom: 1px solid #ccc;
+    }
+  }
+
+  .invoice {
+    width: 400px;
+    //max-height: 500px;
+    //overflow-y: auto
+  }
+
+  //::-webkit-scrollbar {
+  //  width: 3px;
+  //  height: 3px;
+  //}
+}
+
+.smx_deleteoverflow{
+  overflow-x: hidden !important;
+}
+.fom_check_power{
+  margin-right: 0rem;
+  left: -5px;
+}
+
+

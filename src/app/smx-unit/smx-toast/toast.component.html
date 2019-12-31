@@ -1,0 +1,88 @@
+<!--授权页面-->
+<div id="smx-access" class="smx-access" *ngIf="config.toastType && config.toastType === 4;else toss">
+  <div class="smx-access-div">
+    <img src="/assets/source-img/logo.png" style="position: absolute;height: 36px;margin: 2px 5px;" loading="lazy">
+    <div class="smx-modal-header smx-access-header">
+      <span>激活</span>
+    </div>
+    <div class="smx-modal-body smx-access-body">
+      <div style="text-align: center;width: 100%;margin-bottom: 10px;">
+        <!--<span *ngIf="!success" style="font-size: 18px;font-weight: bold;">Sm@rtMapX尚未初始化或已到期,请联系商务激活!</span>-->
+        <span *ngIf="!success" style="font-size: 18px;font-weight: bold;">Sm@rtMapX尚未初始化或已到期,请使用微信扫码获取激活码!</span>
+        <span *ngIf="!error && success" style="color: green;font-size: 12px">您已开启Sm@rtMapX敏捷GIS开发平台全部功能,如在使用中有任何疑问,请及时联系我们!</span>
+        <div *ngIf="!success" class="active-qrcode">
+          <div class="active-qrcode-img" id="active-qrcode-img">
+            <!--<img alt="Scan me!" src="" style="display: block;">-->
+          </div>
+        </div>
+      </div>
+      <div style="padding: 10px;">
+        <label style="font-weight: bold">机器码:</label>
+        <span style="display: inline-block;width: 400px; border: 1px solid #a5a3a3;padding: 2px;">{{code}}</span>
+      </div>
+      <div style="padding: 10px;">
+        <label style="font-weight: bold">激活码:</label>
+        <input type="text" style="display: inline-block;width: 400px" [(ngModel)]="accessCode"
+               [disabled]="success? true:false">
+      </div>
+      <div style="margin-top: 20px;text-align: center;">
+        <span *ngIf="error" style="color: red;">{{error}}</span>
+        <span *ngIf="!error && success" style="    color: green;font-size: 16px;font-weight: bold;">到期时间：{{time}}</span>
+      </div>
+      <div style="border-top: 1px solid #ccc;padding: 10px;">
+        <span style="font-weight: bold">联系电话: </span>
+        <span>62975588-6666</span>
+      </div>
+    </div>
+    <div class="smx-modal-footer smx-access-footer">
+      <button *ngIf="!success" type="button" class="smx-btn smx-grid smx-default" (click)="submit()">验证</button>
+      <button *ngIf="success" type="button" class="smx-btn smx-grid smx-default" (click)="goSystem()">确定</button>
+    </div>
+
+  </div>
+</div>
+<!--吐司-->
+<ng-template #toss>
+  <div class="alert bg-white c-toast"
+       [class.smx-toast-success]="isSuccess()"
+       [class.smx-toast-info]="isInfo()"
+       [class.smx-toast-warning]="isWarning()"
+       [class.smx-toast-error]="isError()">
+
+    <button *ngIf="isDismissEnabled()"
+            title="关闭"
+            type="button"
+            class="close"
+            data-dismiss="config"
+            aria-label="Close"
+            (click)="dismiss()">
+      <span aria-hidden="true" class="smx-toast-icon smx-toast-icon-close"></span>
+    </button>
+
+    <button *ngIf="isError() && config.describe"
+
+            style="margin-right: 10px"
+            title="查看错误详情"
+            type="button"
+            class="close"
+            data-dismiss="config"
+            aria-label="Close"
+            (click)="watchError()">
+      <span aria-hidden="true" class="smx-toast-icon smx-toast-icon-down"></span>
+    </button>
+
+
+    <span title="{{config.text}}"
+          class="smx-toast-text"
+          [ngStyle]="{'max-width':isError() && config.describe?'360px':'400px'}">
+       <i class="smx-toast-icon"
+          [class.smx-toast-icon-success]="isSuccess()"
+          [class.smx-toast-icon-info]="isInfo()"
+          [class.smx-toast-icon-warning]="isWarning()"
+          [class.smx-toast-icon-error]="isError()">
+    </i>
+      <strong>{{config.textStrong}}</strong>
+      <span>{{config.text}}</span>
+    </span>
+  </div>
+</ng-template>

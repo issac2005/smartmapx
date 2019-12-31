@@ -1,0 +1,60 @@
+<div class=" select-color">
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <!-- <div class="beyond">{{title}}</div> -->
+      <div  pTooltip="{{tooltip}}"
+            positionStyle='relitive'
+            hideDelay="100"
+            tooltipPosition="bottom"
+            class="beyond">{{title}}</div>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <div *ngIf="showStyle === 'number' || showStyle === 'undefined' || showStyle === 'string'" style="float: left">
+        <span style="float: left;padding-top: 3px">
+            <svg [ngClass]="{'svg-disabled' : attribute === 'fill-outline-color' && !layerInfo['fill-antialias']}"
+             (click)="clickAdd(attribute)" fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14" width="14" size="14" color="#8e8e8e" viewBox="0 0 40 40" style="vertical-align: middle; color: rgb(142, 142, 142);">
+                <g>
+                    <path d="m30 6.6v5h-11.6l8.2 8.4-8.2 8.4h11.6v5h-20v-3.4l10.9-10-10.9-10v-3.4h20z"></path>
+                </g>
+            </svg>
+        </span>
+        <!--<input type="text"
+               [(colorPicker)]="model"
+               [value]="model"
+               [cpOutputFormat]="'rgba'"
+               (colorPickerChange)="change($event)"
+               [cpPositionRelativeToArrow]="false"
+               class="smx-control" style="width: 139px;margin-left: 9px;display: inline"/>-->
+        <smart-color [(color)]="model"
+                     [background]="false"
+                     [cpOutputFormat]="'rgba'"
+                     [disabledBoolean]="attribute === 'fill-outline-color' && !layerInfo['fill-antialias']"
+                     style="display: inline-block;margin-left: 9px"
+                     [inputStyle]="{'height':'26.19px', 'width': '139px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0.2rem'}"
+                     (onChangeComplete)="change($event)">
+        </smart-color>
+      </div>
+      <div *ngIf="showStyle === 'object'" style="float: left">
+        <div *ngFor="let num of layerInfo[attribute].stops index as i" style="margin:0 0 4px 3px">
+          <i class="fa fa-trash" (click)="remove(i)"></i>
+          <input type="number" (keyup)="test($event, i)" [value]="num[0]" [(ngModel)]="num[0]" class="smx-control" style="width: 29px;display: inline;padding: 0.15rem 0.35rem;font-size: 0.175rem"/>
+          <!--<input type="text"
+                 [(colorPicker)]="layerInfo[attribute].stops[i][1]"
+                 [value]="layerInfo[attribute].stops[i][1]"
+                 [cpOutputFormat]="'rgba'"
+                 [cpPositionRelativeToArrow]="false"
+                 (colorPickerChange)="changes($event)"
+                 class="smx-control" style="width: 105px;margin-left: 9px;display: inline"/>-->
+          <smart-color [(color)]="layerInfo[attribute].stops[i][1]"
+                       [background]="false"
+                       [cpOutputFormat]="'rgba'"
+                       style="display: inline-block;margin-left: 9px"
+                       [inputStyle]="{'height':'26.19px', 'width': '105px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0.2rem'}"
+                       (onChangeComplete)="changes($event, i)">
+          </smart-color>
+        </div>
+        <button (click)="buttomAdd()" class="smx-btn smx-default smx-xs" style="margin-left: 120px">添加</button>
+      </div>
+    </div>
+  </div>
+</div>

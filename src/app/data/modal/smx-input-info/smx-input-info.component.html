@@ -1,0 +1,99 @@
+<!--页头-->
+<ng-content select="[name=header]"></ng-content>
+<!--主体-->
+<div *ngFor="let m of view">
+  <!--图片上传-->
+  <div *ngIf="m.element === 'icon_upload'" class="form-group">
+
+    <smx-upload (uploadEnd)="fileChange($event,m)" (uploadCancel)="fileCancel(m)" [smxFile]="'image'"
+                [smxMaxSize]="m.size">
+      <label *ngIf="m.title" smxType="label" class="control-label smx-modal-body-title"
+             style="position: relative;top: -30px;">{{m.title}}</label>
+    </smx-upload>
+  </div>
+
+
+  <!--// 输入框-->
+  <div *ngIf="m.element === 'input'" class="form-group">
+    <smx-input
+      [smxDisabled]="m.disabled"
+      [smxFormat]="m.type"
+      [(ngModel)]="m.value"
+      [smxMaxlength]="m.maxLength || 256"
+      [smxStyle]="{width:'75%'}"
+      [smxPlaceholder]="m.placeholder">
+      <label *ngIf="m.title" class="control-label smx-modal-body-title"
+     >{{m.title}}</label>
+    </smx-input>
+    <div style="position: relative;
+    margin-left: 6rem;
+    width: 15rem;
+    font-size: 0.8rem;
+    color: #AAAAAA;">{{m.tip}}</div>
+
+  </div>
+
+
+  <!--文本域-->
+  <div *ngIf="m.element === 'textarea'" class="form-group">
+    <!-- 改变属性值[maxLength] - > [smxMaxlength] wb -->
+    <smx-input
+      [smxMode]="'textarea'"
+      [smxMaxlength]="m.maxLength ? m.maxLength : 256"
+      [smxStyle]="{width:'75%'}"
+      [(ngModel)]="m.value"
+      [smxPlaceholder]="m.placeholder">
+      <label *ngIf="m.title"
+             class="control-label smx-modal-body-title smx-modal-body-title-textarea">{{m.title}}</label>
+    </smx-input>
+  </div>
+
+  <!--// 单选框-->
+  <div *ngIf="m.element === 'radio'" class="form-group">
+
+    <!--<div style="display: inline-block;">-->
+    <smx-radio
+      [options]="m.options"
+      [(ngModel)]="m.value">
+      <label *ngIf="m.title" class="control-label smx-modal-body-title">{{m.title}}</label>
+    </smx-radio>
+    <!--</div>-->
+  </div>
+
+  <!--文件上传-->
+  <div *ngIf="m.element === 'upload'" class="form-group">
+    <smx-upload (uploadEnd)="uploadEnd($event,m)"
+
+                [smxWidth]="248"
+                [smxMaxSize]="m.size"
+                [smxAccept]="['csv']" [smxTip]="m.tip">
+      <label *ngIf="m.title" smxType="label" class="control-label smx-modal-body-title">{{m.title}}</label>
+    </smx-upload>
+  </div>
+
+
+  <!--下拉框-->
+  <div *ngIf="m.element === 'select'" class="form-group">
+    <smx-select
+      [(ngModel)]="m.value"
+      [options]="m.options"
+      [smxStyle]="{'width':'248px'}">
+      <label *ngIf="m.title" class="control-label smx-modal-body-title">{{m.title}}</label>
+    </smx-select>
+  </div>
+
+  <!--按钮-->
+  <div *ngIf="m.element === 'button'" class="form-group">
+    <label *ngIf="m.title" class="control-label smx-modal-body-title">{{m.title}}</label>
+    <button class="smx-btn smx-default" (click)="btnClick()">{{m.value}}</button>
+  </div>
+
+  <!--注入组件-->
+  <div *ngIf="m.element === 'c-control'" class="form-group">
+    <label *ngIf="m.title" class="control-label smx-modal-body-title">{{m.title}}</label>
+    <ng-container [ngTemplateOutlet]="smxControl[m.control]"
+                  [ngTemplateOutletContext]="{value:m,view:view}"></ng-container>
+  </div>
+</div>
+<!--页尾-->
+<ng-content select="[name=footer]"></ng-content>

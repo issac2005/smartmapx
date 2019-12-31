@@ -1,0 +1,97 @@
+<div class="active-layer">
+  <div class="form-group">
+    <div id="layer-smartMapX-select-ban">
+      图层
+      <i id="add" title="单击添加图层" (click)="$event.stopPropagation(); bgEndPluse()">+</i>
+    </div>
+    <!-- 配置面板中 -->
+    <ul id="layer-smartMapX-select-showlist" class="layer-list">
+      <li style="list-style-type: none;" *ngFor="let item of testArray ; index as i">
+
+        <label *ngIf="(item?.nameShow)  === true" (dblclick)="dBclicklab(i)" title="双击修改图层名称">{{item?.name}}</label>
+        <input #box *ngIf="(item?.nameShow) === false" autofocus title="点击输入框以外的区域改名成功" (blur)="dBclick(i,box.value)"
+               maxlength="40" type="text" value="{{item?.name}}" class="smx-control">
+
+        <span class="style_delete" title="删除图层" (click)="prompt(i)"><i style="cursor: pointer;"
+                                                                       class="fa fa-trash-o"></i></span>
+        <span (click)="changOnOff($event,i)"
+              [ngClass]="item?.show ? 'layer-Off': 'layer-On' " title="单击后图层默认关闭">
+          <i [ngClass]="item?.show ? 'before_button':'after_button'"></i>
+        </span>
+        <span id="layer-smartMapX-select-reselect" title="重新选择图层" (click)="reselectPluse(i)"><i
+          class="fa fa-navicon"></i></span>
+      </li>
+    </ul>
+    <!-- 确认删除弹出框 -->
+    <div id="layer-smartMapX-select-waringdirector" *ngIf="promptBoolen">
+      <div id="layer-smartMapX-select-waringtitle">
+        <span id="layer-smartMapX-select-waringworld">删除图层</span>
+        <span id="layer-smartMapX-select-waringXcancel" style="cursor: pointer;" (click)="ButtonDisDelete()">×</span>
+      </div>
+      <div id="layer-smartMapX-select-waringmessage">
+        <span style="position: relative;top: 13px;">删除图层将不可恢复，确定要删除图层?</span>
+      </div>
+      <div class="smx-modal-footer">
+        <button class="smx-btn smx-grid smx-outline-default" (click)="ButtonDisDelete()">取消</button>
+        <button class="smx-btn smx-default smx-grid"  (click)="ButtonSuerDelete()">确定</button>
+      </div>
+    </div>
+
+    <!-- checkbox相关 -->
+    <div id="layer-smartMapX-select-checkAll" class="layer-smartMapX-select-checkAll" *ngIf="pluseBoolean">
+      <div class="layer-smartMapX-select-tableTitle">
+        选择图层
+      </div>
+      <div class="layer-smartMapX-select-info">
+        <div style="height: 143px;">
+          <!-- 图层checkbox框 -->
+          <table>
+            <tr *ngFor="let item of layerInfomation ; index as i;">
+              <td class="layer-smartMapX-select-trtd" [ngStyle]="{'color':item.isCheck===true ? '#3887be' : '#222224'}">
+                <input class="smx-checkbox" [checked]="item.isCheck" type="checkbox" value="{{layerInfoId[i]}}" (click)="clicks($event, i)">
+                <label class="checkbox-label" (click)="clicks($event, i)">{{item.name}}</label>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <p style="top: 8px;position: relative;left: 10px;">已选中{{layerLength}}个图层</p>
+      </div>
+      <div class="layer-smartMapX-select-button" style="position: relative; top: 11px">
+        <button class="smx_layerselect_de smx-btn smx-outline-default" (click)="buttonDis()">取消</button>
+        <button class="smx_layerselect smx-btn smx-default" (click)="buttonSubmit()">确定</button>
+      </div>
+    </div>
+
+    <!-- 图层编译checkbox -->
+    <div id="layer-smartMapX-reselect-checkAll" class="layer-smartMapX-select-checkAll" *ngIf="reselectBoolean">
+      <div class="layer-smartMapX-select-tableTitle">
+        图层编辑
+        <span id="layer-smartMapX-reselect-tableTitle_close" title="关闭" (click)="reslectDis()">×</span>
+      </div>
+      <div class="layer-smartMapX-select-info">
+        <div style="height: 143px;">
+          <table>
+            <tr *ngFor="let layer of HtmlNeedArray ; index as i;">
+              <td class="layer-smartMapX-reselect-trtd"  [ngStyle]="{'color':layer.isCheck===true ? '#276eae' : '#222224'}">
+                <input class="smx-checkbox"  style="margin: 0 5px; cursor: pointer;" (click)="reclick(i)"
+                       [checked]="layer.isCheck" type="checkbox" value="{{layerInfoId[i]}}">
+                       <label class="checkbox-label" (click)="reclick(i)" >{{layer.name}}</label>
+
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div style="position: relative;top: 7px;">
+        <p id="layer-smartMapX-reselect-selectnumber">已选中{{reselectArrayLength}}个图层</p>
+      </div>
+      <div class="layer-smartMapX-select-button" style="position: relative;top: 15px;">
+        <button class="smx_layerselect_de smx-btn smx-outline-default" (click)="reslectDis()">取消</button>
+        <button class="smx_layerselect smx-btn smx-default" (click)="reselectSure()">确定</button>
+      </div>
+
+    </div>
+  </div>
+</div>

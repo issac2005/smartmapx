@@ -1,0 +1,59 @@
+<div class="staSubsection" *ngIf="this.config.componentType !== 3">
+  <!--统计字段-->
+  <div class="row" *ngIf="this.config.componentType === 1 && field && this.fieldArray.length > 0">
+    <div class="col-md-4 col-xs-4">
+      <div class="staSubsection-title">统计字段</div>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <select [(ngModel)]="field"
+              (ngModelChange)="checkedField($event)"
+              class="form-control form-control-xs" style="width: 166px; height:26px;display: inline">
+        <option *ngFor="let item of fieldArray" [ngValue]="item">
+          {{item.description}}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!--分段级数-->
+  <div class="row" *ngIf="grade">
+    <div class="col-md-4 col-xs-4">
+      <div class="staSubsection-title">分段级数</div>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <select [(ngModel)]="grade"
+              (ngModelChange)="checkedGrade($event)"
+              class="form-control form-control-xs" style="width: 166px; height:26px;display: inline">
+        <option *ngFor="let item of grades" [ngValue]="item">{{item}}</option>
+      </select>
+    </div>
+  </div>
+
+  <!--色带-->
+  <!-- <div style="margin-bottom: 4px" *ngIf="config.attribute === 'staLegend'"></div> -->
+  <div [ngStyle]="{'display':config.attribute === 'staLegend'? 'none':'block' }">
+    <div class="row" *ngIf="colorLine">
+      <div class="col-md-4 col-xs-4">
+        <div class="staSubsection-title">配色方案</div>
+      </div>
+      <div class="col-md-8 col-xs-8">
+        <div>
+                    <span type="text" class="form-control form-control-xs staSubsection-colorline-btn"
+                          [ngStyle]="{'background-image': 'url('+colorLine.label+')'}"
+                          (click)="openLegend($event)"></span>
+        </div>
+        <div class="staSubsection-colorline-select" *ngIf="colorLineStatus">
+          <ul style="list-style: none;margin-bottom: 0px">
+            <li *ngFor="let v of subsectionColors">
+                            <span style="display: inline-block;width: 100%;height: 25px;"
+                                  [ngStyle]="{'background':'url('+ v.label +')'}"
+                                  (click)="checkedColor(v)">
+                            </span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

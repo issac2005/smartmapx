@@ -1,0 +1,494 @@
+.panel {
+  padding-top: 70px;
+  //background: #edf1f2;
+  //background: #f8f7f5;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+
+
+  &-div{
+    height: 100%;
+    background: #fff;
+  }
+
+  .left {
+
+    &-tab {
+      &-title {
+        height: 32px;
+        background: #fff;
+        line-height: 32px;
+        padding-left: 9px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 100%;
+      }
+
+      &-back {
+        font-size: 20px;
+        color: #0098cf;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+    }
+
+    &-panpel {
+
+      &-data {
+        width: 80px;
+        height: 80px;
+        display: inline-block;
+        //margin: 10px;
+        cursor: pointer;
+        border-top: 0px solid #dee2e6;
+
+        //background-repeat: no-repeat;
+        //background-size: 100% 100%;
+
+        &-split {
+          background-image: url(/assets/img/sprites.png);
+          background-position: -583px -77px;
+          background-repeat: no-repeat;
+        }
+
+        &-combine {
+          background-image: url(/assets/img/sprites.png);
+          background-position: -477px -77px;
+          background-repeat: no-repeat;
+        }
+
+        &-en {
+          background-image: url(/assets/img/sprites.png);
+          background-position: -690px -77px;
+          background-repeat: no-repeat;
+        }
+
+
+        &-pp {
+          background-image: url(/assets/img/sprites.png);
+          background-position: -502px -476px;
+          background-repeat: no-repeat;
+        }
+
+        &-ni {
+          background-image: url(/assets/img/sprites.png);
+          background-position: -607px -476px;
+          background-repeat: no-repeat;
+        }
+
+        &-disabled {
+          filter: grayscale(1);
+          cursor: not-allowed;
+          disabled: true
+        }
+
+      }
+
+      &-th {
+        border-top: 0px solid #dee2e6;
+      }
+
+    }
+
+  }
+
+  // 统计图
+  .sta {
+    //发布
+    &-btn-plu {
+      position: fixed;
+      right: 15px;
+      top: 120px;
+      cursor: pointer;
+      border-radius: 5px;
+      text-align: center;
+      width: 62px;
+      z-index: 9;
+      height: 26px;
+      border: 0px solid #ddd;
+      background-repeat: no-repeat;
+      background-image: url(/assets/img/sprites.png);
+      background-position: -281px -490px;
+      transition: unset;
+      background-color: unset;
+
+      &:disabled {
+        &:hover {
+          background-position: -281px -490px;
+          transition: unset;
+        }
+      }
+
+      &:hover {
+        background-position: -281px -528px;
+        transition: unset;
+      }
+    }
+
+    /*切换底图*/
+    &-btn-toggle {
+      position: fixed;
+      right: 85px;
+      z-index: 9;
+      cursor: pointer;
+      top: 120px;
+      border-radius: 5px;
+      text-align: center;
+      width: 84px;
+      height: 26px;
+      border: 0px solid #ddd;
+      background-repeat: no-repeat;
+      background-image: url(/assets/img/sprites.png);
+      background-position: -13px -490px;
+      transition: unset;
+      background-color: unset;
+
+      &:disabled {
+        &:hover {
+          background-position: -13px -490px;
+          transition: unset;
+        }
+      }
+
+      &:hover {
+        background-position: -13px -528px;
+        transition: unset;
+      }
+    }
+
+    //窗口关闭打开
+    .mapsta-drawer {
+      height: 100%;
+      position: absolute;
+      width: 300px;
+      left: -305px;
+      top: 0px;
+      border-right: 1px solid #ccc;
+      background: #dde4ec;
+      z-index: 9;
+      -webkit-transition: all .6s;
+
+      .slideBtn2 {
+        position: absolute;
+        right: -18px;
+        width: 20px;
+        height: 100px;
+        line-height: 100px;
+        color: #fff;
+        text-align: center;
+        cursor: pointer;
+        border: 0;
+        top: 60%;
+        background-image: url(/assets/img/sprites.png);
+        background-repeat: no-repeat;
+        background-position: -365px -179px;
+
+      }
+
+      .slideBtn2.open {
+        right: -23px;
+        background-position: -395px -179px;
+      }
+    }
+
+    .mapsta-drawer.show {
+      left: 0px;
+    }
+
+    .sta-body-sw {
+      position: fixed;
+      top: 385px;
+      right: 15px;
+      border: 1px solid #ccc;
+      width: 32px;
+      height: 32px;
+      text-align: center;
+      /* vertical-align: middle; */
+      border-radius: 5px;
+      line-height: 25px;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    .sta-body-center {
+      position: fixed;
+      top: 420px;
+      right: 15px;
+      border: 1px solid #ccc;
+      width: 32px;
+      height: 32px;
+      text-align: center;
+      /* vertical-align: middle; */
+      border-radius: 5px;
+      line-height: 25px;
+      background-color: #fff;
+      cursor: pointer;
+
+      &-icon {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-image: url(/assets/img/sprites.png);
+        background-position: -577px -11px;
+      }
+    }
+
+  }
+
+  .listWrap {
+    color: #fff;
+
+    .subNavWrap {
+      margin: 0;
+      padding: 0;
+
+      li.subCtrl {
+        display: inline-block;
+        padding: 5px;
+        width: 95px;
+        height: 30px;
+        font-size: 12px;
+        border: none;
+        position: relative;
+        top: 1px;
+        text-align: center;
+        cursor: pointer;
+        background: #b5c2ca;
+      }
+
+      li.subCtrl.active {
+        color: #333;
+        position: relative;
+        background: #fdfeff;
+        top: 2px;
+        font-weight: 600;
+        border-top: 2px solid #4a8bc6;
+      }
+    }
+  }
+
+  .right-side-box {
+    position: absolute;
+    left: 240px;
+    right: 0;
+    top: 70px;
+    bottom: 0;
+    padding: 0 0 0 5px;
+    overflow: auto;
+    display: inline-block;
+    box-orient: vertical;
+    flex-direction: column;
+
+    background-color: #f8f7f5;
+
+    .btn-grid {
+      height: 40px;
+      padding: 0 15px 15px;
+      background: #fff;
+
+      .btn {
+        padding: 4px 20px;
+        font-size: 12px;
+        margin-right: 10px;
+      }
+    }
+
+    .right-filter-box {
+      background: #fff;
+      padding: 15px;
+
+      .right-filter-title {
+        height: 45px;
+        line-height: 30px;
+        color: #666;
+
+        span {
+          font-size: 14px;
+        }
+
+        .float-right {
+          font-size: 12px;
+          cursor: pointer;
+        }
+      }
+
+      .right-filter-body {
+        background: #eee;
+        margin: 0;
+        position: relative;
+        padding-bottom: 60px;
+        padding-top: 20px;
+
+        .filter-bottom {
+          position: absolute;
+          width: 450px;
+          left: 50%;
+          margin-left: -225px;
+          height: 25px;
+          bottom: 15px;
+
+          .filter-label {
+            width: 60px;
+            font-size: 12px;
+            line-height: 25px;
+          }
+
+          #inlineFormCustomSelect {
+            height: 25px;
+            line-height: 25;
+            width: 150px;
+            border: 1px solid #ccc;
+            border-radius: 0;
+            color: #333;
+          }
+
+          .btn {
+            width: 64px;
+            position: relative;
+            top: -1px;
+          }
+        ;
+        }
+      }
+    }
+  }
+
+  //总数
+  .smartmapx-data-totalProperty {
+    position: absolute;
+    right: 50px;
+    //margin-top: 5px;
+  }
+
+  //导出
+  .btn-grid-export {
+    background-image: url(/assets/img/sprites.png);
+    background-position: -20px -240px;
+    background-repeat: no-repeat;
+    /* display: inline-block; */
+    width: 76px;
+    height: 26px;
+    display: inline-block;
+    position: absolute;
+    right: 150px;
+    cursor: pointer;
+  }
+
+}
+
+.sta-plu {
+  // 标题
+  &-header {
+    background: #3887be;
+    height: 31px;
+    //padding-bottom: 20px;
+    //padding-top: 20px;
+    padding: 0px 11px 0px 12px;
+    line-height: 30px;
+
+    .modal-title {
+      color: #fff;
+      font-size: 12px;
+      position: relative;
+      //top: 5px;
+      line-height: 30px;
+    }
+
+    .close {
+      color: #fff;
+      opacity: 1;
+      font-weight: normal;
+      padding-bottom: 5px;
+      line-height: 30px;
+    }
+  }
+
+  // 内容
+  &-body {
+    .control-label {
+      margin-bottom: 0px;
+      vertical-align: middle;
+    }
+
+    .form-group {
+      .form-control {
+        display: inline-block;
+        vertical-align: top;
+        width: calc(100% - 70px);
+      }
+    }
+  }
+
+  // 尾部
+  &-footer {
+    text-align: center;
+    display: block;
+    border: 0px;
+    padding: 0px 15px 15px;
+
+    .btn-secondary {
+      background: #eeeeee;
+      color: #333333;
+      width: 80px;
+      height: 28px;
+      line-height: 28px;
+      padding: 0px;
+      border: 1px #eeeeee;
+
+      &:hover {
+        background: #3887be;
+        color: #eeeeee;
+      }
+
+      &[disabled] {
+        background: #cacaca;
+        color: #000000;
+        // cursor: default;
+        //&:hover{
+        //
+        //}
+      }
+    }
+
+    .button-disabled {
+      disabled: true;
+      opacity: 0;
+    }
+  }
+}
+
+.card-header.active {
+  .fa-sort-up {
+    top: 0 !important;
+    transform: rotate(180deg);
+  }
+}
+
+//自定义模板相关样式
+.template.da {
+  display: inline-block;
+}
+
+.template.container {
+  margin-bottom: -15px;
+  padding-top: 10px;
+
+  .row {
+    height: 30px;
+    line-height: 1;
+
+    div {
+      padding: 0;
+
+      input {
+        position: relative;
+        top: -5px;
+      }
+    }
+  }
+}

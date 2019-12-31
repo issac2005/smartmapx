@@ -1,0 +1,505 @@
+<div class="stalayerContainer" *ngIf="newSta;else oldSta">
+  <div style="width: 295px">
+    <nz-collapse>
+      <nz-collapse-panel [nzHeader]="'图层信息'" [nzActive]="true">
+        <div class="info-body">
+          <div class="base-info">
+            <div class="row">
+              <div class="col-md-4 col-xs-4">
+                <div>样式名称</div>
+              </div>
+              <div class="col-md-8 col-xs-8">
+                <input type="text"
+                       [disabled]="mapType === 'map'? false:true"
+                       (blur)="changeEvent({key:'name',value: $event})"
+                       [(ngModel)]="layer_style_name"
+                       class="form-control form-control-xs"/>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 col-xs-4">
+                <div>专题类型</div>
+              </div>
+              <div class="col-md-8 col-xs-8">
+                <input type="text"
+
+                       [(ngModel)]="layerType"
+                       class="form-control form-control-xs" disabled/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-xs-4">
+                <div>图层名称</div>
+              </div>
+              <div class="col-md-8 col-xs-8">
+                <input type="text" [(ngModel)]="layer[0].metadata.layer_name"
+                       class="form-control form-control-xs" disabled/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-collapse-panel>
+      <nz-collapse-panel [nzHeader]="'样式设置'" [nzActive]="true" *ngIf="updatePermission">
+        <div class="info-body" *ngIf="modelInfo?.attributes">
+          <div *ngFor="let v of modelInfo['attributes']">
+            <sta-subsection *ngIf="v?.componentId === 1 && fieldArray"
+                            [config]="v"
+                            [modelInfo]="modelInfo"
+                            [fieldArray]="fieldArray"
+                            [style]="layer[0]"
+                            (changeEvent)="changeEvent($event)">
+            </sta-subsection>
+
+
+            <sta-slider *ngIf="v?.componentId === 2"
+                        [config]="v"
+                        [style]="layer[0]"
+                        (changeEvent)="changeEvent($event)">
+            </sta-slider>
+
+
+            <sta-radio *ngIf="v?.componentId === 3"
+                       [ngStyle]="{'display': v.attribute === 'RenderType' && !RenderType? 'none': ''}"
+                       [config]="v"
+                       [style]="layer[0]"
+                       (changeEvent)="changeEvent($event)">
+            </sta-radio>
+
+            <sta-select *ngIf="v?.componentId === 5"
+                        [config]="v"
+                        [style]="layer[0]"
+                        (changeEvent)="changeEvent($event)">
+            </sta-select>
+
+            <app-grade-set *ngIf="v?.componentId === 4"
+                           [config]="v"
+                           [style]="layer[0]"
+                           [staType]="staType"
+                           (changeEvent)="changeEvent($event)">
+            </app-grade-set>
+            <!-- 图标符号图 -->
+            <sta-icon *ngIf="v?.componentId === 6"
+                      [config]="v"
+                      [style]="layer[0]"
+                      [staType]="staType"
+                      [splite]="splite"
+                      [map]="map"
+                      (changeEvent)="changeEvent($event)"
+            ></sta-icon>
+            <!-- 流向图 -->
+            <app-flow-graph *ngIf="v?.componentId === 7"
+                            [config]="v"
+                            [style]="layer[0]"
+                            [staType]="staType"
+                            [map]="map"
+                            [busLines]="option"
+            ></app-flow-graph>
+
+          </div>
+        </div>
+        <div class="sta-yy">
+          <button
+            type="button"
+            class="smx-btn smx-default smx-xs btn-yy"
+            (click)="saveSta()">应用
+          </button>
+        </div>
+      </nz-collapse-panel>
+      <nz-collapse-panel [nzHeader]="'样式编辑'" [nzActive]="true">
+        <div class="base-info">
+          <textarea id="myresource" [(ngModel)]="myTextarea" disabled></textarea>
+        </div>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </div>
+</div>
+
+<ng-template #oldSta>
+  <div id="sta-box">
+    <div class="left-tab-panel" style="width: 100%;">
+      <nz-collapse>
+        <nz-collapse-panel [nzHeader]="'图层信息'" [nzActive]="true">
+          <div class="info-body">
+            <div class="container">
+              <div class="row">
+                <div class="col-4">样式名称</div>
+                <div class="col-8">
+                  <input type="text"
+                         style="width: 150px"
+                         [disabled]="mapType === 'map'? false:true"
+                         (blur)="changeEvent({key:'name',value: $event})"
+                         [(ngModel)]="layer[0].metadata.name"/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <div>专题类型</div>
+                </div>
+                <div class="col-8">
+                  <input type="text"
+                         style="width: 150px"
+                         [(ngModel)]="layerType" disabled/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <div>图层名称</div>
+                </div>
+                <div class="col-8">
+                  <input type="text" style="width: 150px"
+                         [(ngModel)]="layer[0].metadata.layer_name" disabled/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nz-collapse-panel>
+        <nz-collapse-panel [nzHeader]="'样式设置'" [nzActive]="true" *ngIf="updatePermission">
+          <!--灯光图-->
+          <ng-container *ngIf="staType === 'b8e4c3c0-55ec-4c47-b28f-6b2572bd48cd'">
+            <div class="container">
+              <div class="row">
+                <div class="col-4">统计字段</div>
+                <div class="col-8">
+                  <select [(ngModel)]="subsectionField"
+                          (ngModelChange)="subsectionField = $event"
+                          class="sta-body-select1">
+                    <option *ngFor="let item of subsectionFields" [ngValue]="item?.value">
+                      {{item?.label}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <div>分段级数</div>
+                </div>
+                <div class="col-8">
+                  <select [(ngModel)]="subsectionGrade"
+                          (ngModelChange)="subsectionGrade = $event;changeGrad($event)"
+                          class="sta-body-select1">
+                    <option *ngFor="let item of subsectionGrades" [ngValue]="item">{{item}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <div>渲染类型</div>
+                </div>
+                <div class="col-8">
+                  <label class="form-check-label">
+                    <input name="colortype"
+                           type="radio"
+                           [(ngModel)]="subsectionType"
+                           style="top: 0;margin-right: 2px;"
+                           value="categorical" checked>等于</label>
+                  <label class="form-check-label">
+                    <input name="colortype"
+                           type="radio"
+                           style="top: 0;margin-right: 2px;"
+                           [(ngModel)]="subsectionType"
+                           value="exponential">渐变</label>
+                  <label class="form-check-label">
+                    <input name="colortype"
+                           type="radio"
+                           style="top: 0;margin-right: 2px;"
+                           [(ngModel)]="subsectionType"
+                           value="interval">间隔</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="sta-body-subsection" style="margin-top: 20px;">
+              <label class="sta-body-subsection-label">分段区间</label>
+            </div>
+            <div>
+              <table>
+                <thead>
+                <tr>
+                  <th scope="col" style="text-align: center">分段值</th>
+                  <th scope="col" style="text-align: center">取色</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let v of subsectionColors" style="text-align: center">
+
+                  <td style="width: 50%">
+                    <input class="sta-value"
+                           type="number"
+                           placeholder="属性值"
+                           [(ngModel)]="v[0]"
+                           [disabled]="subsectionMethod !== '自定义分段'? false: true "/>
+                  </td>
+                  <td>
+                    <smart-color [(color)]="v[1]"
+                                 [background]="false"
+                                 [cpOutputFormat]="'rgba'"
+                                 style="display: inline-block;margin-left: -10px"
+                                 [inputStyle]="{'margin-left': '25px','height':'25px', 'width': '100px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0'}">
+                    </smart-color>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="sta-yy">
+              <button type="button" class="btn btn-sm btn-success btn-yy"
+                      (click)="updateSta('light')">应用
+              </button>
+            </div>
+          </ng-container>
+          <!--行政区划-->
+          <ng-container *ngIf="staType === '22c8992e-9714-48cd-8795-e377a9117f36'">
+            <div class="container">
+              <div class="row">
+                <div class="col-4">统计字段</div>
+                <div class="col-8">
+                  <select [(ngModel)]="subsectionField"
+                          (ngModelChange)="subsectionField = $event"
+                          class="sta-body-select1">
+                    <option *ngFor="let item of subsectionFields" [ngValue]="item?.value">
+                      {{item?.label}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <div>透明度</div>
+                </div>
+                <div class="col-8" style="position: relative;top: -12px">
+                  <div style="width: 80%;display: inline-block;margin-right: 2px;">
+                    <nz-slider [(ngModel)]="opacity" [nzMin]="0" [nzMax]="100" [nzTipFormatter]="null"></nz-slider>
+                  </div>
+
+                  <label class="sta-label-end"
+                         style="display: inline-block;position: absolute;line-height: 36px;">{{opacity / 100}}</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <div>渲染类型</div>
+                </div>
+                <div class="col-8">
+                  <label class="form-check-label">
+                    <input name="colortype"
+                           type="radio"
+                           [(ngModel)]="subsectionType"
+                           value="categorical" checked>等于</label>
+                  <label class="form-check-label">
+                    <input name="colortype"
+                           type="radio"
+                           [(ngModel)]="subsectionType"
+                           value="exponential">渐变</label>
+                  <label class="form-check-label">
+                    <input name="colortype"
+                           type="radio"
+                           [(ngModel)]="subsectionType"
+                           value="interval">间隔</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="sta-body-subsection" style="margin-top: 20px">
+              <label class="sta-body-subsection-label">分段区间</label>
+            </div>
+
+            <div>
+              <table style="width:100%;">
+                <thead>
+                <tr>
+                  <th scope="col" style="text-align: center">区划码</th>
+                  <th scope="col" style="text-align: center">取色</th>
+                  <th scope="col" style="text-align: center">区划名</th>
+                  <th scope="col" style="text-align: center"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let v of subsectionColors" style="text-align: center">
+
+                  <td style="width: 30%">
+                    <input class="sta-value"
+                           type="number"
+                           placeholder="属性值"
+                           [(ngModel)]="v.value[0]"
+                           style="width: 50px"
+                           [disabled]="subsectionMethod !== '自定义分段'? false: true "/>
+                  </td>
+                  <td style="width: 30%">
+                    <smart-color [(color)]="v.value[1]"
+                                 [background]="false"
+                                 [cpOutputFormat]="'rgba'"
+                                 style="display: inline-block;margin-left: -10px"
+                                 [inputStyle]="{'height':'25px', 'width': '70px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0'}">
+                    </smart-color>
+                  </td>
+                  <td style="width: 30%">
+                    <input class="sta-color-value"
+                           placeholder="区划名"
+                           [(ngModel)]="v.name"
+                           style="width: 50px"/>
+                  </td>
+                  <td>
+                    <i class="fa fa-trash-o fa-lg" (click)="deleteArea(v.key)"
+                       style="cursor: pointer;margin-left: 5px"></i>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="sta-yy">
+              <button type="button" class="btn btn-sm btn-success"
+                      style="margin: 25px 5px 10px;left: 139px;position: relative;" (click)="addArea()">添加区划
+              </button>
+              <button type="button" class="btn btn-sm btn-success btn-yy"
+                      (click)="updateSta('regionalism')">
+                应用
+              </button>
+            </div>
+          </ng-container>
+          <!--柱状图-->
+          <ng-container *ngIf="staType == 'd20fb4db-484b-4408-a59b-dc96812c6d5e' && subsectionFields">
+            <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle">
+              <div nz-col nzSpan="7">统计字段</div>
+              <div nz-col nzSpan="17">
+                <smx-select-checkbox [options]="subsectionFields" [(ngModel)]="selectOption" [smxTagCount]="1"
+                                     [smxValueKey]="'value'">
+                </smx-select-checkbox>
+              </div>
+            </div>
+
+            <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle">
+              <div nz-col nzSpan="7">不透明度</div>
+              <div nz-col nzSpan="15">
+                <smx-slider [(ngModel)]="opacity" [smxMin]="0" [smxMax]="100"></smx-slider>
+              </div>
+              <div nz-col nzSpan="2">
+                <span class="sta-label-end">{{opacity / 100}}</span>
+              </div>
+            </div>
+            <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle">
+              <div nz-col nzSpan="7">图形宽度</div>
+              <div nz-col nzSpan="15">
+                <smx-slider [(ngModel)]="barItemWidth" [smxMin]="5" [smxMax]="8"></smx-slider>
+              </div>
+              <div nz-col nzSpan="2">
+                <span class="sta-label-end">{{barItemWidth}}</span>
+              </div>
+            </div>
+            <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle">
+              <div nz-col nzSpan="7">图形间隙</div>
+              <div nz-col nzSpan="15">
+                <smx-slider [(ngModel)]="barGapWidth" [smxMin]="1" [smxMax]="5"></smx-slider>
+              </div>
+              <div nz-col nzSpan="2">
+                <span class="sta-label-end">{{barGapWidth}}</span>
+              </div>
+            </div>
+
+            <div class="sta-body-subsection">
+              <label class="sta-body-subsection-label">区间设置</label>
+            </div>
+            <div style="margin-top: 10px">
+              <label class="sta-label">最大值</label>
+              <input type="number" placeholder="各条数据和里的最大值" [(ngModel)]="sumMaxValue"
+                     style="width: 148px;padding-left: 5px;margin-left: 35px"/>
+            </div>
+            <div>
+              <label class="sta-label">最大高度</label>
+              <input type="number" placeholder="柱图的最大高度" [(ngModel)]="barMaxHeight"
+                     style="width: 148px;padding-left: 5px;margin-left: 35px"/>
+            </div>
+            <div class="sta-body-section" *ngIf="selectOption.length > 0">
+              <span style="padding: 2px 13px;font-weight: bold;">标签名</span>
+              <span style="padding: 2px 50px;font-weight: bold;">取色</span>
+            </div>
+            <div class="sta-body-section" *ngFor="let v of selectOption">
+              <div style="margin-bottom: 10px;">
+                <input class="sta-value"
+                       placeholder="字段描述"
+                       [(ngModel)]="v['label']"
+                       maxlength="12"
+                       disabled/>
+                <smart-color [(color)]="v['hex']"
+                             [background]="false"
+                             [cpOutputFormat]="'rgba'"
+                             style="display: inline-block;margin-left: -10px"
+                             [inputStyle]="{'margin-left': '25px','height':'25px', 'width': '100px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0'}">
+                </smart-color>
+              </div>
+            </div>
+            <div class="sta-yy">
+              <button type="button" class="btn btn-sm btn-success btn-yy" (click)="updateSta('bar')">应用
+              </button>
+            </div>
+          </ng-container>
+          <!--饼状图-->
+          <ng-container *ngIf="staType == 'c40527b1-c55a-4922-9e2d-351897741583' && subsectionFields">
+            <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle">
+              <div nz-col nzSpan="7">统计字段</div>
+              <div nz-col nzSpan="17">
+                <smx-select-checkbox [options]="subsectionFields" [(ngModel)]="selectOption" [smxTagCount]="1"
+                                     [smxValueKey]="'value'">
+                </smx-select-checkbox>
+              </div>
+            </div>
+
+            <div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle">
+              <div nz-col nzSpan="7">不透明度</div>
+              <div nz-col nzSpan="15">
+                <smx-slider [(ngModel)]="opacity" [smxMin]="0" [smxMax]="100"></smx-slider>
+              </div>
+              <div nz-col nzSpan="2">
+                <span class="sta-label-end">{{opacity / 100}}</span>
+              </div>
+            </div>
+
+
+            <div class="sta-body-subsection">
+              <label class="sta-body-subsection-label">区间设置</label>
+            </div>
+            <div style="margin-top: 10px">
+              <label class="sta-label">最大值</label>
+              <input type="number" placeholder="各条数据和里的最大值" [(ngModel)]="sumMaxValue"
+                     style="width: 148px;padding-left: 5px;margin-left: 35px"/>
+            </div>
+            <div>
+              <label class="sta-label">最大半径</label>
+              <input type="number" placeholder="饼图的最大半径" [(ngModel)]="pieMaxRadius"
+                     style="width: 148px;padding-left: 5px;margin-left: 35px"/>
+            </div>
+            <div class="sta-body-section" *ngIf="selectOption.length > 0">
+              <span style="padding: 2px 13px;font-weight: bold;">标签名</span>
+              <span style="padding: 2px 50px;font-weight: bold;">取色</span>
+            </div>
+            <div class="sta-body-section" *ngFor="let v of selectOption">
+              <div style="margin-bottom: 10px;">
+                <input class="sta-value"
+                       placeholder="字段描述"
+                       [(ngModel)]="v['label']"
+                       maxlength="12"
+                       disabled/>
+                <smart-color [(color)]="v['hex']"
+                             [background]="false"
+                             [cpOutputFormat]="'rgba'"
+                             style="display: inline-block;margin-left: -10px"
+                             [inputStyle]="{'margin-left': '25px','height':'25px', 'width': '100px','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '0'}">
+                </smart-color>
+              </div>
+            </div>
+            <div class="sta-yy">
+              <button type="button" class="btn btn-sm btn-success btn-yy" (click)="updateSta('pie')">应用</button>
+            </div>
+          </ng-container>
+        </nz-collapse-panel>
+        <nz-collapse-panel [nzHeader]="'样式编辑'" [nzActive]="true">
+          <div class="base-info" style="position: relative;right: 15px;bottom: 15px;">
+            <textarea [(ngModel)]="myTextarea" disabled></textarea>
+          </div>
+        </nz-collapse-panel>
+      </nz-collapse>
+    </div>
+  </div>
+</ng-template>

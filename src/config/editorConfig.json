@@ -1,0 +1,1476 @@
+{
+    "groups": [
+        {
+            "id": "layerInfo",
+            "name": "图层信息",
+            "condition": [
+                "fill",
+                "line",
+                "symbol",
+                "circle",
+                "background",
+                "fill-extrusion"
+            ],
+            "attributes": [
+                {
+                    "id": 1,
+                    "baseInfo": "图层基础信息，包括 样式名称 类型 图层类型",
+                    "attribute": "baseInfo",
+                    "type": 1,
+                    "groupId": "layerInfo",
+                    "componentId": 6
+                }
+            ]
+        },
+        {
+            "id": "displayLevel",
+            "name": "显示级别",
+            "condition": [
+                "fill",
+                "line",
+                "symbol",
+                "circle",
+                "background",
+                "fill-extrusion"
+            ],
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "最小显示级别",
+                    "attribute": "minzoom",
+                    "min": 0,
+                    "max": 24,
+                    "type": 2,
+                    "groupId": "layerInfo",
+                    "componentId": 6
+                }
+            ]
+        },
+        {
+            "id": "filterInfo",
+            "name": "过滤属性",
+            "condition": [
+                "fill",
+                "line",
+                "symbol",
+                "circle",
+                "background",
+                "fill-extrusion"
+            ],
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "过滤",
+                    "attribute": "filter",
+                    "pattern": "filter",
+                    "defaults": "",
+                    "type": 0,
+                    "groupId": "layerInfo",
+                    "componentId": 6
+                }
+            ]
+        },
+        {
+            "id": "drawProperty",
+            "name": "绘制属性",
+            "condition": [
+                "fill",
+                "line",
+                "circle",
+                "background",
+                "fill-extrusion"
+            ],
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "不透明度",
+                    "attribute": "fill-opacity",
+                    "pattern": "fill-opacity",
+                    "default": 1,
+                    "type": 2,
+                    "min": 0,
+                    "max": 100,
+                    "layerType": "fill",
+                    "tooltip":"图层上面的不透明度",
+                    "componentId": 1,
+                    "belong": "paint"
+                },
+                {
+                    "id": 2,
+                    "title": "颜色",
+                    "attribute": "fill-color",
+                    "pattern": "fill-color",
+                    "default": "rgba(12, 22, 32, 1)",
+                    "type": 0,
+                    "layerType": "fill",
+                    "tooltip":"图层上面的颜色",
+                    "componentId": 4,
+                    "belong": "paint"
+                },
+                {
+                    "id": 3,
+                    "title": "显示轮廓",
+                    "attribute": "fill-antialias",
+                    "pattern": [
+                        true,
+                        false
+                    ],
+                    "default": false,
+                    "type": 0,
+                    "layerType": "fill",
+                    "tooltip":"如果勾选，则为图层上的面添加轮廓",
+                    "componentId": 5,
+                    "belong": "paint"
+                },
+                {
+                    "id": 4,
+                    "title": "轮廓颜色",
+                    "attribute": "fill-outline-color",
+                    "pattern": "fill-outline-color",
+                    "default": "rgba(34, 44, 31, 1)",
+                    "type": 0,
+                    "layerType": "fill",
+                    "tooltip":"轮廓颜色，在勾选“显示轮廓”时选择轮廓颜色",
+                    "componentId": 4,
+                    "belong": "paint"
+                },
+                {
+                    "id": 5,
+                    "title": "图案选择",
+                    "attribute": "fill-pattern",
+                    "pattern": "fill-pattern",
+                    "default": "",
+                    "type": 1,
+                    "layerType": "fill",
+                    "tooltip":"选择填充面的图案",
+                    "componentId": 1,
+                    "belong": "paint"
+                },
+                {
+                    "id": 6,
+                    "title": "偏移",
+                    "attribute": "fill-translate",
+                    "pattern": "fill-translate",
+                    "default": [
+                        0,
+                        0
+                    ],
+                    "type": 1,
+                    "layerType": "fill",
+                    "tooltip":"面相对当前位置的偏移，分别是左负右正、上负下正，单位为像素",
+                    "componentId": 2,
+                    "belong": "paint"
+                },
+                {
+                    "id": 7,
+                    "title": "点中心点偏移",
+                    "attribute": "fill-translate-anchor",
+                    "pattern": [
+                        "map",
+                        "viewport"
+                    ],
+                    "default": [
+                        "地图",
+                        "检视"
+                    ],
+                    "type": 1,
+                    "layerType": "fill",
+                    "tooltip":"该面相对于地图的平移。选择“地图”，表示该面相对于地图进行平移；选择“检视”，表示该面相对于视口进行平移",
+                    "componentId": 3,
+                    "belong": "paint"
+                },
+                {
+                    "id": 8,
+                    "title": "不透明度",
+                    "attribute": "line-opacity",
+                    "pattern": "line-opacity",
+                    "default": 1,
+                    "type": 2,
+                    "min": 0,
+                    "max": 100,
+                    "layerType": "line",
+                    "tooltip":"图层上线条的不透明度",
+                    "componentId": 1,
+                    "belong": "paint"
+                },
+                {
+                    "id": 10,
+                    "title": "颜色",
+                    "attribute": "line-color",
+                    "pattern": "line-color",
+                    "default": "rgba(0, 0, 0, 1)",
+                    "type": 0,
+                    "layerType": "line",
+                    "tooltip":"图层上线条的颜色",
+                    "componentId": 4,
+                    "belong": "paint"
+                },
+                {
+                    "id": 11,
+                    "title": "线宽",
+                    "attribute": "line-width",
+                    "pattern": "line-width",
+                    "default": "2",
+                    "type": 0,
+                    "layerType": "line",
+                    "tooltip":"图层上线条的宽度",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 36,
+                    "title": "虚线样式",
+                    "attribute": "line-dasharray",
+                    "pattern": [
+                        true,
+                        false
+                    ],
+                    "default": false,
+                    "type": 0,
+                    "layerType": "line",
+                    "tooltip":"图层上线条实线、虚线的长度",
+                    "componentId": 5,
+                    "belong": "paint"
+                },
+                {
+                    "id": 12,
+                    "title": "线要素偏移",
+                    "attribute": "line-offset",
+                    "pattern": "line-offset",
+                    "default": "0",
+                    "type": 0,
+                    "layerType": "line",
+                    "tooltip":"线相对于线的偏移量。对于线性要素，正值将相对于线方向的线向右偏移，向左偏移负值。对于面要素，正值会导致插入，负值会导致出线",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 13,
+                    "title": "模糊",
+                    "attribute": "line-blur",
+                    "pattern": "line-blur",
+                    "default": "0",
+                    "type": 0,
+                    "layerType": "line",
+                    "tooltip":"线条的模糊，单位为像素",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 14,
+                    "title": "图案选择",
+                    "attribute": "line-pattern",
+                    "pattern": "line-pattern",
+                    "default": "",
+                    "type": 1,
+                    "layerType": "line",
+                    "tooltip":"选择填充线的图案",
+                    "componentId": 1,
+                    "belong": "paint"
+                },
+                {
+                    "id": 15,
+                    "title": "偏移",
+                    "attribute": "line-translate",
+                    "pattern": "line-translate",
+                    "default": [
+                        0,
+                        0
+                    ],
+                    "type": 1,
+                    "layerType": "line",
+                    "tooltip":"线条相对当前位置的偏移，分别是左负右正、上负下正，单位为像素",
+                    "componentId": 2,
+                    "belong": "paint"
+                },
+                {
+                    "id": 16,
+                    "title": "点中心点偏移",
+                    "attribute": "line-translate-anchor",
+                    "pattern": [
+                        "map",
+                        "viewport"
+                    ],
+                    "default": [
+                        "地图",
+                        "检视"
+                    ],
+                    "type": 1,
+                    "layerType": "line",
+                    "tooltip":"该线相对于地图的平移。选择“地图”，表示该线相对于地图进行平移；选择“检视”，表示该线相对于视口进行平移",
+                    "componentId": 3,
+                    "belong": "paint"
+                },
+                {
+                    "id": 17,
+                    "title": "间隙宽度",
+                    "attribute": "line-gap-width",
+                    "pattern": "line-gap-width",
+                    "default": "0",
+                    "type": 0,
+                    "layerType": "line",
+                    "tooltip":"在线的实际路径之外绘制线框。值表示内部间隙的宽度，单位为像素",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 18,
+                    "title": "颜色",
+                    "attribute": "background-color",
+                    "pattern": "background-color",
+                    "default": "rgba(255, 255, 255, 1)",
+                    "type": 0,
+                    "layerType": "background",
+                    "tooltip":"该图层在地图上的展示颜色",
+                    "componentId": 4,
+                    "belong": "paint"
+                },
+                {
+                    "id": 19,
+                    "title": "图案选择",
+                    "attribute": "background-pattern",
+                    "pattern": "background-pattern",
+                    "default": "",
+                    "type": 1,
+                    "layerType": "background",
+                    "tooltip":"选择填充背景的图案",
+                    "componentId": 1,
+                    "belong": "paint"
+                },
+                {
+                    "id": 20,
+                    "title": "不透明度",
+                    "attribute": "background-opacity",
+                    "pattern": "background-opacity",
+                    "default": 1,
+                    "type": 2,
+                    "min": 0,
+                    "max": 100,
+                    "layerType": "background",
+                    "tooltip":"该图层在地图上展示的不透明度",
+                    "componentId": 1,
+                    "belong": "paint"
+                },
+                {
+                    "id": 21,
+                    "title": "不透明度",
+                    "attribute": "fill-extrusion-opacity",
+                    "pattern": "fill-extrusion-opacity",
+                    "default": 1,
+                    "type": 2,
+                    "min": 0,
+                    "max": 100,
+                    "layerType": "fill-extrusion",
+                    "tooltip":"图层上高程面的不透明度",
+                    "componentId": 1,
+                    "belong": "paint"
+                },
+                {
+                    "id": 22,
+                    "title": "颜色",
+                    "attribute": "fill-extrusion-color",
+                    "pattern": "fill-extrusion-color",
+                    "default": "rgba(255, 255, 255, 1)",
+                    "type": 0,
+                    "layerType": "fill-extrusion",
+                    "tooltip":"图层上高程面的颜色",
+                    "componentId": 4,
+                    "belong": "paint"
+                },
+                {
+                    "id": 23,
+                    "title": "偏移",
+                    "attribute": "fill-extrusion-translate",
+                    "pattern": "fill-extrusion-translate",
+                    "default": [
+                        0,
+                        0
+                    ],
+                    "type": 1,
+                    "layerType": "fill-extrusion",
+                    "tooltip":"高程面相对当前位置的偏移，分别是左负右正、上负下正，单位为像素",
+                    "componentId": 2,
+                    "belong": "paint"
+                },
+                {
+                    "id": 24,
+                    "title": "中心点偏移",
+                    "attribute": "fill-extrusion-translate-anchor",
+                    "pattern": [
+                        "map",
+                        "viewport"
+                    ],
+                    "default": [
+                        "地图",
+                        "检视"
+                    ],
+                    "type": 1,
+                    "layerType": "fill-extrusion",
+                    "tooltip":"该高程面相对于地图的平移。选择“地图”，表示该高程面相对于地图进行平移；选择“检视”，表示该高程面相对于视口进行平移",
+                    "componentId": 3,
+                    "belong": "paint"
+                },
+                {
+                    "id": 25,
+                    "title": "图案",
+                    "attribute": "fill-extrusion-pattern",
+                    "pattern": "fill-extrusion-pattern",
+                    "default": 0,
+                    "type": 1,
+                    "layerType": "fill-extrusion",
+                    "tooltip":"选择填充高程面的图案",
+                    "componentId": 1,
+                    "belong": "paint"
+                },
+                {
+                    "id": 26,
+                    "title": "挤压高度",
+                    "attribute": "fill-extrusion-height",
+                    "pattern": "fill-extrusion-base",
+                    "default": "15",
+                    "type": 0,
+                    "layerType": "fill-extrusion",
+                    "tooltip":"图层上线条虚线、实线的长度",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 27,
+                    "title": "底部挤压高度",
+                    "attribute": "fill-extrusion-base",
+                    "pattern": "fill-extrusion-base",
+                    "default": "15",
+                    "type": 0,
+                    "layerType": "fill-extrusion",
+                    "tooltip":"拉伸此图层的高度，填写大于0的数，单位为像素",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 28,
+                    "title": "颜色",
+                    "attribute": "circle-color",
+                    "pattern": "circle-color",
+                    "default": "rgba(0, 0, 0, 1)",
+                    "type": 0,
+                    "layerType": "circle",
+                    "tooltip":"图层上圆点的颜色",
+                    "componentId": 4,
+                    "belong": "paint"
+                },
+                {
+                    "id": 29,
+                    "title": "不透明度",
+                    "attribute": "circle-opacity",
+                    "pattern": "circle-opacity",
+                    "default": 1,
+                    "type": 2,
+                    "min": 0,
+                    "max": 100,
+                    "layerType": "circle",
+                    "tooltip":"图层上圆点的不透明度",
+                    "componentId": 1,
+                    "belong": "paint"
+                },
+                {
+                    "id": 30,
+                    "title": "描边",
+                    "attribute": "circle-stroke-color",
+                    "pattern": "circle-stroke-color",
+                    "default": "rgba(0, 0, 0, 1)",
+                    "type": 0,
+                    "layerType": "circle",
+                    "tooltip":"图层上圆点描边的颜色",
+                    "componentId": 4,
+                    "belong": "paint"
+                },
+                {
+                    "id": 29,
+                    "title": "描边不透明度",
+                    "attribute": "circle-stroke-opacity",
+                    "pattern": "circle-stroke-opacity",
+                    "default": 1,
+                    "type": 2,
+                    "min": 0,
+                    "max": 100,
+                    "layerType": "circle",
+                    "tooltip":"图层上圆点描边的透明度",
+                    "componentId": 1,
+                    "belong": "paint"
+                },
+                {
+                    "id": 30,
+                    "title": "模糊",
+                    "attribute": "circle-blur",
+                    "pattern": "circle-blur",
+                    "default": "0",
+                    "type": 0,
+                    "layerType": "circle",
+                    "tooltip":"图层上圆点的模糊量。1代表圆点模糊，仅中心点完全不透明",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 31,
+                    "title": "半径",
+                    "attribute": "circle-radius",
+                    "pattern": "circle-radius",
+                    "default": 5,
+                    "type": 0,
+                    "layerType": "circle",
+                    "tooltip":"图层上圆点的半径长度",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 32,
+                    "title": "描边宽度",
+                    "attribute": "circle-stroke-width",
+                    "pattern": "circle-stroke-width",
+                    "default": 0,
+                    "type": 0,
+                    "layerType": "circle",
+                    "tooltip":"图层上圆点的描边宽度,描边作用于圆点半径外部",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 33,
+                    "title": "俯视角度标",
+                    "attribute": "circle-pitch-scale",
+                    "pattern": [
+                        "map",
+                        "viewport"
+                    ],
+                    "default": [
+                        "地图",
+                        "检视"
+                    ],
+                    "type": 1,
+                    "layerType": "circle",
+                    "tooltip":"当为地图设置俯角时，选取'地图'，代表：圆是根据视距离来缩放的,选取'检视'，代表：圆没有缩放",
+                    "componentId": 3,
+                    "belong": "paint"
+                },
+                {
+                    "id": 34,
+                    "title": "偏移",
+                    "attribute": "circle-translate",
+                    "pattern": "circle-translate",
+                    "default": [
+                        0,
+                        0
+                    ],
+                    "type": 1,
+                    "layerType": "circle",
+                    "tooltip":"图层上的圆点相对锚点的偏移，分别是左负右正、上负下正，单位为像素",
+                    "componentId": 2,
+                    "belong": "paint"
+                },
+                {
+                    "id": 35,
+                    "title": "点中心偏移",
+                    "attribute": "circle-translate-anchor",
+                    "pattern": [
+                        "map",
+                        "viewport"
+                    ],
+                    "default": [
+                        "地图",
+                        "检视"
+                    ],
+                    "type": 1,
+                    "layerType": "circle",
+                    "tooltip":"控制'偏移'设置的参照,选取'地图'代表：圆圈相对于地图进行平移,选取'检视'代表：圆圈相对于视口进行平移",
+                    "componentId": 3,
+                    "belong": "paint"
+                }
+            ]
+        },
+        {
+            "id": "layoutProperty",
+            "name": "布局属性",
+            "condition": [
+                "line"
+            ],
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "末端样式",
+                    "attribute": "line-cap",
+                    "pattern": [
+                        "butt",
+                        "round",
+                        "square"
+                    ],
+                    "default": [
+                        "平角",
+                        "圆角",
+                        "直角"
+                    ],
+                    "type": 1,
+                    "layerType": "line",
+                    "tooltip":"线尾的显示，选择“平角“，末端样式为带有方形末端的帽子，该末端被绘制到线的确切端点；选择“圆角，末端样式为一个圆形端盖，在线的端点处以半径为线的一半，并以线的端点为中心；选择”直角“，末端样式为带有方形端的帽，在线的宽度的一半处绘制超出线的端点",
+                    "componentId": 3,
+                    "belong": "layout"
+                },
+                {
+                    "id": 2,
+                    "title": "连接方式",
+                    "attribute": "line-join",
+                    "pattern": [
+                        "bevel",
+                        "round",
+                        "miter"
+                    ],
+                    "default": [
+                        "斜切",
+                        "圆角",
+                        "斜角"
+                    ],
+                    "type": 1,
+                    "layerType": "line",
+                    "tooltip":"线尾的连接方式，选择“斜切”，线尾具有方形末端的连接，该方形在线的宽度的一半处被绘制超出线的端点；选择“圆角”，线尾具有圆形末端的连接，该末端在线的端点处以半径为线的宽度的一半绘制并且以线的端点为中心；选择“斜角”，线尾的样式为一个带有尖角的角部连接，其外侧绘制超出路径的终点直到它们相遇",
+                    "componentId": 3,
+                    "belong": "layout"
+                },
+                {
+                    "id": 3,
+                    "title": "斜度限制",
+                    "attribute": "line-miter-limit",
+                    "pattern": "line-miter-limit",
+                    "default": 2,
+                    "type": 0,
+                    "layerType": "line",
+                    "tooltip":"用于自动将斜切连接转换为斜角连接以获得锐角。连接方式为“斜角”方式时输入数值",
+                    "componentId": 1,
+                    "belong": "layout"
+                },
+                {
+                    "id": 4,
+                    "title": "范围限制",
+                    "attribute": "line-round-limit",
+                    "pattern": "line-round-limit",
+                    "default": "1.05",
+                    "type": 0,
+                    "layerType": "line",
+                    "tooltip":"用于自动将圆角连接转换为斜角连接的角度。连接方式为“圆角”方式输入数值",
+                    "componentId": 1,
+                    "belong": "layout"
+                }
+            ]
+        },
+        {
+            "id": "globalLayout",
+            "name": "全局布局属性",
+            "condition": [
+                "symbol"
+            ],
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "图标布局",
+                    "attribute": "symbol-placement",
+                    "pattern": [
+                        "point",
+                        "line"
+                    ],
+                    "default": [
+                        "点",
+                        "线"
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"图层上的点在地图上的布局方式，提供点布局方式和线布局方式",
+                    "componentId": 3,
+                    "belong": "layout"
+                },
+                {
+                    "id": 2,
+                    "title": "间距",
+                    "attribute": "symbol-spacing",
+                    "pattern": "symbol-spacing",
+                    "default": 250,
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"输入大于0的数值，在图标布局方式为“线布局”方式时生效",
+                    "componentId": 1,
+                    "belong": "layout"
+                },
+                {
+                    "id": 3,
+                    "title": "避让边缘",
+                    "attribute": "symbol-avoid-edges",
+                    "pattern": [
+                        true,
+                        false
+                    ],
+                    "default": false,
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"默认不勾选，鼠标移入提示“如果为勾选，则符号会避免相互冲突",
+                    "componentId": 5,
+                    "belong": "layout"
+                }
+            ]
+        },
+        {
+            "id": "textLayout",
+            "name": "文本布局属性",
+            "condition": [
+                "symbol"
+            ],
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "字段",
+                    "attribute": "text-field",
+                    "pattern": [],
+                    "default": "",
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"在此选择表中的字段，在地图上该图层的文本显示该字段的字段值；也可以直接输入文本，令其显示在图层上",
+                    "componentId": 3,
+                    "belong": "layout"
+                },
+                {
+                    "id": 2,
+                    "title": "字体",
+                    "attribute": "text-font",
+                    "pattern": "text-font",
+                    "default": [
+                        "Microsoft YaHei Regular"
+                    ],
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"该图层上文本字",
+                    "componentId": 2,
+                    "belong": "layout"
+                },
+                {
+                    "id": 3,
+                    "title": "大小",
+                    "attribute": "text-size",
+                    "pattern": "text-size",
+                    "default": "16",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"该图层上文本的大小，单位为像素",
+                    "componentId": 1,
+                    "belong": "layout",
+                    "EXtype":0
+                },
+                {
+                    "id": 4,
+                    "title": "行高",
+                    "attribute": "text-line-height",
+                    "pattern": "text-line-height",
+                    "default": "1.2",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"该图层上文本的行高，单位为倍数",
+                    "componentId": 1,
+                    "belong": "layout"
+                },
+                {
+                    "id": 5,
+                    "title": "内边距",
+                    "attribute": "text-padding",
+                    "pattern": "text-padding",
+                    "default": "0",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"该图层上文本锚点间的间隙，单位为像素",
+                    "componentId": 1,
+                    "belong": "layout"
+                },
+                {
+                    "id": 6,
+                    "title": "允许覆盖",
+                    "attribute": "text-allow-overlap",
+                    "pattern": [
+                        true,
+                        false
+                    ],
+                    "default": false,
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"如果勾选，即使文本与其他先前绘制的符号发生碰撞，文本也将可见",
+                    "componentId": 5,
+                    "belong": "layout"
+                },
+                {
+                    "id": 7,
+                    "title": "忽略位置",
+                    "attribute": "text-ignore-placement",
+                    "pattern": [
+                        true,
+                        false
+                    ],
+                    "default": false,
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"如果勾选则即使其他符号与文本发生碰撞，也可以看到其他符号",
+                    "componentId": 5,
+                    "belong": "layout"
+                },
+                {
+                    "id": 8,
+                    "title": "边距对齐",
+                    "attribute": "text-pitch-alignment",
+                    "pattern": [
+                        "map",
+                        "viewport",
+                        "auto"
+                    ],
+                    "default": [
+                        "地图",
+                        "检视",
+                        "自动"
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"投放地图时文本的方向。边距对齐和旋转对齐应配合设置，默认情况下，当按住鼠标右键上下移动时，地图会发生一定的俯角，按住鼠标右键左右移动时，地图会发生旋转，选择“检视”模式，图层上的文本在屏幕上显示始终是正对屏幕方向；选择“地图”模式，图层上的文本与地图的俯角保持一致；选择“自动”模式，与“检视”模式的显示效果相同",
+                    "componentId": 3,
+                    "belong": "layout"
+                },
+                {
+                    "id": 9,
+                    "title": "文本旋转对齐",
+                    "attribute": "text-rotation-alignment",
+                    "pattern": [
+                        "map",
+                        "viewport",
+                        "auto"
+                    ],
+                    "default": [
+                        "地图",
+                        "检视",
+                        "自动"
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"投放地图时文本的方向。边距对齐和旋转对齐应配合设置，当“边距对齐”选择“地图”，地图发生俯角和旋转时，“旋转对齐”选择“地图”模式，图层上的文本在屏幕上显示与地图的俯角和方向保持一致；“旋转对齐”选择“检视”模式，图层上的文本只与地图的俯角保持一致；选择“自动”模式，与“检视”模式的显示效果相同。当“边距对齐”选择“检视”，“旋转对齐”选择“地图”，文本显示只与地图的方向保持一致；“旋转对齐”选择“检视”，图层上的文本在屏幕上显示始终是正对屏幕方向，“旋转对齐”选择“自动”，与检视的效果相同",
+                    "componentId": 3,
+                    "belong": "layout"
+                },
+                {
+                    "id": 10,
+                    "title": "最大宽度",
+                    "attribute": "text-max-width",
+                    "pattern": "text-max-width",
+                    "default": "10",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"文本的最大宽度，单位为像素",
+                    "componentId": 1,
+                    "belong": "layout",
+                    "EXtype":0
+                },
+                {
+                    "id": 11,
+                    "title": "文本间距",
+                    "attribute": "text-letter-spacing",
+                    "pattern": "text-letter-spacing",
+                    "default": "0",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"文本的字母间距单位为像素",
+                    "componentId": 1,
+                    "belong": "layout",
+                    "EXtype":0
+                },
+                {
+                    "id": 12,
+                    "title": "对齐方式",
+                    "attribute": "text-justify",
+                    "pattern": [
+                        "left",
+                        "center",
+                        "right"
+                    ],
+                    "default": [
+                        "左",
+                        "中",
+                        "右"
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"文本换行时的对齐方式",
+                    "componentId": 3,
+                    "belong": "layout"
+                },
+                {
+                    "id": 13,
+                    "title": "文本锚点",
+                    "attribute": "text-anchor",
+                    "pattern": [
+                        "top",
+                        "bottom",
+                        "left",
+                        "right",
+                        "center",
+                        "top-left",
+                        "top-right",
+                        "bottom-left",
+                        "bottom-right"
+                    ],
+                    "default": [
+                        "上",
+                        "下",
+                        "左",
+                        "右",
+                        "中",
+                        "左上",
+                        "右上",
+                        "左下",
+                        "右下"
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"文本的某侧靠近锚点放置",
+                    "componentId": 3,
+                    "belong": "layout"
+                },
+                {
+                    "id": 14,
+                    "title": "最大角度",
+                    "attribute": "text-max-angle",
+                    "pattern": "text-max-angle",
+                    "default": 45,
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"相邻字符间的最大角度变化，“图标布局”方式是“线”布局时生效，单位为度",
+                    "componentId": 1,
+                    "belong": "layout"
+                },
+                {
+                  "id": 20,
+                  "title": "旋转角度",
+                  "attribute": "text-rotate",
+                  "pattern": "text-rotate",
+                  "default": 0,
+                  "type": 0,
+                  "layerType": "symbol",
+                  "tooltip":"顺时针旋转文本的角度，数值不可大于最大旋转角度，单位为度",
+                  "componentId": 1,
+                  "belong": "layout"
+                },
+                {
+                    "id": 15,
+                    "title": "图标间隔",
+                    "attribute": "symbol-spacing",
+                    "pattern": "symbol-spacing",
+                    "default": 250,
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"图标之间的间距",
+                    "componentId": 10000,
+                    "belong": "layout"
+                },
+                {
+                    "id": 16,
+                    "title": "防倒置",
+                    "attribute": "text-keep-upright",
+                    "pattern": [
+                        true,
+                        false
+                    ],
+                    "default": false,
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"可以翻转文本，防止其倒置。在文本的“旋转对齐”是“地图”方式，且“图标布局”方式是“线”布局时生效",
+                    "componentId": 5,
+                    "belong": "layout"
+                },
+                {
+                    "id": 17,
+                    "title": "大小写转换",
+                    "attribute": "text-transform",
+                    "pattern": [
+                        "none",
+                        "uppercase",
+                        "lowercase"
+                    ],
+                    "default": [
+                        "无变化",
+                        "大写",
+                        "小写"
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"选择“大写”，此图层上的英文文本全部为大写字母；选择“小写”，此图层上的英文文本全部为小写字母",
+                    "componentId": 3,
+                    "belong": "layout"
+                },
+                {
+                    "id": 18,
+                    "title": "偏移",
+                    "attribute": "text-offset",
+                    "pattern": "text-offset",
+                    "default": [
+                        0,
+                        0
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"文字相对锚点的偏移，分别是左负右正、上负下正，单位为像素",
+                    "componentId": 2,
+                    "belong": "layout"
+                },
+                {
+                    "id": 19,
+                    "title": "选配",
+                    "attribute": "text-optional",
+                    "pattern": [
+                        true,
+                        false
+                    ],
+                    "default": false,
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"如果勾选，则当文本与其他符号发生碰撞而图标没有碰撞时，图标将显示没有相应的文本",
+                    "componentId": 5,
+                    "belong": "layout"
+                }
+            ]
+        },
+        {
+            "id": "iconLayout",
+            "name": "图标布局属性",
+            "condition": [
+                "symbol"
+            ],
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "允许覆盖",
+                    "attribute": "icon-allow-overlap",
+                    "pattern": [
+                        true,
+                        false
+                    ],
+                    "default": false,
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"如果勾选，即使图标与其他先前绘制的符号发生碰撞，该图标也将可见",
+                    "componentId": 5,
+                    "belong": "layout"
+                },
+                {
+                    "id": 2,
+                    "title": "忽略位置",
+                    "attribute": "icon-ignore-placement",
+                    "pattern": [
+                        true,
+                        false
+                    ],
+                    "default": false,
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"如果勾选，即使其他符号与图标发生碰撞，也可以看到其他符号",
+                    "componentId": 5,
+                    "belong": "layout"
+                },
+                {
+                    "id": 3,
+                    "title": "选配",
+                    "attribute": "icon-optional",
+                    "pattern": [
+                        true,
+                        false
+                    ],
+                    "default": false,
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"如果勾选，当图标与其他符号发生碰撞而文本没有碰撞时，文本将显示没有相应的图标",
+                    "componentId": 5,
+                    "belong": "layout"
+                },
+                {
+                    "id": 4,
+                    "title": "图标旋转对齐",
+                    "attribute": "icon-rotation-alignment",
+                    "pattern": [
+                        "map",
+                        "viewport",
+                        "auto"
+                    ],
+                    "default": [
+                        "地图",
+                        "检视",
+                        "自动"
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"投放地图时图标的方向。当按住鼠标右键上下移动时，地图会发生一定的俯角，按住鼠标右键左右移动时，地图会发生旋转，当地图发生俯角和旋转时，选择“地图”时，图标的俯角和方向和地图保持一致；选择“自动”，图标始终正对着屏幕的方向；选择“检视”和“自动”的效果相同",
+                    "componentId": 3,
+                    "belong": "layout"
+                },
+                {
+                    "id": 5,
+                    "title": "大小",
+                    "attribute": "icon-size",
+                    "pattern": "icon-size",
+                    "default": "1",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"图标在地图上的大小，单位为倍数",
+                    "componentId": 1,
+                    "belong": "layout",
+                    "EXtype":0
+                },
+                {
+                    "id": 6,
+                    "title": "文本适配",
+                    "attribute": "icon-text-fit",
+                    "pattern": [
+                        "none",
+                        "width",
+                        "height",
+                        "both"
+                    ],
+                    "default": [
+                        "无变化",
+                        "宽",
+                        "高",
+                        "全部"
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"缩放图标以适合相关文本",
+                    "componentId": 3,
+                    "belong": "layout"
+                },
+                {
+                    "id": 7,
+                    "title": "文本适配填充",
+                    "attribute": "icon-text-fit-padding",
+                    "pattern": "icon-text-fit-padding",
+                    "default": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "type": 2,
+                    "layerType": "symbol",
+                    "tooltip":"分别向上方、右侧、下方、左侧拉伸图标的距离，选择文本适配情况下生效，单位为像素",
+                    "componentId": 2,
+                    "belong": "layout"
+                },
+                {
+                    "id": 8,
+                    "title": "图案选择",
+                    "attribute": "icon-image",
+                    "pattern": "icon-image",
+                    "default": "000000",
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"为图层上的点选择图标",
+                    "componentId": 1,
+                    "belong": "layout"
+                },
+                {
+                    "id": 9,
+                    "title": "旋转角度",
+                    "attribute": "icon-rotate",
+                    "pattern": "icon-rotate",
+                    "default": 2,
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"顺时针旋转图标，单位为度",
+                    "componentId": 1,
+                    "belong": "layout"
+                },
+                {
+                    "id": 10,
+                    "title": "内边距",
+                    "attribute": "icon-padding",
+                    "pattern": "icon-padding",
+                    "default": "0",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"用于检测符号与与符号的图标边界框周围的附加区域的大小，单位为像素",
+                    "componentId": 1,
+                    "belong": "layout"
+                },
+                {
+                    "id": 11,
+                    "title": "防倒置",
+                    "attribute": "icon-keep-upright",
+                    "pattern": "icon-keep-upright",
+                    "default": [
+                        true,
+                        false
+                    ],
+                    "type": false,
+                    "layerType": "symbol",
+                    "tooltip":"可以翻转图标，防止其倒置。在图标的“旋转对齐”是“地图”方式，且“图标布局”方式是“线”布局时生效",
+                    "componentId": 5,
+                    "belong": "layout"
+                },
+                {
+                    "id": 12,
+                    "title": "偏移",
+                    "attribute": "icon-offset",
+                    "pattern": "icon-offset",
+                    "default": [
+                        0,
+                        0
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"文字相对锚点的偏移，分别是左负右正、上负下正，单位为像素",
+                    "componentId": 2,
+                    "belong": "layout"
+                }
+            ]
+        },
+        {
+            "id": "textRender",
+            "name": "文本绘制属性",
+            "condition": [
+                "symbol"
+            ],
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "颜色",
+                    "attribute": "text-color",
+                    "pattern": "text-color",
+                    "default": "rgba(0, 0, 0, 1)",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"图层上的文本的颜色",
+                    "componentId": 4,
+                    "belong": "paint"
+                },
+                {
+                    "id": 2,
+                    "title": "不透明度",
+                    "attribute": "text-opacity",
+                    "pattern": "text-opacity",
+                    "default": 1,
+                    "type": 2,
+                    "min": 0,
+                    "max": 100,
+                    "layerType": "symbol",
+                    "tooltip":"图层上文本的不透明度，范围从0到1",
+                    "componentId": 1,
+                    "belong": "paint"
+                },
+                {
+                    "id": 3,
+                    "title": "光晕颜色",
+                    "attribute": "text-halo-color",
+                    "pattern": "text-halo-color",
+                    "default": "rgba(0, 0, 0, 0)",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"文本光环的颜色，与背景区分",
+                    "componentId": 4,
+                    "belong": "paint"
+                },
+                {
+                    "id": 4,
+                    "title": "光晕宽度",
+                    "attribute": "text-halo-width",
+                    "pattern": "text-halo-width",
+                    "default": "0",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"光晕到文字轮廓的距离，单位为像素",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 5,
+                    "title": "光晕距离",
+                    "attribute": "text-halo-blur",
+                    "pattern": "text-halo-blur",
+                    "default": "0",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"光晕向外倾斜的距离，单位为像素",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 6,
+                    "title": "偏移",
+                    "attribute": "text-translate",
+                    "pattern": "text-translate",
+                    "default": [
+                        0,
+                        0
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"文字相对锚点的偏移，分别是左负右正、上负下正，单位为像素",
+                    "componentId": 2,
+                    "belong": "paint"
+                },
+                {
+                    "id": 7,
+                    "title": "点中心偏移",
+                    "attribute": "text-translate-anchor",
+                    "pattern": [
+                        "map",
+                        "viewport"
+                    ],
+                    "default": [
+                        "地图",
+                        "检视"
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"投放地图时文本的方向。当按住鼠标右键上下移动时，地图会发生一定的俯角，按住鼠标右键左右移动时，地图会发生旋转，当地图发生俯角和旋转时，选择“地图”时，文本的俯角和方向和地图保持一致；选择“自动”，文本始终正对着屏幕的方向；选择“检视”和“自动”的效果相同",
+                    "componentId": 3,
+                    "belong": "paint"
+                }
+            ]
+        },
+        {
+            "id": "chartRender",
+            "name": "图标绘制属性",
+            "condition": [
+                "symbol"
+            ],
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "颜色",
+                    "attribute": "icon-color",
+                    "pattern": "icon-color",
+                    "default": "rgba(0, 0, 0, 1)",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"图标的颜色，只能与SDF图标一起使用",
+                    "componentId": 4,
+                    "belong": "paint"
+                },
+                {
+                    "id": 2,
+                    "title": "不透明度",
+                    "attribute": "icon-opacity",
+                    "pattern": "icon-opacity",
+                    "default": 1,
+                    "type": 2,
+                    "min": 0,
+                    "max": 100,
+                    "layerType": "symbol",
+                    "tooltip":"图层上图标的不透明度，范围从0到1",
+                    "componentId": 1,
+                    "belong": "paint"
+                },
+                {
+                    "id": 3,
+                    "title": "光晕颜色",
+                    "attribute": "icon-halo-color",
+                    "pattern": "icon-halo-color",
+                    "default": "rgba(0, 0, 0, 0)",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"图标光晕的颜色，只能与SDF图标一起使用",
+                    "componentId": 4,
+                    "belong": "paint"
+                },
+                {
+                    "id": 4,
+                    "title": "光晕宽度",
+                    "attribute": "icon-halo-width",
+                    "pattern": "icon-halo-width",
+                    "default": "0",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"光晕到图标轮廓的距离，单位为像素",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 5,
+                    "title": "光晕距离",
+                    "attribute": "icon-halo-blur",
+                    "pattern": "icon-halo-blur",
+                    "default": "0",
+                    "type": 0,
+                    "layerType": "symbol",
+                    "tooltip":"淡出外面的距离，单位为像素",
+                    "componentId": 1,
+                    "belong": "paint",
+                    "EXtype":0
+                },
+                {
+                    "id": 6,
+                    "title": "偏移",
+                    "attribute": "icon-translate",
+                    "pattern": "icon-translate",
+                    "default": [
+                        0,
+                        0
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"图标相对锚点的偏移，分别是左负右正、上负下正，单位为像素",
+                    "componentId": 2,
+                    "belong": "paint"
+                },
+                {
+                    "id": 7,
+                    "title": "点中心偏移",
+                    "attribute": "icon-translate-anchor",
+                    "pattern": [
+                        "map",
+                        "viewport"
+                    ],
+                    "default": [
+                        "地图",
+                        "检视"
+                    ],
+                    "type": 1,
+                    "layerType": "symbol",
+                    "tooltip":"投放地图时图标的方向。当按住鼠标右键上下移动时，地图会发生一定的俯角，按住鼠标右键左右移动时，地图会发生旋转，当地图发生俯角和旋转时，选择“地图”时，图标的俯角和方向和地图保持一致；选择“自动”，图标始终正对着屏幕的方向；选择“检视”和“自动”的效果相同",
+                    "componentId": 3,
+                    "belong": "paint"
+                }
+            ]
+        },
+        {
+            "id": "styleEditing",
+            "name": "样式编辑",
+            "condition": [
+                "fill",
+                "line",
+                "symbol",
+                "circle",
+                "background",
+                "fill-extrusion"
+            ],
+            "attributes": [
+                {
+                    "id": 1,
+                    "title": "样式编辑，统一在filter组件中",
+                    "attribute": "fill-color",
+                    "pattern": "fill-color",
+                    "default": "rgba(12, 22, 32, 1)",
+                    "type": 3,
+                    "groupId": "layerInfo",
+                    "componentId": 6
+                }
+            ]
+        }
+    ]
+}

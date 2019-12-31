@@ -1,0 +1,78 @@
+// -------- ng-zorro 自定义参数覆盖 -----------
+/**
+ *   banner页面
+ */
+.index-box {
+  .ant-carousel .slick-slider,
+  .ant-carousel .slick-list,
+  .ant-carousel .slick-track {
+    height: 100%;
+  }
+}
+
+
+/**
+ *   折叠面板collapse
+ */
+
+// 折叠面板
+.ant-collapse {
+  font-size: 12px;
+}
+
+// 折叠面板标题
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+  background-color: #e7ecee;
+  padding: 5px 0 5px 20px;
+}
+
+// 折叠面板箭头标志
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow,
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .arrow {
+  position: absolute;
+  text-align: end;
+  right: 10px;
+  //top: calc(50% - 3px);
+}
+
+// 折叠面板内容
+.ant-collapse-content {
+  background-color: #F4F7FB;
+  overflow: visible;
+}
+
+
+/**
+ * 抽屉
+ */
+.ant-drawer-body {
+  padding: 5px;
+}
+
+/**
+ * 覆盖框层级
+ */
+.cdk-overlay-container {
+  z-index: 1051;
+}
+
+/**
+ * 时间日期选择框图标
+ */
+.ant-time-picker-clear, .ant-time-picker-icon,
+.ant-calendar-picker-clear, .ant-calendar-picker-icon {
+  margin-top: -10px;
+}
+
+
+/**
+ * 滑动条样式
+ */
+.ant-slider-rail {
+  background-color: #e1e1e1;
+}
+
+//多选框面板
+.ant-select-selection--multiple .ant-select-selection__choice {
+  max-width: 50%;
+}

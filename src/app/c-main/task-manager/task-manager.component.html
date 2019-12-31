@@ -1,0 +1,20 @@
+<div class="task-manager">
+  <smx-icon [iconName]="'fa-bell-o'" (iconClick)="openTask($event)" [iconSize]="20" [tip]="taskNum"
+            [title]="taskTitle"></smx-icon>
+  <div *ngIf="taskShow !== undefined" class="task-manager-modal" (click)="$event.stopPropagation()"
+       [ngClass]="{'task-manager-modal-close': !taskShow,'task-manager-modal-open': taskShow}">
+    <div class="task-manager-modal-header">
+      <div>执行中<span style="color: #32b6ff">{{loadingNum}}</span></div>
+      <div>完成<span style="color: #00b065">{{finishNum}}</span></div>
+      <div>失败<span style="color: #e7191b">{{failedNum}}</span></div>
+    </div>
+    <div class="task-manager-modal-body">
+      <ng-container *ngFor="let v of taskItems">
+        <task-item [task]="v" (removeEvent)="removeTask($event)"></task-item>
+      </ng-container>
+    </div>
+    <div class="task-manager-modal-footer">
+      <span (click)="removeTasks()">移除已完成任务</span>
+    </div>
+  </div>
+</div>

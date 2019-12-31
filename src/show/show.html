@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'/>
+
+  <title></title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+  <script src='/map/assets/smartmapx.js'></script>
+  <link href='/map/assets/smartmapx.css' rel='stylesheet'/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .mapLoading {
+      background-image: url(./loading.png);
+      height: 38px;
+      width: 228px;
+      position: absolute;
+      bottom: calc(50% - 19px);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      left: calc(50% - 114px);
+    }
+  </style>
+</head>
+<body ontouchmove="return event.preventDefault()">
+
+<div id='map'></div>
+<div id="notice"></div>
+<span id='loadbar' class="mapLoading"></span>
+<script>
+
+  window.onload = function () {
+    showJson();
+  };
+
+
+  function initMap(url) {
+    var map_id = getQueryString('mapID');
+    var token_id = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE1MzcxODM1OTgsImRhdGEiOiJ7XCJsb2dpbl9uYW1lXCI6XCJyb290XCIsXCJnZW5kZXJcIjoyLFwidXNlcl9pZFwiOlwiZm1fc3lzdGVtX3VzZXJfcm9vdFwiLFwidXNlcl9uYW1lXCI6XCJyb290XCIsXCJ1c2VyX29yaWdpbl9pZFwiOlwiZm1fbG9jYWxcIixcInByb2R1Y3RfaWRcIjpcIlwiLFwiZXhwaXJlX3RpbWVcIjpcIlwiLFwic291cmNlX2lkXCI6XCJcIixcInR5cGVcIjpcIlwiLFwiY29ycF9pZFwiOlwiZm1fc3lzdGVtX2NvcnBcIn0iLCJleHAiOjQwOTI1OTkzNDksImp0aSI6ImFfNjhmZjBhZGY5OTcxNDQ0NThjNzViZWFiN2FjNTkzYWYifQ.W122WkT6QR4HZWbpalkpmirV9JWkDYcCkmNZoxCB_z8';
+    ajax({
+      url: url + "/em/services/1.0.0/execute/showMapStyle",
+      type: "get",
+      data: {
+        mapID: map_id
+      },        //请求参数
+      dataType: "json",
+      success: function (res) {
+        const data = JSON.parse(res);
+        if(!data || data.status < 0){
+          alert('未发现地图,请确认此地图是否已经被删除!');
+          return;
+        }
+        let bounds;
+        if (data && data.config && data.config.bounds) {
+          bounds = data.config.bounds;
+        }
+        smartmapx.apikey = token_id;
+        smartmapx.mapbase = url;
+        var map;
+        if (bounds) {
+          var maxBounds;
+          if (typeof bounds == 'string') {
+            try { // json
+              maxBounds = JSON.parse(bounds);
+            } catch (e) {  // 字符串
+              var bound = bounds.split(',');
+              maxBounds = [[bound[3], bound[2]], [bound[1], bound[0]]]
+            }
+          }
+
+
+          map = new smartmapx.Map({
+            container: 'map',
+            style: data.data,
+            minZoom: data.config.minzoom,
+            maxZoom: data.config.maxzoom,
+            maxBounds: maxBounds
+          });
+        } else {
+          map = new smartmapx.Map({
+            container: 'map',
+            style: data.data,
+            minZoom: data.config.minzoom,
+            maxZoom: data.config.maxzoom
+          });
+        }
+
+        map.on('load',function () {
+          document.getElementById('loadbar').style.display = 'none';
+        })
+
+      },
+      fail: function (status) {
+      }
+    });
+  }
+
+  function getQueryString(name) {
+    // alert(name)
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+  }
+
+  function ajax(options) {
+    options = options || {};
+    options.type = (options.type || "GET").toUpperCase();
+    options.dataType = options.dataType || "json";
+    var params = formatParams(options.data);
+
+    //创建 - 非IE6 - 第一步
+    if (window.XMLHttpRequest) {
+      var xhr = new XMLHttpRequest();
+    } else { //IE6及其以下版本浏览器
+      var xhr = new ActiveXObject('Microsoft.XMLHTTP');
+    }
+
+    //接收 - 第三步
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        var status = xhr.status;
+        if (status >= 200 && status < 300) {
+          options.success && options.success(xhr.responseText, xhr.responseXML);
+        } else {
+          options.fail && options.fail(status);
+        }
+      }
+    }
+
+    //连接 和 发送 - 第二步
+    if (options.type == "GET") {
+      xhr.open("GET", options.url + "?" + params, true);
+      xhr.send(null);
+    } else if (options.type == "POST") {
+      xhr.open("POST", options.url, true);
+      //设置表单提交时的内容类型
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.send(params);
+    }
+  }
+
+  //格式化参数
+  function formatParams(data) {
+    var arr = [];
+    for (var name in data) {
+      arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(data[name]));
+    }
+    arr.push(("v=" + Math.random()).replace(".", ""));
+    return arr.join("&");
+  }
+
+  function showJson() {
+    var test;
+    if (window.XMLHttpRequest) {
+      test = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+      test = new window.ActiveXObject();
+    } else {
+      alert("请升级至最新版本的浏览器");
+    }
+    if (test != null) {
+      test.open("GET", "../config/config.json", true);
+      test.send(null);
+      test.onreadystatechange = function () {
+        if (test.readyState == 4 && test.status == 200) {
+          var obj = JSON.parse(test.responseText);
+          initMap(obj.serviceIP.basemap);
+        }
+      };
+
+    }
+  }
+</script>
+
+</body>
+</html>

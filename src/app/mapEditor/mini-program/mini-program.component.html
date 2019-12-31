@@ -1,0 +1,39 @@
+<div class="minProCont" >
+  <div class="minProTitle">
+    <button class="addProgram btn" (click)="openModal()" *ngIf="editStatus === 1"><i class="fa fa-plus"></i>添加</button>
+    <!--<span>列表</span>-->
+  </div>
+  <div class="minProgramList">
+    <ul class="programList" *ngIf="editStatus === 1">
+      <li [ngClass]="{'on':oindex === ind}" *ngFor="let v of programData;let ind=index;" (click)="liClick(v, ind, true)">
+            <span class="title">
+                <span [ngClass]="{'programIcon':true,'type1':v.type === 1,'type2':v.type === 2,'type3':v.type === 3,'type4':v.type === 4}"></span>
+                <span class="name">{{v.title}}</span>
+            </span>
+        <div class="btnGroup">
+          <i class="fa fa-trash-o" (click)="$event.stopPropagation(); deleteProgram(v)" title="删除"></i>&nbsp;
+          <span  class="enable" *ngIf="v.status === 1"
+                 (click)="$event.stopPropagation();  unableUse(v,ind)" title="启用">
+                </span>
+          <span *ngIf="v.status === 0"
+                (click)="$event.stopPropagation();  enableUse(v,ind)" title="禁用">
+                </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div [ngClass]="{'programPreview':true,'open':isOpen}" id="programPreview" style="top: 32px;height: calc(100% - 32px)">
+  <div class="programCover" *ngIf="coverShow"><span>正在加载...</span></div>
+  <div class="previewTitle">
+    <span class="saveProgram" (click)="getUserData()">应用</span>
+    {{programInfo.title}}配置
+  </div>
+  <div class="previewWrap layerItemContainer">
+    <div style="padding:0 15px 10px;color: #273D56;" *ngIf="schema.description">{{schema.description}}</div>
+    <app-json-show [schema]="schema" [appsInfo]="appsInfo" [programInfo]="programInfo" [mapObj]="mapObj" (showCover)="receiveShowCover($event)" (changeSetting)="receiveChangeSetting($event)" (changeVersion)="receiveChangeVersion($event)">
+    </app-json-show>
+    <app-json (jsonChange)="receiveJsonChange($event)" [programInfo]="programInfo" ></app-json>
+  </div>
+  <span [ngClass]="{'slideBtn':true,'left':!isOpen}" (click)="toggleSlide()"></span>
+</div>

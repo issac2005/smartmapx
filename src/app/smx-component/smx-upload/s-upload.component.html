@@ -1,0 +1,72 @@
+<ng-content select="[smxType=label]"></ng-content>
+<div class="smx-upload" [ngStyle]="smxStyle">
+  <input type="file" *ngIf="uploadActive" [id]="uuid" style="display: none" [accept]="fileType"
+         (change)="fileChangeEvent($event)">
+  <ng-container *ngIf="smxFile === 'file'">
+    <div class="suc" [ngStyle]="{'margin-bottom':smxTip?'15px':'unset'}"
+         [style.width.px]="smxWidth" (click)="customUpload? openUpload():null">
+      <ng-container *ngIf="!customUpload">
+        <div class="suc-upload">
+          <span class="suc-upload-span" (click)="openUpload()">选择文件</span>
+        </div>
+        <div class="suc-file">
+          <span>{{name ? name : '还未选择文件'}}</span>
+        </div>
+        <div class="suc-tip">
+          <span>{{smxTip}}</span>
+        </div>
+      </ng-container>
+      <!--      自定义-->
+      <ng-content select="[smxType=custom]"></ng-content>
+    </div>
+
+  </ng-container>
+  <ng-container *ngIf="smxFile === 'image'">
+    <div class="sui-fileinput-list" [style.width.px]="smxMultiple?smxMultipleWidth:''">
+      <ng-container *ngIf="!smxMultiple">
+        <div *ngIf="!imgFile || !smxIsShow" (click)="openUpload()">
+          <div class="sui-icon_u">
+            <span class="sui-plus"></span>
+          </div>
+        </div>
+        <div *ngIf="imgFile && smxIsShow">
+          <div class="sui-icon_u sui-icon-img">
+            <div class="sui-icon-img-btn">
+              <span class="sui-icon_uc fa fa-eye" (click)="viewImg(imgFile)"></span>
+              <span class="sui-icon_uc fa fa-close" (click)="cancelFileChange($event)"></span>
+            </div>
+            <img [src]="imgFile" class="sui-images" loading="lazy">
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="smxMultiple">
+        <ul #sui_ul [style.width.px]="smxMultipleWidth">
+          <li *ngIf="showScroll" class="sui-icon-img-left" (mousedown)="preScroll($event)" (mouseup)="clearInterval()">
+            <i class="smx-icon icon-Arrowleft" style="font-size: 20px;"></i>
+          </li>
+          <li *ngIf="closeUpload" class="sui-icon-img-li" (click)="openUpload()">
+            <div class="sui-icon_u">
+              <span class="sui-plus"></span>
+            </div>
+          </li>
+          <li *ngFor="let v of imgFiles;index as i" class="sui-icon-img-li">
+            <div class="sui-icon_u  sui-icon-img">
+              <div class="sui-icon-img-btn">
+                <span class="sui-icon_uc fa fa-eye" (click)="viewImg(v.result)"></span>
+                <span class="sui-icon_uc fa fa-close" (click)="cancelFileChange($event,i)"></span>
+              </div>
+              <img [src]="v.result" class="sui-images" loading="lazy">
+            </div>
+          </li>
+          <li *ngIf="showScroll" class="sui-icon-img-right" (mousedown)="nextScroll($event)"
+              (mouseup)="clearInterval()">
+            <i class="smx-icon icon-Arrowright" style="font-size: 20px;"></i>
+          </li>
+        </ul>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>
+<nz-modal [(nzVisible)]="isVisible" (nzOnCancel)="closeView()" [nzWidth]="500" [nzFooter]="null" [nzClosable]="false">
+  <img [src]="viewImgUrl" style="width: 100%" loading="lazy">
+</nz-modal>

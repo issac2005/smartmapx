@@ -1,0 +1,188 @@
+@mixin rotate ($deg) {
+    transform: $deg;
+    -webkit-transform: $deg;
+    -moz-transform: $deg;
+    -o-transform: $deg;
+}
+
+.rootContainer{
+    width:100%;
+    height:calc(100% - 70px);
+    position: absolute;
+    left:0;
+    top:70px;
+    background: #fff;
+}
+
+.leftPanel{
+    width:400px;
+    height:100%;
+    position: absolute;
+    left:0;
+    box-sizing: border-box;
+    transition:all .3s;
+}
+.leftPanel.hide{
+    left:-400px;
+}
+.leftPanel.fullScreen{
+    width:100%;
+    //transition:all 0s;
+}
+
+
+.rightPanel{
+    position:relative;
+    height:100%;
+    margin-left:400px;
+    border-left:1px solid #ccc;
+    transition:all .3s;
+    overflow: hidden;
+}
+.rightPanel.fullScreen{
+    margin-left:0;
+}
+
+.toggleBtn{
+    position: absolute;
+    right: -17px;
+    width: 18px;
+    height: 100px;
+    line-height: 100px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    border: 0;
+    top: 60%;
+    z-index: 99;
+    background: url(/assets/img/sprites.png) no-repeat -366px -180px;
+}
+
+.toggleBtn.show{
+    background: url(/assets/img/sprites.png) no-repeat -398px -180px;
+}
+.toggleBtn.hide{
+    display:none;
+}
+.map{
+    width:100%;
+    position:absolute;
+    top:0;
+    bottom:0;
+    overflow: hidden;
+}
+
+.btnContainer{
+    position: absolute;
+    top:10px;
+    right:20px;
+    z-index: 10;
+}
+
+.mini{
+    &-sta-toggle{
+        //width:auto;
+        //height: 30px;
+        //line-height: 16px;
+        //padding:0 10px;
+        //color: #fff;
+        //border-radius: 5px;
+        //position: absolute;
+        //top: 10px;
+        //right: 110px;
+        //white-space: nowrap;
+        //border:none;
+        //background: #4b6f9b;
+        //z-index: 9;
+
+        position: fixed;
+        right: 185px;
+        z-index: 9;
+        top: 120px;
+        border-radius: 5px;
+        text-align: center;
+        width: 84px;
+        height: 26px;
+        border: 0px solid #ddd;
+        background-repeat: no-repeat;
+        background-image: url(/assets/img/sprites.png);
+        background-position: -13px -490px;
+        transition: unset;
+        background-color: unset;
+        &:disabled {
+            &:hover {
+                background-position: -13px -490px;
+                transition: unset;
+            }
+        }
+        &:hover{
+            background-position: -13px -528px;
+            transition: unset;
+        }
+    }
+
+    &-sta-publish{
+        position: fixed;
+        right: 15px;
+        top: 120px;
+        border-radius: 5px;
+        text-align: center;
+        width: 62px;
+        z-index: 9;
+        height: 26px;
+        border: 0px solid #ddd;
+        background-repeat: no-repeat;
+        background-image: url(/assets/img/sprites.png);
+        background-position: -281px -490px;
+        transition: unset;
+        background-color: unset;
+        &:disabled {
+            &:hover {
+                background-position: -281px -490px;
+                transition: unset;
+            }
+        }
+        &:hover {
+            background-position: -281px -528px;
+            transition: unset;
+        }
+    }
+
+
+    &-sta-submit{
+        font-size: 12px;
+        color: white;
+        position: fixed;
+        right: 89px;
+        top: 120px;
+        border-radius: 5px;
+        text-align: center;
+        width: 84px;
+        z-index: 9;
+        height: 26px;
+        border: 0px solid #ddd;
+        background-repeat: no-repeat;
+        background-image: url(/assets/img/sprites.png);
+        background-position: -13px -609px;
+        transition: unset;
+        background-color: unset;
+        &:disabled {
+            &:hover {
+                background-position: -13px -609px;
+                transition: unset;
+            }
+        }
+        &:hover {
+            background-position: -13px -645px;
+            transition: unset;
+        }
+    }
+}
+.disable{
+    cursor: not-allowed;
+}
+
+
+
+

@@ -1,0 +1,446 @@
+.dynamic_layer{
+  #layer-smartMapX-select-ban {
+    width: 100%;
+    padding:0 10px 0 15px;
+    margin-bottom: 10px;
+    height:32px;
+    line-height: 32px;
+    color:#1a1a1a;
+    background-color: #e7ecee;
+    position: relative;
+    overflow: hidden;
+
+    i{
+      float:right;
+      line-height: 28px;
+      font-size: 24px;
+      font-style: normal;
+      color:#45a8fd;
+      cursor: pointer;
+    }
+  }
+
+  #layer-smartMapX-select-title {
+    position: relative;
+    float: left;
+    left: 14px;
+    font-size: 14px;
+    top: 8px;
+  }
+
+  #layer-smartMapX-select-add {
+    float: right;
+    line-height: 28px;
+    font-size: 24px;
+    font-style: normal;
+    color: #45a8fd;
+    cursor: pointer;
+  }
+  #layer-smartMapX-select-showlist{
+    position: relative;
+    cursor: pointer;
+  }
+  #layer-smartMapX-select-checkAll,
+  #layer-smartMapX-reselect-checkAll{
+    position: fixed;
+    left: 430px;
+    border-bottom: 1px #1111;
+    z-index: 1000;
+    top: 199px;
+    width: 215px;
+    height: 246px;
+    box-shadow: 0px 3px 3px #ddd;
+    border-spacing: 2px;
+    border-collapse: initial;
+    background-color: #fff;
+
+    table{
+      width:100%;
+    }
+  }
+
+  .layer-smartMapX-select-info {
+    overflow-y: auto;
+    height: 151px;
+    overflow-x: hidden;
+    border: 7px solid #fff;
+    position: relative;
+    top: 0px;
+    border-bottom: 0px;
+    background-color: #f4f9fa;
+    padding: 0px;
+
+    //&::-webkit-scrollbar-thumb {
+    //  background:#075fa9;
+    //}
+  }
+  //#layer-smartMapX-select-info::-webkit-scrollbar-thumb{
+  //  border-radius: 3px;
+  //  background: #065fa9;
+  //}
+
+  .layer-smartMapX-select-tableTitle {
+    height: 30px;
+    line-height: 30px;
+    padding:0 10px;
+    background: #f4f7fc;
+  }
+
+  #layer-smartMapX-select-tabletitle_p {
+    position: relative;
+    font-size: 12px;
+    color: #2d2f33;
+    height: 30px;
+    line-height: 25px;
+    background-color: #f4f7fc;
+  }
+
+  .layer-smartMapX-select-button2 {
+    position: relative;
+    left: 87px;
+    background: #3aa4fc;
+    color: #ffffff;
+    width: 50px;
+    height: 20px;
+    line-height: 18px;
+    padding: 0px;
+    border: 1px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+
+  .layer-smartMapX-select-button1 {
+    position: relative;
+    left: 86px;
+    background: #ffffff;
+    color: #3887be;
+    width: 50px;
+    height: 20px;
+    line-height: 18px;
+    padding: 0px;
+    border: 1px solid #e0e3e8;
+    border-radius: 3px;
+    top: 1px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .layer-smartMapX-select-button{
+    position: relative;
+    top: 11px;
+    left: 97px;
+  }
+  #layer-smartMapX-select-tranline {
+    width: 216px;
+    height: 1px;
+    margin: 0px auto;
+    padding: 0px;
+    background-color: #aaa;
+    overflow: hidden;
+    position: relative;
+    top: 4px;
+    left: -6px;
+    cursor: pointer;
+  }
+  .layer-smartMapX-select-trtd{
+    font-size: 12px;
+    color: #333333;
+    position: relative;
+    left: 4px;
+  }
+  #layer-smartMapX-select-trtd_id:hover {
+    color: #3887be;
+    cursor: pointer;
+  }
+
+  .layer-smartMapX-reselect-trtd:hover {
+    color: #3887be;
+    cursor: pointer;
+  }
+  .checkbox-label{
+    width:80%;
+    font-size:14px;
+    cursor: pointer;
+
+    &:hover{
+      color:#276eae;
+    }
+  }
+
+  #layer-delete {
+    font-size: 20px;
+    margin-right: 5px;
+    color: #3aa4fc;
+    cursor: pointer;
+  }
+
+  .layer-Off {
+    display: inline-block;
+    width: 22px;
+    height: 10px;
+    border-radius: 5px;
+    vertical-align: middle;
+    background: #0ab1f7;
+    position: relative;
+    cursor: pointer;
+    //#0ab1f7
+  }
+
+  .layer-On {
+    display: inline-block;
+    width: 22px;
+    height: 10px;
+    border-radius: 5px;
+    vertical-align: middle;
+    background: #afb2b3;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .after_button {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 12px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #fff;
+    // #afb2b3
+  }
+
+  .before_button {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #fff;
+
+  }
+
+  #layer-smartMapX-select-reselect {
+    cursor: pointer;
+  }
+
+  #layer-smartMapX-select-waringdirector {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    min-width: 380px;
+    max-width: 100%;
+    transform: translate(-50%, -50%) !important;
+    margin: 0;
+    flex-direction: column;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+  }
+
+  #layer-smartMapX-select-waringtitle {
+    background: #3887be;
+    height: 30px;
+    padding: 0px 11px 0px 12px;
+    line-height: 30px;
+  }
+
+  #layer-smartMapX-select-waringworld {
+    color: #fff;
+    position: relative;
+    top: -2px;
+
+  }
+
+  #layer-smartMapX-select-waringXcancel {
+    color: #fff;
+    opacity: 1;
+    font-weight: normal;
+    position: relative;
+    bottom: 3px;
+    line-height: 30px;
+    left: 284px;
+    font-size: 20px;
+    top: -1px;
+  }
+
+ /*  #layer-smartMapX-select-waringsure {
+    background: #3887be;
+    color: #ffffff;
+    width: 80px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0px;
+    border: 1px #eeeeee;
+    position: relative;
+    left: 23%;
+    top: -5px;
+  }
+
+  #layer-smartMapX-select-waringcancel {
+    background: #3887be;
+    color: #ffffff;
+    width: 80px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0px;
+    border: 1px #eeeeee;
+    position: relative;
+    left: 29%;
+    top: -5px;
+  }
+ */
+  #layer-smartMapX-select-waringmessage {
+    height: 51px;
+    text-align: center;
+    font-size: 13px;
+  }
+
+
+  /* .layer-smartMapX-select-waringButton{
+    padding-bottom:15px;
+  } */
+
+
+  #layer-smartMapX-reselect-tableinfo {
+    overflow-y: auto;
+    height: 163px;
+    overflow-x: hidden;
+    border: 1px solid #1111;
+    position: relative;
+    top: 0px;
+    border-bottom: 0px;
+  }
+
+  #layer-smartMapX-reselect-tableTitle {
+    height: 30px;
+    line-height: 30px;
+    padding:0 10px;
+    background: #f4f7fc;
+  }
+
+  #layer-smartMapX-reselect-tableTitle_p {
+    font-size: 15px;
+    font-weight: bold;
+    position: relative;
+    left: 6px;
+    top: 1px;
+  }
+
+  #layer-smartMapX-reselect-tableTitle_close {
+    position: relative;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    float:right;
+  }
+
+  #layer-smartMapX-reselect-buttonDis {
+    position: relative;
+    left: 57px;
+    background: #ffffff;
+    color: black;
+    width: 71px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0px;
+    border: 1px solid #11111161;
+    border-radius: 4px;
+    top: 1px;
+    cursor: pointer;
+  }
+
+  #layer-smartMapX-reselect-buttonsure {
+    left: 63px;
+    background: #3887be;
+    color: #ffffff;
+    width: 71px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0px;
+    border: 1px;
+    border-radius: 4px;
+    position: relative;
+  }
+
+  #layer-smartMapX-reselect-selectnumber {
+    position: relative;
+    left: 12px;
+    color: darkorange;
+
+  }
+
+  .color-select {
+    color: #007bff;
+  }
+
+  table input{
+    vertical-align: middle;
+    margin:0 5px;
+    cursor: pointer;
+  }
+
+  .layer-list li{
+    padding:0 10px;
+    margin:0 10px;
+    height:28px;
+    line-height: 28px;
+    border:1px solid #e4e4e4;
+    text-align: right;
+    background: #f1f1f1;
+    overflow: hidden;
+    margin-bottom: 10px;
+
+    .fa-navicon{
+      color: #888;
+    }
+
+    label{
+      width:60%;
+      float:left;
+      text-align: left;
+      margin:0;
+    }
+    input[type=text]{
+      display:inline-block;
+      width: 200px;
+      height:26px;
+      line-height: 30px;
+      float:left;
+      text-align: left;
+    }
+
+    span{
+      margin:0 2px;
+    }
+  }
+
+  .checkbox-select{
+    width:15px;
+    height:15px;
+    outline: none;
+    -webkit-appearance: none;
+    background: url("/assets/img/sprites.png") no-repeat -363px -149px;
+  }
+  .checkbox-select:checked{
+    background: url("/assets/img/sprites.png") no-repeat -342px -149px;
+  }
+
+}
+.smx_layerselect{
+  width: 54px;
+  height: 22px;
+  padding: 0;
+}
+.smx_layerselect_de{
+  width: 54px;
+  height: 22px;
+  padding: 0;
+  position: relative;
+  left: -2px;
+}
+

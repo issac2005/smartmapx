@@ -1,0 +1,171 @@
+<!-- 弹框头部 -->
+<div class="smx-modal-header">
+  <h4 class="modal-title">{{keyConfig.title}}</h4>
+  <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+</div>
+
+<!-- 弹框主体 -->
+<div class="smx-modal-body">
+  <div class="plot-style-wrap">
+    <!-- 样式列表 -->
+    <div class="defulat-style-wrap">
+      <!-- 点-样式列表-->
+      <ul class="defulat-style-list" *ngIf="modalData.modeType === 'draw_point'">
+        <li *ngIf="modalData.type !== 'create'" >
+          <div class="list-wrap on" (click)="createStyle()">
+            <i class="fa fa-plus"></i>
+            <p class="create">新建样式</p>
+          </div>
+        </li>
+        <li *ngFor="let item of dataList index as i;" >
+          <div class="list-wrap" [ngClass]="{'on': i === styleIndex}">
+            <div class="circle" [ngStyle]="{'background':item.style['circle-color'], 'border-width': item.style['circle-stroke-width']/2 + 'px', 'border-color': item.style['circle-stroke-color'], 'opacity': item.style['circle-opacity']}"></div>
+            <p class="name" title="item.style.name">{{item.style.name}}</p>
+          </div>
+          <div class="list-warp-cover">
+            <i class="fa fa-edit" (click)="editStyle(item,i)"></i>
+            <i class="fa fa-trash-o" (click)="openDeleteModal(item, delete, i)"></i>
+          </div>
+        </li>
+      </ul>
+
+      <!-- 线-样式列表-->
+      <ul class="defulat-style-list" *ngIf="modalData.modeType === 'draw_line'">
+        <li>
+          <div class="list-wrap on" (click)="createStyle()">
+            <i class="fa fa-plus"></i>
+            <p class="create">新建样式</p>
+          </div>
+        </li>
+        <li *ngFor="let item of dataList index as i;" >
+          <div class="list-wrap" [ngClass]="{'on': i === styleIndex}">
+            <div class="line"  [ngStyle]="{'border-width': item.style['line-width'] + 'px', 'border-color': item.style['line-color'],'opactiy': item.style['line-opacity'], 'border-style': item.style['line-dasharray'][0] === 0 ? 'solid' : 'dashed'}"></div>
+            <p class="name" title="item.style.name">{{item.style.name}}</p>
+          </div>
+          <div class="list-warp-cover">
+            <i class="fa fa-edit" (click)="editStyle(item,i)"></i>
+            <i class="fa fa-trash-o" (click)="openDeleteModal(item, delete, i)"></i>
+          </div>
+        </li>
+      </ul>
+
+      <!-- 面-样式列表-->
+      <ul class="defulat-style-list" *ngIf="modalData.modeType === 'draw_box' || modalData.modeType === 'draw_fill' || modalData.modeType === 'draw_circle'">
+        <li>
+          <div class="list-wrap on" (click)="createStyle()">
+            <i class="fa fa-plus"></i>
+            <p class="create">新建样式</p>
+          </div>
+        </li>
+        <li *ngFor="let item of dataList index as i;" >
+          <div class="list-wrap" [ngClass]="{'on': i === styleIndex}">
+            <div class="fill" *ngIf="item.style['fill-pattern'] === ''" [ngStyle]="{'background': item.style['fill-color'], 'border-color': item.style['fill-outline-color'], 'border-style': 'solid', 'border-width': item.style['fill-outline-width'] + 'px'}"></div>
+
+            <div class="fill" *ngIf="item.style['fill-pattern'] === 'H00002' " [ngStyle]="{'background-image': 'url(assets/img/001.png)', 'border-color': item.style['fill-outline-color'], 'border-style': 'solid', 'border-width': item.style['fill-outline-width'] + 'px'}"></div>
+
+            <div class="fill" *ngIf="item.style['fill-pattern'] === 'H00002' " [ngStyle]="{'background-image': 'url(assets/img/002.png)', 'border-color': item.style['fill-outline-color'], 'border-style': 'solid', 'border-width': item.style['fill-outline-width'] + 'px'}"></div>
+            <p class="name" title="item.style.name">{{item.style.name}}</p>
+          </div>
+          <div class="list-warp-cover">
+            <i class="fa fa-edit" (click)="editStyle(item,i)"></i>
+            <i class="fa fa-trash-o" (click)="openDeleteModal(item, delete, i)"></i>
+          </div>
+        </li>
+      </ul>
+
+      <!-- 注记-样式列表-->
+      <ul class="defulat-style-list" *ngIf="modalData.modeType === 'draw_words'">
+        <li>
+          <div class="list-wrap on" (click)="createStyle()">
+            <i class="fa fa-plus"></i>
+            <p class="create">新建样式</p>
+          </div>
+        </li>
+        <li *ngFor="let item of dataList index as i;" >
+          <div class="list-wrap" [ngClass]="{'on': i === styleIndex}">
+            <div class="words"  [ngStyle]="{'font-size': '16px', 'color': item.style['text-color'], 'font-weight': item.style['text-halo-width'] === 1 ? 'bold' : 'normal'}">文本</div>
+            <p class="name" title="item.style.name">{{item.style.name}}</p>
+          </div>
+          <div class="list-warp-cover">
+            <i class="fa fa-edit" (click)="editStyle(item,i)"></i>
+            <i class="fa fa-trash-o" (click)="openDeleteModal(item, delete, i)"></i>
+          </div>
+        </li>
+      </ul>
+
+      <!-- 图片-样式列表-->
+      <ul class="defulat-style-list" *ngIf="modalData.modeType === 'draw_photo'">
+        <li>
+          <div class="list-wrap on" (click)="createStyle()">
+            <i class="fa fa-plus"></i>
+            <p class="create">新建样式</p>
+          </div>
+        </li>
+        <li *ngFor="let item of dataList index as i;" >
+          <div class="list-wrap" [ngClass]="{'on': i === styleIndex}">
+            <div class="photo fa fa-picture-o"  [ngStyle]="{ 'border-color': item.style['fill-outline-color'], 'border-style': 'solid', 'border-width': item.style['fill-outline-width'] === 0 ? '0px' : '1px'}"></div>
+            <p class="name" title="item.style.name">{{item.style.name}}</p>
+          </div>
+          <div class="list-warp-cover">
+            <i class="fa fa-edit" (click)="editStyle(item,i)"></i>
+            <i class="fa fa-trash-o" (click)="openDeleteModal(item, delete, i)"></i>
+          </div>
+        </li>
+      </ul>
+
+      <!-- 箭头-样式列表-->
+      <ul class="defulat-style-list" *ngIf="modalData.modeType === 'draw_arrow'">
+        <li *ngIf="modalData.type !== 'create'">
+          <div class="list-wrap on" (click)="createStyle()">
+            <i class="fa fa-plus"></i>
+            <p class="create">新建样式</p>
+          </div>
+        </li>
+        <li *ngFor="let item of dataList index as i;" >
+          <div class="list-wrap" [ngClass]="{'on': i === styleIndex}">
+            <div class="arrow">
+               <span class="arrow-fill" [ngStyle]="{'background': item.style['fill-color'], 'border-color': item.style['fill-outline-color'], 'border-width': item.style['fill-outline-width'] === 0 ? '0px' : '1px', 'opacity': item.style['fill-opacity']}">
+        </span>
+              <i class="arrow" [ngStyle]="{'border-left':item.style['fill-outline-width'] === 0 ? 'none' : '14px solid' + ' '+item.style['fill-outline-color'], 'border-top': item.style['fill-outline-width'] === 0 ? 'none' : '9px solid' + ' '+ 'transparent', 'border-bottom': item.style['fill-outline-width'] === 0 ? 'none' :'9px solid' + ' '+ 'transparent','opacity': item.style['fill-opacity'] }">
+              </i>
+              <i class="arrow-border" [ngStyle]="{'border-left':'13px solid' + ' '+item.style['fill-color'], 'opacity': item.style['fill-opacity']}"></i>
+
+            </div>
+            <p class="name" title="item.style.name">{{item.style.name}}</p>
+          </div>
+          <div class="list-warp-cover">
+            <i class="fa fa-edit" (click)="editStyle(item,i)"></i>
+            <i class="fa fa-trash-o" (click)="openDeleteModal(item, delete, i)"></i>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <app-style-detail *ngIf="defaultStyle" [(defaultStyle)]="defaultStyle" [styleArray]="styleArray" [modeType]="defaultStyle?.geo_type"></app-style-detail>
+  </div>
+</div>
+
+<!-- 弹框底部 -->
+<div class="smx-modal-footer">
+  <button type="button" class="smx_not_div_w top_data_newmap_ws smx-btn smx-grid smx-outline-default"
+          (click)="cancel()">取消
+  </button>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <button type="button" class="top_data_newmap_wss smx-btn smx-grid smx-default" (click)="saveStyle()" id="smx-plot">保存
+  </button>
+</div>
+
+<!-- 删除提示 -->
+<ng-template #delete let-c="close" let-d="dismiss">
+  <div class="smx-modal-header">
+    <h4 class="modal-title">删除提醒</h4>
+    <span aria-hidden="true" class="close" (click)="d('Cross click')">&times;</span>
+  </div>
+  <div class="smx_center smx-modal-body">
+    <p style="text-align: center">删除后将不可恢复，您确定要删除吗？</p>
+  </div>
+  <div class="smx-modal-footer">
+    <button type="button" class="smx-btn smx-grid smx-outline-default" (click)="c('Close')">取消</button>
+    <button type="button" class="smx-btn smx-grid smx-default" (click)="c()" id="smx-plot">确定</button>
+  </div>
+</ng-template>

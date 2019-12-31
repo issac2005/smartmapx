@@ -1,0 +1,33 @@
+<div class="smx-panel">
+  <ng-content select="[smxType=header]"></ng-content>
+  <div class="smx-panel-body">
+    <nz-collapse>
+      <ng-container *ngFor="let panel of smxData">
+        <nz-collapse-panel [nzHeader]="panel.title" [nzActive]="panel.active">
+          <ng-container [ngSwitch]="panel.type">
+            <ng-container *ngSwitchCase="'custom'">
+              <ng-container [ngTemplateOutlet]="panel.view"></ng-container>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              <div *ngFor="let v of panel.view" nz-row style="margin: 5px 0;line-height: 1.8rem;">
+                <div nz-col nzSpan="8">{{v.title}}</div>
+                <div nz-col nzSpan="16">
+                  <smx-input *ngIf="v.input;else noInput" [(ngModel)]="v.value" (blur)="v.input($event)"
+                             (enter)="v.input($event)"></smx-input>
+                  <ng-template #noInput>
+                    <span>{{v.value  | SmxPipe: v.pipe}}</span>
+                    <button *ngIf="v.btn" class="smx-btn smx-default smx-xs" style="float: right;"
+                            (click)="v.btn.btnClick()">{{v.btn.label}}
+                    </button>
+                    <span *ngIf="v.icon" class="editor_type" title="不可编辑"></span>
+                  </ng-template>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </nz-collapse-panel>
+      </ng-container>
+    </nz-collapse>
+  </div>
+</div>
+

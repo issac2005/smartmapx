@@ -1,0 +1,39 @@
+<ng-container *ngIf="mode === 'time'">
+  <nz-time-picker
+    [(ngModel)]="value"
+    [ngStyle]="smxStyle"
+    [ngClass]="smxClass"
+    [nzFormat]="smxFormat"
+    [nzPlaceHolder]="smxPlaceHolder"
+    [nzAllowEmpty]="false"
+    [nzDisabled]="smxDisabled"
+    (ngModelChange)="change($event)">
+  </nz-time-picker>
+</ng-container>
+<ng-container *ngIf="mode === 'date'">
+  <nz-date-picker
+    [(ngModel)]="value"
+    [nzStyle]="smxStyle"
+    [nzClassName]="smxClass"
+    [nzAllowClear]="false"
+    (ngModelChange)="change($event)"
+    [nzPlaceHolder]="smxPlaceHolder"
+    [nzFormat]="smxFormat"
+    [nzDisabled]="smxDisabled">
+  </nz-date-picker>
+</ng-container>
+<ng-container *ngIf="mode === 'date-time'">
+  <nz-date-picker
+    nzShowTime
+    [nzMode]="'time'"
+    [(ngModel)]="value"
+    [nzStyle]="smxStyle"
+    [nzClassName]="smxClass"
+    [nzAllowClear]="false"
+    [nzFormat]="smxFormat"
+    [nzPlaceHolder]="smxPlaceHolder"
+    [nzDisabled]="smxDisabled"
+    (ngModelChange)="change($event)">
+  </nz-date-picker>
+</ng-container>
+

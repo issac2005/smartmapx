@@ -1,0 +1,236 @@
+<div id="mainLogin">
+  <div class="modal-header">
+    <h4 class="modal-title">{{getTitle(type)}}</h4>
+    <span *ngIf="type !== 'BindPhone'"  aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+  </div>
+
+  <div class="modal-body">
+
+    <!--注册账户-->
+    <div class="form-signin" *ngIf="type === 'SignIn'">
+      <!--saas-->
+      <div *ngIf="config.type === 'saas'" class="input-group" style="position: relative;top: 48px;">
+        <input class="form-control form-control-lg input-item input-fp-code" name="code" [(ngModel)]="code"
+               placeholder="验证码" (blur)="verifyCode(code)">
+        <span class="btn-fp-code" (click)="codeStatus ? getCode():''">{{codeTime}}</span>
+      </div>
+
+      <div *ngIf="config.type === 'saas'" class="input-group" style="position: relative;bottom: 48px;">
+        <input type="text" class="form-control form-control-lg input-item" name="text" [(ngModel)]="tel"
+               placeholder="手机号" (blur)="verifyTel(tel, 'exist')">
+      </div>
+
+
+      <!--企-->
+      <div *ngIf="config.type !== 'saas'" class="input-group" style="position: relative;">
+        <input type="text" class="form-control form-control-lg input-item" name="text" [(ngModel)]="tel"
+               placeholder="用户名" (blur)="verifyTel(tel)">
+      </div>
+      <div class="input-group">
+        <input type="password" class="form-control form-control-lg input-item" name="signpsword" maxlength="12"
+               placeholder="密码" [(ngModel)]="signPsword" title="6-12个字符" (blur)="verifyPass(signPsword,signPswordTwo)">
+      </div>
+      <div class="input-group">
+        <input type="password" class="form-control form-control-lg input-item" name="signpswordtwo" maxlength="12"
+               placeholder="确认密码" [(ngModel)]="signPswordTwo" title="6-12个字符"
+               (blur)="verifyPass(signPsword,signPswordTwo)">
+      </div>
+      <div class="err-text" [ngStyle]="{'opacity':errSigninShow?1:0}">
+        <span class="fa fa-info-circle"></span>
+        <span>{{errText}}</span>
+      </div>
+
+      <div class="input-group" style="margin: 5px 0">
+        <div class="agreeConditional">
+          <input type="checkbox" name="agreeCheck" [(ngModel)]="agree" class="agreeCheck" (change)="getValue(agree)">
+          我已完整阅读并接受《<span (click)="agreementModal()">用户服务协议</span>》各项条款
+        </div>
+      </div>
+      <button class="btn btn-lg btn-block btn-primary" type="submit" (click)="goSignin($event)"
+              [disabled]="registerDisabled? false: true" id="smx-login">注册
+      </button>
+    </div>
+
+    <!--手机绑定-->
+    <div class="form-signin" *ngIf="type === 'BindPhone'">
+
+      <div style="text-align: center;">
+        <img src="../../../assets/img/bind.png" style="height: 60px;margin-bottom: 10px" loading="lazy">
+        <p style="font-size: 12px;color: #999999;">首次微信登录,您需要绑定手机号,以后也可以使用此手机号登录</p>
+        <p style="font-size: 14px;color: #333333;">如果您已有账号,可以直接绑定原手机号</p>
+      </div>
+
+      <div class="input-group" *ngIf="wechatBind" style="position: relative;top: 48px;">
+        <input class="form-control form-control-lg input-item" name="code" [(ngModel)]="code"
+               placeholder="验证码" (blur)="verifyCode(code)">
+      </div>
+
+      <div class="input-group" [ngStyle]="{'bottom':wechatBind?'48px':''}">
+        <input type="text" class="form-control form-control-lg input-item input-fp-code" name="tel" [(ngModel)]="tel"
+               placeholder="手机号" (blur)="verifyTel(tel)">
+        <span class="btn-fp-code" (click)="bindCodeStatus ? wechatBindTel():''"
+              style="width: 20%">{{bindCodeTime}}</span>
+      </div>
+
+
+      <div class="input-group" *ngIf="wechatBind === '10'">
+        <input type="password" class="form-control form-control-lg input-item" name="signpsword" maxlength="12"
+               placeholder="密码" [(ngModel)]="signPsword" title="6-12个字符" (blur)="verifyPass(signPsword,signPswordTwo)">
+      </div>
+      <div class="input-group" *ngIf="wechatBind === '10'">
+        <input type="password" class="form-control form-control-lg input-item" name="signpswordtwo" maxlength="12"
+               placeholder="确认密码" [(ngModel)]="signPswordTwo" title="6-12个字符"
+               (blur)="verifyPass(signPsword,signPswordTwo)">
+      </div>
+
+
+      <div class="err-text" [ngStyle]="{'opacity':errSigninShow?1:0}">
+        <span class="fa fa-info-circle"></span>
+        <span>{{errText}}</span>
+      </div>
+      <button *ngIf="wechatBind && wechatBind > 0" (click)="goBind()" class="btn btn-lg btn-block btn-primary" id="smx-login">确定
+      </button>
+    </div>
+
+
+    <!--修改密码-->
+    <div class="form-signin" *ngIf="type === 'ChangePs'">
+      <div class="input-group">
+        <input type="password" class="form-control form-control-lg input-item" name="username"
+               [(ngModel)]="oldPassword"
+               maxlength="12"
+               placeholder="原密码" (blur)="verifyPass(newPassword,newPasswordTwo,oldPassword)">
+      </div>
+      <div class="input-group">
+        <input type="password" class="form-control form-control-lg input-item" name="passwd" [(ngModel)]="newPassword"
+               maxlength="12"
+               placeholder="新密码" (blur)="verifyPass(newPassword,newPasswordTwo,oldPassword)">
+      </div>
+      <div class="input-group">
+        <input type="password" class="form-control form-control-lg input-item" name="passwd"
+               [(ngModel)]="newPasswordTwo"
+               maxlength="12"
+               placeholder="确认密码" (blur)="verifyPass(newPassword,newPasswordTwo,oldPassword)">
+      </div>
+
+      <div class="err-text" [ngStyle]="{'opacity':errSigninShow?1:0}">
+        <span class="fa fa-info-circle"></span>
+        <span>{{errText}}</span>
+      </div>
+
+
+      <button class="btn btn-lg btn-block btn-primary" (click)="goChangePs($event)" id="smx-login">确定</button>
+
+    </div>
+
+    <!--忘记密码-->
+    <div class="form-signin" *ngIf="type === 'ForgetPs'">
+
+      <div class="input-group">
+        <input type="tel" class="form-control form-control-lg input-item" name="tel" [(ngModel)]="tel"
+               placeholder="手机号" (blur)="verifyTel(tel)">
+      </div>
+      <div class="input-group">
+        <input type="text" class="form-control form-control-lg input-item input-fp-code" name="code" [(ngModel)]="code"
+               placeholder="验证码" (blur)="verifyCode(code)">
+        <span class="btn-fp-code" (click)="tag = true;codeStatus ? getCode('ForgetPs'):''">{{codeTime}}</span>
+      </div>
+
+      <div *ngIf="tag">
+        <div class="input-group">
+          <input type="password" class="form-control form-control-lg input-item" name="passwd" [(ngModel)]="newPassword"
+                 maxlength="12"
+                 placeholder="密码" (blur)="verifyPass(newPassword,newPasswordTwo)">
+        </div>
+
+        <div class="input-group">
+          <input type="password" class="form-control form-control-lg input-item" name="passwd"
+                 maxlength=" 12"
+                 [(ngModel)]="newPasswordTwo"
+                 placeholder="确认密码" (blur)="verifyPass(newPassword,newPasswordTwo)">
+        </div>
+      </div>
+
+      <div class="err-text" [ngStyle]="{'opacity':errSigninShow?1:0}">
+        <span class="fa fa-info-circle"></span>
+        <span>{{errText}}</span>
+      </div>
+      <button class="btn btn-lg btn-block btn-primary" (click)="goForgetPs($event)" id="smx-login">确定</button>
+    </div>
+
+    <!--修改昵称-->
+    <div class="form-signin" *ngIf="type === 'ChangeUserName'">
+      <div class="input-group">
+        <input type="text" class="form-control form-control-lg input-item" name="username"
+               [(ngModel)]="userName"
+               maxlength="12"
+               placeholder="支持1-12个汉字 数字 字母 _ ()">
+      </div>
+
+      <div class="err-text" [ngStyle]="{'opacity':errSigninShow?1:0}">
+        <span class="fa fa-info-circle"></span>
+        <span>{{errText}}</span>
+      </div>
+      <button class="btn btn-lg btn-block btn-primary" (click)="goChangeUn()" id="smx-login">确定</button>
+
+    </div>
+
+    <!--登录-->
+    <div id="login_container" *ngIf="type === 'Login'" style="text-align: center">
+      <form class="form-signin">
+        <div class="input-group">
+          <input type="text" class="form-control form-control-lg input-item" name="username"
+                 [(ngModel)]="userName" [placeholder]="config.type === 'saas'? '手机号':'用户名'">
+
+        </div>
+        <div class="input-group">
+          <input type="password" class="form-control form-control-lg input-item" name="passwd"
+                 [(ngModel)]="userPasswd" placeholder="密码">
+        </div>
+
+        <div class="err-text" style="color: #f00;padding-left: 10px;height: 10px;text-align: left">
+          <div *ngIf="errSigninShow">
+            <span class="fa fa-info-circle"></span>
+            <span>{{errText}}</span>
+          </div>
+        </div>
+
+        <div class="pull-right" style="margin: 10px;">
+          <a *ngIf="config.type === 'saas'" href="javascript:;" (click)="forgetPswd()"
+             style="margin-right: 10px">忘记密码?</a>
+          <a href="javascript:;" (click)="signIn('signin')">马上注册</a>
+        </div>
+
+        <button class="btn btn-lg btn-block btn-primary" (click)="goLogin($event)">登录</button>
+      </form>
+
+      <div *ngIf="config.type === 'saas'" style="margin: 10px;">
+        <div class="splitLineIn">使用其他方式登录</div>
+        <div style="text-align: center">
+          <span class="login_wechat" (click)="wechatLogin()"></span>
+        </div>
+      </div>
+    </div>
+
+    <!--微信授权页面-->
+    <div id="wechat" *ngIf="type === 'wechat' || type === 'wechatBind'" style="text-align: center"></div>
+
+    <!--微信解绑确认框-->
+    <div id="comfirm" *ngIf="type === 'comfirm'">
+      <div class="form-group">
+        <span class="comfirm-waring"></span>
+        <span for="recipient-name"
+              class="control-label">是否解除当前微信绑定状态?</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="activeModal.close()" id="smx-login">确定
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

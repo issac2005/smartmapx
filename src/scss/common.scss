@@ -1,0 +1,357 @@
+/**
+ * @author LLCN(KerferJu)
+ * @Date 2019/3/8 15:24
+ * @desc 样式变量定义
+ *
+ */
+//主要颜色
+$c-color-primary:#1190d6 !default;
+//次要颜色
+$c-color-secondary:#10a2e9 !default;
+
+//深色
+$c-color-deep:#0a7bb9 !default;
+
+//浅色
+$c-color-light:#5bc0de !default;
+
+//主要黑色
+$c-color-black-primary:#333333 !default;
+//次要黑色
+$c-color-black-secondary:#555555 !default;
+//深黑色
+$c-color-black-deep:#000000 !default;
+//浅黑色
+$c-color-black-light:#888888 !default;
+
+//主要灰色
+$c-color-gray-primary:#f2f2f2 !default;
+//次要灰色
+$c-color-gray-secondary:#fafafa !default;
+//深灰色
+$c-color-gray-deep:#eeeeee !default;
+//浅灰色
+$c-color-gray-light:#fefefe !default;
+
+//白色
+$c-color-white:#ffffff !default;
+//灰色
+$c-color-gary:#dddddd !default;
+
+//白灰色
+$c-color-white-gray:#f6f7f8 !default;
+
+//盒子阴影
+$c-box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.03) !default;
+
+//头部阴影
+$c-header-shadow: 1px 2px 6px rgba(0, 0, 0, 0.03) !default;
+
+//图片阴影
+$c-img-shadow: 1px 2px 6px rgba(0, 0, 0, 0.05) !default;
+
+//层次图盒子阴影
+$c-hierarchy-box:1px 1px 3px rgba(100, 100, 100, 0.6) !default;
+
+//toast
+$c-toast-box:1px 1px 3px rgba(100, 100, 100, 0.3) !default;
+
+//switch
+$c-switch-small: 0 1px 3px rgba(0,0,0,0.3) !default;
+
+//按钮阴影
+$c-btn-shadow: 1px 2px 6px rgba(0, 0, 0, 0.03) !default;
+
+
+//spin
+$c-spin-color-red:#f95372;
+$c-spin-color-blue:#00abff;
+$c-spin-color-yellow:#e7ba08;
+
+//bootstrap
+$c-bootstrap-secondary:#ffffff;
+$c-bootstrap-secondary-deep:#e6e6e6;
+
+$c-bootstrap-primary:#20a8d8;
+$c-bootstrap-primary-deep:#1985ac;
+
+$c-bootstrap-success:#4dbd74;
+$c-bootstrap-success-deep:#369759;
+
+$c-bootstrap-info:#6acae6;
+$c-bootstrap-info-deep:#32add3;
+
+$c-bootstrap-warning:#f0bd0a;
+$c-bootstrap-warning-deep:#bf9608;
+
+$c-bootstrap-danger:#f86c6b;
+$c-bootstrap-danger-deep:#e23533;
+
+
+/**内边距**/
+.c-p5{
+  padding:5px
+}
+.c-p10{
+  padding:10px
+}
+.c-p15{
+  padding:15px
+}
+
+
+/**外边距**/
+.c-mt3 {
+  margin-top: 3px;
+}
+.c-mt5 {
+  margin-top: 5px;
+}
+.c-mt10 {
+  margin-top: 10px;
+}
+.c-mt15 {
+  margin-top: 15px;
+}
+.c-mt20 {
+  margin-top: 20px;
+}
+.c-mt25 {
+  margin-top: 25px;
+}
+.c-mt30 {
+  margin-top: 30px;
+}
+.c-mt50 {
+  margin-top: 50px;
+}
+.c-mb5 {
+  margin-bottom: 5px;
+}
+.c-mb10 {
+  margin-bottom: 10px;
+}
+.c-mb15 {
+  margin-bottom: 15px;
+}
+.c-mb20{
+  margin-bottom: 20px;
+}
+.c-ml5 {
+  margin-left: 5px;
+}
+.c-ml10 {
+  margin-left: 10px;
+}
+.c-ml15 {
+  margin-left: 15px;
+}
+.c-ml20 {
+  margin-left: 20px;
+}
+.c-mr3 {
+  margin-right: 3px;
+}
+.c-mr5 {
+  margin-right: 5px;
+}
+/**字号**/
+.c-fs15 {
+  font-size: 15px;
+}
+.c-fs20 {
+  font-size: 20px;
+}
+.c-fs25 {
+  font-size: 25px;
+}
+.c-fs30 {
+  font-size: 30px;
+}
+.c-fs50 {
+  font-size: 50px;
+}
+
+/**卡片**/
+.c-card {
+  border: 0px;
+  border-radius: 1px;
+  -webkit-box-shadow: $c-box-shadow;
+  box-shadow: $c-box-shadow;
+  -moz-box-shadow:  $c-box-shadow;
+}
+
+/**手式**/
+.c-cursor-pointer {
+  cursor: pointer;
+}
+
+/**自动滚动条**/
+.c-scroll-y-a{
+  overflow-y: auto;
+}
+/**内容换行**/
+.c-word-break{
+   word-break:break-all;
+}
+/*line table*/
+.c-line-table {
+  width: 100%;
+  margin-bottom: 10px;
+  tr {
+    border-bottom: 1px dashed $c-color-gray-deep;
+    td {
+      padding: 10px;
+    }
+    th {
+      padding: 10px;
+    }
+  }
+  &:first-child {
+    tr {
+      border-top: 1px dashed $c-color-gray-deep;
+    }
+  }
+}
+
+/*去除阴影*/
+.c-not-shadow{
+  -webkit-box-shadow:none;
+	-moz-box-shadow:none;
+	box-shadow: none;
+}
+
+/*行标题*/
+.c-line-title {
+	margin-bottom: 15px;
+	padding-bottom: 8px;
+	font-size: 15px;
+	border-bottom: 1px dashed $c-color-gary;
+	color: $c-color-black-secondary;
+	font-weight: bold;
+}
+
+
+/*图片上传按钮*/
+.c-file-upload {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    width:100px;
+    [type=file] {
+        cursor: pointer;
+        display: block;
+        filter: alpha(opacity=0);
+        min-height: 100%;
+        min-width: 100%;
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        text-align: right;
+        top: 0;
+    }
+}
+
+
+
+
+
+.popover-content {
+    padding: 0px !important;
+    width: 140px !important;
+}
+
+/*时间轴*/
+.c-timeline {
+  position: relative;
+  padding: 0px;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10px;
+    height: 100%;
+    width: 2px;
+    background: $c-color-gray-primary;
+  }
+}
+
+.c-timeline-block {
+  position: relative;
+  margin: 0px;
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.c-timeline-point {
+  position: absolute;
+  top: 22px;
+  left: 5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: $c-color-gray-primary;
+  &:hover {
+    background-color: $c-color-secondary;
+  }
+}
+
+.c-timeline-point-active {
+  position: absolute;
+  top: 22px;
+  left: 5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: $c-color-secondary;
+}
+
+.c-timeline-content {
+  position: relative;
+  display: table;
+  clear: both;
+  margin-left: 30px;
+  width: -moz-calc(100% - 35px);
+  width: -webkit-calc(100% - 35px);
+  width: calc(100% - 35px);
+  border-bottom: 1px solid $c-color-gray-deep;
+  padding: 15px;
+  &:hover {
+    background-color: $c-color-gray-primary;
+    cursor: pointer;
+  }
+  .c-title {
+    color: $c-color-black-primary;
+    margin-top: 0px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .c-text {
+    margin: 15px 0;
+    line-height: 1.6;
+    color: $c-color-black-primary;
+  }
+  .c-date {
+    color: $c-color-black-secondary;
+    float: left;
+    padding: 2px 0;
+  }
+}
+
+$smx-color-defalut: #2282b7;
+$smx-color-defalut-hover: #32b6ff;
+$smx-color-defalut-active: #1b6690;
+$smx-color-disabled: #c9caca;
+$smx-table-checkbox: #dee2e6;
+$icon-pen: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjJBQ0E5RkY0RjEyMzExRThBQjlEOTE5MzA1QTA1NzQzIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjJBQ0E5RkY1RjEyMzExRThBQjlEOTE5MzA1QTA1NzQzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MkFDQTlGRjJGMTIzMTFFOEFCOUQ5MTkzMDVBMDU3NDMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MkFDQTlGRjNGMTIzMTFFOEFCOUQ5MTkzMDVBMDU3NDMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz57NTyLAAABAUlEQVR42mL8//8/AzUBEwOVwYAbyAHE64H4DxBfBGITSg1kBmIBKK0HxIswVIAihQjMCMSzgDgPiNmAeMF/CPiFrpaFSJf1AnEqEH8G4tNAnALEd4FYkBwXViC5JgGInwDxJiBmx6aekGFJUMP+AnEWEN+A8g9AvU6SgQFQg0CgGIhPQdkXgJgflz5chtkD8XeoAS1AvAvKvgPE4vh8hU3QAIg/Qg2YCsQroeznQKxMKMzRBVSA+CXUgDVQA/9DLdAjJomhCxz4jwBvoPQ3ILYlMr1iGHj/PyoARYovsYZhM/ATmoGJpBiGLaeA+EeB+BgQ7wLiPaSWNowjr4AFCDAA05qY59Aiqy4AAAAASUVORK5CYII=';
+$icon-output: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjU5NzlDQzU1RjJEMDExRThBQjIxOEM2Q0RFNTYwNUVEIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjU5NzlDQzU2RjJEMDExRThBQjIxOEM2Q0RFNTYwNUVEIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTk3OUNDNTNGMkQwMTFFOEFCMjE4QzZDREU1NjA1RUQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NTk3OUNDNTRGMkQwMTFFOEFCMjE4QzZDREU1NjA1RUQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5UpfADAAABA0lEQVR42mL8//8/AzUBEwOVwdA0MBCI/xOJA9A1M2KJFA4gNiPC9f+A+BQQ/0AWZMGikAeIHxHpQx50AxlALkTC3f9JB93IZqB7+Q8Q5wHxNiJd6AXEk5B9iu7lO0DMB8QPsGi2BuKvQHwBSYwPqgdnLO8EYjf0iANiQ6hrDgKxA5KcO1QPzjD0BuJfQMwN5asA8SW0MHsJxDxQNb+geuBmoBuIrAgUvseAuAuIPYC4DIifALEuDsuxGgjC+4F4IhCLArEOkrghECsg8SdC1aLox5YOdwFxGhBvh6Yx5DDjB2IFaOL3A+JZGLqxuFAEiI8Skf6OQtUy4EuHo+Uh6QAgwADxEX0NVkxyfgAAAABJRU5ErkJggg==';
+

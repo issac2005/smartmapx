@@ -1,0 +1,41 @@
+<div class="et">
+    <div class="et-left">
+        <div class="et-left-body">
+            <div style="height: 40px;background: #E7ECEE;">
+                <button type="button" class="smx-btn smx-default smx-xs addPlan" (click)="addPlan()">添加方案</button>
+            </div>
+            <div>
+                <ul class="infoes">
+                    <li *ngFor="let v of treeData"
+                        [class.infoes-selected]="v === selectedInfo"
+                        (click)="onSelectNode($event,v)">
+                        <span class="infoes-title" title="{{v?.name}}">{{v?.name}}</span>
+                        <div>
+                            <i [class.infoes-selected-i]="v === selectedInfo" class="fa fa-pencil infoes-edit"
+                               (click)="updateNode($event,v)" title="编辑">
+                            </i>
+                            <i [class.infoes-selected-i]="v === selectedInfo" class="fa fa-trash infoes-delete"
+                               (click)="deleteNode($event,v)" title="删除">
+                            </i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="et-right">
+        <et-page #etPage
+                 [pageConfig]="pageConfig"
+                 [filterConfig]="filterConfig"
+                 [strucrtorData]="strucrtorData"
+                 [operationConfig]="operationConfig"
+                 (initializeData)="initializeData()"
+                 (submitSuccess)="submitSuccess($event)">
+        </et-page>
+    </div>
+</div>
+
+
+
+

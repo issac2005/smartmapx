@@ -1,0 +1,62 @@
+.container-fluid {
+    font-size: 12px;
+    font-family: '微软雅黑';
+}
+.double {
+    .row {
+        margin-bottom: 4px;
+    }
+    .btn-xs {
+        padding: 0.15rem 0.28rem;
+        font-size: 0.575rem;
+        line-height: 1.4;
+        border-radius: 0.2rem;
+    }
+    .form-control-xs {
+        padding: 0.10rem 0.5rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        border-radius: 0.2rem;
+        height: 26.19px;
+    }
+    .beyond {
+        line-height: 26.19px;
+        width: 90px;
+        text-align: left;
+        font-size: 12px;
+        cursor: help;
+    }
+    input[type=number] {
+        -moz-appearance:textfield;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+
+    svg {
+        fill:#273d56;
+        cursor: pointer;
+    }
+    svg:hover {
+        fill:#8e8e8e;
+    }
+    i {
+        cursor: pointer;
+        margin-right: 5px;
+    }
+    @media (min-width: 168px) {
+        .col-xs-4 {
+            flex: 33%;
+            max-width:33%;
+        }
+        .col-xs-8 {
+            flex: 67%;
+            max-width:67%;
+        }
+
+    }
+
+}

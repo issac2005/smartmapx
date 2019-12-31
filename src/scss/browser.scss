@@ -1,0 +1,125 @@
+/**
+ * @author LLCN
+ * @Date 2018/12/28 13:56
+ * @desc 浏览器兼容样式
+ *
+ */
+
+/*页面统一样式*/
+html,
+body {
+  font-size: 14px;
+  background-color: $c-color-primary;
+}
+
+
+/*添加手形*/
+
+a[href], input[type='submit'], input[type='image'], label[for], select, button, .c-pointer {
+  cursor: pointer;
+}
+
+
+ul {
+  padding-left: 0;
+}
+
+ul, h1, h2, h3, h4, h5, p {
+  margin-bottom: 0;
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 0px;
+}
+
+
+//------------------------------------ 设置滚动条的样式start -------------------------------------------//
+//寬高
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+// 滑槽
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+// 滑块
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(255, 125, 125, 0.4);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+//-------------------------------------- 设置滚动条的样式end -------------------------------------------//
+
+
+//------------------------------------------模态框----------------------------------------------------//
+.modal-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 380px;
+  max-width: 100%;
+
+  transform: translate(-50%, -50%) !important;
+  margin: 0;
+}
+
+.modal-title {
+  font-size: 16px;
+  padding-bottom: 8px;
+}
+
+.modal-body {
+  max-height: 550px;
+  overflow: auto;
+
+  .err-text {
+    font-size: 12px;
+    color: #f00;
+    padding-left: 10px;
+    margin-bottom: 5px;
+  }
+
+  .pull-right {
+    font-size: 12px;
+  }
+}
+
+//---------------------------------------------------模态框--------------------------------------------//
+
+
+//-------------------------------------自定义button 禁止效果---------------------------------------------//
+button {
+  //禁止效果
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+  }
+
+  //取消按钮框
+  &:focus,
+  &:active:focus,
+  &.active:focus,
+  &.focus,
+  &:active.focus,
+  &.active.focus {
+    outline: none;
+    border-color: transparent;
+    box-shadow: none;
+  }
+}
+
+//-------------------------------------自定义button 禁止效果-----------------------------------------//
+
+
+.active-qrcode-img {
+  img {
+    margin: 5px auto;
+  }
+
+}

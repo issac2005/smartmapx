@@ -1,0 +1,145 @@
+<div class=" base-info" *ngIf="patemter.type === 0">
+  <div class="row" style="margin-bottom: 4px">
+    <div class="col-md-4 col-xs-4">
+      <div class="com-beyond"
+           pTooltip="{{tooltipCombinationFilter}}"
+           hideDelay="100"
+           tooltipPosition="bottom"
+      >组合过滤
+      </div>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <select [(ngModel)]="layerInfo.filter[0]" (change)="change($event,'diff')"
+              class="smx-control"
+              style="height: 26.19px;font-size: 10px;">
+        <option value="all">包含所有</option>
+        <option value="none">不包含任意一个</option>
+        <option value="any">包含任意一个</option>
+      </select>
+    </div>
+  </div>
+  <div class="row" *ngFor="let filter of newFilter;index as i;" style="">
+    <div class="col-md-12" class="filter_margin">
+      <span class="fa fa-trash" style="cursor: pointer" (click)="remove(i)"></span>
+      <select style="width: 60px;height: 26.19px;display: inline" (change)="change(filter,'filter',i, 0)" [(ngModel)]="filter[1]" class="smx-control">
+        <option *ngFor="let name of defau.name index as i" [value]="name">{{defau.description[i]}}</option>
+      </select>
+      <select style="width: 60px;height: 26.19px;display: inline" (change)="change(filter,'filter',i, 'in')"
+              [(ngModel)]="filter[0]" class="smx-control">
+        <option *ngFor="let cond of condition" [value]="cond">{{cond}}</option>
+      </select>
+      <input *ngIf="filter[0] !== 'in' && filter[0] !== '!in'"
+             [disabled]="filter[0] === 'has' || filter[0] === '!has'"
+             type="text"
+             (change)="change(filter,'filter',i, 0)"
+             [(ngModel)]="filter[2]"
+             [value]="(filter[0] !== 'has' || filter[0] !== '!has') ? filter[2] : ''"
+             style="width: 120px;  display: inline" class="smx-control"/>
+      <input *ngIf="filter[0] === 'in' || filter[0] === '!in'" type="text" (change)="change(filter,'filter',i, $event)"
+             [value]="filter.slice(2).join(',')"
+             style="width: 120px;  display: inline" class="smx-control"/>
+    </div>
+  </div>
+  <div class="col-md-12" class="filter_margin">
+    <button (click)="addFilter()" class="smx-btn smx-default smx-xs">新增过滤</button>
+  </div>
+</div>
+<div class=" base-info" *ngIf="patemter.type === 1">
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <div class="com-beyond"
+           pTooltip="{{tooltipTypeName}}"
+           hideDelay="100"
+           tooltipPosition="bottom">样式名称
+      </div>
+    </div>
+    <div class="col-md-8 col-xs-8" (click)="test = true;$event.stopPropagation()">
+      <input id='test'
+             type="text"
+             [(ngModel)]="layerInfo.metadata.name"
+             (blur)="test = false;change($event)"
+             [disabled]="mapType === 'geo'? true: false"
+             class="smx-control"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <div class="com-beyond"
+           pTooltip="{{tooltipLayerType}}"
+           hideDelay="100"
+           tooltipPosition="bottom"
+      >图层类型
+      </div>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <select
+        *ngIf="type === '图标' || type === '圆'"
+        (change)="changeLayerType()"
+        [(ngModel)]="layerInfo.type"
+        class="smx-control" style="width: 166px; height:26px;display: inline">
+        <option value="circle">圆</option>
+        <option value="symbol">图标</option>
+      </select>
+      <!-- <input type="text"
+             *ngIf="type === '线'"
+             [(ngModel)]="type"
+             [value]="type"
+             class="smx-control" disabled/> -->
+      <!---------------------------------------------------------------->
+      <select
+        *ngIf="type === '面' || type === '高程面' || type === '线' "
+        (change)="changeFillType(layerInfo.type)"
+        [(ngModel)]="layerInfo.type"
+        class="smx-control" style="width: 166px; height:26px;display: inline">
+        <option value="fill">面</option>
+        <option value="fill-extrusion">高程面</option>
+        <option value="line">线</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <div class="com-beyond"
+           pTooltip="{{tooltipTypeName}}"
+           hideDelay="100"
+           tooltipPosition="bottom"
+      >图层名称
+      </div>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <input type="text" [(ngModel)]="layerInfo.metadata.layer_name" class="smx-control"
+             disabled/>
+    </div>
+  </div>
+  <!--<div class="row">-->
+  <!--<div class="col-md-4 col-xs-4">-->
+  <!--<div>图层分类</div>-->
+  <!--</div>-->
+  <!--<div class="col-md-8 col-xs-8">-->
+  <!--&lt;!&ndash;<input type="text" placeholder="2122" class="smx-control" />&ndash;&gt;-->
+  <!--<input type="text" [(ngModel)]="layerInfo.metadata.layer_class_name" class="smx-control"-->
+  <!--disabled/>-->
+  <!--</div>-->
+  <!--</div>-->
+</div>
+<div class=" base-info" *ngIf="patemter.type === 2">
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <div class="beyond"
+           pTooltip="{{tooltipLayerlevel}}"
+           hideDelay="100"
+           tooltipPosition="bottom"
+      >图层显示级别
+      </div>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <smx-slider2 [(ngModel)]="rangeValues" (onChange)="slideEnds($event)" [min]="patemter.min" [max]="patemter.max"
+                [range]="true" class="p-slide"></smx-slider2>
+      {{rangeValues[0] + '-' + rangeValues[1]}}
+    </div>
+  </div>
+</div>
+<div class="container-fluid base-info" *ngIf="patemter.type === 3">
+  <textarea id="myresource" (change)="changeLayer(myTextarea)" [(ngModel)]="myTextarea"
+            [value]="myTextarea"></textarea>
+</div>

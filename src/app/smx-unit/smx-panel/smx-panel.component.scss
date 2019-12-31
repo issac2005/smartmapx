@@ -1,0 +1,46 @@
+.smx-panel {
+  width: 240px;
+  background: #f8f7f5;
+  height: calc(100% - 70px);
+  overflow: hidden;
+  position: absolute;
+
+  &-body {
+    font-size: 12px;
+    height: calc(100% - 32px);
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    a {
+      text-decoration: none;
+    }
+
+    .left-panel-title {
+      color: #333;
+      padding: 0 5px;
+      line-height: 0.8;
+      border-left: 2px solid #0098cf;
+    }
+
+    .overflow-hidden {
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      height: 100%;
+    }
+
+    .editor_type {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      background-repeat: no-repeat;
+      background-image: url(/assets/img/sprites.png);
+      background-position: -639px -16px;
+      float: right;
+      position: relative;
+    }
+  }
+}

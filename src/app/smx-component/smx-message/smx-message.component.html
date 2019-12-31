@@ -1,0 +1,22 @@
+<div class="ant-message-notice"
+     [@moveUpMotion]="nzMessage.state"
+     (mouseenter)="onEnter()"
+     (mouseleave)="onLeave()">
+  <div class="ant-message-notice-content">
+    <div class="ant-message-custom-content" [ngClass]="'ant-message-' + nzMessage.type">
+      <ng-container [ngSwitch]="nzMessage.type">
+        <i *ngSwitchCase="'success'" class="smx-message-icon smx-message-icon-success"></i>
+        <i *ngSwitchCase="'info'" class="smx-message-icon smx-message-icon-info"></i>
+        <i *ngSwitchCase="'warning'" class="smx-message-icon smx-message-icon-warning"></i>
+        <i *ngSwitchCase="'error'" class="smx-message-icon smx-message-icon-error"></i>
+<!--        <i *ngSwitchCase="'loading'" nz-icon type="loading"></i>-->
+      </ng-container>
+      <ng-container *nzStringTemplateOutlet="nzMessage.content">
+        <span [innerHTML]="nzMessage.content"></span>
+      </ng-container>
+      <ng-container>
+        <i class="smx-message-icon smx-message-icon-close" (click)="remove(nzMessage)"></i>
+      </ng-container>
+    </div>
+  </div>
+</div>

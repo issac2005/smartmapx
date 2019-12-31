@@ -1,0 +1,125 @@
+<!--  表格-->
+<ng-container *ngIf="pageType === 1">
+  <div class="grid">
+
+    <!--头部加载动画-->
+    <smx-loading [loading]="loading"></smx-loading>
+    <div class="grid-box-header">
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th *ngIf="canChecked && pageType==1" class="check-thead">
+            <input type="checkbox" class="smx-checkbox" (change)="checkAll($event)" title="全选/全不选"
+                   [(ngModel)]="isAllChecked">
+            <span style="display: inline-block;position: relative;top: 3px;color: #9c9c9c">已选{{dataIndex.length}}
+              条</span>
+          </th>
+          <th *ngFor="let item of gridHeader; index as i;"
+              [title]="item.description">
+            <span class="grid-box-header-span">{{item.description}}</span>
+          </th>
+        </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="grid-box"
+         detect-scroll (onScroll)="loadNextPage($event)" (scroll)="scrollLeft($event)">
+      <table class="table table-bordered table-hover">
+        <tbody>
+
+        <tr *ngFor="let item of gridData; index as i">
+          <!--表格选择框-->
+          <th scope="row" *ngIf="canChecked && pageType==1" class="check-tbody">
+            <input type="checkbox" [(ngModel)]="rawData[i].checked" class="smx-checkbox"
+                   (change)="checkItem(i, $event, item)">
+          </th>
+          <!--表格数据-->
+          <td *ngFor="let itemHeader of gridHeader;">
+            <ng-container [ngSwitch]="itemHeader.type">
+              <span *ngSwitchCase="'fm_ui_point_geo'" class="data-geo-icon data-geo-icon-point"
+                    [ngClass]="{'geo_filter': !item[itemHeader.alias]}"></span>
+              <span *ngSwitchCase="'fm_ui_line_geo'" class="data-geo-icon data-geo-icon-line"
+                    [ngClass]="{'geo_filter': !item[itemHeader.alias]}"></span>
+              <span *ngSwitchCase="'fm_ui_polygon_geo'" class="data-geo-icon data-geo-icon-poygon"
+                    [ngClass]="{'geo_filter': !item[itemHeader.alias]}"></span>
+              <span *ngSwitchCase="'fm_ui_pick_date'">
+                {{item[itemHeader.alias] | date: itemHeader.config.smxFormat || 'yyyy-MM-dd'}}</span>
+              <span *ngSwitchCase="'fm_ui_pick_datetime'">
+                {{item[itemHeader.alias] | date: itemHeader.config.smxFormat || 'yyyy-MM-dd HH:mm:ss'}}</span>
+              <span *ngSwitchCase="'fm_ui_pick_time'">
+                {{item[itemHeader.alias] | date: itemHeader.config.smxFormat || 'HH:mm:ss'}}</span>
+              <span *ngSwitchDefault title="{{item[itemHeader.alias]}}" ngxClipboard
+                    [cbContent]="item[itemHeader.alias]">{{item[itemHeader.alias]}}</span>
+            </ng-container>
+
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+    <!--底部加载动画-->
+    <div class="data-loading" style="position: fixed;bottom: 20px;left: calc(50% + 120px);" *ngIf="!dataLoading">
+      <smx-loading></smx-loading>
+    </div>
+  </div>
+</ng-container>
+<!--  结构-->
+<ng-container *ngIf="pageType === 2">
+  <div class="grid" style="width: 100%; height: 595px; background: #fff;">
+    <div class="grid-box-header">
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th *ngFor="let item of structureHeader; index as i; first as isFirst" [title]="item">{{item}}</th>
+        </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="grid-box">
+      <table class="table table-bordered table-hover">
+        <tbody>
+        <tr *ngFor="let item of structureValue; index as i">
+
+          <td *ngFor="let itemHeader of structureHeader;">
+          <span *ngIf="!inArray(itemHeader) && (!item.editFlag || itemHeader !== '别名') && itemHeader !== '类型'"
+                title="{{item[itemHeader]}}"
+                [ngStyle]="{'width':itemHeader=='别名' && !item.editFlag&&canChecked? '50px': '100px'}" ngxClipboard
+                [cbContent]="itemHeader =='主键'? (item[itemHeader]==1?'是':'') : (itemHeader =='允许空'? (item[itemHeader]==1?'允许':'否') : item[itemHeader])">
+              {{itemHeader == '主键' ? (item[itemHeader] == 1 ? '是' : '') : (itemHeader == '允许空' ? (item[itemHeader] == 1 ? '允许' : '否') : item[itemHeader])}}
+          </span>
+
+            <!--别名-->
+            <input *ngIf=" item?.editFlag && itemHeader === '别名'" class="change-name-input"
+                   [value]="item?.editValue"
+                   maxlength="40"
+                   (keypress)="inputChangeName($event)" (blur)="saveChangeName($event, i)" type="text" autofocus
+                   placeholder="请输入别名">
+            <span *ngIf="itemHeader=='别名' && !item.editFlag&&canChecked" class="fa fa-edit" [style.width.px]="50"
+                  (click)="changeEditFlag(i, item[itemHeader], $event)">
+          </span>
+
+            <!--数据类型-->
+            <div *ngIf="itemHeader === '类型'">
+
+              <ui-setting-button *ngIf="pageConfig.visit_type === 0"
+                                 [type]="type"
+                                 [smxUiItem]="item[itemHeader]"
+                                 (onChange)="typeChange($event,item,itemHeader,i)"
+              >
+              </ui-setting-button>
+              <!-- whx 修改 -->
+              <span *ngIf="pageConfig.visit_type === 1">{{item[itemHeader].type | sOutputCsv: 'type'}}
+                /{{item[itemHeader].component_data_type_id| sOutputCsv: 'control'}}</span>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</ng-container>
+
+

@@ -1,0 +1,23 @@
+<div class="input-component">
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <label>{{label}}</label>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <!--<input type="text"-->
+             <!--[(colorPicker)]="model"-->
+             <!--[value]="model"-->
+             <!--[cpOutputFormat]="'rgba'"-->
+             <!--[cpPositionRelativeToArrow]="false"-->
+             <!--(colorPickerChange)="change($event)"-->
+             <!--class="form-control" name="name" [(ngModel)]="ColorValue">-->
+      <smart-color [(color)]="ColorValue"
+                   [background]="false"
+                   [cpOutputFormat]="'rgba'"
+                   (onChangeComplete)="change($event)"
+                   style="display: inline-block;margin-left: -10px;width:100%;"
+                   [inputStyle]="{'margin-left': '10px','height':'33px', 'width': '100%','padding': '0.10rem 0.5rem','font-size': '0.875rem','line-height': '1.5','border-radius': '2px'}">
+      </smart-color>
+    </div>
+  </div>
+</div>

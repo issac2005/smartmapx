@@ -1,0 +1,101 @@
+.gradeSet {
+    white-space: nowrap;
+    .btn-xs {
+        padding: 0.15rem 0.28rem;
+        font-size: 0.575rem;
+        line-height: 1.4;
+        border-radius: 0.2rem;
+    }
+    .form-control-xs {
+        padding: 0.10rem 0.5rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        border-radius: 0;
+        height: 24.19px;
+    }
+    .card-header {
+        padding: 0.30rem 0.85rem;
+        background-color: #e7ecee;
+    }
+    .card-body {
+        padding: 0;
+    }
+    .card-body {
+        padding: 5px 0 0 0 !important;
+        background-color:#F4F7FB !important;
+    }
+    .info-body {
+        font-size: 12px;
+        color: #273D56;
+    }
+    .row {
+        margin-bottom: 4px;
+    }
+    .beyond {
+        line-height: 26.19px;
+        width: 90px;
+        text-align: left;
+        font-size: 12px;
+    }
+    .info-header {
+        width: 300px;
+        height: 30px;
+        line-height: 30px;
+        background-color: #e7ecee;
+    }
+
+    .card-header.active {
+        .fa-sort-up {
+            top: 0 !important;
+            transform: rotate(180deg);
+        }
+    }
+
+    a:focus, a:hover {
+        text-decoration: none;
+    }
+
+    input[type=number] {
+        -moz-appearance:textfield;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .card-header a {
+        display: block;
+    }
+
+    .p-slides {
+        width: 60px;
+        display: inline-block;
+        margin-right: 3px;
+        position: relative;
+        margin-left: -5px;
+    }
+
+    svg {
+        fill:#273d56;
+        cursor: pointer;
+    }
+    svg:hover {
+        fill:#8e8e8e;
+    }
+    @media (min-width: 168px) {
+        .col-xs-4 {
+            flex: 33%;
+            max-width:33%;
+        }
+        .col-xs-8 {
+            flex: 67%;
+            max-width:67%;
+        }
+
+    }
+
+}
+
+.sta-text-border{
+
+ }

@@ -1,0 +1,50 @@
+<!--批量操作按钮-->
+<div class="smx-tree-select">
+  <i (click)="editor_layer()" [ngClass]="{'icon smx-icon icon-manage': true, 'show_editor': editable}" style="font-size: 24px; cursor: pointer"></i>
+  <span *ngIf="checked_layer?.length > 0" style="font-size: 12px;padding-left: 6px;color:#273d56">已选中{{checked_layer?.length}}个图层</span>
+  <div class="select_list">
+    <i [ngClass]="{'fa fa-copy':true, 'disable': false}" (click)="copy_group()" title="复制"> </i>
+    <i *ngIf="!union_icon" class="icon smx-icon icon-union" title="分组" (click)="union_layer()" style="font-size: 12px;cursor: pointer;"></i>
+    <i *ngIf="union_icon" title="拆分" class="icon smx-icon icon-split" (click)="split_layer()" style="font-size: 12px;cursor: pointer;"></i>
+    <i *ngIf="show_hide"  [ngClass]="{'fa fa-eye':true, 'disable': false}" (click)="hideLayer()" title="显示"></i>
+    <i *ngIf="!show_hide"  [ngClass]="{'fa fa-eye-slash':true, 'disable': false}" (click)="showLayer()" title="隐藏"></i>
+    <i [ngClass]="{'fa fa-trash-o':true, 'disable': false}" title="删除" (click)="delete_select()"></i>
+  </div>
+</div>
+
+<!--显示图层信息，添加图层-->
+<div class="maputnik-layer-list-header">
+  <div class="layers_num">{{copy_layers.length}}个图层</div>
+  <button class="addLayer btn" (click)="openModal()"><i class="fa fa-plus"></i>添加</button>
+</div>
+
+<!--全选按钮-->
+<div *ngIf="editable" class="all_select">
+  <input type="checkbox" class="smx-checkbox" (click)="allSelect($event)" [(ngModel)]="selectAll"/><span>全选</span>
+</div>
+
+<!--图层列表-->
+<div class="layerListContainer" [ngStyle]="{'height': editable ? 'calc(100% - 90px)' : 'calc(100% - 61px)'}">
+  <div dragula="VAMPIRESS" id="data_drag" [(dragulaModel)]="jsonTree">
+    <ng-container *ngFor="let item of jsonTree">
+      <smx-tree-node
+        [tree_id]="item.id"
+        [grade]="item.grade"
+        [last]="item.last"
+        [editable]="editable"
+        [map]="map"
+        [mapId]="mapId"
+        [(treeNode)]="item.children">
+      </smx-tree-node>
+    </ng-container>
+  </div>
+</div>
+
+<!--限制操作蒙版-->
+<div *ngIf="layerMask" class="layer_mask">
+  <i nz-icon [nzType]="'loading'"></i>
+</div>
+
+
+
+

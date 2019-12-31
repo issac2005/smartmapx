@@ -1,0 +1,667 @@
+{
+  "plotEdit": {
+    "routing": true,
+    "router": "http://api.smartmapx.com/routing"
+  },
+  "styles": [
+    {
+      "type": "draw_line",
+      "properties": [
+        {
+          "name": "line-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "line-width",
+          "type": "borderWidth",
+          "value": 1,
+          "title": ""
+        },
+        {
+          "name": "line-dasharray",
+          "type": "lineType",
+          "value": 0,
+          "title": "线型"
+        },
+        {
+          "name": "line-opacity",
+          "type": "opacity",
+          "value": 1,
+          "title": "透明度"
+        }
+      ]
+    },
+    {
+      "type": "draw_point",
+      "properties": [
+        {
+          "name": "circle-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "circle-radius",
+          "type": "width",
+          "value": 10,
+          "title": ""
+        },
+        {
+          "name": "circle-stroke-color",
+          "type": "borderColor",
+          "value": "#09c",
+          "title": "描边"
+        },
+        {
+          "name": "circle-stroke-width",
+          "type": "borderWidth",
+          "value": 2,
+          "title": ""
+        },
+        {
+          "name": "circle-opacity",
+          "type": "opacity",
+          "value": 1,
+          "title": "透明度"
+        }
+      ]
+    },
+    {
+      "type": "draw_symbol",
+      "properties": [
+        {
+          "name": "icon-image",
+          "type": "icon",
+          "value": "",
+          "title": ""
+        },
+        {
+          "name": "icon-size",
+          "type": "lineHeight",
+          "value": 1,
+          "title": "大小"
+        },
+        {
+          "name": "icon-opacity",
+          "type": "opacity",
+          "value": 1,
+          "title": "透明度"
+        }
+      ]
+    },
+    {
+      "type": "draw_words",
+      "properties": [
+        {
+          "name": "text-size",
+          "type": "fontSize",
+          "value": 12,
+          "title": "字号"
+        },
+        {
+          "name": "text-halo-width",
+          "type": "fontBold",
+          "value": 0,
+          "title": ""
+        },
+        {
+          "name": "text-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "text-max-width",
+          "type": "width",
+          "value": 12,
+          "title": "最大宽度"
+        },
+        {
+          "name": "text-line-height",
+          "type": "lineHeight",
+          "value": 12,
+          "title": "行高"
+        }
+      ]
+    },
+    {
+      "type": "draw_pendant_words",
+      "properties": [
+        {
+          "name": "text-size",
+          "type": "fontSize",
+          "value": 12,
+          "title": "字号"
+        },
+        {
+          "name": "text-halo-width",
+          "type": "fontBold",
+          "value": 0,
+          "title": ""
+        },
+        {
+          "name": "text-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "text-max-width",
+          "type": "width",
+          "value": 12,
+          "title": "最大宽度"
+        },
+        {
+          "name": "text-line-height",
+          "type": "lineHeight",
+          "value": 12,
+          "title": "行高"
+        }
+      ]
+    },
+    {
+      "type": "draw_box",
+      "properties": [
+        {
+          "name": "fill-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "fill-outline-color",
+          "type": "borderColor",
+          "value": "#09c",
+          "title": "边框"
+        },
+        {
+          "name": "fill-outline-width",
+          "type": "borderWidth",
+          "value": 5,
+          "title": ""
+        },
+        {
+          "name": "fill-pattern",
+          "type": "fillPattern",
+          "value": "002",
+          "title": "填充图案"
+        },
+        {
+          "name": "fill-opacity",
+          "type": "opacity",
+          "value": 1,
+          "title": "透明度"
+        }
+
+      ]
+    },
+    {
+      "type": "draw_fill",
+      "properties": [
+        {
+          "name": "fill-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "fill-outline-color",
+          "type": "borderColor",
+          "value": "#09c",
+          "title": "边框"
+        },
+        {
+          "name": "fill-outline-width",
+          "type": "borderWidth",
+          "value": 5,
+          "title": ""
+        },
+        {
+          "name": "fill-pattern",
+          "type": "fillPattern",
+          "value": "0000001",
+          "title": "填充图案"
+        },
+        {
+          "name": "fill-opacity",
+          "type": "opacity",
+          "value": 1,
+          "title": "透明度"
+        }
+      ]
+    },
+    {
+      "type": "draw_circle",
+      "properties": [
+        {
+          "name": "fill-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "fill-outline-color",
+          "type": "borderColor",
+          "value": "#09c",
+          "title": "边框"
+        },
+        {
+          "name": "fill-outline-width",
+          "type": "borderWidth",
+          "value": 5,
+          "title": ""
+        },
+        {
+          "name": "fill-pattern",
+          "type": "fillPattern",
+          "value": "001",
+          "title": "填充图案"
+        },
+        {
+          "name": "fill-opacity",
+          "type": "opacity",
+          "value": 1,
+          "title": "透明度"
+        }
+      ]
+    },
+    {
+      "type": "draw_arrow",
+      "properties": [
+        {
+          "name": "fill-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "fill-outline-color",
+          "type": "borderColor",
+          "value": "#09c",
+          "title": "边框"
+        },
+        {
+          "name": "fill-outline-width",
+          "type": "borderWidth",
+          "value": 5,
+          "title": ""
+        },
+        {
+          "name": "fill-opacity",
+          "type": "opacity",
+          "value": 1,
+          "title": "透明度"
+        }
+      ]
+    },
+    {
+      "type": "draw_photo",
+      "properties": [
+        {
+          "name": "fill-outline-color",
+          "type": "borderColor",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "fill-outline-width",
+          "type": "width",
+          "value": 1,
+          "title": ""
+        },
+        {
+          "name": "fill-color",
+          "type": "",
+          "value": "#fff",
+          "title": ""
+        },
+        {
+          "name": "fill-opacity",
+          "type": "",
+          "value": 1,
+          "title": ""
+        }
+      ]
+    },
+    {
+      "type": "draw_pendant_image",
+      "properties": [
+        {
+          "name": "width",
+          "type": "imageWidth",
+          "value": "",
+          "title": "宽"
+        },
+        {
+          "name": "height",
+          "type": "imageHeight",
+          "value": "",
+          "title": "高"
+        },
+        {
+          "name": "borderColor",
+          "type": "imageBorderColor",
+          "value": "",
+          "title": "边框"
+        },
+        {
+          "name": "borderWidth",
+          "type": "imageBorderWidth",
+          "value": "",
+          "title": ""
+        },
+        {
+          "name": "borderRadius",
+          "type": "imageRadius",
+          "value": "",
+          "title": "圆角半径"
+        },
+        {
+          "name": "boxShadow",
+          "type": "imageBoxShadow",
+          "value": "",
+          "title": "阴影"
+        },
+        {
+          "name": "backgroundSize",
+          "type": "",
+          "value": "",
+          "title": ""
+        },
+        {
+          "name": "borderStyle",
+          "type": "",
+          "value": "solid",
+          "title": ""
+        }
+      ]
+    }
+  ],
+  "manageStyles": [
+    {
+      "type": "draw_point",
+      "properties": [
+        {
+          "name": "circle-color",
+          "type": "color",
+          "value": "",
+          "title": "颜色"
+        },
+        {
+          "name": "circle-radius",
+          "type": "slider",
+          "value": "",
+          "title": "半径",
+          "max": 30,
+          "min": 1
+        },
+        {
+          "name": "circle-stroke-color",
+          "type": "color",
+          "value": "",
+          "title": "描边颜色"
+        },
+        {
+          "name": "circle-stroke-width",
+          "type": "slider",
+          "value": "",
+          "title": "描边宽度",
+          "max": 10,
+          "min": 0
+        },
+        {
+          "name": "circle-opacity",
+          "type": "opacity",
+          "value": "",
+          "title": "透明度"
+        }
+      ]
+    },
+    {
+      "type": "draw_line",
+      "properties": [
+        {
+          "name": "line-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "line-width",
+          "type": "slider",
+          "value": 1,
+          "title": "线宽",
+          "max": 10,
+          "min": 1
+        },
+        {
+          "name": "line-dasharray",
+          "type": "lineType",
+          "value": 0,
+          "title": "线型"
+        },
+        {
+          "name": "line-opacity",
+          "type": "opacity",
+          "value": 1,
+          "title": "透明度"
+        }
+      ]
+    },
+    {
+      "type": "draw_words",
+      "properties": [
+        {
+          "name": "text-size",
+          "type": "fontSize",
+          "value": 12,
+          "title": "字号"
+        },
+        {
+          "name": "text-halo-width",
+          "type": "fontBold",
+          "value": 0,
+          "title": ""
+        },
+        {
+          "name": "text-line-height",
+          "type": "lineHeight",
+          "value": 12,
+          "title": "行高"
+        },
+        {
+          "name": "text-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "text-max-width",
+          "type": "slider",
+          "value": 12,
+          "title": "最大宽度",
+          "max": 300,
+          "min": 10
+        }
+      ]
+    },
+    {
+      "type": "draw_box",
+      "properties": [
+        {
+          "name": "fill-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "fill-outline-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "边框颜色"
+        },
+        {
+          "name": "fill-pattern",
+          "type": "fillPattern",
+          "value": "002",
+          "title": "填充图案"
+        },
+        {
+          "name": "fill-outline-width",
+          "type": "slider",
+          "value": 5,
+          "title": "边框宽度",
+          "max": 10,
+          "min": 0
+        },
+        {
+          "name": "fill-opacity",
+          "type": "opacity",
+          "value": 1,
+          "title": "透明度"
+        }
+
+      ]
+    },
+    {
+      "type": "draw_fill",
+      "properties": [
+        {
+          "name": "fill-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "fill-outline-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "边框颜色"
+        },
+        {
+          "name": "fill-pattern",
+          "type": "fillPattern",
+          "value": "002",
+          "title": "填充图案"
+        },
+        {
+          "name": "fill-outline-width",
+          "type": "slider",
+          "value": 5,
+          "title": "边框宽度",
+          "max": 10,
+          "min": 0
+        },
+        {
+          "name": "fill-opacity",
+          "type": "opacity",
+          "value": 1,
+          "title": "透明度"
+        }
+
+      ]
+    },
+    {
+      "type": "draw_circle",
+      "properties": [
+        {
+          "name": "fill-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "fill-outline-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "边框颜色"
+        },
+        {
+          "name": "fill-pattern",
+          "type": "fillPattern",
+          "value": "002",
+          "title": "填充图案"
+        },
+        {
+          "name": "fill-outline-width",
+          "type": "slider",
+          "value": 5,
+          "title": "边框宽度",
+          "max": 10,
+          "min": 0
+        },
+        {
+          "name": "fill-opacity",
+          "type": "opacity",
+          "value": 1,
+          "title": "透明度"
+        }
+
+      ]
+    },
+    {
+      "type": "draw_photo",
+      "properties": [
+        {
+          "name": "fill-outline-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "颜色"
+        },
+        {
+          "name": "fill-outline-width",
+          "type": "slider",
+          "value": 1,
+          "title": "边框宽度",
+          "max": 10,
+          "min": 0
+        },
+        {
+          "name": "fill-color",
+          "type": "",
+          "value": "#fff",
+          "title": ""
+        },
+        {
+          "name": "fill-opacity",
+          "type": "",
+          "value": 1,
+          "title": ""
+        }
+      ]
+    },
+    {
+      "type": "draw_arrow",
+      "properties": [
+        {
+          "name": "fill-color",
+          "type": "color",
+          "value": "#fff",
+          "title": "颜色"
+        },
+        {
+          "name": "fill-outline-width",
+          "type": "slider",
+          "value": 1,
+          "title": "边框宽度",
+          "max": 10,
+          "min": 0
+        },
+        {
+          "name": "fill-outline-color",
+          "type": "color",
+          "value": "#09c",
+          "title": "边框颜色"
+        },
+        {
+          "name": "fill-opacity",
+          "type": "opacity",
+          "value": 1,
+          "title": "透明度"
+        }
+      ]
+    }
+  ]
+}

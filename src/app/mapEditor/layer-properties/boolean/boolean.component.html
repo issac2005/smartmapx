@@ -1,0 +1,147 @@
+<div class=" boolean">
+  <div class="row" *ngIf=" attribute !== 'line-dasharray' ">
+    <div class="col-md-4 col-xs-4">
+     <!--  <div class="beyond">{{title}}</div> -->
+     <div  pTooltip="{{tooltip}}"
+            positionStyle='relitive'
+            hideDelay="100"
+            tooltipPosition="bottom"
+            class="beyond">{{title}}</div>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <div *ngIf="showStyle === 'boolean' || showStyle === 'undefined' || showStyle === 'string'" style="float: left;height: 26.19px;">
+          <span style="float: left;padding-top: 1px">
+            <svg (click)="clickAdd(attribute)" fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14" width="14" size="14" color="#8e8e8e" viewBox="0 0 40 40" style="vertical-align: middle; color: rgb(142, 142, 142);">
+                <g>
+                    <path d="m30 6.6v5h-11.6l8.2 8.4-8.2 8.4h11.6v5h-20v-3.4l10.9-10-10.9-10v-3.4h20z"></path>
+                </g>
+            </svg>
+          </span>
+        <label class="checkbox" style="margin-left: 10px;">
+          <input type="checkbox"
+          [checked]="layerInfo[attribute] ? layerInfo[attribute] : false"
+          (change)="onChecked($event)">
+          <i class="icon-checkbox"></i>
+        </label>
+      </div>
+      <div *ngIf="showStyle === 'object'" style="float: left">
+        <div *ngFor="let num of layerInfo[attribute].stops index as i" style="height: 30px;">
+          <i class="fa fa-trash" (click)="remove(i)"></i>
+          <input type="number" class="smx-control" style="width: 29px;display: inline;padding: 0.15rem 0.35rem;font-size: 0.175rem"
+                (keyup)="test($event, i)"
+                [value]="num[0]"
+                [(ngModel)]="num[0]"/>
+          <label class="checkbox" style="margin-left: 10px;">
+            <input type="checkbox"  [checked]="layerInfo[attribute].stops[i][1]" (change)="onChecked($event,i)">
+            <i style="bottom: -6px" class="icon-checkbox"></i>
+          </label>
+        </div>
+        <button (click)="buttomAdd()" class="smx-btn smx-default smx-xs" style="margin-left: 120px">添加</button>
+      </div>
+
+    </div>
+  </div>
+  <!-- 虚线样式 -->
+  <div class="row" *ngIf=" attribute === 'line-dasharray' ">
+        <!-- 虚线是否显示 -->
+        <div class="col-md-4 col-xs-4">
+            <div pTooltip="{{tooltipDasha}}"
+                 positionStyle='relitive'
+                 hideDelay="100"
+                 tooltipPosition="bottom"
+                 class="beyond">虚线</div>
+        </div>
+        <div class="col-md-8 col-xs-8">
+            <div style="float: left;height: 26.19px;">
+                <label class="checkbox" style="margin-left: 22px;">
+                  <input type="checkbox"
+                  (change)="onLineChecked($event)"
+                  [checked]="layerInfo[attribute] ? true : false">
+                  <i class="icon-checkbox"></i>
+                </label>
+            </div>
+        </div>
+
+
+        <div *ngIf="layerInfo[attribute] ? true : false" class="col-md-4 col-xs-4" >
+          <div pTooltip="{{tooltip}}"
+               positionStyle='relitive'
+               hideDelay="100"
+               tooltipPosition="bottom"
+               class="beyond">{{title}}</div>
+        </div>
+
+        <!-- 单一缩放级别的时候 -->
+        <div *ngIf="isArrayline" class="oneLineDsha"  class="col-md-8 col-xs-8">
+            <span style="position: absolute; top: 0px;left: 14.5px">
+              <svg  (click)="clickAddLine(attribute)"
+                  fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14" width="14"
+                  size="14" color="#8e8e8e" viewBox="0 0 40 40"
+                  style="vertical-align: middle; color: rgb(142, 142, 142);">
+                <g>
+                    <path d="m30 6.6v5h-11.6l8.2 8.4-8.2 8.4h11.6v5h-20v-3.4l10.9-10-10.9-10v-3.4h20z"></path>
+                </g>
+              </svg>
+            </span>
+            <div *ngFor="let item of layerInfo[attribute]; index as i; trackBy:indexTracker">
+              <i *ngIf="i > 1" class="fa fa-trash" (click)="dasharray_del(i)" style="margin-left: 3.5px"></i>
+              <input type="number"
+                     [(ngModel)]="layerInfo[attribute][i]"
+                     (change)="changeline($event, i, item)"
+                     class="smx-control"
+                     [ngClass]="{'dasharray1': i < 2, 'dasharray2': i > 1}"/>
+            </div>
+
+             <button (click)="dasharrayList()" class="smx-btn smx-default smx-xs" style="margin-left: 120px">添加</button>
+        </div>
+
+
+        <!-- 多缩放级别情况 -->
+
+        <!-- 样式 赋值 -->
+        <div *ngIf=" layerInfo[attribute] && !isArrayline" class="col-md-8 col-xs-8" style="margin-bottom: 4px">
+          <div *ngFor="let num of layerInfo[attribute].stops ; index as i" style="margin:0 0 4px 3px">
+            <!-- 删除 -->
+            <i title="删除分组" class="fa fa-trash"
+               (click)="removeline(i)"></i>
+            <!-- 缩放级别 -->
+            <input type="number" class="smx-control" style="width: 29px;display: inline;padding: 0.15rem 0.35rem;font-size: 0.175rem;"
+                   (keyup)="test($event, i)"
+                   [value]="num[0]"
+                   [(ngModel)]="num[0]"/>
+            <!-- 虚线 实虚 数值 -->
+            <div *ngFor=" let minNum of num[1] ; index as j; trackBy:indexTracker " style="display: inline-block; margin-left: 15px; float: right; position: relative; right: 7px;">
+              <i class="fa fa-trash" (click)="removeDeExline(i,j)" [ngStyle]="{'color': num[1].length > 2 ? '#273D56' : '#8F8E8E' }" style="margin-right: 1px"></i>
+              <input type="number" style="width: 85px;margin-left: 9px;display: inline; margin-bottom: 4px;"
+                     (change)="changesline($event,i,j)"
+                     [(ngModel)]="layerInfo[attribute].stops[i][1][j]"
+                     class="smx-control"/>
+            </div>
+            <!-- 添加 -->
+            <button (click)="lineDaMingroup(i)" class="smx-btn smx-default smx-xs" style="margin-left: 115px">添加</button>
+          </div>
+            <!--<div *ngFor="let num of layerInfo[attribute].stops ; index as i" style="margin:0 0 4px 3px">
+                &lt;!&ndash; 删除 &ndash;&gt;
+                <i title="删除分组" class="fa fa-trash"
+                                    (click)="removeline(i)"></i>
+                &lt;!&ndash; 缩放级别 &ndash;&gt;
+                <input type="number" class="smx-control" style="width: 29px;display: inline;padding: 0.15rem 0.35rem;font-size: 0.175rem;"
+                      (keyup)="test($event, i)"
+                       [value]="num[0]"
+                       [(ngModel)]="num[0]"/>
+                &lt;!&ndash; 虚线 实虚 数值 &ndash;&gt;
+                <div *ngFor=" let minNum of num[1] ; index as j " style="display: inline-block; margin-left: 15px; float: right; position: relative; right: 7px;">
+                  <i class="fa fa-trash" (click)="removeDeExline(i,j)" [ngStyle]="{'color': num[1].length > 2 ? '#273D56' : '#8F8E8E' }"></i>
+                  <input type="number" style="width: 80px;margin-left: 9px;display: inline; margin-bottom: 4px;"
+                                          (keyup)="changesline($event,i,j)"
+                                          value="{{layerInfo[attribute].stops[i][1][j]}}"
+                                          class="smx-control"/>
+                </div>
+                &lt;!&ndash; 添加 &ndash;&gt;
+                <button (click)="lineDaMingroup(i)" class="smx-btn smx-default smx-xs" style="margin-left: 115px">添加</button>
+            </div>-->
+            <!-- 添加分组 -->
+            <button (click)="lineDaMaxgroup()" class="smx-btn smx-default smx-xs" style="margin-left: 107px; display: inline-block;">添加组</button>
+        </div>
+  </div>
+</div>

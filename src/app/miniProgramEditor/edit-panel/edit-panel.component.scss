@@ -1,0 +1,173 @@
+@mixin rotate($deg) {
+    transform: $deg;
+    -webkit-transform: $deg;
+    -moz-transform: $deg;
+    -o-transform: $deg;
+}
+
+.editPanel {
+    height: 100%;
+    overflow: hidden;
+
+
+  .editPanelTitle {
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 10px;
+    padding: 0 10px 0 15px;
+    color: #333;
+    background: #e7ecee;
+    overflow: hidden;
+  }
+
+  .back {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-bottom: 5px;
+    margin-right:5px;
+    border: 1px solid #3aa4fc;
+    border-right: none;
+    border-bottom: none;
+    vertical-align: middle;
+    cursor: pointer;
+    @include rotate(rotate(-45deg));
+  }
+
+  .miniProgramTitle{
+    display: inline-block;
+    width:110px;
+    margin-top:-3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+  }
+
+  .versionInfo{
+    font-size: 16px;
+    float:right;
+
+    .versionStatus{
+      display:inline-block;
+      width:10px;
+      height:10px;
+      margin-right:5px;
+      border-radius: 50%;
+      background: #F4332F;
+    }
+
+    .version{
+      display:inline-block;
+      max-width: 204px;
+      font-style: normal;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+      margin-top:-3px;
+    }
+
+    .versionIcon{
+      display: inline-block;
+      width: 24px;
+      height: 18px;
+      margin-left: 5px;
+      cursor: pointer;
+      background-repeat: no-repeat;
+      background-image: url(/assets/img/sprites.png);
+      background-position: -111px -614px;
+      vertical-align: middle;
+    }
+
+  }
+
+
+  .editTab {
+    width:400px;
+    margin-bottom: 10px;
+    overflow: hidden;
+
+    .editList li {
+      width: 78px;
+      height: 30px;
+      line-height: 30px;
+      box-sizing: border-box;
+      border-top: 1px solid #3aa4fc;
+      border-bottom: 1px solid #3aa4fc;
+      border-left: 1px solid #3aa4fc;
+      text-align: center;
+      transition: all .2s;
+      float: left;
+      list-style-type: none;
+      cursor: pointer;
+
+      &:hover {
+        background: #1577c8;
+
+        a {
+          color: #fff;
+        }
+      }
+
+      a {
+        display: block;
+        width: 77px;
+        height: 28px;
+        color: #3aa4fc;
+        text-decoration: none;
+      }
+    }
+    .editList li.on {
+      background: #3aa4fc;
+
+      a {
+        color: #fff;
+      }
+    }
+    .editList {
+      margin-left: 5px;
+    }
+    .editList li:first-child {
+      border-radius: 3px 0 0 3px;
+    }
+    .editList li:last-child {
+      border-radius: 0 3px 3px 0;
+      border-right: 1px solid #3aa4fc;
+    }
+
+    button {
+      width: 60px;
+      height: 30px;
+      font-size: 12px;
+      color: #fff;
+      margin-right:5px;
+      border: none;
+      border-radius: 3px;
+      background: #5cb85c;
+      float: right;
+      cursor: pointer;
+      .fa {
+        font-size: 16px;
+        font-weight: normal;
+        margin-right: 5px;
+      }
+      &:hover {
+        background: #069bb3;
+      }
+    }
+  }
+
+  .editCont {
+    height: calc(100% - 95px);
+    margin:0 5px;
+    border: 1px solid #ccc;
+    //overflow-y: auto;
+  }
+}
+
+
+
+
+
+

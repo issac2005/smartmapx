@@ -1,0 +1,26 @@
+<div class="d_home" *ngIf="config">
+  <app-data-toolbar
+    [paddingValue]="paddingValue"
+    [everyPageNum]="everyPageNum"
+    [keyConfig]="config">
+  </app-data-toolbar>
+  <app-data-home
+    [paddingValue]="paddingValue"
+    [keyConfig]="config"
+    (scrollLoad)="scrollLoad()"
+    (addNum)="addNum()"
+  >
+  </app-data-home>
+</div>
+<ng-template #raster_image_upload let-item="value">
+  <smx-input [smxPlaceholder]="'请输入图片路径'" [smxStyle]="{width:'180px'}" [(ngModel)]="item.value"></smx-input>
+  <smx-upload [smxFile]="'file'" (uploadEnd)="uploadImage($event,item)" [smxAccept]="'image/*'"
+              [smxStyle]="{'margin-left': '5px'}" [smxMaxSize]="20">
+    <div #custom smxType="custom" class="smx-btn smx-default">上传</div>
+  </smx-upload>
+</ng-template>
+<ng-template #raster_map_calibration let-item="view">
+  <div style="text-align: center">
+    <button class="smx-btn smx-default" (click)="mapCalibration($event,item)" style="width: 80%">地图校准</button>
+  </div>
+</ng-template>

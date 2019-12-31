@@ -1,0 +1,85 @@
+<div class="data-filter">
+  <div class="form-group">
+    <div class="layer-smartMapX-select-ban">
+      图层
+      <i id="add" title="单击添加图层" (click)="add()">+</i>
+    </div>
+    <!-- 配置面板中 -->
+    <ul id="layer-smartMapX-select-showlist" class="layer-list">
+      <li style="list-style-type: none;" *ngFor="let item of testArray ; index as i">
+        <div class="listItem" (click)="slideToggle(i)">
+          <label>{{testArray[i].name}}</label>
+          <span class="move-up" title="上移" *ngIf="testArray.length > 1 && i > 0" (click)="$event.stopPropagation(); moveUp(item, i)"></span>
+          <span class="move-down" title="下移" *ngIf="testArray.length > 1 && i === 0 || i < testArray.length-1"  (click)="$event.stopPropagation(); moveDown(item, i)"></span>
+          <span class="style_delete" title="删除图层" (click)="$event.stopPropagation(); prompt(i)"><i style="cursor: pointer;" class="fa fa-trash-o"></i></span>
+          <span [ngClass]="{'layer':true, 'on': item.dataShow, 'off': !item.dataShow}" title="{{item.dataShow?'启用':'禁用'}}" (click)="$event.stopPropagation(); showLayerData(item)"><i></i></span>
+          <span [ngClass]="{'arrow':true,'off':!item.slidedown}"></span>
+
+        </div>
+        <div [ngClass]="{'dataWrap': true,'hide': !item.slidedown}">
+          <div class="info-title-wrap">
+            <div class="info-title">
+              <span>字段</span><span>提示信息</span>
+            </div>
+            <div class="condition">
+              <div class="condition-wrap">
+                <ul class="input-list">
+                  <li *ngFor="let v of item.data; index as oind">
+                    <!-- 删除 -->
+                    <i class="fa fa-trash-o" (click)="deleteCondition(item, item.data, oind)"></i>
+                    <!-- 下拉 -->
+                    <select (change)="selectKey($event, v, oind, item)" [value]="v.value">
+                        <option  disabled="disabled" value="">请选择</option>
+                      <option  *ngFor="let opt of item.dataType" [value]="opt.description">{{opt.description}}</option>
+                    </select>
+                    <input class="form-control" (change)="dBclickLegend(item)" type="text" maxlength="40" [(ngModel)]="v.name" >
+                  </li>
+                </ul>
+              </div>
+              <div class="icon-wrap"><i class="add-icon" (click)="addCondition(item, i)">+</i></div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- checkbox相关 -->
+  <div id="layer-smartMapX-select-checkAll" *ngIf="pluseBoolean">
+    <div class="layer-smartMapX-select-tableTitle">
+      选择图层
+    </div>
+    <div id="layer-smartMapX-select-info">
+      <div style="height: 143px;">
+        <!-- 图层checkbox框 -->
+        <table>
+          <tr *ngFor="let item of layerInfomation ; index as i;">
+            <td class="layer-smartMapX-select-trtd" style="position: relative;left: 4px;">
+              <input [id]="i+2" class="radio-select" style="margin: 0 0 0 0.5em; cursor: pointer; " type="radio" value="{{layerInfoId[i]}}"
+                     (click)="clicks($event, i)" name="a">
+              <label [for]="i+2" style="width:80%;">{{item.name}}</label>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id="layer-smartMapX-select-button" style="position: relative; top: 11px;text-align: center;">
+      <button id="layer-smartMapX-select-button1" style="color: black" (click)="buttonDis()">取消</button>
+      <button id="layer-smartMapX-select-button2" (click)="buttonSubmit()">确定</button>
+    </div>
+  </div>
+
+  <!-- 确认删除弹出框 -->
+  <div id="layer-smartMapX-select-waringdirector" *ngIf="promptBoolean">
+    <div id="layer-smartMapX-select-waringtitle">
+      <span id="layer-smartMapX-select-waringworld">删除图层</span>
+      <span id="layer-smartMapX-select-waringXcancel" style="cursor: pointer;" (click)="ButtonDisDelete()">×</span>
+    </div>
+    <div id="layer-smartMapX-select-waringmessage">
+      <span style="position: relative;top: 13px;">删除图层将不可恢复，确定要删除图层?</span>
+    </div>
+    <div class="layer-smartMapX-select-waringButton">
+      <button id="layer-smartMapX-select-waringsure" (click)="ButtonSuerDelete()">确定</button>&nbsp;&nbsp;
+      <button id="layer-smartMapX-select-waringcancel" (click)="ButtonDisDelete()">取消</button>
+    </div>
+  </div>
+</div>

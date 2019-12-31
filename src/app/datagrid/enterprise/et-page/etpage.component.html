@@ -1,0 +1,445 @@
+<div class="et-page" *ngIf="event_data">
+  <div>
+        <span class="fa fa-window-maximize et-page-header-edit" title="测试"
+              (click)="testInterface()"></span>
+  </div>
+
+
+  <!--首部-->
+  <div class="et-page-header" style="padding: 20px;">
+    <div *ngIf="operationType === 0">
+      <div>
+        <span class="et-page-header-name">{{event_data.description}}</span>
+        <!--<button type="button" class="btn btn-info">测试</button>-->
+      </div>
+      <div>
+        <p class="et-page-header-desc">{{event_data.remark || '描述为空'}}</p>
+      </div>
+    </div>
+
+
+    <div *ngIf="operationType === 1 || operationType === 2">
+      <div>
+        <span class="et-page-body-title">方案名称</span>
+        <input class="form-control" type="text" id="formGroupInputLarge" placeholder="请输入方案名称"
+               [(ngModel)]="event_data.description" (ngModelChange)="operationLog('name', $event)"
+               style="width: calc(100% - 20px)">
+      </div>
+      <div style="margin-top: 10px">
+        <span class="et-page-body-title">方案描述</span>
+        <textarea class="form-control" placeholder="请输入方案描述信息"
+                  [(ngModel)]="event_data.remark" (ngModelChange)="operationLog('description', $event)"
+                  style="width: calc(100% - 20px)">
+                </textarea>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!--主体-->
+  <div class="et-page-body" style="padding: 20px">
+
+    <div>
+
+      <!--静态参数-->
+      <div *ngIf="pageType === 'query' ||  pageType === 'selects' || pageType === 'select'"
+           style="margin-bottom: 50px">
+
+        <div class="et-page-body-where">
+          <span class="et-page-body-title">静态参数</span>
+          <span *ngIf="operationType === 1 || operationType === 2"
+                class="fa fa-plus-square-o et-page-body-plus" title="添加返回参数"
+                (click)="addCondition()"></span>
+          <p>
+            <b>[service_event_parameters]:</b>
+            <span style="color: red">(可以为空)</span>
+            <span>用于数据查询时对数据源的过滤;</span>
+          </p>
+
+
+          <hr class="style-seven-down">
+          <div>
+            <div class="form-group et-page-body-conjunction" style="width: 50%">
+              <label class="control-label" style="margin-right: 10px">查询方式:</label>
+              <label *ngIf="operationType === 0" class="control-label"
+                     style="color: #0a7bb9">{{conjunction}}</label>
+              <select *ngIf="operationType === 1 || operationType === 2" [(ngModel)]="conjunction"
+                      class="form-control"
+                      style="padding: 0px;display: unset;width: 50%">
+                <option *ngFor="let item of conjunctionSelect"
+                        [ngValue]="item?.value">
+                  {{(item)?.label}}
+                </option>
+              </select>
+            </div>
+
+            <div>
+              <table class="table table-striped et-page-body-edit">
+                <thead class="thead-dark">
+                <tr>
+                  <th *ngIf="operationType === 1 || operationType === 2" class="td0" scope="col"
+                      style="padding: 0px;"></th>
+                  <th class="td1" scope="col">过滤字段</th>
+                  <th class="td2" scope="col">过滤方式</th>
+                  <th class="td3" scope="col">值</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="filterArrayData.length > 0">
+                <tr *ngFor="let v of filterArrayData;index as i"
+                    [ngClass]="{'et-page-body-tr': operationType ===1}"
+                    [title]="operationType === 1 || operationType === 2?'双击修改此条数据':''"
+                    (dblclick)="operationType === 1 || operationType === 2? checkedItem(v?.entity_column_id+i,3):null">
+                  <td *ngIf="operationType === 1 || operationType === 2" class="td0"
+                      style="padding: 0px;">
+                                        <span class="fa fa-trash-o fa-lg"
+                                              style="cursor: pointer;text-align: center"
+                                              title="删除此查询条件"
+                                              (click)="removeCondition(v, filterArrayData)">
+                                        </span>
+                  </td>
+
+
+                  <!--过滤字段-->
+                  <td *ngIf="operationType === 0" class="td1">
+                    <span>{{getDescTitle(v.entity_column_id)}}</span>
+                  </td>
+                  <td *ngIf="operationType === 1 || operationType === 2" class="td1">
+                                        <span *ngIf="(v.entity_column_id+i) !== checkEditItemId3">
+                                        {{getDescTitle(v.entity_column_id)}}
+                                        </span>
+
+                    <select *ngIf="(v.entity_column_id+i) === checkEditItemId3"
+                            [(ngModel)]="v.entity_column_id"
+                            (ngModelChange)="filterChanged($event, v)" class="form-control">
+                      <option *ngFor="let item of filterConfig"
+                              [ngValue]="item?.entity_column_id">
+                        {{(item)?.description}}
+                      </option>
+                    </select>
+                  </td>
+
+                  <!--过滤方式-->
+                  <td *ngIf="operationType === 0" class="td2">
+                    <span>{{getRuleTitle(v.data_type_rule_id)}}</span>
+                  </td>
+                  <td *ngIf="operationType === 1 || operationType === 2" class="td2">
+                    <span
+                      *ngIf="(v.entity_column_id+i) !== checkEditItemId3">{{getRuleTitle(v.data_type_rule_id)}}</span>
+                    <select *ngIf="(v.entity_column_id+i) === checkEditItemId3"
+                            [(ngModel)]="v.data_type_rule_id"
+                            class="form-control">
+                      <option *ngFor="let item of (selectTwoGroup)"
+                              [ngValue]="item.data_type_rule_id">
+                        {{(item)?.name}}
+                      </option>
+                    </select>
+                  </td>
+
+                  <!--值-->
+                  <td *ngIf="operationType === 0" class="td3">
+                    <span>{{v.value}}</span>
+                  </td>
+                  <td *ngIf="operationType === 1 || operationType === 2" class="td3">
+                                        <span
+                                          *ngIf="(v.entity_column_id+i) !== checkEditItemId3">{{v.value}}</span>
+                    <input *ngIf="(v.entity_column_id+i) === checkEditItemId3"
+                           class="form-control"
+                           (blur)="operationType === 1 || operationType === 2? cancelEdit():null"
+                           [type]="v.data_type == 'postgres_integer' || v.data_type === 'postgres_numeric' || v.data_type === 'postgres_bigint' || v.data_type === 'postgres_smallint'?  'number' : 'text'"
+                           [(ngModel)]="v.value">
+                  </td>
+                </tr>
+                </tbody>
+                <tbody *ngIf="loadStatus && filterArrayData.length === 0 && operationType !== 0">
+                <td colspan="4">
+                  <span class="et-page-body-null">参数信息为空</span>
+                </td>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+          <hr class="style-seven-up">
+        </div>
+      </div>
+
+
+      <!--动态参数-->
+      <div *ngIf="pageType === 'update'|| pageType === 'query' || pageType === 'selects' || pageType === 'select'"
+           style="margin-bottom: 50px">
+        <div class="et-page-body-return">
+          <div>
+            <span class="et-page-body-title">{{pageType === 'update' ? '修改依据' : '动态参数' }}</span>
+            <span *ngIf="operationType === 1 || operationType === 2"
+                  class="fa fa-plus-square-o et-page-body-plus"
+                  title="添加字段"
+                  (click)="insertKey('operationTwo', pageType === 'update'?  'updataKey': 'filter')">
+            </span>
+
+            <p *ngIf="pageType === 'update'">
+              <b>[service_event_config.updateKey]</b>
+              <span style="color: red">(不能为空)</span>
+              <span>用于判断所需要修改的数据唯一性,所以要求所组合字段唯一性;</span>
+            </p>
+            <p *ngIf="pageType === 'query'">
+              <b>[service_event_config.filter]:</b>
+              <span style="color: red">(不能为空)</span>
+              <span>允许用户过滤的字段;</span>
+            </p>
+          </div>
+
+          <hr class="style-seven-down">
+          <div>
+            <table class="table table-striped et-page-body-edit">
+              <thead class="thead-dark">
+              <tr>
+                <th *ngIf="operationType === 1 || operationType === 2" scope="col" class="td0"
+                    style="padding: 0px;"></th>
+                <th scope="col" class="td1">名称</th>
+                <th scope="col" class="td2">别名</th>
+                <th scope="col" class="td3">描述</th>
+              </tr>
+              </thead>
+              <tbody *ngIf="operationTwo.key.length > 0">
+              <tr *ngFor="let v of operationTwo.key"
+                  [ngClass]="{'et-page-body-tr': operationType ===1}"
+                  [title]="operationType === 1 || operationType === 2?'双击修改此条数据':''"
+                  (dblclick)="operationType === 1 || operationType === 2? checkedItem(v?.entity_column_id,2):null">
+                <td *ngIf="operationType === 1 || operationType === 2" class="td0"
+                    style="padding: 0px;">
+                                    <span class="fa fa-trash-o fa-lg"
+                                          style="cursor: pointer;text-align: center"
+                                          title="删除此返回值"
+                                          (click)="deleteKey(v, operationTwo)">
+                                    </span>
+                </td>
+
+
+                <td *ngIf="operationType === 0" class="td1" title="{{v?.entity_column_id}}">{{v?.description || v.description}}
+                  <span style="color: #0a7bb9"
+                        *ngIf="v?.component_data_type_id  || v.component_instance_id">[{{v?.component_data_type_id || v.component_instance_id}}
+                    ]</span>
+                </td>
+
+                <td *ngIf="operationType === 1 || operationType === 2" class="td1">
+                                    <span *ngIf="checkEditItemId2 !== v?.entity_column_id">{{v?.description || v.description}}
+                                      <span style="color: #0a7bb9"
+                                            *ngIf="v.component_data_type_id || v.component_instance_id">[{{v?.component_data_type_id || v?.component_instance_id}}
+                                        ]</span>
+                                    </span>
+                  <input *ngIf="checkEditItemId2 === v?.entity_column_id" class="form-control"
+                         type="text"
+                         (blur)="operationType === 1 || operationType === 2? cancelEdit():null"
+                         [(ngModel)]="v['description']">
+                </td>
+
+
+                <td *ngIf="operationType === 0" class="td2">
+                  <span>{{v?.alias}}</span>
+                </td>
+                <td *ngIf="operationType === 1 || operationType === 2" class="td2">
+                  <span *ngIf="checkEditItemId2 !== v?.entity_column_id">{{v?.alias}}</span>
+                  <input *ngIf="checkEditItemId2 === v?.entity_column_id" class="form-control"
+                         type="text"
+                         (blur)="operationType === 1 || operationType === 2? cancelEdit():null"
+                         [(ngModel)]="v['alias']">
+                </td>
+
+
+                <td *ngIf="operationType === 0" class="td3"><span>{{v?.remark}}</span></td>
+                <td *ngIf="operationType === 1 || operationType === 2" class="td3">
+                  <span *ngIf="checkEditItemId2 !== v?.entity_column_id">{{v?.remark}}</span>
+                  <input *ngIf="checkEditItemId2 === v?.entity_column_id" class="form-control"
+                         type="text"
+                         (blur)="operationType === 1 || operationType === 2? cancelEdit():null"
+                         [(ngModel)]="v['remark']">
+                </td>
+              </tr>
+              </tbody>
+              <tbody *ngIf="loadStatus&& operationTwo.key.length === 0 && operationType !== 0">
+              <tr>
+                <td colspan="4">
+                                    <span class="et-page-body-null">{{pageType === 'update' ?
+                                      '未选中任何字段,无法确定修改数据!' : '静态参数为空,无法进行过滤设置!'}}</span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr class="style-seven-up">
+        </div>
+      </div>
+
+
+      <!--返回值-->
+      <div>
+        <div class="et-page-body-return">
+          <div>
+                        <span
+                          class="et-page-body-title">{{pageType === 'query' || pageType === 'selects' || pageType === 'select' ? '返回字段' :
+                          pageType === 'delete' ? '删除key' : pageType === 'insert' ? '插入字段' :
+                            pageType === 'update' ? '修改字段' : ''}}
+                        </span>
+            <span *ngIf="operationType === 1 || operationType === 2"
+                  class="fa fa-plus-square-o et-page-body-plus"
+                  title="添加字段"
+                  (click)="insertKey('operation', pageType)">
+                        </span>
+
+
+            <p *ngIf="pageType === 'query' || pageType === 'select' || pageType === 'selects'">
+              <b>[service_event_config.result]:</b>
+              <span style="color: red">(可以为空)</span>
+              <span>用于查询后规定可返回的字段信息,如果为空的话默认返回全部字段;</span>
+            </p>
+            <p *ngIf="pageType === 'delete'">
+              <b>[service_event_config.delete]:</b>
+              <span style="color: red">(不能为空)</span>
+              <span>用于删除数据时的唯一判定值,所选择的组合字段应该具有唯一性;</span>
+            </p>
+            <p *ngIf="pageType === 'insert'">
+              <b>[service_event_config.insert]:</b>
+              <span style="color: red">(不能为空)</span>
+              <span>用于数据插入时用户所需要的提交的字段;</span>
+            </p>
+            <p *ngIf="pageType === 'update'">
+              <b>[service_event_config.update]:</b>
+              <span style="color: red">(不能为空)</span>
+              <span>用于数据修改时用户具有改动权限的的字段;</span>
+            </p>
+
+          </div>
+          <hr class="style-seven-down">
+          <div>
+            <table class="table table-striped et-page-body-edit">
+              <thead class="thead-dark">
+              <tr>
+                <th *ngIf="operationType === 1 || operationType === 2" scope="col" class="td0"
+                    style="padding: 0px;"></th>
+                <th scope="col" class="td1">名称</th>
+                <th scope="col" class="td2">别名</th>
+                <th scope="col" class="td3">描述</th>
+              </tr>
+              </thead>
+              <tbody *ngIf="operation.key.length > 0">
+              <tr *ngFor="let v of operation.key"
+                  [ngClass]="{'et-page-body-tr': operationType ===1}"
+                  [title]="operationType === 1 || operationType === 2?'双击修改此条数据':''"
+                  (dblclick)="operationType === 1 || operationType === 2? checkedItem(v?.entity_column_id,1):null">
+
+                <td *ngIf="operationType === 1 || operationType === 2" class="td0"
+                    style="padding: 0px;">
+                                        <span class="fa fa-trash-o fa-lg"
+                                              style="cursor: pointer;text-align: center"
+                                              title="删除此返回值"
+                                              (click)="deleteKey(v, operation)">
+
+                                        </span>
+                </td>
+
+                <td *ngIf="operationType === 0" class="td1" title="{{v?.entity_column_id}}">{{v?.description || v.description}}
+                  <span style="color: #0a7bb9"
+                        *ngIf="v?.component_data_type_id || v.component_instance_id">[{{v?.component_data_type_id || v.component_instance_id}}
+                    ]</span>
+                </td>
+
+                <td *ngIf="operationType === 1 || operationType === 2" class="td1">
+                                        <span
+                                          *ngIf="checkEditItemId !== v?.entity_column_id">{{v?.description || v.description}}
+                                          [<span style="color: #0a7bb9"
+                                                 *ngIf="v?.component_data_type_id || v.component_instance_id">{{v?.component_data_type_id || v.component_instance_id}}</span>]
+                                        </span>
+
+                  <input *ngIf="checkEditItemId === v?.entity_column_id" class="form-control"
+                         type="text"
+                         (blur)="operationType === 1 || operationType === 2? cancelEdit():null"
+                         [(ngModel)]="v['description']">
+                </td>
+
+
+                <td *ngIf="operationType === 0" class="td2"><span>{{v?.alias}}</span></td>
+                <td *ngIf="operationType === 1 || operationType === 2" class="td2">
+                  <span *ngIf="checkEditItemId !== v?.entity_column_id">{{v?.alias}}</span>
+                  <input *ngIf="checkEditItemId === v?.entity_column_id" class="form-control"
+                         type="text"
+                         (blur)="operationType === 1 || operationType === 2? cancelEdit():null"
+                         [(ngModel)]="v['alias']">
+                </td>
+
+
+                <td *ngIf="operationType === 0" class="td3"><span>{{v?.remark}}</span></td>
+                <td *ngIf="operationType === 1 || operationType === 2" class="td3">
+                  <span *ngIf="checkEditItemId !== v?.entity_column_id">{{v?.remark}}</span>
+                  <input *ngIf="checkEditItemId === v?.entity_column_id" class="form-control"
+                         type="text"
+                         (blur)="operationType === 1 || operationType === 2? cancelEdit():null"
+                         [(ngModel)]="v['remark']">
+                </td>
+              </tr>
+              </tbody>
+              <tbody *ngIf="loadStatus && operation.key.length === 0 && operationType !== 0">
+              <tr>
+                <td colspan="4">
+                                            <span class="et-page-body-null">未选中任何字段
+                                              {{pageType === 'query' || pageType === 'select' || pageType === 'selects' ? '默认全部返回' :
+                                                pageType === 'delete' ? '无法完成删除判断' :
+                                                  pageType === 'insert' ? '无法确认插入数据' :
+                                                    pageType === 'update' ? '无法确认修改数据' : ''}}
+                                            </span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+      <!--URL示例-->
+      <div style="margin-bottom: 50px">
+        <div class="et-page-body-where">
+          <span class="et-page-body-title">示例</span>
+          <hr class="style-seven-down">
+          <div>
+            <table class="table table-striped et-page-body-edit">
+              <thead class="thead-dark">
+              <tr>
+                <th *ngIf="operationType === 1 || operationType === 2" class="td0" scope="col"
+                    style="padding: 0px;"></th>
+                <th class="td1" scope="col">URL示例</th>
+                <th class="td2" scope="col"></th>
+                <th class="td3" scope="col"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td rowspan="3" scope="col">{{searchUrl}}</td>
+              </tr>
+              <!--<tr>
+                <td rowspan="3" scope="col">
+                </td>
+              </tr>-->
+              </tbody>
+            </table>
+            <div style="margin-top: 5px;height: 700px;position: relative">
+              <!--                    <div id="htmlEditor" name="htmlEditor"></div>-->
+              <smx-editor [mode]="'html'" [(ngModel)]="htmlEditor" [smxReadOnly]="true"
+                          [smxTheme]="'xcode'"></smx-editor>
+            </div>
+          </div>
+          <hr class="style-seven-up">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!--尾部-->
+  <div class="et-page-footer" *ngIf="operationType === 1 || operationType === 2">
+    <button class="btn btn-secondary" (click)="submit('submit')" type="button" style="margin-right: 5px">确定
+    </button>
+    <button class="btn btn-secondary" (click)="submit('cancel');" type="button">取消</button>
+  </div>
+</div>

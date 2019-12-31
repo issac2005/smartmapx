@@ -1,0 +1,305 @@
+.pro-container.view {
+  width: 298px;
+  max-height: 418px;
+  position: absolute;
+  overflow-y: auto;
+  border-radius: 3px;
+
+}
+
+.pro-container {
+  width: 298px;
+  .pro-name {
+    height: 32px;
+    line-height: 32px;
+    padding: 0 10px;
+    font-size: 14px;
+    color: #273d56;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+    background: #f6f6f6;
+  }
+  .pro-title {
+    height: 28px;
+    line-height: 28px;
+    padding: 0 10px;
+    font-size: 14px;
+    color: #333;
+    background: #e7ecee;
+  }
+  .input-wrap {
+    padding: 10px;
+    background: #fff;
+
+    [type=text] {
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      padding-left: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 5px;
+      resize: none;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .img-wrap {
+      display: inline-block;
+      margin-left: 24px;
+      position: relative;
+      //top:18px;
+
+
+      .img-container{
+        width:160px;
+        overflow-x: auto;
+        &::-webkit-scrollbar{
+          width: 0;
+          height: 0;
+        }
+      }
+
+      .prev,.next{
+        position: absolute;
+        top: 40%;
+        margin-top: -10px;
+        width:20px;
+        height:20px;
+        text-align: center;
+        border-radius: 50%;
+        background: rgba(0,0,0,0.3);
+        z-index: 2;
+        cursor: pointer;
+
+        &:hover{
+          background: rgba(0,0,0,0.6);
+        }
+
+      }
+
+      .prev{
+
+        &:after{
+          content: "";
+          display:inline-block;
+          width:8px;
+          height:8px;
+          margin:0 0 2px 2px;
+          border:2px solid #fff;
+          border-right:none;
+          border-bottom:none;
+          transform: rotate(-45deg);
+        }
+
+        left: -10px;
+      }
+
+      .next{
+
+        &:after{
+          content: "";
+          display:inline-block;
+          width:8px;
+          height:8px;
+          margin:0 2px 2px 0;
+          border:2px solid #fff;
+          border-left:none;
+          border-bottom:none;
+          transform: rotate(45deg);
+        }
+
+        right:-10px;
+      }
+
+      .sui {
+
+        //覆写系统上传(图标)
+        &-icon_u {
+          display: inline-block;
+          border: 1px solid #ccc;
+          padding: 10px;
+          width: 70px;
+          height: 70px;
+          text-align: center;
+          line-height: 70px;
+          position: relative;
+          cursor: pointer;
+        }
+
+        &-icon_uc {
+          display: inline-block;
+          /* top: 0; */
+          /* right: 2px; */
+          cursor: pointer;
+          color: #fff;
+          margin: 5px;
+
+        }
+
+        &-plus {
+          display: inline-block;
+          width: 30px;
+          height: 30px;
+          background-image: url(/assets/img/sprites.png);
+          background-repeat: no-repeat;
+          background-position: -148px -50px;
+        }
+
+        &-icon-img {
+          img {
+            vertical-align: unset;
+            height: 100%;
+            width: 100%;
+          }
+
+          &-btn {
+            display: none;
+          }
+
+          &:hover {
+            background: rgba(0, 0, 0, 0.7);
+
+            .sui-icon-img-btn {
+              display: block !important;
+              position: absolute;
+              width: calc(100% - 20px);
+              height: calc(100% - 20px);
+              z-index: 100;
+
+              span:hover {
+                color: #d8d8d8;
+              }
+            }
+
+            img {
+              opacity: .3;
+            }
+          }
+        }
+
+        &-fileinput-list {
+          position: relative;
+          display: inline-block;
+          width: 100%;
+          overflow-x: auto;
+
+          ul {
+            overflow-y: hidden;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 5px 0;
+          }
+
+          li {
+            display: inline-table;
+            vertical-align: top;
+            //width: 70px;
+          }
+
+          ul::-webkit-scrollbar {
+            width: 1px;
+            height: 1px;
+          }
+        }
+      }
+    }
+
+    .img-list {
+      overflow: hidden;
+      li {
+        float:left;
+        margin-right:5px;
+        list-style-type: none;
+
+        .img-name{
+          width:70px;
+          font-size:12px;
+          color:#666;
+          text-align: center;
+          white-space:nowrap;
+          overflow:hidden;
+          text-overflow:ellipsis;
+        }
+
+      }
+    }
+
+  }
+  .clearAttr{
+    width: 30px;
+    height: 28px;
+    float: right;
+    cursor: pointer;
+    border-radius: 0;
+    background-repeat: no-repeat;
+    padding-bottom: 5px;
+    // background-color: #3b8cd0;
+    border: 0px;
+    margin-right: -10px;
+    margin-top: -27px;
+    background-image: url(/assets/img/sprites.png);
+    background-position: -380px -142px;
+    position: relative;
+    right: -6px;
+
+  }
+  .getGeojson{
+    float: right;
+    width: 84px;
+    height: 27px;
+  }
+  .add-attribute{
+    width: 138px;
+    height: 24px;
+    margin-left: 80px;
+    margin-top: 26px;
+
+    margin-bottom: 26px;
+    
+    cursor: pointer;
+    // background-repeat: no-repeat;
+    /* background-image: url(/assets/img/sprites.png); */
+    /* background-position: -602px -568px; */
+    /* border-bottom-color: #3b8cd0; */
+    background-color: #3b8cd0;
+    color: white;
+    font-size: 15px;
+    text-align: center;
+    line-height: 24px;
+    border-radius: 4px;
+  }
+  #nameInput{
+    width: 97%;
+    height: 22px;
+    line-height: 22px;
+    padding-left: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    
+  }
+  .addAttribute{
+    // max-height: 276px;
+    max-height: 206px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .getGeojson{
+    float: right;
+    width: 106px;
+    height: 22px;
+    margin-top: 4px;
+    text-align: center;
+    line-height: 22px;
+    background-color: #388dd1;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+}

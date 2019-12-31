@@ -1,0 +1,19 @@
+<div>
+  <ng-container *ngIf="smxPercentType === 1,else percent">
+    <div
+      class="smx-progress"
+      [style.height.px]="smxHeight"
+      [ngClass]="{'smx-progress-active-a':smxStatus !== -1 && smxStatus !== 100,'smx-progress-finsh':smxStatus === 100,'smx-progress-fail':smxStatus === -1}">
+      <span class="smx-progress-tip" [style.line-height.px]="smxHeight">{{smxShowTip ? smxShowTip : ''}}</span>
+    </div>
+  </ng-container>
+  <ng-template #percent>
+    <div
+      class="smx-progress"
+      [style.height.px]="smxHeight"
+      [ngClass]="{'smx-progress-active-p':smxStatus !== -1 && smxStatus !== 100,'smx-progress-finsh':smxStatus === 100,'smx-progress-fail':smxStatus === -1}">
+      <span class="smx-progress-percent" [style.width.%]="smxPercent >= 100?100:smxPercent"></span>
+      <span class="smx-progress-tip" [style.line-height.px]="smxHeight">{{smxShowTip ? smxShowTip : ''}}</span>
+    </div>
+  </ng-template>
+</div>

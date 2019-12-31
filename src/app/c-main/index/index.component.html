@@ -1,0 +1,21 @@
+<!--轮播页面-->
+<div class="index-box">
+  <div class="index-box-banner">
+    <!--    <i nz-icon type="left" class="left" (click)="carousel.pre()"></i>-->
+    <i nz-icon nzType="left" nzTheme="outline" class="left" (click)="carousel.pre()"></i>
+    <nz-carousel nzAutoPlay [nzAutoPlaySpeed]="10000" #carousel>
+      <div nz-carousel-content *ngFor="let index of array">
+        <div class="bg-item" [style.background]="index" style="height: 100%;"></div>
+      </div>
+    </nz-carousel>
+    <!--    <i nz-icon type="right" class="right" (click)="carousel.next()"></i>-->
+    <i nz-icon nzType="right" nzTheme="outline" class="right" (click)="carousel.next()"></i>
+  </div>
+
+
+  <!--页脚-->
+  <div class="index-box-footer">
+    版权所有:北京灵图软件技术有限公司&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;京ICP证020244 京公网安备11010802016788号
+    <span class="index-box-version" *ngIf="version">{{version}}</span>
+  </div>
+</div>

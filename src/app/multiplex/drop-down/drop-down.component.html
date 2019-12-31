@@ -1,0 +1,21 @@
+<div class="dropdown-component">
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <label>{{label}}</label>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <!--<p-dropdown id="dropdown"-->
+      <!--(onChange)="onchange($event,default)"-->
+      <!--[options]="select" [(ngModel)]="default"-->
+      <!--[style]="{'width':'150px'}"-->
+      <!--placeholder="{{programJson[0]}}"></p-dropdown>-->
+      <smx-select
+        [smxStyle]="{'height':'33px'}"
+        (onChange)="onchange($event,default)"
+        [options]="select"
+        [(ngModel)]="default"
+        [smxPlaceholder]="programJson[0]">
+      </smx-select>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="rootContainer">
+    <div [ngClass]="{'leftPanel':true,'hide':isHide, 'fullScreen':parentIsFull}">
+        <app-edit-panel
+            [dataInfo]="dataInfo"
+            [mapObj]="mapComponent.map"
+            (event)="parentSetFullScreen($event)">
+        </app-edit-panel>
+        <span [ngClass]="{'toggleBtn':true,'show':isHide, 'hide':parentIsFull}" (click)="slideToggle()"></span>
+    </div>
+    <div [ngClass]="{'rightPanel':true,'fullScreen':isHide}">
+        <app-map [dataInfo]="dataInfo" (sendMsg)="receiveMsg($event)" #mapComponent></app-map>
+    </div>
+    <div class="btnContainer">
+        <button  *ngIf="isEdit" [ngClass]="{'publish':true, 'mini-sta-toggle':true, 'disable':!mapLoad}" [disabled]="!mapLoad" (click)="openModal()"></button>
+        <button  *ngIf="isEdit" [ngClass]="{'publish':true, 'mini-sta-publish':true, 'disable':!mapLoad}" [disabled]="!mapLoad" (click)="publishProgram()"></button>
+        <button  *ngIf="isEdit" [ngClass]="{'submit':true, 'mini-sta-submit':true, 'disable':!mapLoad}" [disabled]="!mapLoad" (click)="checkCode()"></button>
+    </div>
+</div>

@@ -1,0 +1,166 @@
+<div class="legendSet">
+  <div class="row" style="border-bottom: 1px solid #ccc">
+      <div class="col-md-12">分段区间</div>
+  </div>
+  <!--___________图标符号图___________-->
+  <div *ngIf="config.componentType === 1">
+
+      <div class="row">
+          <div class="col-md-2">
+              <div>{{config.title[0]}}</div>
+          </div>
+          <div class="col-md-3">
+              <div style="margin-left: -4px">{{config.title[1]}}</div>
+          </div>
+          <div class="col-md-3">
+              <div>{{config.title[2]}}</div>
+          </div>
+          <div class="col-md-4">
+              <div>{{config.title[3]}}</div>
+          </div>
+      </div>
+      <!-- string -->
+      <div *ngIf="fieldType === 'text'">
+          <div class="row" *ngFor="let item of style.metadata.statistics.layer_info[0]; index as i">
+
+             <!-- 是否被选 -->
+            <div class="col-md-2">
+                <div class="smartMapX-Allen-iconcheck">
+                    <div style="margin-top: 1px; line-height: 26px; text-align: center">
+                        <input type="checkbox" class="smx-checkbox"
+                        (click)="checkbox($event, i)"
+                        [checked]="style.metadata.statistics.layer_info[2][i]">
+                    </div>
+                </div>
+              </div>
+              <!-- 分段值 -->
+              <div class="col-md-3">
+                <div class="smartMapX-Allen-input">
+                    <input type="text"
+                           [(ngModel)]="item[0]"
+                           (change)="fieldTextChange()"
+                           class="smx-control form-control-xs"
+                           style="height: 29px; margin-top: 2px; margin-left: -15px; width: 60px;text-align: center"/>
+                </div>
+              </div>
+
+              <!-- 引入图例 -->
+              <div class="col-md-3">
+                <div class="smartMapX-Allen-icon">
+                 <app-legend
+                    [staIcondata]="style.metadata.statistics.layer_info[3][i]"
+                    [isStaIconData]="sta_legend"
+                    [BooleanColseHtml]="BooleanHtmlFalse"
+                    [BooleanInput]="BooleanInputfa"
+                    [BooleanDelete]="BooleanDeletefa"
+                    [style_url]='style'
+                    [mapObj]="map"
+                    (setIconData)="getIconData($event,i)"
+                 ></app-legend>
+                </div>
+            </div>
+
+              <!-- 图标大小 -->
+              <div>
+                    <div class="smartMapX-Allen-iconsize">
+                        <input type="number" #box
+                        [(ngModel)]="style.metadata.statistics.layer_info[1][i][1]"
+                        (change)="iconChangeSize(i,box.value)"
+                        class="smx-control form-control-xs"
+                        style="height: 29px;margin-top: 2px; width: 31px;text-align: center"/>
+                    </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- number -->
+      <div *ngIf="fieldType === 'number'">
+          <div class="row" *ngFor="let item of style.metadata.statistics.layer_info[0]; index as i">
+
+            <!-- 是否被选 -->
+            <div class="col-md-2">
+                <div class="smartMapX-Allen-iconcheck"></div>
+                  <div style="margin-top: 1px; line-height: 26px; text-align: center">
+                      <input type="checkbox" class="smx-checkbox" (click)="checkbox($event, i)"
+                      [checked]="style.metadata.statistics.layer_info[2][i]"    >
+                  </div>
+              </div>
+
+              <!-- 分段值 -->
+              <div class="col-md-3">
+                    <div class="smartMapX-Allen-input">
+                            <input type="number"
+                                   [(ngModel)]="item[0]"
+                                   (change)="fieldNumberChange(i)"
+                                   class="smx-control form-control-xs"
+                                   style="height: 29px; margin-top: 2px; margin-left: -15px; width: 60px;text-align: center"/>
+                        </div>
+              </div>
+
+              <!-- 引入图例 -->
+              <div class="col-md-3">
+                  <div class="smartMapX-Allen-icon">
+                    <app-legend
+                    [staIcondata]="style.metadata.statistics.layer_info[3][i]"
+                    [isStaIconData]="sta_legend"
+                    [BooleanColseHtml]="BooleanHtmlFalse"
+                    [BooleanInput]="BooleanInputfa"
+                    [BooleanDelete]="BooleanDeletefa"
+                    [style_url]='style'
+                    [mapObj]="map"
+                    (setIconData)="getIconData($event,i)"
+                 ></app-legend>
+                  </div>
+              </div>
+
+              <!-- 图标大小 -->
+             <div>
+                   <div class="smartMapX-Allen-iconsize">
+                       <input type="number" #box
+                       [(ngModel)]="style.metadata.statistics.layer_info[1][i][1]"
+                       (change)="iconChangeSize(i,box.value)"
+                       class="smx-control form-control-xs"
+                       style="height: 29px;margin-top: 2px; width: 31px;text-align: center"/>
+                   </div>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-2">
+              <div style="line-height: 26px; text-align: center">
+              </div>
+          </div>
+          <div class="col-md-3">
+              <div style="line-height: 26px; margin-left: -3px">其它值</div>
+          </div>
+
+           <!-- 选取图例  -->
+          <div class="col-md-3">
+              <div class="smartMapX-Allen-icon" *ngFor="let item of style.metadata.statistics.otherValue[3]">
+                  <app-legend
+                        [staIcondata]="style.metadata.statistics.otherValue[3]"
+                        [isStaIconData]="sta_legend"
+                        [BooleanColseHtml]="BooleanHtmlFalse"
+                        [BooleanInput]="BooleanInputfa"
+                        [BooleanDelete]="BooleanDeletefa"
+                        [style_url]='style'
+                        [otherValue]='otherValue'
+                        [mapObj]="map"
+                        (otherIconData)="getIconDataOther($event)"
+                    ></app-legend>
+                </div>
+          </div>
+          <!--  其他图标大小  -->
+          <div>
+                <div class="smartMapX-Allen-iconsize">
+                        <input type="number"  #box
+                            class="smx-control form-control-xs"
+                            [(ngModel)]="style.metadata.statistics.otherValue[1]"
+                            (change)="otherIconChangeSize(box.value)"
+                            style="height: 29px;margin-top: 2px; width: 31px;text-align: center"/>
+                    </div>
+          </div>
+
+      </div>
+  </div>
+</div>

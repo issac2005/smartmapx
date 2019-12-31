@@ -1,0 +1,16 @@
+.smx-input {
+  &-html-default {
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  &-html-editor {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+  }
+}

@@ -1,0 +1,198 @@
+/**
+ * @author LLCN(KerferJu)
+ * @Date 2019/3/8 15:23
+ * @desc bootstrap覆写样式
+ *
+ */
+//btn
+.btn {
+  -webkit-box-shadow: $c-btn-shadow;
+  box-shadow: $c-btn-shadow;
+  -moz-box-shadow: $c-btn-shadow;
+  text-transform: uppercase;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.btn-secondary {
+  -webkit-background-size: 200% 200%;
+  background-size: 200% 200%;
+  background-position: 50%;
+}
+
+.btn-secondary:active {
+  background-color: $c-bootstrap-secondary-deep;
+  border-color: $c-bootstrap-secondary-deep;
+  background-image: -webkit-radial-gradient(circle, $c-bootstrap-secondary-deep 10%, $c-bootstrap-secondary 11%);
+  background-image: -o-radial-gradient(circle, $c-bootstrap-secondary-deep 10%, $c-bootstrap-secondary 11%);
+  background-image: radial-gradient(circle, $c-bootstrap-secondary-deep 10%, $c-bootstrap-secondary 11%);
+  background-repeat: no-repeat;
+  -webkit-background-size: 1000% 1000%;
+  background-size: 1000% 1000%;
+}
+
+.btn-primary {
+  -webkit-background-size: 200% 200%;
+  background-size: 200% 200%;
+  background-position: 50%;
+}
+
+.btn-primary:active {
+  background-color: $c-bootstrap-primary-deep;
+  border-color: $c-bootstrap-primary-deep;
+  background-image: -webkit-radial-gradient(circle, $c-bootstrap-primary-deep 10%, $c-bootstrap-primary 11%);
+  background-image: -o-radial-gradient(circle, $c-bootstrap-primary-deep 10%, $c-bootstrap-primary 11%);
+  background-image: radial-gradient(circle, $c-bootstrap-primary-deep 10%, $c-bootstrap-primary 11%);
+  background-repeat: no-repeat;
+  -webkit-background-size: 1000% 1000%;
+  background-size: 1000% 1000%;
+}
+
+.btn-success {
+  -webkit-background-size: 200% 200%;
+  background-size: 200% 200%;
+  background-position: 50%;
+}
+
+.btn-success:active {
+  background-color: $c-bootstrap-success-deep;
+  border-color: $c-bootstrap-success-deep;
+  background-image: -webkit-radial-gradient(circle, $c-bootstrap-success-deep 10%, $c-bootstrap-success 11%);
+  background-image: -o-radial-gradient(circle, $c-bootstrap-success-deep 10%, $c-bootstrap-success 11%);
+  background-image: radial-gradient(circle, $c-bootstrap-success-deep 10%, $c-bootstrap-success 11%);
+  background-repeat: no-repeat;
+  -webkit-background-size: 1000% 1000%;
+  background-size: 1000% 1000%;
+}
+
+.btn-info {
+  -webkit-background-size: 200% 200%;
+  background-size: 200% 200%;
+  background-position: 50%;
+}
+
+.btn-info:active {
+  background-color: $c-bootstrap-info-deep;
+  border-color: $c-bootstrap-info-deep;
+  background-image: -webkit-radial-gradient(circle, $c-bootstrap-info-deep 10%, $c-bootstrap-info 11%);
+  background-image: -o-radial-gradient(circle, $c-bootstrap-info-deep 10%, $c-bootstrap-info 11%);
+  background-image: radial-gradient(circle, $c-bootstrap-info-deep 10%, $c-bootstrap-info 11%);
+  background-repeat: no-repeat;
+  -webkit-background-size: 1000% 1000%;
+  background-size: 1000% 1000%;
+}
+
+.btn-warning {
+  -webkit-background-size: 200% 200%;
+  background-size: 200% 200%;
+  background-position: 50%;
+}
+
+.btn-warning:active {
+  background-color: $c-bootstrap-warning-deep;
+  border-color: $c-bootstrap-warning-deep;
+  background-image: -webkit-radial-gradient(circle, $c-bootstrap-warning-deep 10%, $c-bootstrap-warning 11%);
+  background-image: -o-radial-gradient(circle, $c-bootstrap-warning-deep 10%, $c-bootstrap-warning 11%);
+  background-image: radial-gradient(circle, $c-bootstrap-warning-deep 10%, $c-bootstrap-warning 11%);
+  background-repeat: no-repeat;
+  -webkit-background-size: 1000% 1000%;
+  background-size: 1000% 1000%;
+}
+
+.btn-danger {
+  -webkit-background-size: 200% 200%;
+  background-size: 200% 200%;
+  background-position: 50%;
+}
+
+.btn-danger:active {
+  background-color: $c-bootstrap-danger-deep;
+  border-color: $c-bootstrap-danger-deep;
+  background-image: -webkit-radial-gradient(circle, $c-bootstrap-danger-deep 10%, $c-bootstrap-danger 11%);
+  background-image: -o-radial-gradient(circle, $c-bootstrap-danger-deep 10%, $c-bootstrap-danger 11%);
+  background-image: radial-gradient(circle, $c-bootstrap-danger-deep 10%, $c-bootstrap-danger 11%);
+  background-repeat: no-repeat;
+  -webkit-background-size: 1000% 1000%;
+  background-size: 1000% 1000%;
+}
+
+.table > thead > tr > th {
+  border-bottom: 0px;
+  padding: 5px;
+  line-height: 30px;
+}
+
+.table > tbody > tr > td {
+  padding: 5px;
+  line-height: 30px;
+}
+
+//=================ng-bootstrap================
+//datepicker
+.ngb-dp-header {
+  background-color: $c-color-gray-primary;
+}
+
+// 按钮颜色
+.btn-primary {
+  color: #fff;
+  background-color: #49a9ee;
+  border-color: #49a9ee;
+}
+
+// 按钮颜色
+.btn-info {
+  color: #fff;
+  background-color: #349be1;
+  border-color: #349be1;
+
+  &:hover {
+    background-color: #1d81c5;
+    border-color: #1d81c5;
+  }
+}
+
+//下拉框
+.card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+  background-color: #F4F7FB;
+}
+
+.accordion .card:first-of-type {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.form-control-plaintext {
+
+  background-color: #fff;
+  border: 1px solid #ced4da;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  cursor: pointer;
+}
+
+.tab-content {
+  height: calc(100% - 70px);
+}
+
+.tab-content > .active {
+  height: 100%;
+}
+
+
+/*-- 解决弹框字体模糊问题 --*/
+.modal-open .modal{
+  display: flex!important;
+  align-items: center;
+}
+
+.modal.fade .modal-dialog{
+  margin:0 auto;
+  position: unset;
+  transform: unset!important;
+}

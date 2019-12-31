@@ -1,0 +1,18 @@
+<div class="input-component">
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <label for="float-input">{{label}}</label>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <input id="float-input" [type]="format" class="minprogram_input smx-control"
+             [max]="max"
+             [min]="min"
+             [minlength]="minlength"
+             [maxlength]="maxlength"
+             [(ngModel)]="value"
+             (keyup)="valueChange()"
+      >
+    </div>
+  </div>
+</div>
+

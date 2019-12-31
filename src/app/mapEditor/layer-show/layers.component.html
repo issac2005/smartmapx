@@ -1,0 +1,63 @@
+<div class="layerItemContainer" *ngIf="layerEditor && layerData">
+  <div style="width: 295px">
+    <nz-collapse>
+      <ng-container *ngFor="let title of layerData.groups;index as i;">
+        <nz-collapse-panel [nzHeader]="title.name" [nzActive]="true"
+                           *ngIf="layerInfo.type === title.condition[0]
+                            || layerInfo.type === title.condition[1]
+                            || layerInfo.type === title.condition[2]
+                            || layerInfo.type === title.condition[3]
+                            || layerInfo.type === title.condition[4]
+                            || layerInfo.type === title.condition[5]">
+          <div *ngFor="let attr of title.attributes">
+            <app-input-pattern *ngIf="layerInfo.type === attr.layerType && attr.componentId === 1"
+                               [layer]="layerInfo"
+                               [patemter]="attr"
+                               [splite]="splite"
+                               [sprite]="sprite"
+                               [mapObj]="mapObj"
+                               [ServiceEventId]="ServiceEventId"
+
+            >
+            </app-input-pattern>
+            <app-double-input *ngIf="layerInfo.type === attr.layerType && attr.componentId === 2"
+                              [layer]="layerInfo"
+                              [patemter]="attr"
+            >
+            </app-double-input>
+            <app-layouts *ngIf="layerInfo.type === attr.layerType && attr.componentId === 3"
+                         [layer]="layerInfo"
+                         [patemter]="attr"
+                         [ServiceEventId]="ServiceEventId"
+            >
+            </app-layouts>
+            <app-select-color *ngIf="layerInfo.type === attr.layerType && attr.componentId === 4"
+                              [map]="mapObj"
+                              [layer]="layerInfo"
+                              [patemter]="attr"
+            >
+            </app-select-color>
+            <app-boolean *ngIf="layerInfo.type === attr.layerType && attr.componentId === 5"
+                         [layer]="layerInfo"
+                         [patemter]="attr"
+                         [layerIndex]="layerIndex"
+                         [testInfo]="layerInfo[attr.belong][attr.attribute]"
+            >
+            </app-boolean>
+            <app-base-info *ngIf="attr.componentId === 6"
+                           [layerInfo]="layerInfo"
+                           [patemter]="attr"
+                           [layerIndex]="layerIndex"
+                           [layerEditor]="layerEditor"
+                           [ServiceEventId]="ServiceEventId"
+                           [type]="type"
+                           [mapType]="mapType"
+            >
+            </app-base-info>
+          </div>
+        </nz-collapse-panel>
+      </ng-container>
+    </nz-collapse>
+  </div>
+</div>
+

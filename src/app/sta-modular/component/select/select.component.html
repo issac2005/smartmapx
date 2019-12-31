@@ -1,0 +1,17 @@
+<div class="staSelect">
+    <div class="row">
+        <div class="col-md-4 col-xs-4">
+            <div class="staSelect-title">{{this.config.title}}</div>
+        </div>
+        <div class="col-md-8 col-xs-8">
+            <select [(ngModel)]="value"
+                    (ngModelChange)="checkedItem($event)"
+                    class="form-control form-control-xs" style="width: 166px; height:26px;display: inline">
+                <option *ngFor="let item of Array" [ngValue]="item.value">
+                    {{item?.label}}
+                </option>
+            </select>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,8 @@
+<ng-content></ng-content>
+<ng-container *ngFor="let v of options">
+  <input type="radio" class="smx-radio" [name]="uuid" [value]="v.value" [disabled]="smxDisabled || v.disabled"
+         (change)="change(v.value)" [ngModel]="model" [ngStyle]="smxStyle" [ngClass]="smxClass">
+  <span>{{v.label}}</span>
+</ng-container>
+
+

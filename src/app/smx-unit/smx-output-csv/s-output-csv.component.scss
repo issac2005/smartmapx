@@ -1,0 +1,44 @@
+@import '../../../scss/smx-main';
+
+.s-output-csv {
+  .table > thead > tr > th {
+    //width: 10px;
+    text-align: center;
+    min-width: 55px;
+  }
+
+  table {
+    td, th {
+      text-align: center;
+      padding: 5px;
+      line-height: 40px;
+    }
+  }
+
+
+  &-ui {
+    //text-align: left;
+
+    span {
+      display: inline-block;
+      width: 150px;
+      height: 30px;
+      line-height: 30px;
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 5px;
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    i {
+      vertical-align: middle;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .smx-text{
+    @include smx-text-hidden(180px);
+  }
+}

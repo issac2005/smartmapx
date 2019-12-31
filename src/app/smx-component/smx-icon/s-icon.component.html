@@ -1,0 +1,5 @@
+<div class="smx-icon">
+  <span class="fa" [ngClass]="iconName" (click)="clickEvent($event)" [style.fontSize.px]="iconSize">
+    <span *ngIf="tip" class="smx-icon-tip">{{tip}}</span>
+  </span>
+</div>

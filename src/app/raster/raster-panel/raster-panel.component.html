@@ -1,0 +1,106 @@
+<div class="right-side-box">
+  <div *ngIf="isBottom" class="listWrap">
+    <ul class="subNavWrap">
+      <li class="subCtrl">地图模式</li>
+    </ul>
+  </div>
+
+  <div class="right-tab-panel"
+       style="height: calc(100% - 32px);position: relative;">
+    <nz-collapse>
+      <nz-collapse-panel [nzHeader]="'图层信息'" [nzActive]="true">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-xs-4">样式名称</div>
+            <div class="col-md-8 col-xs-8">
+              <input [(ngModel)]="rasterName" class="smx-control" (change)="changeName(rasterName,'layer_style')"
+                     [disabled]="mapType === 'map'? false:true">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-xs-4">图层名称</div>
+            <div class="col-md-8 col-xs-8">
+              <input [(ngModel)]="rasterLayerName" class="smx-control" disabled>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-xs-4">URL</div>
+            <div class="col-md-8 col-xs-8" style="word-break: break-all;
+                                padding: 0;">
+              <input [(ngModel)]="layerInfo.metadata.url" class="smx-control" disabled
+                     title="{{layerInfo.metadata.url}}">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 col-xs-4">图层分类</div>
+            <div class="col-md-8 col-xs-8">
+              <input [(ngModel)]="layerType" class="smx-control" disabled title="{{layerType}}">
+            </div>
+          </div>
+        </div>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse>
+      <nz-collapse-panel [nzHeader]="'显示级别'" [nzActive]="true">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-xs-4">图层显示级别</div>
+            <div class="col-md-8 col-xs-8">
+              <smx-slider [(ngModel)]="rangeValues" [smxMin]="0" smxMax="22" [smxRange]="true"
+                          (smxOnAfterChange)="slideEnds($event)"
+                          style="position: absolute;width: 145px;height: 15px;top: -13px;"></smx-slider>
+              <label style="position: absolute;left: 148px;">{{rangeValues[0] + '-' + rangeValues[1]}} </label>
+            </div>
+          </div>
+        </div>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse>
+      <nz-collapse-panel [nzHeader]="'图层属性'" [nzActive]="true">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 col-xs-4">不透明度</div>
+            <div class="col-md-8 col-xs-8">
+              <smx-slider
+                [(ngModel)]="rasterOpacity"
+                [smxMax]="100" [smxMin]="0"
+                [smxRange]="false"
+                (smxOnAfterChange)="rasterLayerChange($event)"
+                style="position: absolute;width: 145px;height: 15px;top: -13px;">
+              </smx-slider>
+              <label style="position: absolute;left: 148px;">{{rasterOpacity / 100}}</label>
+            </div>
+          </div>
+          <div *ngIf="isBottom" class="row">
+            <div class="col-md-4 col-xs-4">图层置底</div>
+            <div class="col-md-8 col-xs-8">
+              <input class="smx-checkbox" type="checkbox" [checked]="layerBootomBtn"
+                     style="top:-7px"
+                     (click)="layerSetBottom()"
+              >
+            </div>
+          </div>
+        </div>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse>
+      <nz-collapse-panel [nzHeader]="'样式编辑'" [nzActive]="true">
+        <div class="styleEditor" style="position: relative;bottom: 15px;">
+
+          <textarea [(ngModel)]="myTextarea" (change)="textChange($event)"></textarea>
+        </div>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+  </div>
+
+</div>
+
+
+
+
+

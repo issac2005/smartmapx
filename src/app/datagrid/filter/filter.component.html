@@ -1,0 +1,72 @@
+<!-- *ngFor="let config of filterData"-->
+<div *ngIf="filterWay === 'left';else localFilter">
+  <div class="filter-box" *ngFor="let filter of filterArray;index as i;">
+    <span *ngIf="!disabled" class="fa fa-trash" (click)="remove(i)"></span>
+    <select
+      [disabled]="disabled"
+      class="smx-control"
+      [(ngModel)]="filter.entity_column_id"
+      (ngModelChange)="changeFilter($event,filter, i,1)">
+      <option *ngFor="let item of (filterData)" [ngValue]="item.entity_column_id">{{(item)?.description}}
+      </option>
+    </select>
+    <select
+      [disabled]="disabled"
+      class="smx-control"
+      [(ngModel)]="filter.data_type_rule_id"
+      (ngModelChange)="changeFilter($event, filter, i)">
+      <option *ngFor="let item of filter.selectTwoGroup" [ngValue]="item.data_type_rule_id">{{(item)?.name}}</option>
+    </select>
+    <input
+      [disabled]="disabled"
+      class="smx-control"
+      [type]="filter.component_data_type_id == 'fm_ui_input_integer' ||
+      filter.component_data_type_id == 'fm_ui_input_integer' ||
+        filter.component_data_type_id == 'fm_ui_input_integer2' ||
+        filter.component_data_type_id == 'fm_ui_input_integer8' ||
+        filter.component_data_type_id == 'fm_ui_input_numeric' ||
+        filter.component_data_type_id == 'fm_ui_input_decimal' ||
+        filter.component_data_type_id == 'fm_ui_input_decimal8' ||
+      filter.component_data_type_id === 'sys_ui_c_decimal'?  'number' : 'text'"
+      (blur)="changeFilter($event, filter, i)"
+      [(ngModel)]="filter.value"> <!--(blur)="changeFilter($event, filter, i)"-->
+  </div>
+</div>
+<ng-template #localFilter>
+  <div>
+    <div class="filter-box" *ngFor="let filter of filterArray;index as i;">
+      <span *ngIf="!disabled" class="fa fa-trash" (click)="remove(i)"></span>
+      <select
+        [disabled]="disabled"
+        [ngStyle]="style"
+        class="smx-control"
+        [(ngModel)]="filter.service_event_config_id"
+        (ngModelChange)="changeFilter($event, filter, i)">
+        <option *ngFor="let item of (filterData)" [ngValue]="item?.service_event_config_id">{{(item)?.description}}
+        </option>
+      </select>
+      <select
+        [disabled]="disabled"
+        [ngStyle]="style"
+        class="smx-control"
+        [(ngModel)]="filter.rule">
+        <option *ngFor="let item of filter.selectTwoGroup"
+                [ngValue]="item.data_type_rule_id">{{(item)?.name}}
+        </option>
+      </select>
+      <input
+        [disabled]="disabled"
+        [ngStyle]="style"
+        class="smx-control"
+        [type]="filter.component_data_type_id == 'fm_ui_input_integer' ||
+        filter.component_data_type_id == 'fm_ui_input_integer' ||
+        filter.component_data_type_id == 'fm_ui_input_integer2' ||
+        filter.component_data_type_id == 'fm_ui_input_integer8' ||
+        filter.component_data_type_id == 'fm_ui_input_numeric' ||
+        filter.component_data_type_id == 'fm_ui_input_decimal' ||
+        filter.component_data_type_id == 'fm_ui_input_decimal8' ||
+        filter.component_data_type_id === 'sys_ui_c_decimal'?  'number' : 'text'"
+        [(ngModel)]="filter.value">
+    </div>
+  </div>
+</ng-template>

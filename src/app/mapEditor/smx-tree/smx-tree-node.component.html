@@ -1,0 +1,171 @@
+<div dragula="VAMPIRES" [id]="tree_id" [lang]="grade" [(dragulaModel)]="treeNode"
+     (dragulaModelChange)="changes($event)">
+  <!--style="height: 700px;overflow-y: scroll;"-->
+  <ng-container *ngFor="let item of treeNode; index as i">
+    <div *ngIf="!item.group" style="position: relative">
+      <div *ngIf="!item.copy" [ngClass]="{'item_drag': true, 'on': item.select}" (click)="show_layer(item,$event)">
+        <div class="layerName">
+          <span style="display: inline-block" (click)="$event.stopPropagation();select_layer(item, $event, i)">
+            <input *ngIf="editable" type="checkbox" class="smx-checkbox" style="margin:0; vertical-align:-0.2rem"
+                   [(ngModel)]="item.checked"/>
+          </span>
+          <ng-container [ngSwitch]="item.layers.type">
+                  <span *ngSwitchCase="'symbol'" class="symbol"><i
+                    class="fa fa-map-marker"
+                    title="点类型图层"></i></span>
+            <span *ngSwitchCase="'fill'" class="symbol"><i
+              class="fa fa-map-o"
+              title="面类型图层"></i></span>
+            <span *ngSwitchCase="'line'" class="symbol"><i
+              class="fa fa-road"
+              title="线类型图层"></i></span>
+            <span *ngSwitchCase="'background'" class="symbol"><i
+              class="fa fa-picture-o"
+              title="背景图层"></i></span>
+            <span *ngSwitchCase=" 'circle'" class="symbol"><i
+              class="fa fa-circle-o"
+              title="圆类型图层"></i></span>
+            <span *ngSwitchCase=" 'building'" class="symbol"><i
+              class="fa fa-building-o"
+              title="建筑物"></i></span>
+            <span *ngSwitchCase=" 'pie'" class="symbol"><i
+              class="fa fa-pie-chart"
+              title="饼状图"></i></span>
+            <span *ngSwitchCase=" 'bar'" class="symbol"><i
+              class="fa fa-bar-chart"
+              title="柱状图"></i></span>
+            <span *ngSwitchCase="'heatmap'" class="symbol"><i
+              class="fa fa-area-chart"
+              title="热力图"></i></span>
+            <span *ngSwitchCase=" 'fill-extrusion'" class="symbol"><i
+              class="fa fa-cubes"
+              title="高程面"></i></span>
+            <span *ngSwitchCase=" 'raster'" class="symbol"><i
+              class="fa fa-map"
+              title="栅格"></i></span>
+            <span *ngSwitchDefault class="symbol"><i
+              class="fa fa-pause"
+              title="未知"></i></span>
+            <span>{{item.layers.metadata.name}}</span>
+          </ng-container>
+        </div>
+        <div class="iconWrap">
+            <span>
+                <i class="icon smx-icon icon-center" aria-hidden="true" title="最佳视野"
+                   [ngStyle]="{'opacity': item.layers.metadata?.status === 10 ? 0.5 : 1}"
+                   (click)="$event.stopPropagation(); bestCenter(item.layers)"> </i>
+                <span *ngIf="!item.layers.metadata.reference_type && !(item.layers.metadata.flowgraph)">
+                    <i class="fa fa-copy fa-lg" aria-hidden="true" title="复制"
+                       (click)="$event.stopPropagation(); copyLayer(item.layers)"> </i>
+                </span>
+                <i class="fa fa-trash-o" aria-hidden="true" title="删除"
+                   (click)="$event.stopPropagation(); deleteLayer(item.layers)"> </i>
+
+                <span *ngIf="!item.layers.layout" class="widthOutLayout">
+                    <i [ngClass]="{'fa fa-eye fa-lg':true}" aria-hidden="true" title="显示"
+                       (click)="$event.stopPropagation(); hideLayer(item.layers, false, false)"></i>
+                    <i [ngClass]="{'fa fa-eye-slash fa-lg':false}" aria-hidden="true" title="隐藏"
+                       (click)="$event.stopPropagation(); showLayer(item.layers, false, true)"></i>
+                </span>
+            </span>
+          <span *ngIf="item?.layers.layout != undefined && !(item.layers.metadata.flowgraph)" class="widthLayout">
+
+                <i *ngIf="item.layers.layout.visibility ==='visible' || item.layers.layout.visibility === undefined"
+                   class="fa fa-eye fa-lg" title="显示"
+                   (click)="$event.stopPropagation();hideLayer(item.layers, false, false)"></i>
+                <i *ngIf="item.layers.layout.visibility === 'none'" class="fa fa-eye-slash fa-lg"
+                   title="隐藏" (click)="$event.stopPropagation(); showLayer(item.layers, false, true)"></i>
+          </span>
+          <span *ngIf="item?.layers.layout != undefined && (item.layers.metadata.flowgraph)" class="widthLayout">
+                <i [ngClass]="{'fa fa-eye fa-lg':item.layers.metadata.showflowgraph}" aria-hidden="true" title="显示"
+                   (click)="$event.stopPropagation(); hideLayer(item.layers, false, false)"></i>
+                <i [ngClass]="{'fa fa-eye-slash fa-lg':!item.layers.metadata.showflowgraph}" aria-hidden="true"
+                   title="隐藏" (click)="$event.stopPropagation(); showLayer(item.layers, false, true)"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="item.group && !item?.juhetu"
+         lang="group"
+         [class]="item.allow_open"
+         [align]="item.last" style="text-indent: 0px">
+      <div (click)="$event.stopPropagation();split_layer(item, $event)"
+           [ngClass]="{'item_drag': true, 'on': item.select}">
+        <i *ngIf="!item?.juhetu" class="fa" [ngClass]="{'downs colors fa-caret-down': item.close, 'fa-caret-right down': (!item.close && item.allow_open), 'lock fa-lock': (!item.close && !item.allow_open)}"
+           (click)="show_group(item, $event)"
+        ></i>
+        <div (click)="closeGroup()" (dblclick)="change_group_name(item)" style="display: inline-block;width: 90%">
+          <span *ngIf="!item.dbclick">({{loop_child(item)}}){{item.name}}</span>
+          <input *ngIf="item.dbclick"
+                 placeholder="图层组"
+                 (click)="$event.stopPropagation()"
+                 class="tree-group smx-control"
+                 [(ngModel)]="item.name" autofocus="autofocus"/>
+        </div>
+      </div>
+
+      <div *ngIf="item.close" style="margin-left: 15px">
+        <smx-tree-node
+          [tree_id]="item.id"
+          [grade]="item.grade"
+          [last]="item.last"
+          [editable]="editable"
+          [map]="map"
+          [mapId]="mapId"
+          [treeNode]="item.children" (treeNodeChange)="item.children = $event">
+        </smx-tree-node>
+      </div>
+    </div>
+<!--针对聚合图做特殊处理-->
+    <div *ngIf="item.group && item?.juhetu"
+         lang="group"
+         title="聚合图为特殊图层组"
+         [class]="item.allow_open"
+         [align]="item.last" style="text-indent: 0px">
+      <div (click)="$event.stopPropagation();split_layer(item, $event)"
+           [ngClass]="{'item_drag': true, 'on': item.select}">
+        <i *ngIf="item?.juhetu" class="fa fa-circle-o" style="padding: 0 3px; vertical-align: 12px;"
+        ></i>
+        <div (click)="closeGroup()" class="juhetu">
+          <span *ngIf="!item.dbclick" class="juhetuName">({{loop_child(item)}}){{item.name}}</span>
+          <div class="juhetuWrap">
+            <span>
+                <i class="bestCenter" aria-hidden="true" title="最佳视野"
+                   [ngStyle]="{'opacity': item.children[0].layers.metadata?.status === 10 ? 0.5 : 1}"
+                   (click)="$event.stopPropagation(); bestCenter(item.children[0].layers)"> </i>
+                <span *ngIf="!item.children[0].layers.metadata.reference_type">
+                    <i class="fa fa-copy fa-lg" aria-hidden="true" title="复制"
+                       (click)="$event.stopPropagation(); juhetuCopy(item.children)"> </i>
+                </span>
+                <i class="fa fa-trash-o" aria-hidden="true" title="删除"
+                   (click)="$event.stopPropagation(); juhetuChange(item, 'delete')"> </i>
+
+                <span *ngIf="!item.children[0].layers.layout" class="widthOutLayout">
+                    <i [ngClass]="{'fa fa-eye fa-lg':true}" title="显示"
+                       (click)="$event.stopPropagation();  hideLayer(item.children, true, false)"></i>
+                </span>
+                <span *ngIf="item.children[0].layers.layout" class="widthOutLayout">
+                      <i *ngIf="item.children[0].layers.layout.visibility  === 'visible' || item.children[0].layers.layout.visibility  === undefined" class="fa fa-eye fa-lg" title="显示"
+                         (click)="$event.stopPropagation(); hideLayer(item.children, true, false)"></i>
+                      <i *ngIf="item.children[0].layers.layout.visibility === 'none'" class="fa fa-eye-slash fa-lg" title="隐藏"
+                         (click)="$event.stopPropagation(); showLayer(item.children, true, true)"></i>
+                </span>
+            </span>
+          </div>
+        </div>
+        <!--<div *ngIf="item.close" style="margin-left: 15px">
+          <smx-tree-node
+            [tree_id]="item.id"
+            [grade]="item.grade"
+            [last]="item.last"
+            [editable]="editable"
+            [map]="map"
+            [mapId]="mapId"
+            [treeNode]="item.children" (treeNodeChange)="item.children = $event">
+          </smx-tree-node>
+        </div>-->
+      </div>
+    </div>
+  </ng-container>
+  <div class="false ng-star-inserted" style="width:100%;height:2px"></div>
+</div>

@@ -1,0 +1,185 @@
+.item_drag {
+  padding: 0px 5px;
+  height: 32px;
+  line-height: 32px;
+  cursor: pointer;
+  color: #273d56;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: #f4f7fc;
+  border-bottom: 1px dashed #ccc;
+  .layerName {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+.item_drag:hover {
+  background: #e8edf0;
+  .iconWrap {
+    display: block;
+  }
+  .layerName {
+    width: 64%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .juhetuWrap {
+    display: block;
+  }
+  .juhetuName {
+    width: 64%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.juhetu {
+  display: inline-block;
+  width: 92%;
+  position: relative;
+  .juhetuName {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+  }
+  .juhetuWrap {
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    z-index: 10;
+    span {
+      display: inline-block;
+    }
+
+    i {
+      font-size: 12px;
+      color: #1a2a3b;
+      margin-left: 3px;
+
+    }
+
+    i:hover {
+      color: #333;
+    }
+  }
+}
+.juhetu:hover {
+  background: #e8edf0;
+  .juhetuWrap {
+    display: block;
+  }
+  .juhetuName {
+    width: 64%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+.on {
+  background: #e8edf0;
+  iconWrap {
+    display: block;
+  }
+}
+.colors {
+  color: #3b8cd0
+}
+.down {
+  cursor: pointer;
+  vertical-align: -2px;
+  padding: 0 2px;
+  font-size: 1.25rem;
+  display: inline-block;
+  width: 15px;
+  text-align: center;
+}
+.downs {
+  cursor: pointer;
+  vertical-align: -2px;
+  padding: 0 2px;
+  font-size: 1.25rem;
+  display: inline-block;
+  width: 15px;
+  text-align: center;
+}
+.lock {
+  cursor: pointer;
+  padding: 0 2px;
+  font-size: 1rem;
+  display: inline-block;
+  width: 15px;
+  text-align: center;
+}
+.hide {
+  display: none;
+}
+
+.symbol {
+  cursor: move;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+
+.iconWrap {
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  z-index: 10;
+
+  span {
+    display: inline-block;
+  }
+
+  i {
+    font-size: 12px;
+    color: #1a2a3b;
+    margin-left: 3px;
+
+  }
+
+  i:hover {
+    color: #333;
+  }
+
+}
+
+.iconWrap.show {
+  display: block;
+}
+
+/*.iconWrap .icon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin: 0 2px;
+}*/
+
+.iconWrap .bestCenter {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-bottom: -5px;
+  background-repeat: no-repeat;
+  background-image: url(/assets/img/sprites.png);
+  background-position: -609px -16px;
+}
+.juhetuWrap .bestCenter {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-bottom: -5px;
+  background-repeat: no-repeat;
+  background-image: url(/assets/img/sprites.png);
+  background-position: -609px -16px;
+}

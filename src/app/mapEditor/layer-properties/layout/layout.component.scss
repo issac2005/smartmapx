@@ -1,0 +1,241 @@
+.container-fluid {
+    font-size: 12px;
+    font-family: '微软雅黑';
+}
+.layouts {
+    .smx-Allen-styleEX{
+        border-top-right-radius: 0px; 
+        border-bottom-right-radius: 0px;
+        width: 139px;
+        margin-left: 9px;
+        display: inline;
+    }
+    .smx-Allen-styleEX_more{
+        border-top-right-radius: 0px; 
+        border-bottom-right-radius: 0px;
+        width: 99px;
+        margin-left: 9px;
+        display: inline;
+    }
+    .smx-Allen-styleAdd {
+        float: right;
+        position: absolute;
+        top: 7px;
+        right: 4px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+    .smx-Allen-styleAdd_more {
+        float: right;
+        position: relative;
+        left: 7px;
+        top: 7px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+    //表达式框
+
+    .layerEdit-smartMapX-select-checkAll {
+        position: fixed;
+        left: 430px;
+        border-bottom: 1px #1111;
+        z-index: 1000;
+        top: 199px;
+        width: 116px;
+        height: 194px;
+        box-shadow: 0px 3px 3px #ddd;
+        border-spacing: 2px;
+        border-collapse: initial;
+        background-color: #fff;
+    
+        table{
+          width:100%;
+        }
+      }
+    .layerEdit-smartMapX-select-tableTitle {
+        height: 32px;
+        line-height: 33px;
+        padding: 0 10px;
+        background: #eeeeee;
+        border-bottom: 1px solid #b1acac;
+    }
+    .layerEdit-smartMapX-select-titleTop{
+        position: relative;
+        left: 26%;
+        color: #163455;
+        font-size: 12px;
+        font-family: MicrosoftYaHei;
+        background: #eeeeee;
+    }
+    .layerEdit-smartMapX-select-info {
+        height: 136px;
+        margin:0px 0px 0;
+        background: #f4fafa;
+        position: relative;
+        top: 0px;
+        border-bottom: 0px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    
+        //&::-webkit-scrollbar-thumb {
+        //  background:#aaa;
+        //}
+    }
+    .layerEdit-smartMapX-select-trtd{
+        position: relative;
+        left: 10px;
+      }
+    .layerEdit-smartMapX-select-trtd:hover {
+        color: #3887be;
+        cursor: pointer;
+    }
+    .layerEdit-checkbox-label{
+        width: 80%;
+        font-size: 12px;
+        cursor: pointer;
+        color: #666666;
+        font-family: MicrosoftYaHei;
+    
+        &:hover{
+          color:#276eae;
+        }
+      }
+    .layerEdit-smartMapX-select-tranline {
+        width: 92px;
+        height: 1px;
+        margin: 0px auto;
+        padding: 0px;
+        background-color: #eeeeee;
+        overflow: hidden;
+        position: relative;
+        top: -4px;
+        left: -10px;
+        cursor: pointer;
+    }
+    .layerEdit-smartMapx-button{
+        border: 1px solid #2282b7;
+        width: 15px;
+        display: block;
+        height: 16px;
+        text-align: center;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 12px;
+        color: #ffffff;
+        background: #2282b7;
+    }
+    .jia{
+        border: 1px solid #2282b7;
+        position: relative;
+        left: 5px; 
+        line-height: 12px;
+    }
+    .jian{
+        border: 1px solid #2282b7;
+        position: relative;
+        left: 26px;
+        top: -16px;
+        line-height: 13px;
+        
+    }
+    .cheng{
+        position: relative;
+        left: 48px;
+        top: -32px;
+        line-height: 13px;
+        border: 1px solid #2282b7;
+    }
+    .chu{
+        position: relative;
+        left: 70px;
+        top: -48px;
+        line-height: 18px;
+        border: 1px solid #2282b7;
+    }
+    .and{
+        position: relative;
+        left: 92px;
+        top: -64px;
+        line-height: 12px;
+        border: 1px solid #2282b7;
+    } 
+
+    //表达式框
+
+    .btn-xs {
+        padding: 0.15rem 0.28rem;
+        font-size: 0.575rem;
+        line-height: 1.4;
+        border-radius: 0.2rem;
+    }
+    .form-control-xs {
+        padding: 0.10rem 0.5rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        border-radius: 0.2rem;
+        height: 26.19px;
+    }
+    .beyond {
+        line-height: 26.19px;
+        width: 90px;
+        text-align: left;
+        font-size: 12px;
+        cursor: help;
+    }
+    .row {
+        margin-bottom: 4px;
+    }
+    input[type=number] {
+        -moz-appearance:textfield;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .svg-disabled {
+      fill:#8F8E8E;
+      cursor: auto;
+    }
+    svg {
+        fill:#273d56;
+        cursor: pointer;
+    }
+    svg:hover {
+        fill:#8e8e8e;
+    }
+    i {
+        cursor: pointer;
+         margin-right: 5px;
+    }
+    @media (min-width: 168px) {
+        .col-xs-4 {
+            flex: 33%;
+            max-width:33%;
+        }
+        .col-xs-8 {
+            flex: 67%;
+            max-width:67%;
+        }
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

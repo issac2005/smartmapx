@@ -1,0 +1,13 @@
+<ng-content></ng-content>
+<ng-container *ngFor="let v of options">
+  <input type="checkbox"
+         style="top: -2px"
+         class="smx-checkbox"
+         [value]="v.value"
+         [disabled]="v.disabled"
+         [checked]="values.includes(v.value)?true:false"
+         (change)="change(v.value,v)"
+         [ngStyle]="smxStyle"
+         [ngClass]="smxClass">
+  <span>{{v.label}}</span>
+</ng-container>

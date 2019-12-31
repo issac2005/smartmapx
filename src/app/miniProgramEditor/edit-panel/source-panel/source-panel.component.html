@@ -1,0 +1,58 @@
+<div class="sourceWrap">
+  <div class="saveBar" *ngIf="isEdit">
+    <span (click)="open(content, 'upload')" title="上传"><i class="fa fa-upload"></i> </span>
+    <span (click)="download()" class="download" title="下载"><i class="fa fa-download"></i></span>
+    <span (click)="open(delete, 'delete')" title="删除"><i class="fa fa-trash-o"></i></span>
+  </div>
+  <div class="nameBar">
+    <span>文件名</span>
+    <span>大小</span>
+    <span>日期</span>
+  </div>
+  <ul class="fileList" id="fileList">
+    <li *ngFor="let v of fileData; let ind=index;">
+      <label class="check" (click)="onCheck(v,ind)">
+        <span *ngIf="ind === itemIndex"></span>
+      </label>
+      <span class="fileName">{{v.name}}</span>
+      <span class="fileSize">{{v.size}}</span>
+    </li>
+  </ul>
+</div>
+
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="smx-modal-header">
+    <h4 class="modal-title">上传文件</h4>
+    <span aria-hidden="true" class="close" (click)="d('Cross click')">&times;</span>
+  </div>
+  <div class="smx-modal-body">
+    <div class="source-upload-wrap">
+      <a class="source-upload-file" [ngClass]="{'disabled': showFileName}">
+        上传文件
+        <input id='file' type="file" class="form-control" [disabled]="saveUpload" (change)="fileChangeEvent($event)"
+             placeholder="Upload file...">
+      </a>
+      <span class="source-file-name">{{showFileName? showFileName : null}}</span>
+    </div>
+  </div>
+  <div class="smx-modal-footer">
+    <button type="button" class="smx-btn smx-grid smx-outline-default" (click)="cancelUpload(c)">取消</button>
+    <button type="button" class="smx-btn smx-grid smx-default" [disabled]="!saveUpload" (click)="upploadSave(c)">确定</button>
+  </div>
+</ng-template>
+
+<ng-template #delete let-c="close" let-d="dismiss">
+  <div class="smx-modal-header">
+    <h4 class="modal-title">删除提醒</h4>
+    <span aria-hidden="true" class="close" (click)="d('Cross click')">&times;</span>
+  </div>
+  <div class="smx_center smx-modal-body">
+    确定要删除所选中的文件吗？
+  </div>
+  <div class="smx-modal-footer">
+    <button type="button" class="smx-btn smx-grid smx-outline-default" (click)="c('Close click')">取消</button>
+    <button type="button" class="smx-btn smx-grid smx-default" (click)="fileDelete(c)">确定</button>
+  </div>
+</ng-template>

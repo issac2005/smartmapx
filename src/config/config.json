@@ -1,0 +1,10 @@
+{
+  "version": "2.7.5",
+  "type": "lt",
+  "serviceIP": {
+    "basemap": "http://172.17.60.20:380/",
+    "active": "http://auth.smartmapx.com/register/",
+    "default_map_id": "c532414e-9265-421e-be13-a9cf7f236981"
+  }
+}
+

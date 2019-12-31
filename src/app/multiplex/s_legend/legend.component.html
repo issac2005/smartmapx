@@ -1,0 +1,113 @@
+<div class="legend-style" style="position: relative;">
+  <div [ngStyle]="{'display':isPlotStyleComBoolean ?'block':'none'}" class="legend-component">
+    <div class="container-fluid legend_style" *ngFor="let icon_num of iconData ; index as i">
+      <div class="row" [ngStyle]="{'margin-bottom':!bottom_ishave ? '0px' : '4px'}">
+        <div *ngIf="BooleanColseHtml" class="col-md-4">
+          <input
+            #box title="点击输入框以外的区域输入成功" type="text"
+            class="smx_legend_minp smx-control form-control-xs"
+            (blur)="dBclickLegend(i,box.value)" value="{{iconData[i].iconInputValue}}"
+          />
+        </div>
+        <div [ngClass]="{'col-md-6':(iconselfType === 'icon')}">
+          <!-- 类名判断 样式选择 -->
+          <div [ngClass]="{'icon_show':(iconselfType === 'icon'),
+                           'icon_show_dili':(iconselfType === 'firstLayer'),
+                          'icon_show_dili_more':(iconselfType === 'morefirst'),
+                          'icon_show_sta':(iconselfType === 'staicon')}">
+
+            <div [ngClass]="{'icon_icon':(iconselfType === 'icon' || iconselfType === 'staicon'),
+                             'icon_icon_dili':(iconselfType === 'firstLayer'),
+                             'icon_icon_dili_more':(iconselfType === 'morefirst')}"
+                 [ngStyle]="{'background-position': (-iconData[i].positionx) + 'px' + ' ' + (-iconData[i].positiony) + 'px',
+                'background-image':'url('+icon_num.sprite+')' ,'background-size': (icon_num.iconSprite_width) + 'px' + ' '+ (icon_num.iconSprite_hight) + 'px'}"
+            ></div>
+
+            <span [ngClass]="{'icon_click':(iconselfType === 'icon' || iconselfType === 'staicon'),
+                              'icon_click_dili':(iconselfType === 'firstLayer'),
+                              'icon_click_dili_more':(iconselfType === 'morefirst')}"
+                  title="图标栏" (click)="selectClick($event, i)" >
+
+            <i [ngClass]="{'plus':(iconselfType === 'icon' || iconselfType === 'staicon'),
+                           'plus_dili':(iconselfType === 'firstLayer'),
+                           'plus_dili_more':(iconselfType === 'morefirst')}">+</i>
+          </span>
+          </div>
+        </div>
+        <div *ngIf="BooleanColseHtml" class="col-md-2">
+              <span *ngIf="iconIdarrLength>1" class="style_delete" title="删除" style="color: #3aa4fc;font-size: 20px"
+                    (click)="removeIconParam(i)">
+                <i style="color: #a9a8a6" class="fa fa-trash-o">
+                </i>
+              </span>
+        </div>
+      </div>
+    </div>
+    <!--添加按钮-->
+    <div>
+    <span *ngIf="BooleanColseHtml"
+          class="col-md-button-1" title="添加" (click)="addIconParam()">
+        <i>+</i>
+    </span>
+    </div>
+  </div>
+
+  <div class="iconStyle" [ngStyle]="{'display':!isCollapsed ?'block':'none'}">
+      <div class="container-fluid">
+        <div class="newiconLise row">
+          <ul class="nav navTitle" >
+            <li class="nav-item" *ngFor = 'let il of iconLibrary ; index as i'>
+              <a class="navLink" (click)="chooseClass(i)">{{il.name_id}}</a>
+            </li>
+          </ul>
+        </div>
+        <!-- 图标小程序 地图管理 -->
+        <div class="row sprite-list" *ngIf="legendshow">
+          <div style="width: 100%;height: 145px; overflow-y: auto">
+              <div *ngIf="(FilGFillIcon === 'isFill_GFill' && sprite_name === '系统')" style="margin: 2px;float: left">
+                  <a title="空白图标" class="thumbnail">
+                    <div class="imgPosition" (click)="selectIcon_null()"
+                         [style.width.px]="34"
+                         [style.height.px]="34"
+                         ></div>
+                  </a>
+                  <!-- [ngStyle]= "{'background-image':'url('+spriteTools+')'}" -->
+                </div>
+            <div *ngFor="let item of iconList index as i" style="margin: 2px;float: left">
+              <a class="thumbnail">
+                <div class="imgPosition" (click)="selectIcon(iconList, i)"
+                     [style.width.px]="item.position.width + 2"
+                     [style.height.px]="item.position.height + 2"
+                     [ngStyle]=
+                     "{'background-position': (-item.position.x) + 'px' +
+                     ' ' + (-item.position.y) +
+                     'px','background-image':'url('+spriteTool+')'}"></div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- 图标符号图（统计专题） -->
+        <div class="row sprite-list" *ngIf="isStaLegend">
+          <div style="width: 100%;height: 145px; overflow-y: auto">
+            <div *ngFor="let item of iconList index as i" style="margin: 2px;float: left">
+              <a class="thumbnail">
+                <div (click)="selectIcon(iconList, i)"
+                     [ngClass]="{'imgPosition':!(this.staIcondata[0].staiconId === item.id),
+                                'imgPosition_legend':(this.staIcondata[0].staiconId === item.id)}"
+                     [style.width.px]="item.position.width + 2"
+                     [style.height.px]="item.position.height + 2"
+                     [ngStyle]="{'background-position': (-item.position.x ) + 'px' +
+                     ' ' + (-item.position.y ) + 'px','background-image':'url('+spriteTool+')'}"></div>
+
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+</div>
+

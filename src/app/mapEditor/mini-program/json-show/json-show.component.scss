@@ -1,0 +1,27 @@
+.settingAngular{
+  .jsonContainer {
+    padding: 15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+  }
+
+  .jsonContainer::-webkit-scrollbar {
+    width: 0;
+  }
+
+  .newVersion {
+    width: 170px;
+    height: 20px;
+    color: red;
+    margin:0 0 0 95px;
+    overflow: hidden;
+  }
+
+  .info-body{
+
+    label{color:#273D56;}
+
+  }
+}
+

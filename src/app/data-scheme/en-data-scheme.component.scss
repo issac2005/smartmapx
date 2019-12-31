@@ -1,0 +1,93 @@
+.eds {
+  top: 70px;
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 70px);
+  background: #f8f7f5;
+  padding: 20px;
+  overflow-y: scroll;
+
+  .eds-title {
+    width: 100px;
+  }
+
+  .eds-left {
+    width: 40%;
+    text-align: center;
+    height: 300px;
+
+    table {
+      width: 100%;
+    }
+  }
+
+  .eds-info {
+    width: 60%;
+    position: relative;
+
+    textarea {
+      width: 100%;
+      height: 610px;
+      overflow: auto;
+      background: #eeeeee;
+    }
+  }
+
+  &-no-border {
+    border: 0 solid;
+  }
+
+  &-border {
+    border: 1px solid #ddd;
+  }
+
+  //参数
+  &-parameter {
+    &-td {
+      width: 40%;
+      position: relative
+    }
+    &-div {
+      height: 280px;
+      margin-bottom: 40px
+    }
+
+    select {
+      display: inline-block;
+      margin-right: -5px;
+      height: 33px;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    table {
+      background-color: #f8f7f5;
+
+      tbody {
+        display: block;
+        height: 230px;
+        overflow-y: scroll;
+      }
+
+      //::-webkit-scrollbar {
+      //  width: 1px;
+      //}
+
+      th {
+        text-align: center;
+      }
+    }
+
+  }
+
+  button {
+    margin: 3px;
+  }
+
+  &-view {
+    th {
+      width: 33%;
+    }
+  }
+}
+

@@ -1,0 +1,68 @@
+<div class="test-panel">
+  <div>
+    <!--// 动态参数-->
+<!--    <div *ngIf="eventData.type === 'query' || eventData.type === 'selects' || eventData.type === 'select'"-->
+<!--         class="right-filter-box">-->
+<!--      动态参数-->
+<!--      <div class="right-filter-body"></div>-->
+<!--    </div>-->
+
+    <!--// 静态参数-->
+    <div *ngIf="eventData.type === 'query' || eventData.type === 'selects' || eventData.type === 'select'"
+         class="right-filter-box">
+<!--      静态参数-->
+      <div class="right-filter-body">
+        <c-filter #static [filterWay]="'static'" [filterData]="filterConfig"
+                  [filterArray]="filterArrayData"
+                  [conjunction]="conjunction">
+        </c-filter>
+
+        <div class="filter-bottom">
+          <div style="display: inline-block;">
+            <label class="filter-label">组合过滤</label>
+            <select [(ngModel)]="conjunction" (ngModelChange)="changeConjunction($event)"
+                    class="smx-control"
+                    style="float: right;width: 150px;line-height: 26px;">
+              <option *ngFor="let item of conjunctionSelect" [ngValue]="item.value">{{item.key}}
+              </option>
+            </select>
+          </div>
+
+          <button type="button" class="smx-btn smx-default smx-xs" (click)="addFilterCon()" style="margin:0 10px;">
+            添加过滤
+          </button>
+          <button type="button" class="smx-btn smx-default smx-xs" (click)="searchFilter()" style="margin-right: 10px;">
+            搜索
+          </button>
+          <button type="button" class="smx-btn smx-outline-default smx-xs" (click)="removeAllFilter()">重置
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--// 按钮-->
+    <div class="btn-grid">
+      <button type="button" *ngIf="operation.add" class="smx-btn smx-default" (click)="addNewData()">添加</button>
+      <button type="button" *ngIf="operation.remove" class="smx-btn smx-outline-default" (click)="delGridData()"
+              [disabled]="btnDisabled.del ? false: true">删除
+      </button>
+      <button type="button" *ngIf="operation.update" class="smx-btn smx-outline-default"
+              (click)="updateGridData()"
+              [disabled]="btnDisabled.update ? false: true">修改
+      </button>
+      <span class="smartmapx-data-totalProperty">总数: {{totalProperty}}</span>
+    </div>
+
+
+    <!--// 表格-->
+    <c-grid *ngIf="operationConfig"
+            (totalProperty)="setTotalProperty($event)"
+            [operationConfig]="operationConfig"
+            [strucrtorData]="strucrtorData"
+            [geoType]="geoType"
+            [pageType]="1"
+            [btnDisabled]="btnDisabled">
+    </c-grid>
+  </div>
+</div>
+<!--<button (click)="test()" style="position: fixed;top: 400px;left: 400px">测试</button>-->

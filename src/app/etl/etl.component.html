@@ -1,0 +1,75 @@
+<div class="etl-box">
+  <div class="etl-right-side-box">
+
+    <div>
+      <div class="listWrap">
+        <ul class="subNavWrap">
+          <li class="subCtrl active">操作过程</li>
+        </ul>
+      </div>
+      <div class="etl-load-box" style="height: 100%;position: relative;">
+        <div style="background: #fff;text-align: center;padding: 30px;">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                            <span class="input-block" (click)="openSource()"
+                                  [ngClass]="{'box-flash': tastFlow == 0 || tastFlow == 3}">数据</span>
+              </div>
+              <div class="col">
+                            <span class="input-block fa" [ngClass]="{'box-flash': tastFlow==2}" (click)="go_run()">
+                                {{tastFlow == 2 ? '正在转换' : (tastFlow == 3 ? '转换完成' : '转换')}}
+                            </span>
+              </div>
+              <div class="col">
+                            <span class="input-block" (click)="openOutput()"
+                                  [ngClass]="{'box-flash': tastFlow==1}">输出</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="container" *ngIf="tastFlow >= 2">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>步骤名称</th>
+                <th>复制的记录行数</th>
+                <th>读</th>
+                <th>写</th>
+                <th>输入</th>
+                <th>输出</th>
+                <th>更新</th>
+                <th>拒绝</th>
+                <th>错误</th>
+                <th>激活</th>
+                <th>时间</th>
+                <th>速度(条/秒)</th>
+                <th>Pri/in/out</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of this.outPutResult.stepMeasure;index as i;">
+                <td *ngFor="let tdItem of item;index as j;" [ngStyle]="{'color':j === 8 && tdItem > 0? 'red':''}">
+                  {{j == 0 ? (i == 0 ? '输入表' : (i == 1 ? '输出表' : tdItem)) : tdItem}}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showLog">
+      <div class="listWrap">
+        <ul class="subNavWrap">
+          <li class="subCtrl active">运行日志</li>
+        </ul>
+        <div class="etl-log">
+          <pre *ngFor="let v of logs" style="overflow: hidden;white-space: pre-wrap;word-wrap: break-word;">{{v}}</pre>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

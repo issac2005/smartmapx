@@ -1,0 +1,202 @@
+.layerEditNum-smartMapX-select-checkAll {
+    position: fixed;
+    left: 430px;
+    border-bottom: 1px #1111;
+    z-index: 1000;
+    top: 199px;
+    width: 116px;
+    height: 195px;
+    box-shadow: 0px 3px 3px #ddd;
+    border-spacing: 2px;
+    border-collapse: initial;
+    background-color: #fff;
+
+    table{
+      width:100%;
+    }
+  }
+.layerEditNum-smartMapX-select-tableTitle {
+    height: 32px;
+    line-height: 33px;
+    padding: 0 10px;
+    background: #eeeeee;
+    border-bottom: 1px solid #b1acac;
+}
+.layerEditNum-smartMapX-select-titleTop{
+    position: relative;
+    left: 26%;
+    color: #163455;
+    font-size: 12px;
+    font-family: MicrosoftYaHei;
+    background: #eeeeee;
+}
+.layerEditNum-smartMapX-select-info {
+    height: 136px;
+    margin:0px 0px 0;
+    background: #f4fafa;
+    position: relative;
+    top: 0px;
+    border-bottom: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar-thumb {
+      background:#aaa;
+    }
+}
+.layerEditNum-smartMapX-select-trtd{
+    position: relative;
+    left: 10px;
+  }
+.layerEditNum-smartMapX-select-trtd:hover {
+    color: #3887be;
+    cursor: pointer;
+}
+.layerEditNum-checkbox-label{
+    width: 80%;
+    font-size: 12px;
+    cursor: pointer;
+    color: #666666;
+    font-family: MicrosoftYaHei;
+
+    &:hover{
+      color:#276eae;
+    }
+  }
+.layerEditNum-smartMapX-select-tranline {
+    width: 92px;
+    height: 1px;
+    margin: 0px auto;
+    padding: 0px;
+    background-color: #eeeeee;
+    overflow: hidden;
+    position: relative;
+    top: -4px;
+    left: -10px;
+    cursor: pointer;
+}
+
+/* .layerEditNum-smartMapx-button{
+    border: 1px solid #2282b7;
+    width: 22px;
+    display: block;
+    height: 16px;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #ffffff;
+    background: #2282b7;
+} */
+.layerEdit-smartMapx-button{
+    border: 1px solid #2282b7;
+    width: 15px;
+    display: block;
+    height: 16px;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #ffffff;
+    background: #2282b7;
+}
+// .jia{
+//     position: relative;
+//     left: 5px; 
+//     line-height: 16px;
+// }
+// .jian{
+//     position: relative;
+//     left: 40px;
+//     top: -20px;
+//     line-height: 16px;
+// }
+// .cheng{
+//     position: relative;
+//     left: 75px;
+//     top: -40px;
+//     line-height: 22px;
+// }
+// .chu{
+//     position: relative;
+//     left: 110px;
+//     top: -60px;
+//     line-height: 16px;
+// } 
+.smart-EXXX{
+  float: right;
+}
+//表达式框
+
+
+/* .jia{
+    border: 1px solid #2282b7;
+    position: relative;
+    left: 5px; 
+    line-height: 12px;
+}
+.jian{
+    position: relative;
+    left: 31px;
+    top: -16px;
+    line-height: 13px;
+    cursor: pointer;
+}
+.cheng{
+    position: relative;
+    left: 58px;
+    top: -32px;
+    line-height: 19px;
+    cursor: pointer;
+}
+.chu{
+    position: relative;
+    left: 85px;
+    top: -48px;
+    line-height: 12px;
+    cursor: pointer;
+}  */
+.jia{
+    border: 1px solid #9e9e9e33;
+    position: relative;
+    left: 5px;
+    line-height: 12px;
+    background: #eeeeee;
+    color: #666666;
+    cursor: default;
+}
+/* .jia{
+    border: 1px solid #2282b7;
+    position: relative;
+    left: 5px; 
+    line-height: 12px;
+} */
+.jian{
+    border: 1px solid #2282b7;
+    position: relative;
+    left: 26px;
+    top: -16px;
+    line-height: 13px;
+    
+}
+.cheng{
+    position: relative;
+    left: 48px;
+    top: -32px;
+    line-height: 13px;
+    border: 1px solid #2282b7;
+}
+.chu{
+    position: relative;
+    left: 70px;
+    top: -48px;
+    line-height: 18px;
+    border: 1px solid #2282b7;
+}
+.and{
+    position: relative;
+    left: 92px;
+    top: -64px;
+    line-height: 12px;
+    border: 1px solid #2282b7;
+} 

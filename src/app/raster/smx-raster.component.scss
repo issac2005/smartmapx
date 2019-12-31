@@ -1,0 +1,307 @@
+.smx {
+  &-raster {
+    background: #eff3f5 100% 100%;
+    width: 100%;
+    height: calc(100% - 70px);
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+
+
+
+    .left {
+
+      &-tab {
+        z-index: 10;
+        width: 240px;
+        background: #f8f7f5;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+
+        &-title {
+          height: 32px;
+          background: #fff;
+          line-height: 32px;
+          padding-left: 9px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          width: 100%;
+        }
+
+        &-back {
+          font-size: 20px;
+          color: #0098cf;
+          margin-right: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+    .mapContainer {
+      width: calc(100% - 240px);
+      top: 0;
+      bottom: 0;
+      left: 240px;
+      position: absolute;
+      height: 100%;
+
+      .sta-body-sw {
+        position: fixed;
+        top: 385px;
+        right: 15px;
+        border: 1px solid #ccc;
+        width: 32px;
+        height: 32px;
+        text-align: center;
+        /* vertical-align: middle; */
+        border-radius: 5px;
+        line-height: 30px;
+        background-color: #fff;
+        cursor: pointer;
+        z-index: 2;
+      }
+
+      .sta-body-center {
+        position: fixed;
+        top: 420px;
+        right: 15px;
+        border: 1px solid #ccc;
+        width: 32px;
+        height: 32px;
+        text-align: center;
+        border-radius: 5px;
+        line-height: 25px;
+        background-color: #fff;
+        cursor: pointer;
+        z-index: 2;
+        &-icon{
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-repeat: no-repeat;
+            background-image: url(/assets/img/sprites.png);
+            background-position: -577px -38px;
+        }
+      }
+
+
+    }
+
+    .maputnik-layout-drawer {
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: -67px;
+      width: 308px;
+      border-right: 1px solid #ccc;
+      background: #dde4ec;
+      z-index: 5;
+      -webkit-transition: all .6s;
+
+      .slideBtn {
+
+        position: absolute;
+        right: -18px;
+        width: 20px;
+        height: 100px;
+        line-height: 100px;
+        color: #fff;
+        text-align: center;
+        cursor: pointer;
+        border: 0;
+        top: 60%;
+        background-image: url(/assets/img/sprites.png);
+        background-repeat: no-repeat;
+        background-position: -395px -179px;
+
+      }
+
+      .slideBtn.open {
+        right: -18px;
+        background-position: -365px -179px;
+      }
+    }
+    .maputnik-layout-drawer.show {
+      width: 307px;
+      left: 240px;
+    }
+
+
+    .p-slide {
+      width: 110px;
+      display: inline-block;
+      margin-right: 10px;
+      position: relative;
+    }
+    .opacityStyle {
+      position: fixed;
+      top: 420px;
+      right: 50px;
+      width: 120px;
+      height: 32px;
+      border-radius: 5px;
+      line-height: 25px;
+      background-color: #fff;
+      cursor: pointer;
+      z-index: 2;
+      -webkit-animation: opacityStyle .4s;
+      animation: opacityStyle .4s;
+
+      .p-slide-map {
+        position: absolute;
+        left: 10px;
+        width: 80px;
+        top: 17px;
+      }
+    }
+  /* ----------- */
+      @keyframes opacityStyle {
+        0% {
+            //-webkit-transform: translate3d(100%, 0, 0);
+            -webkit-transform: translate3d(100%, 0, 0);
+          // transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+        }
+        100% {
+            -webkit-transform: none;
+            transform: none;
+        }
+    }
+
+    @-webkit-keyframes opacityStyle {
+        0% {
+            -webkit-transform: translate3d(100%, 0, 0);
+        }
+        100% {
+            -webkit-transform: none;
+        }
+    }
+
+  /* -------------- */
+
+    @media (min-width: 168px) {
+      .col-xs-4 {
+          flex: 33%;
+          max-width:33%;
+      }
+      .col-xs-8 {
+          flex: 67%;
+          max-width:67%;
+          float: right;
+          padding-right: 14px;
+      }
+
+  }
+
+    .ui-slider .ui-slider-handle.ui-slider-handle-active {
+        z-index:0 !important;
+    }
+
+    .map-raster-editor {
+      display: inline-block;
+      position: fixed;
+      right: 180px;
+      top: 90px;
+      border-radius: 5px;
+      text-align: center;
+      width: 70px;
+      cursor: pointer;
+      z-index: 9;
+      height: 26px;
+      border: 0 solid #ddd;
+      background-repeat: no-repeat;
+      background-image: url(/assets/img/sprites.png);
+      background-position: -106px -490px;
+      transition: unset;
+      background-color: unset;
+    }
+    .map-raster-style {
+      display: inline-block;
+      position: fixed;
+      right: 180px;
+      top: 90px;
+      border-radius: 5px;
+      text-align: center;
+      width: 70px;
+      cursor: pointer;
+      z-index: 9;
+      height: 26px;
+      border: 0 solid #ddd;
+      background-repeat: no-repeat;
+      background-image: url(/assets/img/sprites.png);
+      background-position: -191px -490px;
+      transition: unset;
+      background-color: unset;
+    }
+
+    .map-raster-publish {
+      display: inline-block;
+      position: fixed;
+      right: 15px;
+      top: 90px;
+      border-radius: 5px;
+      text-align: center;
+      width: 62px;
+      cursor: pointer;
+      z-index: 9;
+      height: 26px;
+      border: 0px solid #ddd;
+      background-repeat: no-repeat;
+      background-image: url(/assets/img/sprites.png);
+      background-position: -281px -490px;
+      transition: unset;
+      background-color: unset;
+
+      &:disabled {
+        &:hover {
+          background-position: -281px -490px;
+          transition: unset;
+        }
+      }
+
+      &:hover {
+        background-position: -281px -528px;
+        transition: unset;
+      }
+    }
+
+    .map-raster-toggle {
+      display: inline-block;
+      position: fixed;
+      right: 85px;
+      z-index: 9;
+      top: 90px;
+      cursor: pointer;
+      border-radius: 5px;
+      text-align: center;
+      width: 84px;
+      height: 26px;
+      border: 0px solid #ddd;
+      background-repeat: no-repeat;
+      background-image: url(/assets/img/sprites.png);
+      background-position: -13px -490px;
+      transition: unset;
+      background-color: unset;
+
+      &:disabled {
+        &:hover {
+          background-position: -13px -490px;
+          transition: unset;
+        }
+      }
+
+      &:hover {
+        background-position: -13px -528px;
+        transition: unset;
+      }
+    }
+  }
+
+
+
+
+}

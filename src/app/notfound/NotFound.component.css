@@ -1,0 +1,90 @@
+div{
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  display: block;
+}
+div#da-wrapper, div#da-wrapper.fluid {
+  width: 100%;
+}
+div#da-wrapper {
+  height: auto;
+  min-height: 100%;
+  position: relative;
+  min-width: 320px;
+}
+
+
+div#da-content {
+  clear: both;
+  padding-bottom: 58px;
+}
+
+div#da-wrapper .da-container, div#da-wrapper.fluid .da-container {
+  width: 96%;
+  margin: auto;
+}
+div#da-error-wrapper {
+  width: 320px;
+  padding: 30px 0;
+  margin: auto;
+  position: relative;
+}
+div#da-error-wrapper #da-error-pin {
+  width: 38px;
+  height: 38px;
+  display: block;
+  margin: auto;
+  margin-bottom: -27px;
+  z-index: 10;
+  position: relative;
+  background: url(../../assets/source-img/404/error-pin.png) no-repeat center center;
+}
+
+div#da-error-wrapper #da-error-code {
+  width: 285px;
+  height: 290px;
+  padding: 127px 16px 0 16px;
+  position: relative;
+  margin: auto;
+  margin-bottom: 20px;
+  z-index: 5;
+  line-height: 1;
+  font-size: 32px;
+  text-align: center;
+  background: url(../../assets/source-img/404/error-hanger.png) no-repeat center center;
+  -webkit-transform-origin: center top;
+  -moz-transform-origin: center top;
+  transform-origin: center top;
+  -webkit-animation: error-swing infinite 2s ease-in-out alternate;
+  -moz-animation: error-swing infinite 2s ease-in-out alternate;
+  animation: error-swing infinite 2s ease-in-out alternate;
+}
+div#da-error-wrapper #da-error-code span {
+  font-size: 96px;
+  display: block;
+}
+div#da-error-wrapper .da-error-heading {
+  color: #e15656;
+  text-align: center;
+  font-size: 24px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+div#da-error-wrapper p {
+  text-align: center;
+  font-size: 14px;
+}
+
+div#da-error-wrapper p a {
+  margin: 5px;
+  color: #fff;
+  background: #a6d037;
+  text-decoration: none;
+  padding: 1px 6px;
+  display: inline-block;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}

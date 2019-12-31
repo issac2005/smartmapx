@@ -1,0 +1,43 @@
+<div class="left-tab-panel">
+  <nz-collapse>
+    <nz-collapse-panel [nzHeader]="'图层信息'" [nzActive]="true">
+      <div class="container">
+        <div class="row" style="height: auto">
+          <div class="col-md-4 col-xs-4">图层名称</div>
+          <div class="col-md-8 col-xs-8">
+            <input *ngIf="info.visit_type === 0" (blur)="changeLayerName('layer',$event)"
+                   [(ngModel)]="layerInfo.metadata.layer_name" class="smx-control">
+            <span *ngIf="info.visit_type === 1">{{layerInfo.metadata.layer_name}}</span>
+          </div>
+        </div>
+
+
+        <div class="row" style="height: auto;margin-top: 10px">
+          <div class="col-md-4 col-xs-4">样式名称</div>
+          <div class="col-md-8 col-xs-8">
+            <!--                  <span>{{layerInfo.metadata.name}}</span>-->
+            <input *ngIf="info.visit_type === 0" (blur)="changeLayerName('layer_style',$event)"
+                   [(ngModel)]="layerInfo.metadata.name"
+                   class="smx-control">
+            <span *ngIf="info.visit_type === 1">{{layerInfo.metadata.name}}</span>
+          </div>
+        </div>
+
+        <div class="row" style="height: auto;margin-top: 10px">
+          <div class="col-md-4 col-xs-4">URL</div>
+          <div class="col-md-8 col-xs-8" style="word-break: break-all;
+                  padding: 0;">
+            {{url}}
+          </div>
+        </div>
+
+        <div class="row" style="height: 30px;margin-top: 10px">
+          <div class="col-md-4 col-xs-4">图层分类</div>
+          <div class="col-md-8 col-xs-8">
+            {{layerType}}
+          </div>
+        </div>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+</div>

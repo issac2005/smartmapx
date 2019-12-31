@@ -1,0 +1,72 @@
+<div class="smx-raster">
+
+  <div class="left-tab">
+    <div class="left-tab-title">
+      <span class="fa fa-angle-left left-tab-back" (click)="goBack()" title="返回上一页"></span>
+      {{title}}
+    </div>
+
+    <app-left-panel
+      *ngIf="mapObj"
+      [mapObj]="mapObj"
+      [info]="info"
+      [layerInfo]="layerInfo"
+      [url]="url"
+      (layerChangeName)="changeLayerName($event)"
+    >
+    </app-left-panel>
+
+  </div>
+
+  <div class="mapContainer" id="rasterId">
+    <span class="mapLoading"
+          [ngStyle]="{'display': maploaded? 'none': ''}"></span>
+    <!--保存视窗-->
+    <div *ngIf="info.visit_type === 0" (click)="saveWindow()"
+         class="sta-body-sw">
+      <i class="fa fa-star" title="保存当前视窗" style="font: normal normal normal 14px/1 FontAwesome"></i>
+    </div>
+    <!--设置底图的透明度-->
+    <div *ngIf="info.visit_type === 0" class="sta-body-center" (click)="openOpacity()">
+      <i class="sta-body-center-icon" title="设置底图的不透明度"></i>
+    </div>
+    <div *ngIf="isMapOpacity" class="opacityStyle">
+      <div class="p-slide-map">
+        <smx-slider [(ngModel)]="mapOpacity" [smxMax]="100" [smxMin]="0"
+                    [smxRange]="false"
+                    (smxOnAfterChange)="mapOpacityChange($event)"
+                    style="position: absolute;width: 85px;top: -21px;">
+        </smx-slider>
+      </div>
+      <label style="position: absolute;left: 95px;top: 3px;">{{mapOpacity / 100}}</label>
+    </div>
+  </div>
+
+  <div *ngIf="info.visit_type === 0 && mapObj" [ngClass]="{'show':panelShow}" class="maputnik-layout-drawer">
+    <!-- 编辑面板 -->
+    <raster-panel
+      [layerInfo]="layerInfo"
+      [isBottom]="true"
+      (changeStyle)="changeStyle($event)"
+      (changeBottom)="setLayerBottom($event)"
+    >
+    </raster-panel>
+    <!-- 编辑页面开关 -->
+    <span [ngClass]="{'slideBtn':true,'open':panelShow }"
+          (click)="closePanel()">
+          </span>
+  </div>
+  <!-- 编辑 -->
+  <button *ngIf="isImage && info.visit_type === 0" (click)="editorRasterLayer()"
+          [ngClass]="{'map-raster-editor': !imageBoolean, 'map-raster-style': imageBoolean}">
+  </button>
+
+  <!-- 发布 -->
+  <button *ngIf="info.visit_type === 0" class="map-raster-publish" (click)="reaseView()">
+  </button>
+
+  <!--切换底图按钮-->
+  <button *ngIf="info.visit_type === 0" class=" map-raster-toggle" (click)="toggleMap()">
+  </button>
+
+</div>

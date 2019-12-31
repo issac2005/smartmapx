@@ -1,0 +1,145 @@
+<div class="setting-modal">
+  <div class="smx-modal-header">
+    <h4 class="modal-title">{{smxConfig.title}}</h4>
+    <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+  </div>
+  <ng-container [ngSwitch]="smxType">
+    <!--    文本设置面板-->
+    <div *ngSwitchCase="'text'" class="smx-modal-body ui-setting-panel">
+      <div class="ui-setting-panel-text-h">
+<!--        <i nz-icon nzType="cloud" nzTheme="fill" style="right: 25px;cursor: pointer;"></i>-->
+        <!-- whx修改 -->
+        <i class="icon smx-icon icon-smx-add" (click)="addText()" style="color: #257ea8;right: 0px;"></i>
+      </div>
+      <div class="ui-setting-panel-text-b">
+        <ul class="ui-setting-ul">
+          <ng-container *ngFor="let v of smxData.options;index as i">
+            <li (dblclick)="editText(i)">
+              <div *ngIf="editIndex !== i">
+                <span>{{v}}</span>
+              <!--   <i nz-icon nzType="delete" nzTheme="fill" style="right: 45px;cursor: pointer;"
+                   (click)="removeText(i)"></i> -->
+                <i class="icon smx-icon icon-delete" (click)="removeText(i)"  style="color: #257ea8;right: 0px;"></i>
+              <!--   <i nz-icon nzType="up-circle" nzTheme="fill" style="right: 25px;cursor: pointer;"
+                   (click)="moveUp(i)"></i> -->
+                <i class="icon smx-icon icon-chevron-up" (click)="moveUp(i)" style="color: #257ea8;right: 20px;"></i>
+               <!--  <i nz-icon nzType="down-circle" nzTheme="fill" style="right: 5px;cursor: pointer;"
+                   (click)="moveDown(i)"></i> -->
+                <i class="icon smx-icon icon-chevron-down"  (click)="moveDown(i)" style="color: #257ea8;right: 40px;"></i>
+              </div>
+              <div *ngIf="editIndex === i">
+                <smx-input [(ngModel)]="v" (blur)="blur($event,i)" [smxStyle]="{width:'100%'}"
+                           [smxAutoFocus]="true"></smx-input>
+              </div>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+    <!--    整数设置-->
+    <div *ngSwitchCase="'integer'" class="smx-modal-body ui-setting-panel">
+      <div nz-row style="text-align: center;margin-bottom: 10px">
+        <div nz-col nzSpan="12" style="line-height: 33px;">长度限制:</div>
+        <div nz-col nzSpan="12">
+          <smx-select [(ngModel)]="smxData.smxPrecision" [options]="precisions" [smxToNumber]="true"></smx-select>
+        </div>
+      </div>
+      <div nz-row style="text-align: center;margin-bottom: 10px;">
+        <div nz-col nzSpan="12" style="line-height: 33px;">步长按钮:</div>
+        <div nz-col nzSpan="12" style="text-align: left;line-height: 33px">
+          <smx-radio [(ngModel)]="smxData.smxStep" [options]="stepOptions"></smx-radio>
+        </div>
+      </div>
+      <div nz-row style="text-align: center;margin-bottom: 10px;">
+        <div nz-col nzSpan="12" style="line-height: 33px;">千位分隔符:</div>
+        <div nz-col nzSpan="12" style="text-align: left;line-height: 33px">
+          <smx-radio [(ngModel)]="smxData.smxThousands" [options]="thousandsOptions"></smx-radio>
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'decimal'" class="smx-modal-body ui-setting-panel">
+      <div nz-row style="text-align: center;margin-bottom: 10px;">
+        <div nz-col nzSpan="12" style="line-height: 33px;">长度限制:</div>
+        <div nz-col nzSpan="12">
+          <smx-input-number [(ngModel)]="smxData.smxPrecision" [smxStep]="1"></smx-input-number>
+        </div>
+      </div>
+      <div nz-row style="text-align: center;margin-bottom: 10px;">
+        <div nz-col nzSpan="12" style="line-height: 33px;">小数位数:</div>
+        <div nz-col nzSpan="12">
+          <smx-input-number [(ngModel)]="smxData.smxDecimalPrecision" [smxStep]="1"></smx-input-number>
+        </div>
+      </div>
+      <div nz-row style="text-align: center;margin-bottom: 10px;">
+        <div nz-col nzSpan="12" style="line-height: 33px;">步长按钮:</div>
+        <div nz-col nzSpan="12" style="text-align: left;line-height: 33px">
+          <smx-radio [(ngModel)]="smxData.smxStep" [options]="stepOptions"></smx-radio>
+        </div>
+      </div>
+      <div nz-row style="text-align: center;margin-bottom: 10px;">
+        <div nz-col nzSpan="12" style="line-height: 33px;">千位分隔符:</div>
+        <div nz-col nzSpan="12" style="text-align: left;line-height: 33px">
+          <smx-radio [(ngModel)]="smxData.smxThousands" [options]="thousandsOptions"></smx-radio>
+        </div>
+      </div>
+    </div>
+    <!--    布尔值-->
+    <div *ngSwitchCase="'boolean'" class="smx-modal-body ui-setting-panel">
+      <ng-container *ngFor="let v of smxData.options">
+        <div nz-row style="text-align: center;">
+          <div nz-col nzSpan="12" style="line-height: 40px;border: 1px solid #ccc;height: 40px;">{{v.value}}</div>
+          <div nz-col nzSpan="12" style="padding: 3px;border: 1px solid #ccc;height: 40px;">
+            <smx-input [(ngModel)]="v.label" [smxStyle]="{width:'100%',height:'100%'}"></smx-input>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <!--    时间日期-->
+    <div *ngSwitchCase="'dt'" class="smx-modal-body ui-setting-panel">
+      <div class="ui-setting-panel-dt">
+        <span>请选择显示格式:</span>
+        <ul class="ui-setting-ul">
+          <ng-container *ngFor="let v of dtFormats">
+            <li [ngClass]="{'ui-setting-checked': smxData.smxFormat === v.value}" (click)="smxData.smxFormat = v.value">
+              <span>{{v.title}}</span>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+    <!--    日期-->
+    <div *ngSwitchCase="'date'" class="smx-modal-body ui-setting-panel">
+      <div class="ui-setting-panel-dt">
+        <span>请选择显示格式:</span>
+        <ul class="ui-setting-ul">
+          <ng-container *ngFor="let v of dateFormats">
+            <li [ngClass]="{'ui-setting-checked': smxData.smxFormat === v.value}" (click)="smxData.smxFormat = v.value">
+              <span>{{v.title}}</span>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+    <!--    时间-->
+    <div *ngSwitchCase="'time'" class="smx-modal-body ui-setting-panel">
+      <div class="ui-setting-panel-dt">
+        <span>请选择显示格式:</span>
+        <ul class="ui-setting-ul">
+          <ng-container *ngFor="let v of timeFormats">
+            <li [ngClass]="{'ui-setting-checked': smxData.smxFormat === v.value}" (click)="smxData.smxFormat = v.value">
+              <span>{{v.title}}</span>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="smx-modal-footer">
+    <button class="smx-btn smx-outline-default smx-grid" type="button" (click)="activeModal.dismiss()">取消
+    </button>
+    <button class="smx-btn smx-default smx-grid" type="button" (click)="submit()" id="smx-setModal">确定
+    </button>
+  </div>
+</div>

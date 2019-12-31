@@ -1,0 +1,36 @@
+<ng-content></ng-content>
+<input #smxInput
+       class="smx-control smx-input-default"
+       *ngIf="smxMode === 'input'"
+       [name]="smxName"
+       [type]="smxFormat"
+       [disabled]="smxDisabled"
+       [max]="smxMax"
+       [min]="smxMin"
+       [minlength]="smxMinlength"
+       [maxlength]="smxMaxlength"
+       [placeholder]="smxPlaceholder"
+       [ngStyle]="smxStyle"
+       [ngClass]="smxClass"
+       [(ngModel)]="value"
+       (change)="changeEvent($event)"
+       (blur)="changeEvent($event, 'blur')"
+       (keyup)="changeEvent($event)"
+      >
+
+<textarea #smxTextarea
+          class="smx-control smx-input-textarea-default"
+          *ngIf="smxMode === 'textarea'"
+          [name]="smxName"
+          [disabled]="smxDisabled"
+          [minlength]="smxMinlength"
+          [maxlength]="smxMaxlength"
+          [placeholder]="smxPlaceholder"
+          [ngStyle]="smxStyle"
+          [ngClass]="smxClass"
+          [(ngModel)]="value"
+          (change)="changeEvent($event)"
+          (blur)="changeEvent($event, 'blur')"
+          (keyup)="changeEvent($event)">
+</textarea>
+

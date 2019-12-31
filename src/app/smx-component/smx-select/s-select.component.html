@@ -1,0 +1,28 @@
+<div class="smx-select">
+  <ng-content></ng-content>
+  <span
+    *ngIf="!model && smxPlaceholder"
+    [style.lineHeight.px]="smxHeight"
+    class="smx-select-placeholder">
+    {{smxPlaceholder}}
+  </span>
+  <select
+    #smxSelect
+    class="smx-control smx-select-options"
+    name="select"
+    [ngModel]="model"
+    (ngModelChange)="change($event)"
+    (blur)="blurEvent($event)"
+    [style.height.px]="smxHeight"
+    [ngStyle]="smxStyle"
+    [disabled]="disabled"
+    [ngClass]="smxClass">
+    <ng-container *ngIf="smxLabelMode">
+      <option [disabled]="v.disabled" *ngFor="let v of options"
+              [value]="v[optionValue]">{{ v[optionLabel]}}</option>
+    </ng-container>
+    <ng-container *ngIf="!smxLabelMode">
+      <option *ngFor="let v of options" [value]="v">{{v}}</option>
+    </ng-container>
+  </select>
+</div>

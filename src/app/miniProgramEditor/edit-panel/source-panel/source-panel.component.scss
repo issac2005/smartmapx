@@ -1,0 +1,229 @@
+.sourceWrap{
+  .nameBar{
+    height: 24px;
+    line-height: 24px;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-right: none;
+    font-size: 0;
+    color: #74899e;
+
+    span{
+      display: inline-block;
+      height: 22px;
+      line-height: 22px;
+      font-size: 16px;
+      text-align: center;
+      border-right: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    span:nth-child(1){
+      width:50%;
+
+    }
+    span:nth-child(2){
+      width:25%;
+    }
+    span:nth-child(3){
+      width:25%;
+      border-right:none;
+    }
+
+  }
+  .smx_center{
+    text-align: center;
+  }
+  .saveBar{
+    height:30px;
+    line-height:30px;
+    font-size:16px;
+    color:#333;
+    padding:0 10px;
+    text-align: right;
+    background:#e7ecee;
+
+    .download{
+      position:relative;
+      top:1px;
+    }
+
+  }
+  .saveBar .fa{
+    font-size:20px;
+    margin-right:5px;
+    color:#3aa4fc;
+    cursor: pointer;
+  }
+
+  ul.fileList li{
+    font-size:0;
+    overflow: hidden;
+    cursor: pointer;
+
+    label{
+      display:inline-block;
+      width:20px;
+      height: 20px;
+      margin:0 5px;
+      box-sizing: border-box;
+      vertical-align: middle;
+      border:1px solid #ccc;
+      cursor: pointer;
+      overflow: hidden;
+
+      span{
+        display: block;
+        width: 6px;
+        height: 12px;
+        border: 1px solid #333;
+        border-top: none;
+        border-left: none;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        margin-left: 6px;
+        margin-top: 1px;
+      }
+
+    }
+
+    input{
+      display:inline-block;
+      width:19px;
+      height:19px;
+      opacity:0;
+      cursor: pointer;
+    }
+
+    span{
+      display:inline-block;
+      font-size:14px;
+      height:30px;
+      line-height: 30px;
+      vertical-align: middle;
+    }
+    span:nth-child(2){
+      width:45%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    span:nth-child(3){
+      width:22%;
+      text-align: center;
+    }
+  }
+}
+
+
+
+.modal-header {
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    color: #fff;
+    background: #3887be;
+}
+
+.modal-header .close span {
+    margin-bottom: -3px;
+    color: #fff;
+    display: inline-block;
+}
+
+.modal-header h4 {
+    height: 26px;
+    line-height: 26px;
+    font-size: 14px;
+    background: #3887be;
+    top:0;
+}
+.modal-footer {
+    text-align: center;
+    display: block;
+    border: 0px;
+    padding: 0px 15px 15px;
+    .btn-secondary {
+        background: #3887be;
+        color: #ffffff;
+        width: 80px;
+        height: 28px;
+        line-height: 28px;
+        padding: 0px;
+        border: 1px #eeeeee;
+        &:hover {
+            background: #3887be;
+            color: #eeeeee;
+        }
+        &[disabled] {
+            background: #3887be;
+            color: #eeeeee;
+            // cursor: default;
+            //&:hover{
+            //
+            //}
+        }
+    }
+
+    .button-disabled {
+        disabled: true;
+        opacity: 0;
+    }
+}
+
+.smx-modal-body{
+  .source-upload-wrap{
+    border:1px solid #ccc;
+    position: relative;
+
+    .source-upload-file{
+      display: block;
+      position: relative;
+      width:100px;
+      height:30px;
+      line-height: 30px;
+      font-size: 14px;
+      color: #fff;
+      text-align: center;
+      background: #09c;
+      cursor: pointer;
+      overflow: hidden;
+
+      &.disabled{
+        cursor: not-allowed;
+        background: #ccc;
+
+        input[type=file] {
+          cursor: not-allowed;
+        }
+
+      }
+
+      input[type=file] {
+        width:200px;
+        height: 30px;
+        position: absolute;
+        top:0;
+        left:-100px;
+        opacity: 0;
+        cursor: pointer;
+      }
+    }
+    .source-file-name{
+      position: absolute;
+      top:0;
+      left:110px;
+      width:200px;
+      height:30px;
+      line-height: 30px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+    }
+
+  }
+
+}
+
+
+

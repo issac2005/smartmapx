@@ -1,0 +1,221 @@
+<div *ngIf="!modal" id='editor_holder' class="settingContainer">
+  <span>请编辑并保存Json后预览配置</span>
+</div>
+
+<div *ngIf="modal" class="settingAngular">
+  <nz-collapse>
+    <ng-container *ngFor="let item of programJson.group; index as i;">
+      <nz-collapse-panel [nzHeader]="item.title" [nzActive]="true">
+        <div class="info-body">
+          <div *ngFor="let properties of item.properties">
+
+            <app-booleans-component
+              *ngIf="properties.type === 'boolean'"
+              [label]="properties.title"
+              [(ngModel)]="smallProgram[properties.attribute]"
+              (onChange)="getChangeInfo($event)">
+            </app-booleans-component>
+
+            <!-- 滑动条 -->
+            <app-s-slider
+              *ngIf="properties.type === 'slider'"
+              [label]="properties.title"
+              [(ngModel)]="smallProgram[properties.attribute]"
+              [max]="properties.max"
+              [min]="properties.min"
+              (onSlideEnd)="getChangeInfo($event)">
+            </app-s-slider>
+
+            <!--  图例 -->
+            <app-legend
+              *ngIf="properties.type === 'legend'"
+              [legend]="smallProgram[properties.attribute]"
+              [name]="properties.attribute"
+              [BooleanColseHtml]="BooleanColseHtml"
+              [mapObj]="mapObj"
+              (iconidsChange)="getValueChange($event)">
+            </app-legend>
+
+            <!-- 图层控制 -->
+            <app-layer-select
+              *ngIf="properties.type === 'format_layer'"
+              (selectLayersChange)="getValueChange($event)"
+              [pname]="properties.attribute"
+              [mapObj]="mapObj">
+            </app-layer-select>
+            <!-- 动态图层 -->
+            <app-dynamic-layer
+              *ngIf="properties.type ==='dynamic_layer'"
+              [layer]="smallProgram[properties.attribute]"
+              (returnLayer)="getValueChange($event)"
+              [name]="properties.attribute"
+              [mapObj]="mapObj">
+            </app-dynamic-layer>
+
+            <!-- 下拉选框 -->
+            <app-drop-down
+              *ngIf="properties.type === 'dropdown'"
+              [dname]="properties.attribute"
+              [label]="properties.title"
+              [programJson]="properties.enum"
+              [default]="properties.default"
+              (ondropdownChange)="getValueChange($event)">
+            </app-drop-down>
+
+            <!-- 输入框 -->
+            <app-input *ngIf="properties.type === 'input'"
+                       [label]="properties.title"
+                       [(ngModel)]="smallProgram[properties.attribute]"
+                       [max]="properties.max"
+                       [min]="properties.min"
+                       [minlength]="properties.minlength"
+                       [maxlength]="properties.maxlength"
+                       [format]="properties.format"
+                       (ochange)="getValueChange($event)">
+            </app-input>
+
+            <!-- 取色器 -->
+            <app-color-pickers
+              *ngIf="properties.type === 'color'"
+              [label]="properties.title"
+              [cname]="properties.attribute"
+              [ColorValue]="smallProgram[properties.attribute]"
+              (onColorChange)="getValueChange($event)">
+            </app-color-pickers>
+
+            <!-- 信息弹出框 -->
+            <app-info-popue
+              *ngIf="properties.type ==='info-popue'"
+              [name]="properties.attribute"
+              [mapObj]="mapObj"
+              [default]="smallProgram[properties.attribute]"
+              (layerChange)="getValueChange($event)">
+            </app-info-popue>
+
+            <!-- 图层数据过滤 -->
+            <app-data-filter
+              *ngIf="properties.type === 'data-filter'"
+              [name]="properties.attribute"
+              [mapObj]="mapObj"
+              [default]="smallProgram[properties.attribute]"
+              (dataFilterChange)="getValueChange($event)">
+            </app-data-filter>
+
+          </div>
+        </div>
+      </nz-collapse-panel>
+    </ng-container>
+  </nz-collapse>
+  <!--<ngb-accordion #acc="ngbAccordion"-->
+                 <!--(panelChange)="beforeChange($event)"-->
+                 <!--activeIds="ngb-panel-0,ngb-panel-1,ngb-panel-2,ngb-panel-3,ngb-panel-4,ngb-panel-5,ngb-panel-6,ngb-panel-7,ngb-panel-8,ngb-panel-9">-->
+    <!--<div *ngFor="let item of programJson.group; index as i;">-->
+      <!--<ngb-panel>-->
+        <!--<ng-template ngbPanelTitle>-->
+          <!--<span style="color: #273D56;">{{item.title}}</span>-->
+          <!--<span class="float-right fa fa-sort-up ngb-sort ngb-sort-up"></span>-->
+        <!--</ng-template>-->
+        <!--<ng-template ngbPanelContent>-->
+          <!--<div class="info-body">-->
+            <!--<div *ngFor="let properties of item.properties">-->
+
+              <!--<app-booleans-component-->
+                <!--*ngIf="properties.type === 'boolean'"-->
+                <!--[label]="properties.title"-->
+                <!--[(ngModel)]="smallProgram[properties.attribute]"-->
+                <!--(onChange)="getChange($event)">-->
+              <!--</app-booleans-component>-->
+
+              <!--&lt;!&ndash; 滑动条 &ndash;&gt;-->
+              <!--<app-s-slider-->
+                <!--*ngIf="properties.type === 'slider'"-->
+                <!--[label]="properties.title"-->
+                <!--[(ngModel)]="smallProgram[properties.attribute]"-->
+                <!--[max]="properties.max"-->
+                <!--[min]="properties.min"-->
+                <!--(onSlideEnd)="getChangeInfo($event)">-->
+              <!--</app-s-slider>-->
+
+              <!--&lt;!&ndash;  图例 &ndash;&gt;-->
+              <!--<app-legend-->
+                <!--*ngIf="properties.type === 'legend'"-->
+                <!--[legend]="smallProgram[properties.attribute]"-->
+                <!--[name]="properties.attribute"-->
+                <!--[BooleanColseHtml]="BooleanColseHtml"-->
+                <!--(iconidsChange)="getChangeLegend($event)"-->
+              <!--&gt;</app-legend>-->
+
+              <!--&lt;!&ndash; 图层控制 &ndash;&gt;-->
+              <!--<app-layer-select-->
+                <!--*ngIf="properties.type === 'format_layer'"-->
+                <!--(selectLayersChange)="getSelectLayers($event)"-->
+                <!--[pname]="properties.attribute"-->
+                <!--[mapObj]="mapObj"-->
+              <!--&gt;</app-layer-select>-->
+              <!--&lt;!&ndash; 动态图层 &ndash;&gt;-->
+              <!--<app-dynamic-layer-->
+                <!--*ngIf="properties.type ==='dynamic_layer'"-->
+                <!--[layer]="smallProgram[properties.attribute]"-->
+                <!--(returnLayer)="getReturnLayer($event)"-->
+                <!--[name]="properties.attribute"-->
+                <!--[mapObj]="mapObj"-->
+              <!--&gt;</app-dynamic-layer>-->
+
+              <!--&lt;!&ndash; 下拉选框 &ndash;&gt;-->
+              <!--<app-drop-down-->
+                <!--*ngIf="properties.type === 'dropdown'"-->
+                <!--[dname]="properties.attribute"-->
+                <!--[label]="properties.title"-->
+                <!--[programJson]="properties.enum"-->
+                <!--[default]="properties.default"-->
+                <!--(ondropdownChange)="getdropdownstatus($event)"-->
+              <!--&gt;</app-drop-down>-->
+
+              <!--&lt;!&ndash; 输入框 &ndash;&gt;-->
+              <!--<app-input *ngIf="properties.type === 'input'"-->
+                         <!--[label]="properties.title"-->
+                         <!--[(ngModel)]="smallProgram[properties.attribute]"-->
+                         <!--[max]="properties.max"-->
+                         <!--[min]="properties.min"-->
+                         <!--[minlength]="properties.minlength"-->
+                         <!--[maxlength]="properties.maxlength"-->
+                         <!--[format]="properties.format"-->
+                         <!--(ochange)="getChangeInput($event)"-->
+              <!--&gt;</app-input>-->
+
+              <!--&lt;!&ndash; 取色器 &ndash;&gt;-->
+              <!--<app-color-pickers-->
+                <!--*ngIf="properties.type === 'color'"-->
+                <!--[label]="properties.title"-->
+                <!--[cname]="properties.attribute"-->
+                <!--[ColorValue]="smallProgram[properties.attribute]"-->
+                <!--(onColorChange)="getChangeColor($event)"-->
+              <!--&gt;</app-color-pickers>-->
+
+              <!--&lt;!&ndash; 信息弹出框 &ndash;&gt;-->
+              <!--<app-info-popue-->
+                <!--*ngIf="properties.type ==='info-popue'"-->
+                <!--[name]="properties.attribute"-->
+                <!--[mapObj]="mapObj"-->
+                <!--[default]="smallProgram[properties.attribute]"-->
+                <!--(layerChange)="getLayerChange($event)"-->
+              <!--&gt;</app-info-popue>-->
+
+              <!--&lt;!&ndash; 图层数据过滤 &ndash;&gt;-->
+              <!--<app-data-filter-->
+                <!--*ngIf="properties.type === 'data-filter'"-->
+                <!--[name]="properties.attribute"-->
+                <!--[mapObj]="mapObj"-->
+                <!--[default]="smallProgram[properties.attribute]"-->
+                <!--(dataFilterChange)="getDataFilter($event)"-->
+              <!--&gt;</app-data-filter>-->
+
+            <!--</div>-->
+          <!--</div>-->
+        <!--</ng-template>-->
+      <!--</ngb-panel>-->
+    <!--</div>-->
+  <!--</ngb-accordion>-->
+</div>
+
+

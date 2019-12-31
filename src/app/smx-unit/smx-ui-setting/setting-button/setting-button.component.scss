@@ -1,0 +1,35 @@
+.setting-button-ui {
+  //text-align: left;
+
+  span {
+    display: inline-block;
+    width: 130px;  //Ljy修改--原本是 width: 130px; 修改原因：数据管理--数据源结构的类型里边如果浏览器宽度小，会超出
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 5px;
+    text-align: left;
+    padding-left: 5px;
+    font-size: 12px;
+  }
+
+  i {
+    //vertical-align: middle;
+    margin-left: 3px;
+    cursor: pointer;
+  }
+}
+.setting-button-ui.grid {
+  span {
+    width: 80%;
+    /* width: calc(80% - 0px); */
+    min-width: 79px;
+    overflow: hidden;
+  }
+
+  i {
+    top:-9px;
+    position: relative;
+  }
+}

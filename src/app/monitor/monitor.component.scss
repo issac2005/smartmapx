@@ -1,0 +1,22 @@
+.monitor-box {
+  //padding-top: 70px;
+  position: absolute;
+  background: #edf1f2;
+  bottom: 0;
+  top: 70px;
+  left: 0;
+  right: 0;
+  .title-box {
+    margin: 20px 50px;
+  }
+  .chart-box {
+    // position: absolute;top: 90px;left: 40px;right: 40px;bottom: 0;
+    margin: 40px;
+    .each-box {
+      margin-bottom: 50px;
+    }
+  }
+}
+.monitor-pd{
+  width: 50px;
+}

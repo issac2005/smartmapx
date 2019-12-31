@@ -1,0 +1,36 @@
+<!-- 图层编译 数值 表达式 -->
+              
+                <!--  checkbox框  -->
+  <div class="layerEditNum-smartMapX-select-checkAll" [ngStyle]="{'display':!layerEditCheckNumber ?'block':'none'}" >
+      <div class="layerEditNum-smartMapX-select-tableTitle">
+            <span class="layerEditNum-smartMapX-select-titleTop">字段公式</span> 
+      </div>
+      <div class="layerEditNum-smartMapX-select-info">
+          <div style="height: 143px;">
+          <!--  图层checkbox框  -->
+            <table>
+              <tr *ngFor="let item of pattern ; index as i;">
+                <td class="layerEditNum-smartMapX-select-trtd">
+                <label class="layerEditNum-checkbox-label" (click)="layerEditNumclicks($event,i,attribute)">{{defau[i]}}</label>
+                  <div class="layerEditNum-smartMapX-select-tranline"></div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      <div class="layerEditNum-smartMapX-select-button" style="position: relative; top: 5px; left: 2px;">
+        <span class="layerEdit-smartMapx-button jia" (click)="buttonClickAnd(attribute)">&</span>
+                <span class="layerEdit-smartMapx-button jian" (click)="buttonClickAdd(attribute)"
+                      title="请用英文括号将四则运算表达式括起来,例如:({序号}+1)"
+                >+</span>
+                <span class="layerEdit-smartMapx-button cheng" (click)="buttonClickSub(attribute)"
+                      title="请用英文括号将四则运算表达式括起来,例如:({序号}-1)">-</span>
+                <span class="layerEdit-smartMapx-button chu" (click)="buttonClickMult(attribute)"
+                      title="请用英文括号将四则运算表达式括起来,例如:({序号}*1)">*</span>
+                <span class="layerEdit-smartMapx-button and" (click)="buttonClickDivi(attribute)"
+                      title="请用英文括号将四则运算表达式括起来,例如:({序号}/1)">/</span>
+      </div>
+  </div>
+
+
+

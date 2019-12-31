@@ -1,0 +1,221 @@
+<div id="data-list-show" style="height: 100%" *ngIf="dataList && dataList.length >= 0">
+  <div class="d-data-content"
+       detect-scroll (onScroll)="handleScroll($event)" [bottomOffset]="0"
+       [style.padding-left.px]="paddingValue"
+       [style.padding-right.px]="paddingValue">
+    <div class="d-data-content-body">
+      <div>
+        <ul class="d-data-content-body-ul" id="d-data-content-body-ul">
+
+          <!--1添加按钮start-->
+          <div *ngIf="dataType === 'mydata' && keyConfig.create">
+            <!--新的扩展功能-->
+            <div *ngIf="keyConfig.create.type === 0">
+              <li class="data-body-ul-add"
+                  [style.width.px]="keyConfig.container.width"
+                  [style.height.px]="keyConfig.container.height"
+                  [style.margin.px]="keyConfig.container.margin"
+                  (click)="openModal(keyConfig.create)">
+                <div class="data-body-ul-add-icon">
+                  <div>
+                    <span class="fa-icon"></span>
+                    <span class="fa-title">{{keyConfig.create.title}}</span>
+                  </div>
+                </div>
+              </li>
+            </div>
+
+            <!--旧添加功能-->
+            <div *ngIf="keyConfig.create.type === 1">
+              <li class="data-body-ul-add"
+                  [style.width.px]="keyConfig.container.width"
+                  [style.height.px]="keyConfig.container.height"
+                  [style.margin.px]="keyConfig.container.margin"
+                  (click)="open(keyConfig.create.modal.type)">
+                <div class="data-body-ul-add-icon">
+                  <div>
+                    <span class="fa-icon"></span>
+                    <span class="fa-title">{{keyConfig.create.title}}</span>
+                  </div>
+                </div>
+              </li>
+            </div>
+
+            <!--查询方案-->
+            <div *ngIf="keyConfig.create.type === 2">
+              <li class="data-body-ul-add"
+                  [style.width.px]="keyConfig.container.width"
+                  [style.height.px]="keyConfig.container.height"
+                  [style.margin.px]="keyConfig.container.margin"
+                  (click)="createEn('addSql')">
+                <div class="data-body-ul-add-icon">
+                  <div>
+                    <span class="fa-icon"></span>
+                    <span class="fa-title">{{keyConfig.create.title}}</span>
+                  </div>
+                </div>
+              </li>
+            </div>
+          </div>
+          <!--1添加按钮end-->
+
+          <!--列表元素-->
+          <li class="d-data-content-body-ul-li"
+              [style.width.px]="keyConfig.container.width"
+              [style.height.px]="keyConfig.container.height"
+              [style.margin.px]="keyConfig.container.margin"
+              *ngFor="let item of dataList">
+            <!--头-->
+            <div class="header">
+              <span class="header-name">{{item[keyConfig.action.name]}}</span>
+              <!-----------------------------------修改start----------------------------------->
+              <button
+                *ngIf="keyConfig.update && keyConfig.update.type === 0 && (dataType === 'mydata' || dataType === 'mydata_search')"
+                class="header-icon"
+                [title]="keyConfig.update.title"
+                (click)="open('update',item)"></button>
+
+              <!--修改-->
+              <button
+                *ngIf="(keyConfig.update && keyConfig.update.type === 1 && (dataType === 'mydata' || dataType === 'mydata_search'))"
+                class="header-icon"
+                [title]="keyConfig.update.title"
+                [disabled]="keyConfig.type === 'service' ? item.state === -1 || item.state === -2 || item.state === 0 || item.state === 3 : false"
+                (click)="openModal(keyConfig.update, item)">
+              </button>
+
+              <!---------------------------------------------修改end----------------------------------->
+              <span class="header-time" title="上次修改时间"
+                    *ngIf="keyConfig.action.time">{{item.update_time * 1000 | date:'yyyy-MM-dd'}}</span>
+            </div>
+
+
+            <!--主体-->
+            <div class="container"
+                 [ngStyle]="{'background-image': 'url('+ getUrl(item, keyConfig.type) + ')'}"
+                 [ngClass]="{'container-icon':keyConfig.type === 'icon', 'service-bg': keyConfig.type === 'service'}">
+
+
+              <!--实体视图数据区分-->
+              <span class="container-view" *ngIf="item.type && item.type === 'view'"
+                    title="视图数据"></span>
+
+
+              <div class="container-center"
+                   *ngIf="keyConfig.action.edit || keyConfig.action.view || (keyConfig.action.deploy && item.state && item.state !== 0 && item.state !== -2 && item.isedit !== 0) || (keyConfig.action.redeploy && item.state && item.state !== 0 && item.state !== -2 && item.isedit !== 0)">
+
+
+                <div class="container-center-hover">
+                  <div *ngIf="keyConfig.action.qc">
+                    <div style="text-align: center">
+                      <span style="color: #fff">{{keyConfig.action.qc}}</span>
+                    </div>
+                    <div style="margin-bottom: 15px;text-align: center">
+                      <qr-code [value]="getQc(item)"
+                               [size]="100"
+                               [backgroundAlpha]="0.5">
+                      </qr-code>
+                    </div>
+                  </div>
+                  <button *ngIf="keyConfig.action.view" (click)="viewData(item)">{{keyConfig.action.view}}</button>
+                  <button *ngIf="keyConfig.action.edit" (click)="editData(item)">{{keyConfig.action.edit}}</button>
+                </div>
+                <!-- 服务发布按钮 -->
+                <button class="service-btn"
+                        *ngIf="keyConfig.action.deploy && (item.state === 1 || item.state === 2 || item.state === -1)"
+                        (click)="deployService(item)">{{keyConfig.action.deploy}}
+                </button>
+                <button class="service-btn"
+                        *ngIf="keyConfig.action.redeploy && (item.state === 10 || item.state === 11)"
+                        (click)="deployService(item)">{{keyConfig.action.redeploy}}
+                </button>
+              </div>
+            </div>
+
+
+            <!--页脚-->
+            <div class="footer">
+              <!--浏览次数-->
+              <div class="footer-num" *ngIf="keyConfig.visitCount">
+                <span class="footer-num-title" title="浏览次数" *ngIf="keyConfig.type !== 'ap'"></span>
+                <span class="footer-num-title" title="调用次数" *ngIf="keyConfig.type === 'ap'"></span>
+                <span class="footer-num-body">{{item.visit_count}}</span>
+              </div>
+              <!--图标编号-->
+              <div class="footer-num" *ngIf="keyConfig.iconNum">
+                <span class="footer-num-body">{{item.name}}</span>
+              </div>
+              <div class="footer-ds">
+
+                <!--下载 -- Ljy -->
+                <button *ngIf="keyConfig.download"
+                        class="footer-ds-download icon smx-icon icon-service_download"
+                        [disabled]="keyConfig.type === 'service' ? item.state === -1 || item.state === -2 || item.state === 0 || item.state === 3 : false"
+                        title="{{keyConfig.download.title}}" (click)="openModal(keyConfig.download,item)">
+                </button>
+
+                <!--共享-->
+                <button *ngIf="keyConfig.shareAccess && (dataType === 'mydata' || dataType === 'mydata_search')"
+                        class="footer-ds-share"
+                        title="{{keyConfig.shareAccess.title}}" (click)="open('shareAccess',item)">
+                </button>
+
+                <!--new分享-->
+                <button *ngIf="keyConfig.share && (dataType === 'mydata' || dataType === 'mydata_search')"
+                        class="footer-ds-share"
+                        [disabled]="keyConfig.type === 'service' ? item.state === -1 || item.state === -2 || item.state === 0 || item.state === 3 : false"
+                        title="{{keyConfig.share.title}}" (click)="openModal(keyConfig.share,item)">
+                </button>
+
+                <!--信息-->
+                <button *ngIf="keyConfig.viewInfo" class="footer-ds-info" title="{{keyConfig.viewInfo.title}}"
+                        [disabled]="keyConfig.type === 'service' ? item.state === -1 || item.state === -2 || item.state === 0 || item.state === 3 : false"
+                        (click)="openModal(keyConfig.viewInfo,item)"></button>
+
+
+                <!--删除start-->
+                <button
+                  *ngIf="keyConfig.delete && keyConfig.delete.type === 0 && (dataType === 'mydata'|| dataType === 'mydata_search')"
+                  class="footer-ds-delete"
+                  [disabled]="keyConfig.type === 'service' ? item.state === 0 || item.state === 3 : false"
+                  title="{{keyConfig.delete.title}}" (click)="openModal(keyConfig.delete,item)"></button>
+              </div>
+              <!--删除end-->
+
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="map_no_body" *ngIf="loading">
+      <span class="map-no-data">正在检索数据中</span>
+    </div>
+
+
+    <div class="map_no_body" *ngIf="!loading && dataList.length === 0 && dataType !== 'mydata'">
+      <smx-empty [smxContentText]="'未搜索到'+this.searchKey+'数据'"></smx-empty>
+    </div>
+
+    <div>
+
+    </div>
+
+  </div>
+</div>
+
+<!--自定义数据源自定义模板-->
+<ng-template #outputCsv let-value="value">
+  <div class="s-custom-btn">
+      <span class="smx-btn smx-default" (click)="insertItem()">添加
+        <i class="fa fa-plus-square-o"></i></span>
+  </div>
+  <smx-smart-table
+    #smxTable [cols]="value.cols" [datas]="value.datas" [config]="value.config" [smxClass]="'smx-smart-table'"
+    [pipe]="value.pipe" (regNoMatch)="regNoMatch($event)">
+    <ng-template let-item="type">
+      <ui-setting-button [smxUiItem]="item"></ui-setting-button>
+    </ng-template>
+  </smx-smart-table>
+</ng-template>

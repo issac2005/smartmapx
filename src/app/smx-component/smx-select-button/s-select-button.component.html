@@ -1,0 +1,14 @@
+<ng-content></ng-content>
+<div class="s-selectBtn">
+  <ng-container *ngFor="let v of options">
+    <div (click)="v.disabled ?'': modelChange(v)"
+         [ngStyle]="smxStyle"
+         [class]="smxClass"
+         class="s-selectBtn-div"
+         [title]="v.title?v.title:''"
+         [ngClass]="{'s-selectBtn-item-disabled':v.disabled ,'s-selectBtn-item':model !== v[optionValue],'s-selectBtn-item-checked':model === v[optionValue]}">
+      <span class="s-selectBtn-span">{{v[optionLabel]}}</span>
+      <span *ngIf="tip && v[tip]" class="s-selectBtn-tip">{{v[tip]}}折</span>
+    </div>
+  </ng-container>
+</div>

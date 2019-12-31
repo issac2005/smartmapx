@@ -1,0 +1,22 @@
+<div class="smx-select-checkbox" [style.width.px]="smxWidth" [style.height.px]="smxHeight">
+  <nz-select
+    nzMode="multiple"
+    [nzMaxTagPlaceholder]="tagPlaceHolder"
+    [nzDisabled]="smxDisabled"
+    (ngModelChange)="change($event)"
+    [nzDropdownStyle]="smxStyle"
+    [nzDropdownClassName]="smxClass"
+    [nzMaxTagCount]="smxTagCount"
+    [nzDropdownMatchSelectWidth]="true"
+    [nzPlaceHolder]="smxPlaceholder"
+    [nzNotFoundContent]="'无选项'"
+    [(ngModel)]="smxValue">
+    <ng-container *ngIf="!smxLabelMode">
+      <nz-option *ngFor="let v of smxOptions" [nzLabel]="v" [nzValue]="v"></nz-option>
+    </ng-container>
+    <ng-container *ngIf="smxLabelMode">
+      <nz-option *ngFor="let v of smxOptions" [nzLabel]="v[optionLabel]" [nzValue]="v[optionValue]"></nz-option>
+    </ng-container>
+  </nz-select>
+  <ng-template #tagPlaceHolder let-selectedList>...{{ selectedList.length }}</ng-template>
+</div>

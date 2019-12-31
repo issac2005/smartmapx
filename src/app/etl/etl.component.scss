@@ -1,0 +1,171 @@
+.listWrap {
+  color: #fff;
+
+  .subNavWrap {
+    margin: 0;
+    padding: 0;
+
+    li.subCtrl {
+      display: inline-block;
+      padding: 5px;
+      width: 95px;
+      height: 30px;
+      font-size: 12px;
+      border: none;
+      position: relative;
+      top: 1px;
+      text-align: center;
+      cursor: pointer;
+      background: #b5c2ca;
+    }
+
+    li.subCtrl.active {
+      color: #333;
+      position: relative;
+      background: #fdfeff;
+      top: 2px;
+      font-weight: 600;
+      border-top: 2px solid #4a8bc6;
+    }
+  }
+
+  .etl-log {
+    margin: 30px;
+  }
+}
+
+.etl-box {
+  padding-top: 70px;
+  //background: #edf1f2;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  .etl-right-side-box {
+    position: absolute;
+    //left: 240px;
+    right: 0;
+    top: 70px;
+    bottom: 0;
+    padding: 10px 10px 0 10px;
+    overflow: auto;
+    display: flex;
+    box-orient: vertical;
+    flex-direction: column;
+    background-color: #f8f7f5;
+    left: 0;
+
+    .etl-load-box {
+      .input-block {
+        display: inline-block;
+        background: #ccc;
+        height: 100px;
+        width: 100px;
+        margin: 20px;
+        border-radius: 5px;
+        line-height: 100px;
+        cursor: pointer;
+        color: #fff;
+
+        &.fa {
+          border-radius: 50%;
+        }
+
+        &.box-flash {
+          background: #2282b7;
+          animation: shadow-flash 2s infinite;
+        }
+      }
+
+      .table {
+        thead {
+          th {
+            text-align: center;
+          }
+
+        }
+
+        tbody {
+          td {
+            input {
+              height: 31px;
+            }
+          }
+        }
+      }
+    }
+
+    .btn-grid {
+      padding: 0 15px 15px;
+      background: #fff;
+
+      .btn {
+        padding: 4px 20px;
+        font-size: 12px;
+        margin-right: 10px;
+      }
+    }
+
+    .right-filter-box {
+      background: #fff;
+      padding: 15px;
+
+      .right-filter-title {
+        height: 45px;
+        line-height: 30px;
+        color: #666;
+
+        span {
+          font-size: 14px;
+        }
+
+        .float-right {
+          font-size: 12px;
+          cursor: pointer;
+        }
+      }
+
+      .right-filter-body {
+        background: #eee;
+        margin: 0;
+        position: relative;
+        padding-bottom: 60px;
+        padding-top: 20px;
+
+        .filter-bottom {
+          position: absolute;
+          width: 450px;
+          left: 50%;
+          margin-left: -225px;
+          height: 25px;
+          bottom: 15px;
+
+          .filter-label {
+            width: 60px;
+            font-size: 12px;
+            line-height: 25px;
+          }
+
+          #inlineFormCustomSelect {
+            height: 25px;
+            line-height: 25;
+            width: 150px;
+            border: 1px solid #ccc;
+            border-radius: 0;
+            color: #333;
+          }
+
+          .btn {
+            width: 64px;
+            position: relative;
+            top: -1px;
+          }
+        ;
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,42 @@
+/**
+ * @author LLCN(KerferJu)
+ * @Date 2019/2/21 9:17
+ * @desc 此文件为css和scss外部样式文件引入统一地址,禁止书写任何样式,所有第三方组件样式修改找其对应覆写文件处理,如果非全局覆写,请加自己组件唯一级联关系
+ *
+ */
+// 全局样式变量库
+@import 'scss/common';
+// 地图样式
+@import '~@smx/api/smartmapx.css';
+// 地图样式覆写
+@import 'scss/smx-smartmapx.scss';
+// 绘制组件样式
+@import "scss/draw-control.css";
+/****************************************************************************************************/
+/*********************************************第三方样式start*****************************************/
+/****************************************************************************************************/
+//smx组件库样式
+@import 'scss/smx-component/smx';
+@import "scss/smx-component/primeng.css";
+@import "scss/smx-component/primeicons/primeicons.css";
+@import "scss/smx-component/theme/nova-light/theme.css";
+@import "scss/smx-component/bootstrap.css";
+@import 'scss/smx-primeng.scss';
+@import 'scss/smx-bootstrap';
+// 覆写
+//font-awesome
+@import '~font-awesome/css/font-awesome.min.css';
+// dragula
+@import "~dragula/dist/dragula.css";
+// zrror ng-zooro样式覆写
+@import "~ng-zorro-antd/ng-zorro-antd.min.css";
+@import "scss/smx-nza.scss";
+/*smartmapx主题样式*/
+// smartmapx平台统一样式库
+@import "scss/smx-style.scss";
+// smartmapx平台动画库
+@import "scss/smx-component/smx-animal/smx-animal";
+// smartmapx平台字体图标图
+@import "scss/iconfont/iconfont.css";
+// 瀏覽器兼容
+@import 'scss/browser.scss'; //chrome 火狐 IE兼容处理

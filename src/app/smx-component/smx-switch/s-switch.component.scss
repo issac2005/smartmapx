@@ -1,0 +1,83 @@
+.s-switch {
+  &-disabled {
+    cursor: no-drop !important;
+    background: #c9caca !important;
+  }
+
+  &-booleanBtn {
+    display: inline-block;
+    width: 65px;
+    height: 25px;
+    border-radius: 20px;
+    vertical-align: middle;
+    background: #AFB2B3;
+    position: relative;
+    cursor: pointer;
+  }
+
+  &-booleanBtn_open {
+    display: inline-block;
+    width: 65px;
+    height: 25px;
+    border-radius: 20px;
+    vertical-align: middle;
+    background: #0ab1f7;
+    position: relative;
+    cursor: pointer;
+  }
+
+  &-circleBtn {
+    float: left;
+    height: 21px;
+    width: 21px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    right: 0px;
+    margin-top: 2px;
+  }
+
+  &-circleBtn_open {
+    float: left;
+    height: 21px;
+    width: 21px;
+    background: white;
+    border-radius: 50%;
+    margin-top: 2px;
+    position: absolute;
+    left: 0px;
+  }
+
+  &-trueText {
+    float: left;
+    color: white;
+    height: 100%;
+    margin-top: 1px;
+    text-align: center;
+    position: absolute;
+    min-width: 50px;
+    right: 15px;
+  }
+
+  &-trueText_open {
+    float: left;
+    color: white;
+    height: 100%;
+    left: 15px;
+    min-width: 50px;
+    margin-top: 1px;
+    text-align: center;
+    position: absolute;
+
+  }
+
+  &-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 40px;
+    display: inline-block;
+  }
+}
+
+

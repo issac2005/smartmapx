@@ -1,0 +1,16 @@
+/**
+ * @author  keiferju
+ * @time    2019-11-04 13:29
+ * @title   系统主题颜色变量
+ * @desc
+ *
+ */
+
+@mixin smx-text-hidden($width) {
+  width: $width;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+$smx-main-background: #3b3855;   // 背景颜色

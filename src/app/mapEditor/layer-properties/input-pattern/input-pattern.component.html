@@ -1,0 +1,322 @@
+<div class=" input-pattern">
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <div pTooltip="{{tooltip}}"
+           positionStyle='relitive'
+           hideDelay="100"
+           tooltipPosition="bottom"
+           class="beyond">{{title}}</div>
+    </div>
+    <div class="col-md-8 col-xs-8" *ngIf="type === 0 || type === 1">
+
+
+      <div *ngIf="showStyle === 'number' || showStyle === 'undefined' || showStyle === 'string'" style="float: left">
+
+        <!-- 没有表达式属性 -->
+        <div *ngIf="attribute !== 'icon-image' &&
+                    attribute !== 'fill-pattern' &&
+                    attribute !== 'background-pattern' &&
+                    attribute !== 'line-pattern' &&
+                    attribute !== 'fill-extrusion-pattern' &&
+                    patemter.EXtype !== 0 ">
+          <span style="float: left;padding-top: 3px">
+                <svg [ngClass]="{'svg-disabled' : attribute === 'line-round-limit' && layer.layout['line-join'] === 'miter' ||
+                                                  attribute === 'line-miter-limit' && layer.layout['line-join'] === 'round' ||
+                                                  attribute === 'symbol-spacing' && layer.layout['symbol-placement'] !== 'line' ||
+                                                  attribute === 'text-max-width' && layer.layout['symbol-placement'] !== 'point' ||
+                                                  attribute === 'text-max-angle' && layer.layout['symbol-placement'] !== 'line'
+              }"
+                     (click)="clickAdd(attribute)" fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14"
+                     width="14"
+                     size="14" color="#8e8e8e" viewBox="0 0 40 40"
+                     style="vertical-align: middle; color: rgb(142, 142, 142);">
+                    <g>
+                        <path d="m30 6.6v5h-11.6l8.2 8.4-8.2 8.4h11.6v5h-20v-3.4l10.9-10-10.9-10v-3.4h20z"></path>
+                    </g>
+                </svg>
+            </span>
+          <input type="text"
+                 [value]="model"
+                 [(ngModel)]="model"
+                 (keyup)="change($event)"
+                 [disabled]="attribute === 'line-round-limit' && layer.layout['line-join'] === 'miter' ||
+                             attribute === 'line-miter-limit' && layer.layout['line-join'] === 'round' ||
+                             attribute === 'symbol-spacing' && layer.layout['symbol-placement'] !== 'line' ||
+                             attribute === 'text-max-width' && layer.layout['symbol-placement'] !== 'point' ||
+                             attribute === 'text-max-angle' && layer.layout['symbol-placement'] !== 'line'
+                 "
+                 [placeholder]="patemter.default"
+                 class="smx-control" style="width: 139px;margin-left: 9px;display: inline"/>
+        </div>
+
+        <!-- 有表达式属性 -->
+        <div *ngIf="attribute !== 'icon-image' &&
+                    attribute !== 'fill-pattern' &&
+                    attribute !== 'background-pattern' &&
+                    attribute !== 'line-pattern' &&
+                    attribute !== 'fill-extrusion-pattern' &&
+                    patemter.EXtype === 0">
+          <span style="float: left;padding-top: 3px">
+                <svg [ngClass]="{'svg-disabled' : attribute === 'line-round-limit' && layer.layout['line-join'] === 'miter' ||
+                                                  attribute === 'line-miter-limit' && layer.layout['line-join'] === 'round' ||
+                                                  attribute === 'symbol-spacing' && layer.layout['symbol-placement'] !== 'line' ||
+                                                  attribute === 'text-max-width' && layer.layout['symbol-placement'] !== 'point' ||
+                                                  attribute === 'text-max-angle' && layer.layout['symbol-placement'] !== 'line'
+              }"
+                     (click)="clickAdd(attribute)" fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14"
+                     width="14"
+                     size="14" color="#8e8e8e" viewBox="0 0 40 40"
+                     style="vertical-align: middle; color: rgb(142, 142, 142);">
+                    <g>
+                        <path d="m30 6.6v5h-11.6l8.2 8.4-8.2 8.4h11.6v5h-20v-3.4l10.9-10-10.9-10v-3.4h20z"></path>
+                    </g>
+                </svg>
+            </span>
+          <div class="smx-Allen-EXNUM" style="display: inline-block;">
+              <!-- [(ngModel)]="layer.metadata.formulaOptons[attribute]" -->
+              <input
+                    [(ngModel)]="ExpressionEdite"
+                    (focus)="focusOne(attribute)"
+                    (ngModelChange)="changEXstyle()"
+                    [disabled]="attribute === 'line-round-limit' && layer.layout['line-join'] === 'miter' ||
+                                attribute === 'line-miter-limit' && layer.layout['line-join'] === 'round' ||
+                                attribute === 'symbol-spacing' && layer.layout['symbol-placement'] !== 'line' ||
+                                attribute === 'text-max-width' && layer.layout['symbol-placement'] !== 'point' ||
+                                attribute === 'text-max-angle' && layer.layout['symbol-placement'] !== 'line'"
+
+                    class="smx-control" style="width: 139px;margin-left: 9px;display: inline"/>
+
+            <!-- 加号 -->
+            <span [ngStyle]="{'display':styleNumDisplay ?'block':'none'}" style="float: right;position: absolute;right: 4px;top: 7px;font-size: 12px;cursor: pointer;"
+                  (click)="chageNumEvent($event)" class="fa fa-plus-circle"></span>
+            <!-- 引入+-*/ 组件 -->
+            <app-expression
+                          [layer]='layer'
+                          [attribute]='attribute'
+                          [patemter]='patemter'
+                          [showStyle]='showStyle'
+                          [layerInfo]='layerInfo'
+                          [ExpressionEdite]='ExpressionEdite'
+                          [layerEditCheckNumber]='layerEditCheckNumber'
+                          [isChecked]='isChecked'
+                          [ServiceEventId]="ServiceEventId"
+                          (changeExample)='changeExampleF($event)'
+           ></app-expression>
+          </div>
+      </div>
+
+        <!--点 线 面 - 单图标加载面板 -->
+        <div class="input-group" style="margin:0px" *ngIf="attribute === 'fill-pattern' ||
+                                                           attribute === 'background-pattern' ||
+                                                           attribute === 'line-pattern' ||
+                                                           attribute === 'icon-image' ||
+                                                           attribute === 'fill-extrusion-pattern'">
+          <span style="float: left;padding-top: 3px">
+            <svg (click)="clickAdd(attribute)" fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14"
+                 width="14"
+                 size="14" color="#8e8e8e" viewBox="0 0 40 40"
+                 style="vertical-align: middle; color: rgb(142, 142, 142);">
+                <g>
+                    <path d="m30 6.6v5h-11.6l8.2 8.4-8.2 8.4h11.6v5h-20v-3.4l10.9-10-10.9-10v-3.4h20z"></path>
+                </g>
+            </svg>
+          </span>
+          <!-- 引入图例组件 -->
+          <app-legend
+            [BooleanColseHtml]="BooleanHtmlFalse"
+            [BottomisHRow]="bottonIshave"
+            [Tagtyle]="Tagtyle"
+            [GobalkData]="layerInfo[attribute]"
+            [FilGFillIcon]='FilGFillIcon'
+            [iconJson]='layer'
+            [FiconIndex]='0'
+            [mapObj]="mapObj"
+            (getFillData)="change($event)"
+          ></app-legend>
+        </div>
+      </div>
+      <div *ngIf="showStyle === 'object'" style="float: left">
+        <!--非图标加载模板-->
+        <div *ngIf="attribute !== 'icon-image' &&
+                    attribute !== 'fill-pattern' &&
+                    attribute !== 'background-pattern' &&
+                    attribute !== 'line-pattern' &&
+                    attribute !== 'fill-extrusion-pattern' &&
+                    patemter.EXtype !== 0 ">
+          <div *ngFor="let num of layerInfo[attribute].stops index as i" style="margin:0 0 4px 3px">
+            <i class="fa fa-trash" (click)="remove(attribute,i)"></i>
+            <input type="number" (keyup)="test($event,attribute,i)"
+                   [value]="num[0]" [(ngModel)]="num[0]"
+                   class="smx-control"
+                   style="width: 29px;display: inline;padding: 0.15rem 0.35rem;font-size: 0.175rem"/>
+            <input type="number"
+                   *ngIf="type === 0"
+                   [(ngModel)]="layerInfo[attribute].stops[i][1]"
+                   (ngModelChange)="changes()"
+                   class="smx-control" style="width: 105px;margin-left: 9px;display: inline"/>
+            <input type="text"
+                   *ngIf="type === 1"
+                   [(ngModel)]="layerInfo[attribute].stops[i][1]"
+                   (ngModelChange)="changes()"
+                   class="smx-control" style="width: 105px;margin-left: 9px;display: inline"/>
+          </div>
+        </div>
+
+        <!-- 多缩放级别 表达式 -->
+      <div *ngIf="attribute !== 'icon-image' &&
+                  attribute !== 'fill-pattern' &&
+                  attribute !== 'background-pattern' &&
+                  attribute !== 'line-pattern' &&
+                  attribute !== 'fill-extrusion-pattern' &&
+                  patemter.EXtype === 0">
+            <div class="smx-Allen-EXNUM">
+            <div *ngFor="let num of this.layer.metadata.formulaOptons[attribute] index as i" style="margin:0 -6px 4px 3px">
+                <i class="fa fa-trash" (click)="remove(attribute,i)"></i>
+                <input type="number" (keyup)="test($event,attribute,i)"
+                      [value]="num[0]" [(ngModel)]="num[0]"
+                      class="smx-control"
+                      style="width: 29px;display: inline;padding: 0.15rem 0.35rem;font-size: 0.175rem"/>
+                <input type="text"
+                      (focus)="focusMore(attribute,i)"
+                      (ngModelChange)="changEXstyle()"
+                      [(ngModel)]="num[1]"
+                      class="smx-control" style="width: 105px;margin-left: 9px;display: inline"/>
+                <!-- 加号显隐checkbox框 -->
+                <span [ngStyle]="{'display':styleNumDisplay ?'block':'none'}" (click)="chageNumEventMore($event,i)" style="float: right;position: relative;left: 6px;top: 7px;font-size: 12px;cursor: pointer;"
+                     class="fa fa-plus-circle"></span>
+            </div>
+            <!-- 引入+-*/组件 -->
+            <app-expression
+                          [layer]='layer'
+                          [attribute]='attribute'
+                          [patemter]='patemter'
+                          [showStyle]='showStyle'
+                          [layerInfo]='layerInfo'
+                          [chooseIndex]='chooseIndex'
+                          [layerEditCheckNumber]='layerEditCheckNumber'
+                          [ServiceEventId]="ServiceEventId"
+                          (changeExample)='changeExampleF($event)'
+           ></app-expression>
+          </div>
+      </div>
+        <!-- 点 线 面 -> 多图标加载 -->
+        <div *ngIf="attribute === 'fill-pattern' || attribute === 'background-pattern' ||
+                    attribute === 'line-pattern' || attribute === 'icon-image' || attribute === 'fill-extrusion-pattern'">
+          <div *ngFor="let num of layerInfo[attribute].stops index as i" style="margin:0 0 4px 3px">
+            <div class="input-group" style="width: 158px; margin:0px">
+              <i class="fa fa-trash" (click)="remove(attribute,i)"
+                 style="display: inline-block;margin-top: 7px;margin-right: 4px">
+              </i>
+              <input type="number" (keyup)="test($event,attribute,i)"
+                     [value]="num[0]" [(ngModel)]="num[0]"
+                     class="smx-control"
+                     style="width: 29px;display: inline;padding: 0.15rem 0.35rem;font-size: 0.175rem"/>
+
+              <app-legend
+                  [BooleanColseHtml]="BooleanHtmlFalse"
+                  [BottomisHRow]="bottonIshave"
+                  [Tagtylemore]="Tagtyle_more"
+                  [GobalkData]="layerInfo[attribute].stops[i][1]"
+                  [FilGFillIcon]='FilGFillIcon'
+                  [iconJson]='layer'
+                  [FiconIndex]='i'
+                  [mapObj]="mapObj"
+                  (getFillData)="changesMore($event, i)"
+              ></app-legend>
+            </div>
+          </div>
+        </div>
+       <button (click)="buttomAdd()" class="smx-btn smx-default smx-xs" style="margin-left: 120px;margin-bottom: 4px" >添加</button>
+      </div>
+    </div>
+    <div class="col-md-8 col-xs-8" *ngIf="type === 2">
+      <div *ngIf="showStyle === 'number' || showStyle === 'undefined' || showStyle === 'string'" style="float: left">
+        <span style="float: left;padding-top: 3px">
+            <svg (click)="clickAdd(attribute)" fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14"
+                 width="14"
+                 size="14" color="#8e8e8e" viewBox="0 0 40 40"
+                 style="vertical-align: middle; color: rgb(142, 142, 142);">
+                <g>
+                    <path d="m30 6.6v5h-11.6l8.2 8.4-8.2 8.4h11.6v5h-20v-3.4l10.9-10-10.9-10v-3.4h20z"></path>
+                </g>
+            </svg>
+        </span>
+        <smx-slider2 (onChange)="slideEnd($event)"
+                  [(ngModel)]="model"
+                  [min]="patemter.min"
+                  [max]="patemter.max"
+                  class="p-slide"></smx-slider2>
+        {{model / 100 | number:'1.2-2'}}
+      </div>
+      <div *ngIf="showStyle === 'object'" style="float: left">
+        <div *ngFor="let num of layerInfo[attribute].stops index as i" style="margin:0 0 4px 3px">
+          <i class="fa fa-trash" (click)="remove(attribute,i)"></i>
+          <input type="number" (keyup)="test($event,attribute,i)"
+                 [value]="num[0]" [(ngModel)]="num[0]"
+                 class="smx-control"
+                 style="width: 29px;display: inline;padding: 0.15rem 0.35rem;font-size: 0.175rem"/>
+          <smx-slider2 (onChange)="slideEndStops($event, i)"
+                    [(ngModel)]="opacity[i]"
+                    [min]="patemter.min"
+                    [max]="patemter.max"
+                    class="p-slides"></smx-slider2>
+          {{opacity[i] / 100 | number:'1.2-2'}}
+        </div>
+        <button (click)="buttomAdd()" class="smx-btn smx-default smx-xs" style="margin-left: 120px;margin-bottom: 4px">
+          添加
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--图标库模板-->
+  <div [ngStyle]="{'display':!isCollapsed ?'block':'none'}" class="iconStyle">
+    <div class="">
+      <div class="row">
+        <ul class="nav navTitle" style="border-bottom: 1px solid #ccc">
+          <li class="nav-item">
+            <a class="navLink" (click)="chooseClass(0)">政府</a>
+          </li>
+          <li class="nav-item">
+            <a class="navLink" (click)="chooseClass(1)">餐饮</a>
+          </li>
+          <li class="nav-item">
+            <a class="navLink" (click)="chooseClass(2)">宾馆</a>
+          </li>
+          <li class="nav-item">
+            <a class="navLink" (click)="chooseClass(3)">购物</a>
+          </li>
+          <li class="nav-item">
+            <a class="navLink" (click)="chooseClass(4)">交通</a>
+          </li>
+          <li class="nav-item">
+            <a class="navLink" (click)="chooseClass(5)">科教</a>
+          </li>
+          <li class="nav-item">
+            <a class="navLink" (click)="chooseClass(6)">旅游</a>
+          </li>
+          <li class="nav-item">
+            <a class="navLink" (click)="chooseClass(7)">其他</a>
+          </li>
+          <li class="nav-item">
+            <a class="navLink" (click)="chooseClass(8)">专属</a>
+          </li>
+        </ul>
+      </div>
+      <div style="display: none" class="row sprite-list">
+        <div style="width: 100%;height: 145px; overflow-y: auto">
+          <div *ngFor="let item of iconList index as i" style="margin: 2px;float: left">
+            <a class="thumbnail">
+              <div class="imgPosition" (click)="selectIcon(iconList, i)"
+                   [style.width.px]="item.position.width"
+                   [style.height.px]="item.position.height"
+                   [ngStyle]="{'background-position': (-item.position.x) + 'px' + ' ' + (-item.position.y) + 'px','background-image':'url('+sprite+')'}"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

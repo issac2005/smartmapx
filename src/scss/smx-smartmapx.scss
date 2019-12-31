@@ -1,0 +1,163 @@
+/*-- 重写测距关闭按钮 --*/
+.smartmapx-popup-content button {
+  -webkit-appearance: none;
+  color: #333;
+  vertical-align: middle;
+  padding-bottom: 2px;
+  border: none;
+  background: none;
+}
+
+/*-- 重写比例尺颜色 --*/
+.smartmapx-ctrl-scale {
+  border-color: #999;
+  color: #999;
+  min-width: 70px;
+}
+
+/*
+检视模式样式修改
+*/
+.smartmapx-gl-inspect_layer {
+  background-color: #cccccc;
+  width: 250px;
+  height: 24px;
+  color: #333333;
+  font-size: 12px;
+  line-height: 24px;
+  text-indent: 10px;
+}
+
+.smartmapx-gl-inspect_property-name {
+  width: 115px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.smartmapx-gl-inspect_property-value {
+  float: left;
+  margin-top: -20px;
+  position: relative;
+  right: -110px;
+  font-size: 12px;
+  text-indent: 10px;
+  width:50%;
+ /* overflow:hidden;
+  word-wrap: break-word;*/
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.smartmapxgl-inspect_property {
+  color: #585858;
+  font-size: 12px;
+  text-indent: 10px;
+  overflow:hidden;
+}
+
+
+// nav
+.smartmapx-ctrl-top-right {
+  top: 50px;
+  right: 5px;
+}
+
+
+// popue
+.smartmapx-popup-content {
+  padding: 15px 10px 10px;
+
+  li {
+    width: 180px;
+    padding: 0 5px;
+    margin: 2px 0;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: #809999;
+    border-radius: 3px;
+
+    .unedit {
+      color: #ccc;
+      border-radius: 3px;
+      cursor: default;
+
+      &:hover {
+        background: #ddd;
+      }
+
+      .fa {
+        color: #ccc;
+      }
+    }
+
+    &：hover {
+      border-radius: 3px;
+      background: #c6d2e1;
+    }
+  }
+
+  .fa {
+    font-size: 12px;
+    margin-right: 3px;
+  }
+  span:hover {
+    color: white;
+    background: #0ab1f7;
+  }
+  span {
+    width: 100px;
+    padding: 2px 5px;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    text-overflow: ellipsis;
+    background: white;
+    border-bottom: 1px solid #ece4e4;
+    .unedit {
+      color: #ccc;
+      border-radius: 3px;
+      cursor: default;
+
+      &:hover {
+        background: #ddd;
+      }
+
+      .fa {
+        color: #ccc;
+      }
+    }
+
+    &：hover {
+      border-radius: 3px;
+      background: #c6d2e1;
+    }
+  }
+}
+
+
+
+// 统计图层工具条位置
+.smartmapx-ctrl-top-left .smartmapx-ctrl {
+  margin: 10px 0 0 10px;
+  float: left;
+  position: fixed;
+  right: 44px;
+  top: 180px;
+}
+
+
+.mapLoading {
+  background-image: url(/assets/img/loading.png);
+  height: 38px;
+  width: 228px;
+  position: absolute;
+  bottom: 30%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  left: calc(50% - 114px);
+}

@@ -1,0 +1,927 @@
+<!--模态框统一管理器-->
+<div *ngIf="type >= 10 ">
+  <!--头部-->
+  <div class="smx-modal-header">
+    <h4 class="modal-title">{{keyConfig.title}}</h4>
+    <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+  </div>
+
+
+  <!--主体-->
+  <div class="smx-modal-body">
+    <!--10创建-->
+    <div *ngIf="type === 10 || type  === 101">
+      <smx-input-info [view]="keyConfig.view" [smxControl]="keyConfig.smxControl"></smx-input-info>
+    </div>
+
+    <!--11删除do-->
+    <div *ngIf="type === 11">
+      <div class=" smx_center_text">
+        <div id="deleteDataModal">
+          <div>
+            <span class="smx_deleteData-waring"></span>
+            <span for="recipient-name"
+                  class="control-label text_top_move">{{keyConfig.view}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--12修改-->
+    <div *ngIf="type === 12">
+      <div *ngFor="let m of keyConfig.view">
+        <div *ngIf="m.alias === 'icon_upload'" class="form-group">
+          <label class="control-label smx-modal-body-title" style="position: relative;top: -15px;">{{m.title}}:</label>
+          <div class="smx-modal-body-fileinput-button">
+            <smx-upload [smxFile]="'image'" (change)="fileChangeEvent($event, m)" [imgFile]="imgFile"
+                        [smxMaxSize]="0.5"></smx-upload>
+          </div>
+
+        </div>
+        <div *ngIf="m.alias === 'description' || m.alias === 'name'" class="form-group">
+          <label class="control-label smx-modal-body-title">{{m.title}}:</label>
+          <input name="itemName" [type]="m.type" class="smx_control_value_w smx-control"
+                 [(ngModel)]="modalData[m.alias]"
+                 [placeholder]="m.placeholder" [disabled]="m.disabled"
+                 [maxlength]="m.maxlength">
+        </div>
+      </div>
+    </div>
+
+    <!--13信息do-->
+    <div *ngIf="type === 13">
+      <!--<div class="smx-modal-body">-->
+      <table cellpadding="5" style="width: 100%;">
+        <div *ngFor="let m of keyConfig.view" class="viewInfo"
+             [ngClass]="{'show_top': m.color === 'green', 'show_bottom': m.color === 'white'}">
+
+          <tr *ngIf="m.type === 1">
+            <td align="left" class="t1">{{m.title}} <span class="info_t_span">:</span></td>
+            <td class="t2" colspan="2">{{modalData[m.alias]}}</td>
+          </tr>
+
+
+          <tr *ngIf="m.type === 2">
+            <td align="left" class="t1">{{m.title}}<span class="info_t_span">:</span></td>
+            <td class="t2" colspan="2">{{modalData[m.alias] * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          </tr>
+
+
+          <tr *ngIf="m.type === 3">
+            <td align="left" class="t1">{{m.title}}<span class="info_t_span">:</span></td>
+            <td title={{modalData[m.alias]}} class="t2">
+              <span class="smx3 url">{{modalData[m.alias]}}</span>
+            </td>
+            <td class="t3">
+              <span class="smx-btn smx-default smx-xs"
+                    ngxClipboard [cbContent]='modalData[m.alias]'
+                    (cbOnSuccess)="copySuccess()">复制</span>
+            </td>
+          </tr>
+
+
+          <!--推荐版本：未完成！！！-->
+          <tr *ngIf="m.type === 8">
+            <td align="left" class="t1">{{m.title}}<span class="info_t_span">:</span></td>
+            <td class="t2" colspan="2">{{modalData.recommend}}</td>
+          </tr>
+
+          <!------------------------------------地图专题start-------------------->
+          <tr *ngIf="m.type === 4">
+            <td align="left" class="t1">{{m.title}}<span class="info_t_span">:</span></td>
+            <td class="t2">
+              <span class="smx3 url">{{ getiframe('url', modalData[m.label], modalData.release_time) }}</span>
+            </td>
+            <td class="smx5 t3">
+              <span *ngIf="modalData.release_time !== ''"
+                    class="smx-btn smx-default smx-xs"
+                    ngxClipboard
+                    [cbContent]="getiframe('url', modalData[m.label], modalData.release_time)"
+                    (cbOnSuccess)="copySuccess()">复制</span>
+            </td>
+          </tr>
+
+
+          <tr *ngIf="m.type === 5">
+            <td align="left" class="t1" rowspan="3">{{m.title}}<span class="info_t_span">:</span></td>
+            <td class="t4" colspan="2" rowspan="3" style="position: relative">
+              <ol *ngIf="modalData.release_time !== ''" style="padding: 5px;margin: 0px">
+                <li style="list-style: none">&lt;iframe</li>
+                <li style="list-style: none;position: relative;left: 5px">{{ getiframe('iframe',
+                  modalData[m.label], modalData.release_time) }}
+                </li>
+                <li style="list-style: none">&lt;iframe/&gt;</li>
+              </ol>
+            </td>
+          </tr>
+          <!------------------------------------地图专题end-------------------->
+
+          <tr *ngIf="m.type === 6 && modalData[m.alias]">
+            <td align="left" class="t1">{{m.title}}<span class="info_t_span">:</span></td>
+            <td class="t2" colspan="2">{{modalData[m.alias]}}</td>
+          </tr>
+
+
+          <tr *ngIf="m.type === 7">
+            <td align="left" class="t1">{{m.title}}<span class="info_t_span">:</span></td>
+            <td class="t2" colspan="2">{{modalData[m.alias] | SmxPipe: m.pipe}}
+            </td>
+          </tr>
+
+
+          <!-- 版本列表：版本号，版本描述 -->
+          <div *ngIf="m.type === 9" class="div_table">
+            <table border="1" class="table1">
+              <tr class="tr">
+                <td class="td">
+                  <div class="div_td">{{m.title1}}</div>
+                </td>
+                <td class="td">
+                  <div class="div_td">{{m.title2}}</div>
+                </td>
+              </tr>
+            </table>
+            <div class="div_table2">
+              <table border="1" class="table2">
+                <tr *ngFor="let n of modalData.versiondata" class="tr">
+                  <td class="td">
+                    <div class="div_td" title="{{n.versionNo}}">{{n.versionNo}}</div>
+                  </td>
+                  <td class="td">
+                    <div class="div_td" title="{{n.versionDesc}}">{{n.versionDesc}}</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- 服务发布元数据信息：地图，图层，小程序，数据源，查询方案，密钥 --Ljy-->
+          <div *ngIf="m.type === 10" class="createMapModal" style="width: 565px">
+            <div class="layer-select" style="border-bottom: 0px; padding: 0 0;">
+              <div  class="toolbar-category1" style="margin-bottom: -10px; margin-top: 10px;">
+                <span style="padding: 0 10px; width: 92px; left: 0px;" class="btn" *ngFor="let item of serviceTab; let i = index;" [ngClass]="oindex === i? 'btn-primary' : 'btn-secondary'"
+                      (click)="tag=item.name; servicelist(i, item.desc)">{{item.name}}</span>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="m.type === 10" class="div_table">
+            <table  border="1" class="table1">
+              <tr class="tr">
+                <td class="td">
+                  <div *ngIf="changelist === 0" class="div_td">地图名称</div>
+                  <div *ngIf="changelist === 1" class="div_td">图层名称</div>
+                  <div *ngIf="changelist === 2" class="div_td">小程序名称</div>
+                  <div *ngIf="changelist === 3" class="div_td">数据源名称</div>
+                  <div *ngIf="changelist === 4" class="div_td">方案名称</div>
+                  <div *ngIf="changelist === 5" class="div_td">密钥名称</div>
+                </td>
+                <td *ngIf="changelist != 3" class="td">
+                  <div *ngIf="changelist === 0" class="div_td">地图ID</div>
+                  <div *ngIf="changelist === 1" class="div_td">图层ID</div>
+                  <div *ngIf="changelist === 2" class="div_td">版本号</div>
+                  <div *ngIf="changelist === 4" class="div_td">方案ID</div>
+                  <div *ngIf="changelist === 5" class="div_td">密钥类型</div>
+                </td>
+                <td class="td">
+                  <div class="div_td">创建时间</div>
+                </td>
+              </tr>
+            </table>
+            <div class="div_table2" [ngStyle]="{'width': changelist != 3 ? '550px' : '380px' } ">
+              <table border="1" class="table2">
+                <tr *ngFor="let n of showData" class="tr">
+                  <td class="td">
+                    <div class="div_td" title="{{n.name}}">{{n.name}}</div>
+                  </td>
+                  <td *ngIf="changelist != 3" class="td">
+                    <div class="div_td" title="{{n.service_event_id}}">
+                      <div [ngClass]="{'div_td_div': changelist === 0 || changelist === 1 || changelist === 4 }">{{n.service_event_id}}</div>
+                        <button *ngIf="changelist === 0 || changelist === 1 || changelist === 4 "type="button" style="    width: 36px;
+                        height: 20px;line-height: 20px;padding: 0px;color: #ffffff;border: 1px;border-radius: 4px;background: #3887be;margin-right: 10px;margin-top: 5px;float: right;"
+                        ngxClipboard [cbContent]='n.service_event_id'
+                        (cbOnSuccess)="copySuccess()" >复制
+                        </button>
+                    </div>
+                  </td>
+                  <td class="td">
+                    <div class="div_td" title="{{n.createTime}}">{{n.createTime}}</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </table>
+    </div>
+
+    <!--14分享-->
+    <div *ngIf="type === 14">
+      <div class="shareDataModal-addU">
+        <input type="text" class="smx_share_b_data smx-control" placeholder="请输入用户名" (keyup.enter)="shareUser()"
+               [(ngModel)]="userName" maxlength="20"/>
+        <button [disabled]="isdasabled" class="smx-btn smx-default" (click)="shareUser()">添加</button>
+      </div>
+      <div class="shareDataModal-Ulist">
+        <table class="table">
+          <thead class="thead-default">
+          <tr>
+            <th style="text-align: center">用户名</th>
+
+            <!-- 分享：调用 -->
+            <th style="text-align: center" *ngIf="modalData.version && !keyConfig.type">调用</th>
+            <th style="text-align: center">查看</th>
+            <th style="text-align: center">编辑</th>
+            <th style="text-align: center">移除</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let v of dataShareUserList;index as i">
+            <td scope="row">{{v.login_name}}</td>
+
+            <!-- 小程序分享 - 开始 -Ljy加了判断条件-->
+            <td *ngIf="modalData.version && !keyConfig.type">
+              <input type="checkbox" name="istransfer" [ngModel]="v.istransfer" class="smx-checkbox"
+                     (ngModelChange)="$event? v.istransfer = 1: v.istransfer = 0;updateShare(v)"
+                     disabled="true">
+            </td>
+
+            <td *ngIf="modalData.version && !keyConfig.type">
+              <input type="checkbox" name="isView" [ngModel]="v.isview" class="smx-checkbox"
+                     (ngModelChange)="$event? v.isview = v.istransfer = 1: v.isview = 0;updateShare(v)"
+                     [disabled]="v.isedit? true: false">
+            </td>
+
+            <td *ngIf="modalData.version && !keyConfig.type">
+              <input type="checkbox" name="isEdit" [ngModel]="v.isedit" class="smx-checkbox"
+                     (ngModelChange)="$event? v.isedit = v.isview = v.istransfer = 1: v.isedit = 0;updateShare(v)">
+            </td>
+            <!-- 小程序分享 - 结束 -->
+
+            <!-- 服务发布分享 - 开始 - Ljy -->
+            <td *ngIf="modalData.backup_id">
+              <input type="checkbox" name="isView" [ngModel]="1" class="smx-checkbox" [disabled]="true">
+            </td>
+
+            <td *ngIf="modalData.backup_id">
+              <input type="checkbox" name="isEdit" [ngModel]="v.isedit" class="smx-checkbox" (ngModelChange)="$event? v.isedit = 1 : v.isedit = 0; updateShare(v)">
+            </td>
+            <!-- 服务发布分享 - 结束 - Ljy -->
+
+            <td *ngIf="!modalData.version && !modalData.backup_id">
+              <input type="checkbox" name="isView" [ngModel]="v.isview" class="smx-checkbox"
+                     (ngModelChange)="$event? v.isview = 1: v.isview = 0;updateShare(v)"
+                     [disabled]="v.isedit? true: false">
+            </td>
+
+            <td *ngIf="!modalData.version && !modalData.backup_id">
+              <input type="checkbox" name="isEdit" [ngModel]="v.isedit" class="smx-checkbox"
+                     (ngModelChange)="$event? v.isedit = v.isview = 1: v.isedit = 0;updateShare(v)">
+            </td>
+
+            <td>
+              <span class="footer-ds-delete" title="取消用户" (click)="deleteShare(i)"></span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+
+
+    <!--15选择地图-->
+    <div *ngIf="type === 15">
+      <div id="createMapModal" class="createMapModal" style="width: 565px">
+        <!--<div  >-->
+        <div class="createMapModal-search">
+          <input type="text" class="createMapModal_search_input_b smx-control" placeholder="请输入关键字搜索"
+                 (keyup.enter)="searchList()" [(ngModel)]="searchKey" maxlength="40"/>
+          <a class="createMapModal-search-clear" (click)="clearSearch()" title="取消搜索"
+             [ngStyle]="{'opacity': searchKey? 1:0 }">×</a>
+          <button class="smx-btn smx-default smx-lg" (click)="searchList()">搜索</button>
+        </div>
+
+        <div class="layer-select">
+          <div class="toolbar-category1">
+            <span style="padding: 0 10px" class="btn" [ngClass]="mymapChecked? 'btn-primary' : 'btn-secondary'"
+                  (click)="tag='mymap';switchList()">{{keyConfig.view.leftTitle}}</span>
+
+            <span style="padding: 0 10px" class="btn" [ngClass]="mymapChecked? 'btn-secondary' : 'btn-primary'"
+                  (click)="tag='sharemap';switchList()">{{keyConfig.view.rightTitle}}</span>
+          </div>
+          <div *ngIf="baseMapList && baseMapList.length > 0" class="layer-list" detect-scroll
+               (onScroll)="handleScrollEvent($event)" [bottomOffset]="0">
+            <ul>
+              <ng-container *ngIf="!keyConfig.view.list || keyConfig.view.list === 1">
+                <li *ngFor="let v of baseMapList">
+                  <div style="background-size: 100% 100%;"
+                       (click)="checkedBaseData(v)"
+                       [ngClass]="{'layer-list-img-bg-checked': v[keyConfig.view.id] === checkedItem[keyConfig.view.id],
+            'layer-list-img-bg': v[keyConfig.view.id] !== checkedItem[keyConfig.view.id] }"
+                       [ngStyle]="{'background-image': v[keyConfig.view.img]? 'url('+'/uploadfile/'+ v[keyConfig.view.img] + ')': 'url(./assets/source-img/map_bg.png)'}">
+                    <div class="container-center">
+                      <div class="container-center-hover">
+                        <span>{{v[keyConfig.view.description]}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="layer-list-footer">
+                    <span class="footer-user-title">{{v[keyConfig.view.name]}}</span>
+                    <div *ngIf="keyConfig.view.action === 1"
+                         [ngClass]="{'layer-list-footer-custom-ck': v[keyConfig.view.id] === checkedItem[keyConfig.view.id],
+            'layer-list-footer-custom': v[keyConfig.view.id] !== checkedItem[keyConfig.view.id]}">
+                      <input type="checkbox" class="data_w_zdy smx-checkbox"
+                             [ngModel]="checkedItem.isCustom"
+                             (ngModelChange)="checkedItem.isCustom = $event;"
+                             value="true">
+                      <span class="layer-list-footer-custom-title">自定义</span>
+                    </div>
+                  </div>
+                </li>
+              </ng-container>
+              <ng-container *ngIf="keyConfig.view.list === 2">
+                <li *ngFor="let v of baseMapList" style="width: 100%">
+                  <div class="smx-pick-data" (click)="checkedBaseData(v)"
+                       [ngStyle]="{'background':v[keyConfig.view.id] !== checkedItem[keyConfig.view.id] ? '': 'rgb(238, 238, 238)'}">
+                  <span class="layer-list-icon"
+                        [ngStyle]="{'background': 'url('+ getUrl(v.geo_type) + ')'}"></span>
+                    <span class="layer-list-name" title={{v.description}}>
+                      {{ v.description }}
+                      <!--<span *ngIf="(tag === 'mymap') && (v.type === 'view' ? true : false)" title="不可编辑"
+                            class="layer-list-editor"></span>-->
+                      <span
+                        *ngIf="v.type === 'view' || (v?.isedit === undefined ? false : (v?.isedit ===  1 ? false : true))"
+                        title="不可编辑"
+                        class="layer-list-editor"></span>
+                    </span>
+                    <span class="layer-list-checked"
+                          [ngStyle]="{'opacity': v[keyConfig.view.id] !== checkedItem[keyConfig.view.id] ? 0: 1}"></span>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+          <div *ngIf="!baseMapList || baseMapList.length === 0" class="layer-list">
+            <!--            <span class="layer-select-nodata">{{searchTip}}</span>-->
+            <smx-empty [smxContentText]="searchTip"></smx-empty>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--16发布do-->
+    <div *ngIf="type === 16">
+      <div id="release_map" style="width: 495px;height: 405px;background: #ccc;"></div>
+    </div>
+
+
+    <!--17选择更换-->
+    <div *ngIf="type === 17">
+      <smx-input-info [view]="keyConfig.view.children[keyConfig.view.value]" (btnEvent)="btnEvent($event)"
+                      [smxControl]="smxControl">
+        <div name="header" class="form-group smx-modal-body-radio-title">
+          <smx-radio [options]="keyConfig.view.options" [(ngModel)]="keyConfig.view.value"></smx-radio>
+        </div>
+      </smx-input-info>
+    </div>
+
+    <!--18 csv结构分析-->
+    <div *ngIf="type === 18">
+      <div class="form-group" style="text-align: center">
+        <label class="col-form-label" style="margin-right: 10px">数据源名称</label>
+        <input type="text" style="width: 180px;height: 32px; display: inline-block"
+               class="smx-control form-text"
+               placeholder="请输入数据源名称"
+               [(ngModel)]="modalData.name" (keyup)="createTable()" maxlength="40">
+      </div>
+      <div *ngIf="createTableNameStatus">
+        <smx-output-csv [outputType]="2" [mData]="modalData"></smx-output-csv>
+      </div>
+    </div>
+
+    <!--19 进度条-->
+    <div *ngIf="type === 19">
+      <span>{{keyConfig.view.label}}</span>
+      <p>
+        <smx-progress [smxPercent]="modalData.value"></smx-progress>
+      </p>
+    </div>
+
+    <!--20 选择数据-->
+    <div *ngIf="type === 20">
+
+      <!--选择统计类型-->
+      <div class="createMapModal2">
+        <!--<div class="modal-body" style="width: 485px">-->
+        <div class="layer-select2">
+          <div class="layer-list2">
+            <ul style="padding: 0px">
+              <li *ngFor="let v of staList">
+                <div class="layer-list2-sta"
+                     (click)="modalData.geo_type === v.type? checkStatisticsType(v.id): checkStatisticsType(v.id,'no')"
+                     [ngStyle]="{
+                             'filter': modalData.geo_type === v.type? 'unset': 'grayscale(1)',
+                             'background-image':  'url('+ v.url  +')',
+                             'border': modalData.geo_type === v.type &&  v.id === statisticsType ? '3px solid #2787f8' : '1px solid #ffffff'}">
+
+                </div>
+                <div style="padding-bottom: 10px;">
+                  <span class="_name_tu_pian" style="padding-left: 13px;">{{v.name}}</span>
+                </div>
+
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!--</div>-->
+
+      </div>
+    </div>
+
+    <!--获取geojson--Ljy-->
+    <div *ngIf="type === 21">
+      <textarea class="getGeojson" readonly="readonly">{{modalData}}</textarea>
+    </div>
+
+    <!-- 22   地图校准-->
+    <div *ngIf="type === 22">
+      <smx-map (loaded)="mapLoaded($event)" [smxMapBase]="modalData.mapBase"
+               [smxOptions]="modalData.mapOptions"></smx-map>
+      <div nz-row style="margin-top: 5px">
+        <div nz-col nzSpan="12">
+          <smx-input [smxStyle]="{'width':'75%'}" [(ngModel)]="modalData.leftTop" [smxDisabled]="true">
+            <label style="width: 20%
+
+
+
+" class="control-label smx-modal-body-title">左上角</label>
+          </smx-input>
+        </div>
+        <div nz-col nzSpan="12">
+          <smx-input [smxStyle]="{'width':'75%'}" [(ngModel)]="modalData.rightTop" [smxDisabled]="true">
+            <label style="width: 20%" class="control-label smx-modal-body-title">右上角</label>
+          </smx-input>
+        </div>
+      </div>
+      <div nz-row style="margin-top: 5px">
+        <div nz-col nzSpan="12">
+          <smx-input [smxStyle]="{'width':'75%'}" [(ngModel)]="modalData.leftBottom" [smxDisabled]="true">
+            <label style="width: 20%" class="control-label smx-modal-body-title">左下角</label>
+          </smx-input>
+        </div>
+        <div nz-col nzSpan="12">
+          <smx-input [smxStyle]="{'width':'75%'}" [(ngModel)]="modalData.rightBottom" [smxDisabled]="true">
+            <label style="width: 20%" class="control-label smx-modal-body-title">右下角</label>
+          </smx-input>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 23 服务发布 -->
+    <div *ngIf="type === 23">
+      <div class="createMapModal" style="width: 565px">
+        <!--<div  >-->
+        <div class="createMapModal-search">
+          <input type="text" class="createMapModal_search_input_b smx-control" placeholder="请输入关键字搜索"
+                 (keyup.enter)="searchList()" [(ngModel)]="searchKey" maxlength="40"/>
+          <a class="createMapModal-search-clear" (click)="clearServiceSearch()" title="取消搜索"
+             [ngStyle]="{'opacity': searchKey? 1:0 }">×</a>
+          <button class="smx-btn smx-default smx-lg" (click)="servicePublicSearch()">搜索</button>
+        </div>
+
+        <div class="layer-select">
+          <div class="toolbar-category1">
+            <span style="padding: 0 10px" class="btn" *ngFor="let item of serviceTab; let i = index;" [ngClass]="oindex === i? 'btn-primary' : 'btn-secondary'"
+                  (click)="tag=item.name; switchServiceList(i, item.desc)">{{item.name}}</span>
+          </div>
+          <div *ngIf="baseMapList && baseMapList.length > 0" class="layer-list" detect-scroll
+               (onScroll)="handleScrollEvent($event)" [bottomOffset]="0">
+            <ul>
+              <ng-container *ngIf="!keyConfig.view.list || keyConfig.view.list === 1">
+                <li *ngFor="let v of baseMapList">
+                  <div style="background-size: 100% 100%;"
+                       (click)="checkedBaseData(v)"
+                       class="layer-list-img-bg"
+                       [ngClass]="{'layer-list-img-bg-checked': v.valueCheck}"
+                       [ngStyle]="{'background-image': v[keyConfig.view.img]? 'url('+'/uploadfile/'+ v[keyConfig.view.img] + ')': 'url(./assets/source-img/map_bg.png)'}">
+                    <input type="checkbox" [ngModel]="v.valueCheck"  class="service-check data_w_zdy smx-checkbox" (change)="chooseServiceSoruce($event, v)">
+                  </div>
+                  <div class="layer-list-footer">
+                    <span *ngIf="oindex != 4" class="footer-user-title">{{v[keyConfig.view.name] || v['table_desc']}}</span>
+                    <span *ngIf="oindex === 4" class="footer-user-title">{{v[keyConfig.view.description]}}</span>
+                    <!--[ngClass]="{'layer-list-img-bg-checked': v[keyConfig.view.id] === checkedItem[keyConfig.view.id],-->
+                    <!--'layer-list-img-bg': v[keyConfig.view.id] !== checkedItem[keyConfig.view.id] }"-->
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+          <div *ngIf="!baseMapList || baseMapList.length === 0" class="layer-list">
+            <!--            <span class="layer-select-nodata">{{searchTip}}</span>-->
+            <smx-empty [smxContentText]="searchTip"></smx-empty>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--尾部-->
+  <div class="smx-modal-footer">
+
+    <!--获取geojson--Ljy-->
+    <div *ngIf="type === 21">
+      <button type="button" class="smx-btn smx-grid smx-default" ngxClipboard [cbContent]='modalData'
+              (cbOnSuccess)="copySuccess()">复制
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button type="button" class="smx_not_div_close smx-btn smx-grid smx-outline-default"
+              (click)="activeModal.dismiss('close')">关闭
+      </button>
+      <!-- <button type="button" class="smx-btn smx-grid smx-default" (click)="submit(type, keyConfig.view)">确定</button> -->
+    </div>
+    <!--10创建-->
+    <div *ngIf="type === 10 || type === 101">
+      <div *ngIf="keyConfig.independence === 3">
+        <button type="button" class="smx_not_div_w top_data_newmap_w smx-btn smx-outline-default"
+                (click)="activeModal.close('pre')">上一步
+        </button>
+        <button type="button" class="top_data_newmap_b smx-btn smx-grid smx-default"
+                (click)="submit(type, keyConfig.view)" id="smx-popule">确定
+        </button>
+
+      </div>
+      <div *ngIf="keyConfig.independence !== 3">
+        <button type="button" class="smx_not_div_w top_data_newmap_ws smx-btn smx-grid smx-outline-default"
+                (click)="activeModal.dismiss('close')">取消
+        </button>
+        <button type="button" class="top_data_newmap_wss smx-btn smx-grid smx-default"
+                (click)="submit(type, keyConfig.view)" [disabled]="keyConfig.submitDisabled" id="smx-popule">确定
+        </button>
+      </div>
+    </div>
+    <!--11删除do-->
+    <div *ngIf="type === 11">
+      <button type="button" class="smx_not_div_w smx-btn smx-grid smx-outline-default"
+              (click)="activeModal.dismiss('close')">取消
+      </button>
+      <button type="button" class="smx-btn smx-grid smx-default" (click)="activeModal.close()" id="smx-popule">确定</button>
+    </div>
+    <!--12修改-->
+    <div *ngIf="type === 12">
+      <button type="button" class="smx_not_div_w smx-btn smx-grid smx-outline-default"
+              (click)="activeModal.dismiss('close')">取消
+      </button>
+      <button type="button" class="smx-btn smx-grid smx-default" (click)="submit(type, keyConfig.view)" id="smx-popule">确定</button>
+    </div>
+
+    <!--14分享-->
+    <div *ngIf="type === 14">
+      <button type="button" class="smx-btn smx-grid smx-default" (click)="activeModal.close('close')">关闭</button>
+    </div>
+
+    <!--15选择地图-->
+    <div *ngIf="type === 15">
+      <div *ngIf="keyConfig.independence === 1">
+        <button type="button" class="smx-btn smx-grid smx-default"
+                (click)="activeModal.close({checkedItem: checkedItem,tag: tag})"
+                [disabled]="checkedItem? false: true"  id="smx-popule">确定
+        </button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="smx-btn smx-grid smx-outline-default" (click)="activeModal.dismiss('close')"
+        >取消
+        </button>
+      </div>
+      <div *ngIf="keyConfig.independence === 2">
+        <button type="button" class="smx_not_div_w smx-btn smx-grid smx-outline-default"
+                (click)="activeModal.dismiss('close')"
+        >取消
+        </button>
+        <button type="button" class="smx-btn  smx-default"
+                [disabled]="checkedItem? false: true"
+                (click)="activeModal.close({checkedItem: checkedItem,tag: tag})" id="smx-popule">下一步
+        </button>
+      </div>
+      <div *ngIf="keyConfig.independence === 99">
+        <button type="button" class="smx-btn smx-grid smx-outline-default" (click)="activeModal.dismiss('close')"
+        >取消
+        </button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="smx-btn smx-grid smx-default"
+                (click)="activeModal.close({checkedItem: checkedItem,tag: tag})"
+                [disabled]="checkedItem? false: true"  id="smx-popule">确定
+        </button>
+      </div>
+    </div>
+    <!--16发布do-->
+    <div *ngIf="type === 16">
+      <button type="button" class="smx_not_div_w smx-btn smx-grid smx-outline-default"
+              (click)="activeModal.dismiss('close')">取消
+      </button>
+      <button type="button" class="smx-btn smx-grid smx-default" (click)="submit(type)" id="smx-popule">确定
+      </button>
+    </div>
+
+
+    <!--17选择更换-->
+    <div *ngIf="type === 17">
+      <button type="button" class="smx_not_div_w top_data_newmap_ws smx-btn smx-grid smx-outline-default"
+              (click)="activeModal.dismiss()">取消
+      </button>
+      <button type="button" class="top_data_newmap_wss smx-btn smx-grid smx-default"
+              (click)="submit(type,keyConfig.view.children[keyConfig.view.value])" id="smx-popule">下一步
+      </button>
+    </div>
+
+    <!--18 csv导出-->
+    <div *ngIf="type === 18">
+      <button type="button" class="smx_not_div_w top_data_newmap_ws smx-btn smx-grid smx-outline-default"
+              (click)="activeModal.dismiss()">取消
+      </button>
+      <button type="button" class="top_data_newmap_wss smx-btn smx-grid smx-default"
+              (click)="submit(type,keyConfig)" id="smx-popule">确定
+      </button>
+
+    </div>
+
+    <!--    20 统计类型-->
+    <div *ngIf="type === 20">
+      <button type="button" class="smx_not_div_w top_data_newmap_ws smx-btn smx-grid smx-outline-default"
+              (click)="activeModal.close('pre')">上一步
+      </button>
+      <button type="button" class="top_data_newmap_wss smx-btn smx-grid smx-default"
+              (click)="activeModal.close(modalData)"
+              [disabled]="statisticsType === '' || statisticsType === null? true: false"
+              [title]="statisticsType === '' || statisticsType === null? '您需要选择一个统计类型': ''" id="smx-popule">下一步
+      </button>
+    </div>
+    <!--    22 地图校准-->
+    <div *ngIf="type === 22">
+      <button type="button" class="smx_not_div_w top_data_newmap_ws smx-btn smx-grid smx-outline-default"
+              (click)="activeModal.dismiss()">取消
+      </button>
+      <button type="button" class="top_data_newmap_wss smx-btn smx-grid smx-default"
+              (click)="activeModal.close(modalData)" id="smx-popule" id="smx-popule">确定
+      </button>
+
+    </div>
+
+
+    <!-- 23 服务发布 -->
+    <div *ngIf="type === 23">
+      <button type="button" class="smx_not_div_w smx-btn smx-grid smx-outline-default"
+              (click)="activeModal.dismiss('close')"
+      >取消
+      </button>
+      <button type="button" class="smx-btn  smx-default"
+              [disabled]="checkedItem? false: true"
+              (click)="createServiceNext()">下一步
+        <!--activeModal.close({checkedItem: checkedItem,tag: tag})-->
+      </button>
+    </div>
+
+  </div>
+
+
+</div>
+
+<!--==============================旧版本模态框(禁止使用)============================-->
+<ng-container>
+  <!--修改数据信息-->
+  <div class="updateDataModal" *ngIf="type === 'update'">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{keyConfig.update.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+
+    <div class="smx-modal-body">
+      <div *ngFor="let item of keyConfig.update.modal.types">
+        <div class="form-group" *ngIf="item === 'name'">
+          <label class="control-label">{{keyConfig.update.modal.info.name.label}} </label>
+          <input name="itemName" type="text" class="smx_form_minpro smx-control" id="e-name"
+                 [(ngModel)]="modalData[keyConfig.update.params[1][1]]"
+                 placeholder="最多输入40个字符" maxlength="40">
+        </div>
+        <div class="form-group" *ngIf="item === 'description'">
+          <label class="control-label">{{keyConfig.update.modal.info.description.label}}</label>
+          <textarea name="itenMemo" class="smx_form_mincontrol smx-control" id="e-memo"
+                    [(ngModel)]="modalData[keyConfig.update.params[2][1]]"
+                    placeholder="最多输入256个字符" maxlength="256"
+          ></textarea>
+        </div>
+        <div class="form-group" *ngIf="item === 'type' ">
+          <label class="smx_modal_body_desc">{{keyConfig.update.modal.info.type.label}}</label>
+          <div class="smx-modal-body-apps">
+            <ul class="smx-modal-body-apps-ul">
+              <li class="smx-modal-body-apps-li" *ngFor="let v of keyConfig.update.modal.info.type.values">
+                <div class="smx-modal-body-apps-type"
+                     [ngStyle]="{'background-image':'url('+ getAppIcon(v,'icon') +')'}"
+                     [ngClass]="{'smx-modal-body-apps-type-mark': apptype === v}"
+                     (click)="checkedIcon(v)">
+                  <!--<span class="modal-body-apps-ck"-->
+                  <!--[ngClass]="{'modal-body-apps-ck-checked': apptype === v}"></span>-->
+                  <div class="smx-modal-body-apps-type-h">
+                                    <span
+                                      style="color: #fff;font-size: 12px;">{{getAppIcon(v, 'type')}}</span>
+                  </div>
+                </div>
+
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="smx-modal-footer">
+      <button type="button" class="smx_not_div_w smx-btn smx-grid smx-outline-default"
+              (click)="activeModal.close('close')">取消
+      </button>
+      <button type="button" class="smx-btn smx-grid smx-default" aria-label="Close"
+              (click)="testUpdateData(activeModal)">
+        保存
+      </button>
+    </div>
+  </div>
+
+
+  <!--共享数据-->
+  <div class="shareDataModal" *ngIf="type === 'shareAccess'">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{keyConfig.shareAccess.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+
+    <div class="smx-modal-body">
+      <div class="shareDataModal-addU">
+        <input type="text" class="smx_share_b_data smx-control" placeholder="请输入用户名" (keyup.enter)="shareAddUser()"
+               [(ngModel)]="userName" maxlength="20"/>
+        <button id="addShare" [disabled]="isdasabled" class="smx-btn smx-default" (click)="shareAddUser()">添加</button>
+      </div>
+      <div class="shareDataModal-Ulist">
+        <table class="table">
+          <thead class="thead-default">
+          <tr>
+            <th style="text-align: center">用户名</th>
+            <th style="text-align: center">查看</th>
+            <th style="text-align: center">编辑</th>
+            <th style="text-align: center">移除</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let v of dataShareUserList">
+            <td scope="row">{{v.login_name}}</td>
+            <td>
+              <input type="checkbox" name="isView" [ngModel]="v.isview" class="smx-checkbox"
+                     (ngModelChange)="$event? v.isview = 1: v.isview = 0;sharePermission(v)"
+                     [disabled]="v.isedit? true: false"
+              >
+            </td>
+            <td>
+              <input type="checkbox" name="isEdit" [ngModel]="v.isedit" class="smx-checkbox"
+                     (ngModelChange)="$event? v.isedit = v.isview = 1: v.isedit = 0;sharePermission(v)"></td>
+            <td><span class="footer-ds-delete" title="取消用户" (click)="shareDeleteUser(v)"></span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <div class="smx-modal-footer">
+      <!--<button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">确定</button>-->
+      <button type="button" class="smx-btn smx-grid smx-default" (click)="activeModal.close('close')">关闭</button>
+    </div>
+  </div>
+
+
+  <!--选择地图-->
+  <div class="createMapModal" *ngIf="type === 'chooseMap'">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{keyConfig.chooseMap.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+
+    <!--<div class="smx-modal-body" style="width: 618px">-->
+    <div class="smx-modal-body" style="width: 622px">
+      <div class="createMapModal-search">
+        <input type="text" id="searchInput" class="smx_minp_lg smx-control" placeholder="请输入关键字搜索"
+               (keyup.enter)="searchMap()" [(ngModel)]="searchKey" maxlength="40"/>
+        <a id="clearInput" class="createMapModal-search-clear" (click)="clearInput()" title="取消搜索"
+           [ngStyle]="{'opacity': searchKey? 1:0 }">×</a>
+        <button class="smx-btn smx-default smx-lg" (click)="searchMap()">搜索</button>
+      </div>
+
+      <div class="layer-select">
+        <div class="toolbar-category1">
+        <span class="btn" [ngClass]="mymapChecked? 'btn-primary' : 'btn-secondary'"
+              (click)="tag='mymap';switchData()">{{keyConfig.chooseMap.modal.leftTitle}} ({{mapNum?.baseMapNum}})</span>
+
+          <span class="btn" [ngClass]="mymapChecked? 'btn-secondary' : 'btn-primary'"
+                (click)="tag='sharemap';switchData()">{{keyConfig.chooseMap.modal.rightTitle}}
+            ({{mapNum?.staMapNum}})</span>
+        </div>
+        <div *ngIf="baseMapList && baseMapList.length > 0" class="layer-list" detect-scroll
+             (onScroll)="handleScroll($event)" [bottomOffset]="0">
+          <ul style="padding: 0">
+            <li *ngFor="let v of baseMapList">
+              <div style="background-size: 100% 100%;"
+                   (click)="checkedBaseMap(v)"
+                   [ngClass]="{'layer-list-img-bg-checked': v[keyConfig.chooseMap.modal.id] === checkedItem[keyConfig.chooseMap.modal.id],
+                             'layer-list-img-bg': v[keyConfig.chooseMap.modal.id] !== checkedItem[keyConfig.chooseMap.modal.id] }"
+                   [ngStyle]="{'background-image': v[keyConfig.chooseMap.modal.img]? 'url('+ getUrlRoot(keyConfig.chooseMap.title)+v[keyConfig.chooseMap.modal.img] + ')': 'url(./assets/source-img/map_bg.png)'}">
+                <div class="container-center">
+                  <div class="container-center-hover">
+                    <span>{{v[keyConfig.chooseMap.modal.description]}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="layer-list-footer">
+                <span class="footer-user-title">{{v[keyConfig.chooseMap.modal.name]}}</span>
+                <div *ngIf="keyConfig.chooseMap.action === 1"
+                     [ngClass]="{'layer-list-footer-custom-ck': v[keyConfig.chooseMap.modal.id] === checkedItem[keyConfig.chooseMap.modal.id],
+                                'layer-list-footer-custom': v[keyConfig.chooseMap.modal.id] !== checkedItem[keyConfig.chooseMap.modal.id]}">
+                  <input type="checkbox" class="data_w_zdy smx-checkbox"
+                         [ngModel]="checkedItem.isCustom"
+                         (ngModelChange)="checkedItem.isCustom = $event;"
+                         value="true">
+                  <span class="layer-list-footer-custom-title">自定义</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="!baseMapList || baseMapList.length === 0" class="layer-list">
+          <!--        <span class="layer-select-nodata">{{searchTip}}</span>-->
+          <smx-empty [smxContentText]="searchTip"></smx-empty>
+        </div>
+      </div>
+    </div>
+    <div class="smx-modal-footer">
+      <button type="button" class="smx_not_div_w smx-btn smx-grid smx-outline-default"
+              (click)="activeModal.close('close')"
+      >取消
+      </button>
+      <button type="button" class="smx_not_div_w smx-btn smx-grid smx-default" id="smx-popule"
+              *ngIf="keyConfig.chooseMap.independence === 1"
+              (click)="activeModal.dismiss({checkedItem: checkedItem,tag: tag})"
+              [disabled]="checkedItem? false: true" >确定
+      </button>
+
+      <button type="button" class="smx-btn smx-default" *ngIf="keyConfig.chooseMap.independence === 2"
+              (click)="activeModal.dismiss({checkedItem: checkedItem,tag: tag})" id="smx-popule">下一步
+      </button>
+    </div>
+  </div>
+
+  <!--创建小程序(名称描述)-->
+  <div class="createMapModal" *ngIf="type === 'create'">
+    <div class="smx-modal-header">
+      <h4 class="modal-title">{{keyConfig.create.title}}</h4>
+      <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+    </div>
+    <div class="smx-modal-body">
+      <div *ngFor="let m of keyConfig.create.modal.types">
+        <div class="form-group" *ngIf="m === 'name'">
+          <label class="control-label modal-body-desc">{{keyConfig.create.modal.info.name.label}}</label>
+          <input name="itemName" type="text" class="smx_form_minpro smx-control" id="map-name" [(ngModel)]="name"
+                 placeholder="最多输入40个字符" maxlength="40">
+        </div>
+        <div class="form-group" *ngIf="m === 'description'">
+          <label class="control-label modal-body-desc">{{keyConfig.create.modal.info.description.label}}</label>
+          <textarea name="itenMemo" class="smx_form_mincontrol smx-control" id="map-memo" [(ngModel)]="description"
+                    placeholder="最多输入256个字符" maxlength="256"
+          ></textarea>
+        </div>
+        <div class="form-group" *ngIf="m === 'type'">
+          <label class="smx_modal_body_desc">{{keyConfig.create.modal.info.type.label}}</label>
+          <div class="smx-modal-body-apps">
+            <ul class="smx-modal-body-apps-ul">
+              <li class="smx-modal-body-apps-li" *ngFor="let v of keyConfig.create.modal.info.type.values">
+                <div class="smx-modal-body-apps-type"
+                     [ngStyle]="{'background-image':'url('+ getAppIcon(v,'icon') +')'}"
+                     [ngClass]="{'smx-modal-body-apps-type-mark': apptype === v}"
+                     (click)="checkedIcon(v)">
+                  <div class="smx-modal-body-apps-type-h">
+                    <span style="color: #fff;font-size: 12px;">{{getAppIcon(v, 'type')}}</span>
+                  </div>
+                </div>
+
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="m === 'remark'">
+          <label class="control-label modal-body-desc">{{keyConfig.create.modal.info.remark.label}}</label>
+        </div>
+      </div>
+    </div>
+    <div class="smx_not_div_w smx-modal-footer">
+      <button *ngIf="keyConfig.chooseMap" type="button" class="smx-btn smx-outline-default"
+              (click)="activeModal.close('chooseMap')">上一步
+      </button>
+      <button type="button" class="smx-btn smx-default smx-grid" (click)="testCreateMap(activeModal)" id="smx-popule">确定
+      </button>
+    </div>
+  </div>
+</ng-container>
+<!--==============================旧版本模态框(禁止使用)============================-->

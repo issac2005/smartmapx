@@ -1,0 +1,145 @@
+#mainLogin {
+  .modal-header {
+    text-align: center;
+    padding-bottom: 0px;
+    border-bottom: 0px;
+  }
+
+  .modal-title {
+    border-bottom: 3px solid #349BE1;
+    width: 100%;
+  }
+
+
+  .close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+  }
+
+  .input-group {
+    margin: 15px 0;
+  }
+
+  .input-item {
+    font-size: 12px;
+  }
+
+  .btn-fp-code {
+    width: 40%;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 33px;
+    cursor: pointer;
+    background-color: #F0AD4E;
+    color: #fff;
+  }
+
+  .input-fp-code {
+    margin-right: 15px;
+  }
+
+  .agreeConditional {
+    width: 100%;
+    text-align: center;
+
+    .agreeCheck {
+      vertical-align: middle;
+    }
+
+    span {
+      color: #349be1;
+      cursor: pointer;
+    }
+  }
+
+  #login_container {
+    .splitLineIn {
+      padding: 0;
+      margin: 30px 0;
+      line-height: 1px;
+      border-left: 100px solid #ddd;
+      border-right: 100px solid #ddd;
+      text-align: center;
+      color: #999;
+      font-size: 12px;
+    }
+
+    .login_wechat {
+      width: 38px;
+      height: 38px;
+      background-size: 38px 38px;
+      background-image: url('data:image/png;base64,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');
+      cursor: pointer;
+      display: inline-block;
+      //filter: grayscale(1);
+    }
+
+  }
+
+  // 确认框
+  #comfirm {
+    .form-group {
+      text-align: center;
+
+      .comfirm-waring {
+        cursor: pointer;
+        display: inline-block;
+        background-image: url(/assets/img/sprites.png);
+        background-repeat: no-repeat;
+        background-position: -103px -51px;
+        width: 30px;
+        height: 30px;
+      }
+
+      .control-label {
+        position: relative;
+        top: -9px;
+        font-size: 12px;
+      }
+    }
+
+    // 尾部
+    .modal-footer {
+      text-align: center;
+      display: block;
+      border: 0px;
+      padding: 0px 15px 15px;
+
+      .btn-secondary {
+        background: #3887be;
+        color: #ffffff;
+        width: 80px;
+        height: 28px;
+        line-height: 28px;
+        padding: 0px;
+        border: 1px #eeeeee;
+
+        &:hover {
+          background: #3887be;
+          color: #eeeeee;
+        }
+
+        &[disabled] {
+          background: #3887be;
+          color: #ffffff;
+
+          &:hover {
+            background: #3887be;
+            color: #ffffff;
+          }
+        }
+      }
+
+      .button-disabled {
+        disabled: true;
+        opacity: 0;
+      }
+    }
+  }
+}
+
+
+
+

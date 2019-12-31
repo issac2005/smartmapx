@@ -1,0 +1,83 @@
+<ng-content></ng-content>
+<smx-table #dt [value]="datas" [style]="smxStyle" [styleClass]="smxClass">
+  <ng-template pTemplate="header">
+    <tr>
+      <th *ngIf="config.deleteBtn" [style.width.px]="50"></th>
+      <th *ngIf="config.checkbox" [style.width.px]="50"></th>
+      <th *ngFor="let col of cols;">
+        <div [ngSwitch]="col.type">
+          <span *ngSwitchDefault>{{col.header}}</span>
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+    <tr>
+      <td *ngIf="config.deleteBtn" [style.width.px]="50">
+        <span *ngIf="!data.disabled" class="fa fa-trash" (click)="deleteItem(data,rowIndex)"></span>
+      </td>
+      <td *ngIf="config.checkbox" [style.width.px]="50">
+        <input *ngIf="!data.disabled" type="checkbox" (change)="checkItem($event,data,rowIndex)">
+      </td>
+      <ng-container *ngFor="let col of cols">
+        <ng-container [ngSwitch]="col.type">
+          <ng-container *ngIf="!data.disabled;else disabledMode">
+            <!--下拉框-->
+            <td pEditableColumn *ngSwitchCase="'select'">
+              <p-cellEditor style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: block;">
+                <ng-template pTemplate="input">
+                  <smx-select
+                    [(ngModel)]="data[col.field]"
+                    [options]="col.options"
+                    [optionLabel]="col.label"
+                    [smxStyle]="{'height':'100%','width':'100%'}"
+                    [smxAutoFocus]="true"
+                    (blur)="blurEvent(dt, col, data)"
+                    [optionValue]="col.value">
+                  </smx-select>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{getLabel(data[col.field], col) | SmxTablePipe: pipe }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+
+            <!--输入框-->
+            <td pEditableColumn *ngSwitchDefault style="padding: 5px">
+              <p-cellEditor style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: block;">
+                <ng-template pTemplate="input">
+                  <smx-input [smxFormat]="col.type"
+                             [smxMin]="col.min"
+                             [smxMax]="col.max"
+                             [smxMaxlength]="40"
+                             (blur)="blurEvent(dt, col, data)"
+                             [(ngModel)]="data[col.field]"
+                             [smxStyle]="{'width':'100%','height':'100%'}">
+                  </smx-input>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{data[col.field]  | SmxTablePipe: pipe}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+
+            <!--自定义模板-->
+            <td *ngSwitchCase="'custom'" (click)="closeClick($event)">
+              <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="data"></ng-container>
+            </td>
+          </ng-container>
+          <ng-template #disabledMode>
+            <td *ngSwitchCase="'custom'" (click)="closeClick($event)">
+              <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="data"></ng-container>
+            </td>
+
+            <td *ngSwitchDefault>
+              <div>{{data[col.field] | SmxTablePipe: pipe}}</div>
+            </td>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </ng-template>
+</smx-table>
+

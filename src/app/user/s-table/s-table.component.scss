@@ -1,0 +1,32 @@
+#sTable {
+  .customBtn {
+    margin: 0 5px;
+    border-radius: 5px;
+    min-width: 78px;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  .fixedThead {
+    display: block;
+    width: 100%;
+  }
+  .scrollTbody {
+    display: block;
+    height: 262px;
+    overflow: auto;
+    width: 100%;
+  }
+  .table td, .table th {
+    width: 200px;
+    border-bottom: none;
+    border-left: none;
+    border-right: 1px solid #CCC;
+    border-top: 1px solid #DDD;
+    padding: 2px 3px 3px 4px
+  }
+
+}

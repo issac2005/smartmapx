@@ -1,0 +1,79 @@
+<div class="pro-container" [ngClass]="{'view': info.isEdit === 0 }">
+  <div class="pro-name">标绘信息
+    <!--获取geojson--Ljy-->
+    <div class="getGeojson" (click)="getGeojson()">获取GEOJSON</div>
+  </div>
+
+  <!-- 编辑名称 -->
+  <div class="pro-title">名称</div>
+  <div class="input-wrap" *ngIf="info.isEdit === 0">
+    <span  style="display:block;">{{plotInfo?.name}}</span>
+  </div>
+  <div class="input-wrap" *ngIf="plotInfo && info.isEdit === 1">
+    <input id="titleInput" #titleInput type="text" maxlength="40" [(ngModel)]="plotInfo.name" (blur)="titleChange(plotInfo)" >
+  </div>
+
+  <!-- 编辑描述 -->
+  <div class="pro-title">描述</div>
+  <div class="input-wrap"  *ngIf="info.isEdit === 0">
+   <span style="display:block;word-break: break-word;">{{plotInfo?.description}}</span>
+  </div>
+  <div class="input-wrap" *ngIf="plotInfo && info.isEdit === 1">
+    <textarea id="descInput" #descInput cols="30" rows="3"  [(ngModel)]="plotInfo.description" maxlength="256" (blur)="descChange(plotInfo)"></textarea>
+  </div>
+
+  <!-- 上传图片 -->
+  <div class="pro-title">图片</div>
+  <div class="input-wrap">
+    <div>
+      <div style="height:88px;">
+        <smx-upload style="display:inline-block; height:88px; vertical-align: top;" (uploadEnd)="receiveUploadEnd($event)" [smxFile]="'image'" [smxMultipleWidth]="90" [smxMultipleNum]="uploadMax" [smxIsShow]="false" *ngIf="info.isEdit === 1">
+        </smx-upload>
+        <div class="img-wrap">
+          <span class="prev" *ngIf="plotInfo?.content.img?.length > 2 && showIconPrev" (click)="moveLeft()"></span>
+          <span class="next" *ngIf="plotInfo?.content.img?.length > 2 && showIconNext" (click)="moveRight(imgWidth)"></span>
+          <div class="img-container" id="img-conatiner">
+            <ul class="img-list" [ngStyle]="{'width': plotInfo?.content.img?.length*imgWidth + 'px'}">
+              <li  *ngFor="let v of plotInfo?.content.img index as i;">
+                <div class="sui-icon_u  sui-icon-img">
+                  <div class="sui-icon-img-btn">
+                    <span class="sui-icon_uc fa fa-eye" (click)="viewImg(v.url)"></span>
+                    <span class="sui-icon_uc fa fa-close" (click)="deleteImg(v,i)" *ngIf="info.isEdit === 1"></span>
+                  </div>
+                  <img [src]="v.url" class="sui-images" loading="lazy">
+                </div>
+                <div class="img-name">{{plotInfo?.content?.img[i]?.name}}</div><!--v.file[0].name-->
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="padding-left:20px;color:#666;margin-top:-10px;" *ngIf="info.isEdit === 1">{{plotInfo?.content.img?.length}}/10</div>
+    </div>
+  </div>
+
+  <!--添加属性--Ljy-->
+  <div class="addAttribute">
+    <div *ngFor="let aiData of plotInfo_keys ; index as i">
+      <div class="pro-title" *ngIf="info.isEdit === 0">
+        <span style="display:block;">{{aiData.name}}</span>
+      </div>
+      <div class="pro-title" *ngIf="plotInfo && info.isEdit === 1">
+        <input id="nameInput" #nameInput type="text" style="height:22px;background-color: #e7ecee;"maxlength="20" [(ngModel)]="aiData.name" (select)="selectname(i,$event)" (click)="nameChangename(i,$event)" (blur)="nameChange(i,$event)" >
+        <div class="clearAttr" (click)="clearAttr(i)" *ngIf="info.isEdit === 1"></div>
+      </div>
+      <!---->
+      <div class="input-wrap" *ngIf="info.isEdit === 0">
+        <span style="display:block;">{{aiData.value}}</span>
+      </div>
+      <div class="input-wrap" *ngIf="plotInfo && info.isEdit === 1">
+        <input id="attrInput" #attrInput type="text" maxlength="40" [(ngModel)]="aiData.value" (select)="selectvalue(i,$event)" (click)="attrChangeattr(i,$event)" (blur)="attrChange(i,$event)" >
+      </div>
+    </div>
+  </div>
+  <div class="add-attribute icon smx-icon icon-smx-add" (click)="addAttribute()" *ngIf="info.isEdit === 1">&nbsp;&nbsp;添加属性</div>
+
+</div>
+<nz-modal [(nzVisible)]="isVisible" (nzOnCancel)="closeView()" [nzWidth]="500" [nzFooter]="null" [nzClosable]="false">
+  <img [src]="viewImgUrl" style="width: 100%" loading="lazy">
+</nz-modal>

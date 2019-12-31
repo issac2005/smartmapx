@@ -1,0 +1,44 @@
+<div #container
+     [ngClass]="{'smx-drag-modal':true, 'ui-dialog-rtl':rtl,'ui-dialog-draggable':draggable,'ui-dialog-resizable':resizable}"
+     [ngStyle]="style" [class]="styleClass"
+     [@animation]="{value: 'visible', params: {transitionParams: transitionOptions}}"
+     (@animation.start)="onAnimationStart($event)" role="dialog" [attr.aria-labelledby]="id + '-label'">
+  <ng-container *ngIf="headerFacet && headerFacet.first">
+    <div #titlebar (mousedown)="initDrag($event)">
+      <ng-content select="smx-header"></ng-content>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="header">
+    <div #titlebar class="smx-drag-modal-header"
+         (mousedown)="initDrag($event)">
+      <span [attr.id]="id + '-label'" class="mtitle">{{header}}</span>
+      <div>
+        <a *ngIf="minimizable" [ngClass]="{'mlabel':true}"
+           style="width: 24px;display: inline-block;text-align: center;"
+           tabindex="0" role="button" (click)="toggleMinimize('min')">
+          <span class="fa fa-minus"></span>
+        </a>
+        <a *ngIf="maximizable" [ngClass]="{'mlabel':true}"
+           tabindex="0" role="button" (click)="toggleMaximize($event)" (keydown.enter)="toggleMaximize($event)">
+          <span [ngClass]="maximized ? minimizeIcon : maximizeIcon"></span>
+        </a>
+        <a *ngIf="closable" [ngClass]="{'mlabel':true}"
+           tabindex="0" role="button" (click)="close($event)" (keydown.enter)="close($event)"
+           (mousedown)="onCloseMouseDown($event)">
+          <span [class]="closeIcon"></span>
+        </a>
+      </div>
+    </div>
+  </ng-container>
+
+  <div #content class="smx-drag-modal-body" [ngStyle]="contentStyle">
+    <ng-content></ng-content>
+  </div>
+  <div #footer class="ui-dialog-footer ui-widget-content" *ngIf="footerFacet && footerFacet.first">
+    <ng-content select="smx-footer"></ng-content>
+  </div>
+  <div *ngIf="resizable" class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"
+       style="z-index: 90;" (mousedown)="initResize($event)"></div>
+</div>
+<span *ngIf="minimizeStatus" (click)="toggleMinimize()" class="fa fa-window-maximize"
+      style="position: fixed;bottom: 30px;left: 10px;cursor: pointer;color: #fff;"></span>

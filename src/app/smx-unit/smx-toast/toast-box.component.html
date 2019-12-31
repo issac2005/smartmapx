@@ -1,0 +1,16 @@
+<!--吐司-->
+<div class="c-toast-container" [ngClass]="toastPosition"
+     *ngIf="toastConfigs[0] &&toastConfigs[0].toastType &&  toastConfigs[0].toastType === 4;else break"
+     style="left: 0px;top: 0px;height: 100%;width: 100%;background: rgba(0,0,0,0.6);margin-top: 0px;">
+  <div *ngFor="let toastCfg of getToastConfigs()" [@animation]="toastAnimation" id="break">
+    <app-toast [config]="toastCfg" (dismissed)="remove(toastCfg)"></app-toast>
+  </div>
+</div>
+<!--授权页面-->
+<ng-template #break>
+  <div class="c-toast-container" [ngClass]="toastPosition">
+    <div *ngFor="let toastCfg of getToastConfigs()" [@animation]="toastAnimation">
+      <app-toast [config]="toastCfg" (dismissed)="remove(toastCfg)"></app-toast>
+    </div>
+  </div>
+</ng-template>

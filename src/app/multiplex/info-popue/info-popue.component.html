@@ -1,0 +1,89 @@
+<div class="info-popue">
+  <div class="form-group">
+    <div class="layer-smartMapX-select-ban">
+      图层
+      <i id="add" title="单击添加图层" (click)="$event.stopPropagation(); add()">+</i>
+    </div>
+    <!-- 配置面板中 -->
+    <ul id="layer-smartMapX-select-showlist" class="layer-list">
+      <li style="list-style-type: none;" *ngFor="let item of testArray ; index as i">
+        <div class="listItem" (click)="slideToggle(i)">
+          <label>{{testArray[i].name}}</label>
+          <span class="move-up" title="上移" *ngIf="testArray.length > 1 && i > 0" (click)="$event.stopPropagation(); moveUp(item, i)"></span>
+          <span class="move-down" title="下移" *ngIf="testArray.length > 1 && i === 0 || i < testArray.length-1"  (click)="$event.stopPropagation(); moveDown(item, i)"></span>
+          <span class="style_delete" title="删除图层" (click)="$event.stopPropagation(); prompt(i)"><i style="cursor: pointer;" class="fa fa-trash-o"></i></span>
+          <span [ngClass]="{'layer':true, 'on': item.dataShow, 'off': !item.dataShow}" title="{{item.dataShow?'启用':'禁用'}}" (click)="$event.stopPropagation(); showLayerData(item)"><i></i></span>
+          <span [ngClass]="{'arrow':true,'off':!item.slidedown}"></span>
+
+        </div>
+        <div [ngClass]="{'dataWrap': true,'hide': !item.slidedown}">
+          <div class="info-title-wrap">
+            <div class="info-title-add">
+              标题
+              <div class="layer-smartMapX-select-add" (click)="titleModalToggle(item)">插入</div>
+            </div>
+            <div class="info-title-input">
+              <input type="text" class="smx-control" [(ngModel)]="default[i].titleTemplate" (keyup)="inputChange(i, default[i].titleTemplate)">
+            </div>
+          </div>
+          <div class="info-title-wrap">
+            <div class="info-title-add">
+              内容
+              <div class="layer-smartMapX-select-add" (click)="contentModalToggle(item)">插入</div>
+            </div>
+            <div class="info-title-textarea">
+              <textarea name="" id="" rows="6" [(ngModel)]="default[i].contentTemplate" (click)="textareaClick($event,item)" (keyup)="textareaKeyup($event,item,i,default[i].contentTemplate)">
+              </textarea>
+            </div>
+          </div>
+
+          <!-- 选择名称弹出框 -->
+          <div id="selectName" [ngClass]="{'title-select-wrap':true, 'hide':!item.titleModalShow, 'low':!item.titleSelect}">
+            <ul>
+              <li *ngFor="let option of item.layerData" [title]="option.description==='class'?'oclass':option.description" (click)="titleSelect(item, option)">{{option.description==='class'?'oclass':option.description}}</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- checkbox相关 -->
+  <div id="layer-smartMapX-select-checkAll" *ngIf="pluseBoolean">
+    <div class="layer-smartMapX-select-tableTitle">
+      选择图层
+    </div>
+    <div id="layer-smartMapX-select-info">
+      <div style="height: 143px;">
+        <!-- 图层checkbox框 -->
+        <table>
+          <tr *ngFor="let item of layerInfomation ; index as i;">
+            <td class="layer-smartMapX-select-trtd" style="position: relative;left: 4px;">
+              <input [id]="i+2" class="radio-select" style="margin: 0 0 0 0.5em; cursor: pointer; " type="radio" value="{{layerInfoId[i]}}"
+                     (click)="clicks($event, i)" name="a">
+              <label [for]="i+2" style="width:80%;">{{item.name}}</label>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="layer-smartMapX-select-button">
+      <button class="smx_layerselect_de smx-btn smx-outline-default" (click)="buttonDis()">取消</button>
+      <button class="smx_layerselect smx-btn smx-default" (click)="buttonSubmit()">确定</button>
+    </div>
+  </div>
+
+  <!-- 确认删除弹出框 -->
+  <div id="layer-smartMapX-select-waringdirector" *ngIf="promptBoolean">
+    <div id="layer-smartMapX-select-waringtitle">
+      <span id="layer-smartMapX-select-waringworld">删除图层</span>
+      <span id="layer-smartMapX-select-waringXcancel" style="cursor: pointer;" (click)="ButtonDisDelete()">×</span>
+    </div>
+    <div id="layer-smartMapX-select-waringmessage">
+      <span style="position: relative;top: 13px;">删除图层将不可恢复，确定要删除图层?</span>
+    </div>
+    <div class="smx-modal-footer">
+      <button class="smx-btn smx-grid smx-outline-default" (click)="ButtonDisDelete()">取消</button>
+      <button class="smx-btn smx-default smx-grid" (click)="ButtonSuerDelete()">确定</button>
+    </div>
+  </div>
+</div>

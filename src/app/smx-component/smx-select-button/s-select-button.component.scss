@@ -1,0 +1,64 @@
+.s-selectBtn {
+
+  &-div {
+    height: 33px;
+    display: inline-block;
+    //width: auto;
+    min-width: 62px;
+    padding: 5px 10px;
+    border-right: 0.5px solid #fff;
+    text-align: center;
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 10px;
+    span {
+      cursor: pointer;
+    }
+  }
+
+  &-item {
+    background: #f4f4f4;
+    &:hover {
+      background: #e9ecef;
+    }
+  }
+
+  &-item-checked {
+    background: #007ad9;
+    span {
+      color: #fff;
+    }
+
+    &:hover {
+      background: #066dd9;
+    }
+  }
+
+  &-item-disabled {
+    background: #ccc !important;
+    opacity: 0.7 !important;
+    cursor: not-allowed !important;
+    span {
+      color: #212529 !important;
+      cursor: not-allowed !important;
+    }
+
+    &:hover {
+      background: #ccc !important;
+    }
+  }
+
+  &-tip {
+    background-color: #ff9d24;
+    position: absolute;
+    top: -10px;
+    right: 0px;
+    min-width: 15px;
+    border-radius: 2px;
+    text-align: center;
+    font-size: 10px;
+    padding: 0 3px;
+  }
+}
+

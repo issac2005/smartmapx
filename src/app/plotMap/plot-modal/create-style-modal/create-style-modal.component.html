@@ -1,0 +1,21 @@
+<!-- 弹框头部 -->
+<div class="smx-modal-header">
+  <h4 class="modal-title">{{keyConfig.title}}</h4>
+  <span aria-hidden="true" class="close" (click)="activeModal.dismiss()">&times;</span>
+</div>
+
+<!-- 弹框主体 -->
+<div class="smx-modal-body">
+  <app-style-detail *ngIf="defaultStyle" [(defaultStyle)]="defaultStyle" [styleArray]="styleArray" [modeType]="defaultStyle?.geo_type"></app-style-detail>
+</div>
+
+<!-- 弹框底部 -->
+<div class="smx-modal-footer">
+  <button type="button" class="smx_not_div_w top_data_newmap_ws smx-btn smx-grid smx-outline-default"
+          (click)="activeModal.dismiss()">取消
+  </button>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <button type="button" class="top_data_newmap_wss smx-btn smx-grid smx-default" (click)="submitStyle()" id="smx-createStyePopule">
+    确定
+  </button>
+</div>

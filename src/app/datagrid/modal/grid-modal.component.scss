@@ -1,0 +1,419 @@
+#grid-modal {
+  .form-text {
+    font-size: 12px;
+  }
+
+  .grid-modal-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: inline-block;
+  }
+
+  //头部
+  .modal-header {
+    // 标题
+    background: #3887be;
+    height: 30px;
+    //padding-bottom: 20px;
+    //padding-top: 20px;
+    padding: 0px 11px 0px 12px;
+    line-height: 30px;
+
+    .modal-title {
+      color: #fff;
+      font-size: 12px;
+      //position: relative;
+      padding-bottom: 0px;
+      //top: 5px;
+      line-height: 30px;
+    }
+
+    .close {
+      color: #fff;
+      opacity: 1;
+      font-weight: normal;
+      position: relative;
+      bottom: 3px;
+      line-height: 30px;
+    }
+
+    .modal-body {
+      text-align: center;
+    }
+  }
+
+  //尾部
+  .modal-footer {
+    text-align: center;
+    display: block;
+    border: 0;
+    padding: 0 15px 15px;
+
+    .btn-secondary {
+      background: #3887be;
+      color: #eeeeee;
+      width: 80px;
+      height: 28px;
+      line-height: 28px;
+      padding: 0px;
+      border: 1px #eeeeee;
+
+      &:hover {
+        background: #3887be;
+        color: #eeeeee;
+      }
+
+      &[disabled] {
+        background: #3887be;
+        color: #eeeeee;
+        // cursor: default;
+        //&:hover{
+        //
+        //}
+      }
+    }
+
+    .button-disabled {
+      disabled: true;
+      opacity: 0;
+    }
+  }
+
+  // 主体
+  .smx-modal-body {
+    text-align: center;
+    /*padding: 15px;
+    font-size: 12px;
+    color: #333;
+*/
+    .ui-fieldset.ui-widget.ui-widget-content.ui-corner-all.ui-fieldset-toggleable {
+      margin: 10px;
+    }
+
+    .ui-fieldset-toggler.fa.fa-w.fa-plus {
+      font-size: 14px;
+      color: #ccc;
+      position: relative;
+      top: -15px;
+    }
+
+    .ui-fieldset-toggler.fa.fa-w.fa-minus {
+      font-size: 14px;
+      color: #ccc;
+      position: relative;
+      top: -15px;
+    }
+
+    .union-select:hover {
+      background: #e7fcff;
+    }
+
+    .union-style {
+      min-width: 80px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+  }
+
+  .smartmapx-canvas {
+    position: static !important;
+  }
+
+  //::-webkit-scrollbar {
+  //  width: 1px;
+  //}
+
+
+  .listbox {
+    border: 1px solid #ccc;
+  }
+
+  .listbox-item {
+    height: 2rem;
+    line-height: 2rem;
+    cursor: pointer;
+  }
+
+  .listbox-item-checked {
+    background: #007ad9;
+  }
+}
+
+//合并
+.combine {
+  // 搜索
+  &-search {
+    width: 460px;
+    height: 40px;
+    text-align: center;
+    display: inline-flex;
+
+    &-input {
+      width: 360px;
+      height: 40px;
+      padding-left: 10px;
+      margin-right: 10px;
+      border: 1px solid #dddddd;
+
+      position: relative;
+      left: 15px;
+    }
+
+    &-clear {
+      cursor: pointer;
+      color: gray !important;
+      font-size: 20px;
+      position: relative;
+      right: 15px;
+      top: 3px;
+    }
+
+    .btn-primary {
+      //display: inline-block;
+      height: 40px;
+      width: 100px;
+      vertical-align: bottom;
+    }
+  }
+
+  &-select {
+    padding: 15px 15px 0px 15px;
+    //border-top: 1px solid #eceeef;
+    //border-bottom: 1px solid #eceeef;
+    &-category {
+      display: flex;
+      border-bottom: 1px solid #eceeef;
+      margin-bottom: 10px;
+
+      .btn {
+        border-radius: 0;
+        cursor: pointer;
+        color: #666666;
+        height: 30px;
+        line-height: 25px;
+        padding: 0;
+        width: 95px;
+      }
+
+      .btn-primary {
+        color: #6b9dce;
+        background: #ffffff;
+        border-top: 1px solid #4a8bc6;
+        border-left: 1px solid #e5e5e5;
+        border-right: 1px solid #e5e5e5;
+        border-bottom: 1px solid #ffffff;
+        position: relative;
+        top: 1px;
+
+        &:hover {
+          color: #6b9dce;
+          background: #ffffff;
+        }
+      }
+
+      .btn-secondary {
+        background: #ffffff;
+        color: #666666;
+        border-top: 1px solid #e5e5e5;
+        border-left: 1px solid #e5e5e5;
+        border-right: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
+
+        &:hover {
+          background: #ffffff;
+        }
+      }
+    }
+
+    &-list {
+      height: 200px;
+      overflow-y: auto;
+      border-bottom: 1px solid #eceeef;
+      overflow-x: hidden;
+
+      ul {
+        padding: 0px;
+
+        li {
+          list-style: none;
+          display: inline-block;
+          cursor: pointer;
+
+          .layer-list-img-bg {
+            height: 37px;
+            width: 430px;
+
+            .layer-list-icon {
+              display: inline-block;
+              background-image: url(../../../assets/img/point.png);
+              background-repeat: no-repeat;
+              position: relative;
+              left: 10px;
+              top: 3px;
+              margin-right: 10px;
+              width: 15px;
+              height: 15px;
+
+            }
+
+            .layer-list-name {
+              line-height: 37px;
+              display: inline-block;
+              width: 200px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              vertical-align: middle;
+            }
+
+            .layer-list-checked {
+              display: inline-block;
+              background-image: url(/assets/img/sprites.png);
+              background-position: -21px -16px;
+              width: 15px;
+              position: relative;
+              height: 15px;
+              top: 3px;
+              left: 160px;
+              background-repeat: no-repeat;
+            }
+
+            &:hover {
+              background: #eeeeee;
+            }
+          }
+
+        }
+      ;
+      }
+    }
+
+  }
+
+  &-field {
+    position: relative;
+    top: 3px;
+  }
+
+  //::-webkit-scrollbar {
+  //  width: 2px;
+  //  height: 10px;
+  //}
+
+}
+
+.split-modal {
+  .amm {
+    &-body {
+      margin: 15px 0;
+    }
+
+    &-toolbar {
+      color: blue;
+      top: 0;
+      position: relative;
+      text-align: center;
+      width: 100%;
+      height: 35px;
+    }
+
+    &-title {
+      margin-right: 15px;
+      display: inline-block;
+      font-size: 14px;
+      line-height: 35px;
+      color: #3887be;
+      font-weight: bold;
+    }
+
+  }
+}
+
+
+//地址匹配
+.address-matching-modal {
+  .amm {
+    &-body {
+      height: 200px;
+      //border: 1px solid #ccc;
+      margin: 15px;
+      width: 400px;
+      background: #f8f8f8;
+
+      button {
+        margin-top: 3px;
+      }
+    }
+
+    &-body.input {
+      text-align: left;
+      padding: 15px;
+    }
+
+    &-toolbar {
+      color: blue;
+      top: 0px;
+      width: max-content;
+      position: relative;
+      //background: #fff;
+      margin-left: 60px;
+      height: 35px;
+    }
+
+    //&-toolbar.input {
+    //  margin-top: 10px;
+    //}
+
+    &-title {
+      margin-right: 15px;
+      display: inline-block;
+      font-size: 14px;
+      line-height: 35px;
+      color: #3887be;
+      font-weight: bold;
+    }
+
+    &-filed {
+      text-align: left;
+      margin-left: 15px;
+
+      .smx-select {
+        width: auto
+      }
+
+      div {
+        display: inline-block;
+      }
+    }
+
+    &-area {
+      margin-top: 15px;
+      text-align: left;
+      margin-left: 15px;
+
+      .smx-select {
+        width: auto
+      }
+
+      &-select {
+        display: inline-block;
+
+        div {
+          display: inline-block;
+        }
+      }
+    }
+
+    &-filter {
+      max-height: 170px;
+      overflow-y: auto;
+    }
+
+  }
+}
+
+.smx_data_ipt {
+  height: 28px;
+}

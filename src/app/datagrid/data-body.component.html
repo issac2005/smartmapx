@@ -1,0 +1,444 @@
+<div class="panel">
+  <div [ngSwitch]="componentType" class="panel-div">
+    <nz-spin nzSimple style="left: 50%;;position: fixed;top: 50%;" nzTip="数据刷新中..."></nz-spin>
+    <!--数据表格-->
+    <div *ngSwitchCase="'4'">
+      <ng-container *ngIf="pageConfig && operationConfig">
+        <smx-panel [smxData]="smxData">
+          <div class="left-tab-title" smxType="header">
+            <span class="fa fa-angle-left left-tab-back" (click)="goBack('data')" title="返回上一页"></span>
+            {{dataConfig.description}}
+          </div>
+        </smx-panel>
+        <div class="right-side-box">
+          <ng-container *ngIf="pageConfig && operationConfig">
+            <div class="listWrap">
+              <ul class="subNavWrap">
+                <li class="subCtrl" [ngClass]="{'active': pageType == 1}" (click)="switchShow(1)">数据源信息</li>
+                <li class="subCtrl" [ngClass]="{'active': pageType == 2}" (click)="switchShow(2)">数据源结构</li>
+                <li class="subCtrl" [ngClass]="{'active': pageType == 3}" (click)="switchShow(3)"
+                    *ngIf="pageConfig.visit_type === 0">查询方案
+                </li>
+              </ul>
+            </div>
+
+            <!--表格-->
+            <div>
+              <div *ngIf="pageType==1" class="right-filter-box">
+                <div class="right-filter-title">
+                  <span>{{dataConfig.description}}</span>
+                  <div class="float-right" (click)="showFilter=!showFilter">
+                    数据源搜索
+                    <span [ngClass]="{'fa-chevron-circle-down': showFilter, 'fa-chevron-circle-up': !showFilter}"
+                          class="fa"></span>
+                  </div>
+                </div>
+                <div *ngIf="showFilter" class="right-filter-body">
+                  <c-filter
+                    #filter2
+                    [style]="{'width':'80px'}"
+                    [filterWay]="'right'"
+                    [filterData]="filterConfig"
+                    [filterArray]="filterArrayDataTwo"
+                    [conjunction]="conjunction2">
+                  </c-filter>
+
+                  <div class="filter-bottom">
+                    <div style="display: inline-block;">
+                      <label class="filter-label">组合过滤</label>
+                      <select class="smx-control" [(ngModel)]="conjunction2"
+                              (ngModelChange)="changeConjunction2($event)"
+                              style="float: right;width: 150px;line-height: 26px;">
+                        <option *ngFor="let item of conjunctionSelect" [ngValue]="item.value">{{item.key}}
+                        </option>
+                      </select>
+                    </div>
+                    <button type="button" class="smx-btn smx-default smx-xs" (click)="addFilterCon()"
+                            style="margin: 0 10px;">添加过滤
+                    </button>
+                    <button type="button" class="smx-btn smx-default smx-xs" (click)="searchFilter()"
+                            style="margin-right: 10px;padding: 0.25rem 1.35rem">搜索
+                    </button>
+                    <button type="button" class="smx-btn smx-outline-default smx-xs" (click)="removeAllFilter()"
+                            style="padding: 0.25rem 1.35rem;">重置
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="pageType==2" class="right-filter-box">
+                <div class="right-filter-title">
+                  <span>{{dataConfig.description}}</span>
+                </div>
+              </div>
+              <div *ngIf="pageType==1">
+                <div class="btn-grid" *ngIf="pageConfig.visit_type ==0">
+                  <button type="button" *ngIf="operation.add" class="smx-btn smx-default"
+                          style="margin-right: 10px"
+                          (click)="addNewData()">添加
+                  </button>
+                  <button type="button" *ngIf="operation.remove" class="smx-btn smx-outline-default"
+                          style="margin-right: 10px"
+                          (click)="delGridData()"
+                          [disabled]="btnDisabled.del ? false: true">删除
+                  </button>
+                  <button type="button" *ngIf="operation.update" class="smx-btn smx-outline-default"
+                          (click)="updateGridData()"
+                          [disabled]="btnDisabled.update ? false: true">修改
+                  </button>
+                  <button (click)="exportData()"
+                          class="smx-btn smx-default smx-xs"
+                          style="position: absolute;right: 150px;">
+                    <span class="smx-icon-output"></span><span
+                    style="display: inline-block;padding-left: 5px;">导出</span>
+                  </button>
+                  <span class="smartmapx-data-totalProperty">总数: {{totalProperty}}</span>
+                </div>
+                <div class="btn-grid" *ngIf="pageConfig.visit_type ==1">
+                  <span class="smartmapx-data-totalProperty">总数: {{totalProperty}}</span>
+                </div>
+              </div>
+
+              <c-grid
+                (refreshData)="refreshData()"
+                (updateFilterInfo)="getFilterInfo();getGridStructure()"
+                (totalProperty)="setTotalProperty($event)"
+                [pageConfig]="pageConfig"
+                [strucrtorData]="strucrtorData"
+                [operationConfig]="operationConfig"
+                [geoType]="geoType"
+                [pageType]="pageType"
+                [btnDisabled]="btnDisabled">
+              </c-grid>
+            </div>
+
+            <!--企业查询方案-->
+            <div [ngStyle]="{'display': pageType==3 ? 'block' : 'none'}" style="height: 100%;">
+              <enterprise
+                *ngIf="strucrtorData"
+                [pageConfig]="pageConfig"
+                [strucrtorData]="strucrtorData"
+                [filterConfig]="filterConfig"
+                [operationConfig]="operationConfig">
+              </enterprise>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+
+    </div>
+
+    <!--统计图层-->
+    <div *ngSwitchCase="'5'">
+      <smx-panel [smxData]="smxData">
+        <div class="left-tab-title" smxType="header">
+          <span class="fa fa-angle-left left-tab-back" (click)="goBack('sta')" title="返回上一页"></span>
+          {{pageConfig.name}}
+        </div>
+      </smx-panel>
+
+
+      <div class="right-side-box sta">
+        <div class="listWrap">
+          <ul class="subNavWrap">
+            <li class="subCtrl" [ngClass]="{'active': pageType == 1}" (click)="pageType = 1;">地图模式</li>
+            <li class="subCtrl" [ngClass]="{'active': pageType == 2}" (click)="pageType = 2;">数据模式</li>
+          </ul>
+        </div>
+
+        <div [ngStyle]="{'display': pageType==1 ? 'block' : 'none'}" class="right-map-box"
+             style="height: calc(100% - 32px);position: relative;">
+          <div id="sta_map" style="height: 100%; background: #ccc;"></div>
+          <span class="mapLoading"
+                [ngStyle]="{'display': maploaded? 'none': ''}"></span>
+          <div
+            *ngIf="maploaded === true && pageConfig.visit_type === 0 || pageConfig.visit_type === '0'"
+            [ngClass]="{'show':panelShow,'mapsta-drawer':true}">
+            <app-sta-main
+              [mapStyle]="mapStyle"
+              [layer]="layerStyle"
+              [staType]="staType"
+              [layerIndex]="layerIndex"
+              [type]="'sta'"
+              [map]="map">
+            </app-sta-main>
+            <span [ngClass]="{'slideBtn2':true,'open':!panelShow }" (click)="closePanel()"></span>
+          </div>
+
+          <!--发布-->
+          <button *ngIf="(pageConfig.visit_type === 0 || pageConfig.visit_type === '0')"
+                  [disabled]="maploaded? false:true"
+                  class="llcn-custom-btn sta-btn-plu"
+                  (click)="release()">
+          </button>
+
+          <!--切换底图-->
+          <button *ngIf="(pageConfig.visit_type === 0 || pageConfig.visit_type === '0')"
+                  [disabled]="maploaded? false:true"
+                  class="llcn-custom-btn sta-btn-toggle"
+                  (click)="toggleMap()">
+          </button>
+          <!--保存视窗-->
+          <div *ngIf="pageConfig.visit_type === 0 || pageConfig.visit_type === '0'" (click)="saveWindow()"
+               class="sta-body-sw">
+            <i class="fa fa-star" title="保存当前视窗"></i>
+          </div>
+          <!--最佳视野-->
+          <div *ngIf="pageConfig.visit_type === 0 || pageConfig.visit_type === '0'" (click)="getBestCenter()"
+               class="sta-body-center">
+            <i class="sta-body-center-icon" title="图层最佳视野"></i>
+          </div>
+        </div>
+
+        <div [ngStyle]="{'display': pageType==2 ? 'block' : 'none'}">
+          <div class="right-filter-box">
+            <div class="right-filter-title">
+              <span>{{dataConfig.description}}</span>
+              <div class="float-right" (click)="showFilter=!showFilter">
+                数据源搜索
+                <span [ngClass]="{'fa-chevron-circle-down': showFilter, 'fa-chevron-circle-up': !showFilter}"
+                      class="fa"></span>
+              </div>
+            </div>
+            <div *ngIf="showFilter" class="right-filter-body">
+              <c-filter #filter2 [filterWay]="'right'" [filterData]="filterConfig"
+                        [filterArray]="filterArrayDataTwo"
+                        [conjunction]="conjunction2"></c-filter>
+
+              <div class="filter-bottom">
+                <div style="display: inline-block;">
+                  <label class="filter-label">组合过滤</label>
+                  <select [(ngModel)]="conjunction2" (ngModelChange)="changeConjunction2($event)"
+                          class="smx-control"
+                          style="float: right;width: 150px;line-height: 26px;">
+                    <option *ngFor="let item of conjunctionSelect" [ngValue]="item.value">{{item.key}}
+                    </option>
+                  </select>
+                </div>
+                <button type="button" class="smx-btn smx-default smx-xs" (click)="addFilterCon()"
+                        style="margin-left: 10px;">
+                  添加过滤
+                </button>
+                <button type="button" class="smx-btn smx-default smx-xs" (click)="searchFilter()"
+                        style="margin-left: 10px;padding: 0.25rem 1.35rem">
+                  搜索
+                </button>
+                <button type="button" class="smx-btn smx-outline-default smx-xs" (click)="removeAllFilter()"
+                        style="margin-left: 10px;padding: 0.25rem 1.35rem">重置
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="btn-grid" *ngIf="pageConfig.visit_type ==0">
+            <button type="button" *ngIf="operation.add && dataConfig.isedit === 1" class="btn btn-primary"
+                    (click)="addNewData()">添加
+            </button>
+            <button type="button" *ngIf="operation.remove && dataConfig.isedit === 1"
+                    class="btn btn-outline-primary"
+                    [disabled]="btnDisabled.del ? false: true" (click)="delGridData()">删除
+            </button>
+            <button type="button" *ngIf="operation.update && dataConfig.isedit === 1"
+                    class="btn btn-outline-primary"
+                    (click)="updateGridData()"
+                    [disabled]="btnDisabled.update ? false: true">修改
+            </button>
+            <span class="smartmapx-data-totalProperty">总数: {{totalProperty}}</span>
+          </div>
+          <div class="btn-grid" *ngIf="pageConfig.visit_type ==1">
+            <span class="smartmapx-data-totalProperty">总数: {{totalProperty}}</span>
+          </div>
+          <c-grid *ngIf="operationConfig"
+                  (totalProperty)="setTotalProperty($event)"
+                  [operationConfig]="operationConfig"
+                  [pageConfig]="pageConfig"
+                  [strucrtorData]="strucrtorData"
+                  [pageType]="1"
+                  [geoType]="dataConfig.geo_type"
+                  [btnDisabled]="btnDisabled">
+          </c-grid>
+        </div>
+
+      </div>
+    </div>
+
+    <!--地理图层-->
+    <div *ngSwitchCase="'6'">
+      <smx-panel [smxData]="smxData">
+        <div class="left-tab-title" smxType="header">
+          <span class="fa fa-angle-left left-tab-back" (click)="goBack('geo')" title="返回上一页"></span>
+          {{pageConfig.name}}
+        </div>
+      </smx-panel>
+
+      <div class="right-side-box">
+        <div class="listWrap">
+          <ul class="subNavWrap">
+            <li class="subCtrl" [ngClass]="{'active': pageType == 1}" (click)="pageType = 1;">地图模式</li>
+            <li class="subCtrl" [ngClass]="{'active': pageType == 2}" (click)="pageType = 2;">数据模式</li>
+          </ul>
+        </div>
+
+        <div [ngStyle]="{'display': pageType==1  ? 'block' : 'none'}" class="right-map-box"
+             style="height: calc(100% - 32px);position: relative;">
+          <!--<iframe src="/editor" style="border: 0;position: absolute;width: 100%;height: 100%;"></iframe>-->
+          <app-layout *ngIf="dataConfig" [dataConfig]="dataConfig"></app-layout>
+        </div>
+
+
+        <div [ngStyle]="{'display': pageType==2 ? 'block' : 'none'}">
+          <div class="right-filter-box">
+            <div class="right-filter-title">
+              <span>{{dataConfig.description}}</span>
+              <div class="float-right" (click)="showFilter=!showFilter">
+                数据源搜索
+                <span [ngClass]="{'fa-chevron-circle-down': showFilter, 'fa-chevron-circle-up': !showFilter}"
+                      class="fa"></span>
+              </div>
+            </div>
+            <div *ngIf="showFilter" class="right-filter-body">
+              <c-filter #filter2
+                        [filterWay]="'right'"
+                        [filterData]="filterConfig"
+                        [filterArray]="filterArrayDataTwo"
+                        [conjunction]="conjunction2">
+              </c-filter>
+
+              <div class="filter-bottom">
+                <div style="display: inline-block;">
+                  <label class="filter-label">组合过滤</label>
+                  <select [(ngModel)]="conjunction2" (ngModelChange)="changeConjunction2($event)"
+                          class="smx-control"
+                          style="float: right;width: 150px;line-height: 26px;">
+                    <option *ngFor="let item of conjunctionSelect" [ngValue]="item.value">{{item.key}}
+                    </option>
+                  </select>
+                </div>
+
+                <button type="button" class="smx-btn smx-default smx-xs" (click)="addFilterCon()"
+                        style="padding: 0.25rem 0.5rem;margin: 0 10px;">添加过滤
+                </button>
+                <button type="button" class="smx-btn smx-default smx-xs" (click)="searchFilter()"
+                        style="padding: 0.25rem 1.35rem;margin-right: 10px">搜索
+                </button>
+                <button type="button" class="smx-btn smx-outline-default smx-xs" (click)="removeAllFilter()"
+                        style="padding: 0.25rem 1.35rem;">重置
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-grid" *ngIf="pageConfig.visit_type ==0 && dataConfig.isedit === 1">
+            <button type="button" *ngIf="operation.add" class="smx-btn smx-default"
+                    style="margin-right: 10px"
+                    (click)="addNewData()">添加
+            </button>
+            <button type="button" *ngIf="operation.remove" class="smx-btn smx-outline-default"
+                    style="margin-right: 10px"
+                    [disabled]="btnDisabled.del ? false: true"
+                    (click)="delGridData()">删除
+            </button>
+            <button type="button" *ngIf="operation.update" class="smx-btn smx-outline-default"
+                    [disabled]="btnDisabled.update ? false: true"
+                    (click)="updateGridData()">修改
+            </button>
+            <span class="smartmapx-data-totalProperty">总数: {{totalProperty}}</span>
+          </div>
+          <div class="btn-grid" *ngIf="pageConfig.visit_type ==1">
+            <span class="smartmapx-data-totalProperty">总数: {{totalProperty}}</span>
+          </div>
+          <c-grid *ngIf="operationConfig"
+                  (totalProperty)="setTotalProperty($event)"
+                  [operationConfig]="operationConfig"
+                  [pageType]="1"
+                  [strucrtorData]="strucrtorData"
+                  [geoType]="dataConfig.geo_type"
+                  [btnDisabled]="btnDisabled">
+          </c-grid>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!--自定义过滤面板-->
+<ng-template #dataFilter>
+  <div class="template container">
+    <div class="row" style="padding: 0">
+      <div class="col-4">
+        <label class="filter-label" style="margin-bottom: 20px;">查询方式</label>
+      </div>
+      <div class="col-8">
+        <select class="smx-control" [(ngModel)]="conjunction" (ngModelChange)="changeConjunction()"
+                style="position: absolute;top:-5px">
+          <option *ngFor="let item of conjunctionSelect" [ngValue]="item.value">{{item.key}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-left: -25px;">
+      <c-filter
+        #filter
+        [filterWay]="'left'"
+        [filterData]="filterConfig"
+        [filterArray]="filterArrayData"
+        [conjunction]="conjunction">
+      </c-filter>
+    </div>
+    <div style="height: 40px;position: relative;">
+      <button type="button" class="smx-btn smx-default smx-xs"
+              style="position: absolute;right: 40px;" (click)="toAddFilter()">新增过滤
+      </button>
+      <button type="button" class="smx-btn smx-default smx-xs"
+              style="position: absolute;right: -10px;" (click)="searchFilterLeft()">搜索
+      </button>
+    </div>
+  </div>
+</ng-template>
+<!--自定义应用面板-->
+<ng-template #dataAction>
+  <div class="template da">
+    <table class="table">
+      <tbody>
+      <tr>
+        <th scope="col" class="left-panpel-th">
+          <span class="left-panpel-data left-panpel-data-split" (click)="dataSplit()"></span>
+        </th>
+        <th scope="col" class="left-panpel-th">
+          <span class="left-panpel-data left-panpel-data-combine"
+                [ngClass]="{'left-panpel-data-disabled': !combineBtn}"
+                (click)="combineBtn? dataCombine(): null"
+                [title]="combineBtn? '': '空间数据源不支持合并'">
+          </span>
+        </th>
+      </tr>
+      <tr>
+        <th scope="col" class="left-panpel-th">
+          <span class="left-panpel-data left-panpel-data-en" (click)="pageType = 3"
+                title="企业查询方案">
+          </span>
+        </th>
+        <th scope="col" class="left-panpel-th">
+          <span nz-tooltip [nzTooltipTitle]="geoTooltip" id="geocoding"
+                class="left-panpel-data left-panpel-data-pp"
+                [title]="geocodingBtn? '':'只有点数据和属性数据支持地址匹配'"
+                [ngClass]="{'left-panpel-data-disabled': !geocodingBtn || dataConfig.type === 'view' || geoTooltip !== ''}"
+                (click)="geocodingBtn && dataConfig.type !== 'view' && geoTooltip === ''? addressMatching():null"></span>
+        </th>
+        <td class="left-panpel-th"></td>
+      </tr>
+      <tr>
+        <th scope="col" class="left-panpel-th">
+          <span nz-tooltip [nzTooltipTitle]="regeoTooltip" id="regeocoding"
+                class="left-panpel-data left-panpel-data-ni" [title]="reverseGeocodingBtn? '':'只有点数据支持逆地理编码'"
+                [ngClass]="{'left-panpel-data-disabled': !reverseGeocodingBtn || dataConfig.type === 'view'|| regeoTooltip !== ''}"
+                (click)="reverseGeocodingBtn && dataConfig.type !== 'view' && regeoTooltip === ''? reverseGeocoding():null">
+          </span>
+        </th>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>

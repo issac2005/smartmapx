@@ -1,0 +1,12 @@
+<div class="sslider">
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <div class="beyond">{{label}}</div>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <smx-slider2 [(ngModel)]="value" (onSlideEnd)="onSlideEnds($event)" [min]="min" [max]="max" [style]="{'margin-top': '10px','width':'85%'}"></smx-slider2>
+      <span style="position: absolute;right: 20px;top: 0px;">{{showNum/100}}</span>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,212 @@
+.smx-modal-body{
+  overflow: hidden;
+
+  .versionWrap{
+    width:766px;
+    max-height: 320px;
+    overflow-y: auto;
+
+    .versionList li{
+      padding-left:10px;
+      height:40px;
+      line-height: 40px;
+      border-bottom: 1px solid #ddd;
+      list-style-type: none;
+      overflow:hidden;
+      cursor: pointer;
+
+
+      dl {
+        dt, dd{
+          margin:0;
+          float:left;
+          .red{color: #f00;}
+          .blue{color: #09c}
+          .current{color: lightgreen}
+          .blue.current{color: lightgreen}
+          .red.current{color: #f00}
+          .red.blue{color:#f00;}
+        }
+        dt{
+          width:130px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          span{
+            font-weight: normal;
+          }
+
+        }
+        dd{
+          margin-right:10px;
+
+          button{
+            margin: 0 2px;
+          }
+          .versionDelete{
+            &:hover{
+              background:#F73240;
+            }
+            background:#f00;
+          }
+          &:nth-child(3) {
+            margin-right:0;
+          }
+        }
+        .versionDesc{
+          width:238px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .btnWrap{
+          display:none;
+        }
+
+      }
+
+      &:hover{
+        background: #e7ecee;
+        dl .btnWrap{
+          display:block;
+        }
+      }
+
+    }
+  }
+
+  .publishWrap{
+
+    textarea{
+      resize: none;
+    }
+
+    .versionTable{
+
+      td{
+        padding:5px 0;
+      }
+
+      .smx-checkbox{
+        vertical-align: middle;
+      }
+
+    }
+  }
+
+  .submitWrap{
+
+    textarea{
+      resize: none;
+    }
+    .versionTable{
+
+      td{
+        padding:5px 0;
+      }
+    }
+  }
+
+}
+
+.mini-program{
+  .layer-smartMapX-select-waringtitle {
+    background: #3887be;
+    height: 30px;
+    padding: 0px 11px 0px 12px;
+    line-height: 30px;
+    position: relative;
+  }
+
+  .layer-smartMapX-select-waringworld {
+    color: #fff;
+  }
+
+  .layer-smartMapX-select-waringXcancel {
+    color: #fff;
+    opacity: 1;
+    font-weight: normal;
+    position: absolute;
+    bottom: 3px;
+    top: -1px;
+    right: 15px;
+    line-height: 30px;
+    font-size: 20px;
+
+  }
+
+
+  .layer-smartMapX-select-waringmessage {
+    padding:20px 30px;
+    text-align: center;
+    font-size: 14px;
+    overflow: hidden;
+  }
+
+
+
+  .submit-body-sapn1{
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .submit-body-n{
+    position: relative;
+    height: 100px;
+    top: 15px;
+    left: 28px;
+  }
+  .submit-body-m{
+    position: relative;
+    width: 356px;
+    left: 28px;
+    top: -27px;
+  }
+  .submit-body-sapn2{
+    position: relative;
+    vertical-align: top;
+    font-size: 16px;
+    font-weight: bold;
+
+  }
+  .submit-body-sapn3{
+    font-weight: bold;
+  }
+  .submit-body-text{
+    position: relative;
+    width: 210px;
+    height: 100px;
+    resize: none;
+    border: solid 2px #d0d0d0;
+  }
+
+
+}
+.layer-smartMapX-select-waringdirector.mini-program {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  min-width: 380px;
+  max-width: 100%;
+  margin: -75px 0 0 -190px;
+  //transform: translate(-50%, -50%) !important;
+  flex-direction: column;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
+}
+.layer-smartMapX-select-cover.mini-program{
+  width:100%;
+  height:100%;
+  position: fixed;
+  top:0;
+  left:0;
+  opacity:0.5;
+  background: #000;
+  z-index: 0;
+}

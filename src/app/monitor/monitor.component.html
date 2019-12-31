@@ -1,0 +1,75 @@
+<div class="monitor-box" style="overflow: scroll">
+
+  <div class="title-box">
+    <h3 class="float-left">性能监控</h3>
+    <div class="float-right">
+      <!--原本的下拉-->
+      <!-- <p-dropdown [styleClass]="{true:'monitor-pd'}" [options]="severList" [(ngModel)]="selectedSever"
+                  (onChange)="changeTime(1, $event)"
+                  title="服务器"></p-dropdown> -->
+      <!--Ljy替换后的下拉-->
+      <nz-select  (ngModelChange)="changeTime(1, $event)" [(ngModel)]="selectedSever" style="width: 175px;" nzPlaceHolder="所有服务器"  >
+        <nz-option *ngFor="let option of severList " [nzValue]="option.value" [nzLabel]="option.label"  ></nz-option>
+        <!-- <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template> -->
+      </nz-select>
+      <!--原本的下拉-->
+      <!-- <p-dropdown [styleClass]="{true:'monitor-pd'}" [options]="wayList" [(ngModel)]="selectedWay"
+                  (onChange)="changeTime(2, $event)"></p-dropdown> -->
+      <!--Ljy替换后的下拉-->
+      <nz-select  (ngModelChange)="changeTime(2, $event)" [(ngModel)]="selectedWay" style="width: 175px;" >
+        <nz-option *ngFor="let option of wayList " [nzValue]="option.value" [nzLabel]="option.label"  ></nz-option>
+      </nz-select>
+
+      <!--原本的button-->
+      <!-- <p-selectButton [options]="cities2" [(ngModel)]="selectedCity2" (onChange)="changeTime(3, $event)"
+                      [style]="{'top': '2px', 'position': 'relative'}"></p-selectButton> -->
+      <!--Ljy替换原本的button-->
+      <nz-radio-group [(ngModel)]="selectedCity2" [nzButtonStyle]="'solid'" (ngModelChange)="changeTime(3, $event)">
+        <label nz-radio-button [nzValue]="cities2[0].value">{{cities2[0].label}}</label>
+        <label nz-radio-button [nzValue]="cities2[1].value">{{cities2[1].label}}</label>
+        <label nz-radio-button [nzValue]="cities2[2].value">{{cities2[2].label}}</label>
+        <label nz-radio-button [nzValue]="cities2[3].value">{{cities2[3].label}}</label>
+      </nz-radio-group>
+      <!-- <p-calendar [(ngModel)]="value" selectionMode="range" readonlyInput="true"></p-calendar>-->
+    </div>
+  </div>
+
+  <div class="chart-box">
+    <div class="each-box">
+      <smx-chart type="line" [data]="data" [options]="data.options" [height]="'450px'"></smx-chart>
+    </div>
+  </div>
+
+  <div class="title-box">
+    <h3 class="float-left">服务监控</h3>
+    <div class="float-right">
+      <!--原本的select-->
+      <!-- <p-multiSelect [filter]="false" [options]="severList" [(ngModel)]="selectedSevers"
+                     [selectedItemsLabel]="'{0}服务器已选取'"
+                     [resetFilterOnHide]="true" (onPanelHide)="changeService($event)"
+                     [defaultLabel]="'所有服务器'"></p-multiSelect> -->
+      <!--Ljy替换原本的select-->
+      <nz-select  (nzBlur)="changeService($event)" [(ngModel)]="selectedSevers" [nzAllowClear]="true"[nzMaxTagCount]="1" [nzMaxTagPlaceholder]="tagPlaceHolder" style="width: 175px;" nzPlaceHolder="所有服务器" nzMode="multiple" >
+        <nz-option *ngFor="let option of severList " [nzValue]="option.value" [nzLabel]="option.label"  ></nz-option>
+        <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
+      </nz-select>
+    </div>
+  </div>
+
+  <div style="margin: 100px 0;padding: 20px;">
+    <!-- <h4>流量统计</h4>-->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">服务服务器</div>
+        <div class="col-sm">服务名称</div>
+        <div class="col-sm">运行状态</div>
+      </div>
+      <div class="row" *ngFor="let item of serviceList;">
+        <div class="col-sm">{{item?.server_name}}</div>
+        <div class="col-sm">{{item?.service_name}}</div>
+        <div class="col-sm">{{item?.status}}</div>
+      </div>
+    </div>
+  </div>
+
+</div>

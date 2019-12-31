@@ -1,0 +1,27 @@
+<ng-container>
+  <ng-content></ng-content>
+  <div class="s-input-number" [ngStyle]="smxStyle" [ngClass]="smxClass">
+    <input
+      #smxNumberInput
+      class="smx-control smx-input-default"
+      SmxKeydown
+      [name]="smxName"
+      [smxKeyDownType]="smxDecimal? 2:1"
+      [disabled]="smxDisabled"
+      [placeholder]="smxPlaceholder"
+      [(ngModel)]="innerValue"
+      (ngModelChange)="changeEvent()"
+      (blur)="blurEvent($event)"
+      (keydown.enter)="enterEvent($event)">
+    <div class="s-input-number-step" *ngIf="smxStep && smxStep > 0">
+      <i class="up" (click)="smxDisabled? null:clickStep('up')"
+         [ngClass]="{'s-input-number-step-disabled':smxDisabled}">
+        <span></span>
+      </i>
+      <i class="down" (click)="smxDisabled? null:clickStep('down')"
+         [ngClass]="{'s-input-number-step-disabled':smxDisabled}">
+        <span></span>
+      </i>
+    </div>
+  </div>
+</ng-container>

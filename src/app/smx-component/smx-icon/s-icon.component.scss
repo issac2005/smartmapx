@@ -1,0 +1,27 @@
+.smx-icon {
+  display: inline-block;
+
+  .fa {
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+      color: #ff4a3b;
+    }
+  }
+
+  &-tip {
+    color: #fff;
+    font-size: 10px;
+    background-color: red;
+    display: inline-block;
+    min-width: 20px;
+    padding: 2px;
+    position: absolute;
+    text-align: center;
+    border-radius: 5px;
+    top: -10px;
+    left: 10px;
+  }
+}

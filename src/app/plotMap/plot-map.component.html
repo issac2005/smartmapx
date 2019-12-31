@@ -1,0 +1,182 @@
+<div class="plot-map-container" [ngStyle]="{'opacity':printStatus?0:1}">
+  <div class="left-side">
+    <div class="left-wrap">
+      <div class="map-title">
+        <span class="back" title="返回" (click)="back()"></span>
+        {{visitInfo.mapName}}
+      </div>
+
+      <div class="left-tab-panel" *ngIf="map && mapType === 'plot' && info.isEdit === 0">
+        <nz-collapse>
+          <nz-collapse-panel [nzHeader]="'地图信息'" [nzActive]="true">
+            <div class="container">
+              <div class="row">
+                <div class="col-4">地图ID</div>
+                <div class="col-8">{{info.plotId}}</div>
+              </div>
+              <div class="row">
+                <div class="col-4">地图描述</div>
+                <div class="col-8">{{info.description}}</div>
+              </div>
+              <div class="row">
+                <div class="col-4">创建日期</div>
+                <div class="col-8">{{info.create_time * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+              </div>
+              <div class="row">
+                <div class="col-4">修改日期</div>
+                <div class="col-8">{{info.update_time * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+              </div>
+              <div class="row">
+                <div class="col-4">URL</div>
+                <div class="col-8">{{info.url}}</div>
+              </div>
+              <div class="row">
+                <div class="col-4">浏览次数</div>
+                <div class="col-8">{{info.visitCount}}</div>
+              </div>
+            </div>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </div>
+      <!--查看地图--控制标绘信息列表显隐的按钮--Ljy-->
+      <div class="plotmap-plotlist-view icon smx-icon icon-plot_list" (click)="plotListView()" title="标绘信息列表"
+           *ngIf="info.isEdit === 0">
+
+      </div>
+
+      <div class="mapplot-list" [ngClass]="{'plot-information-list-view':info.isEdit === 0}"
+           [ngStyle]="{'display': plotView? 'block':'none'}">
+        <!-- <div>   -->
+        <div class="map-record">共&nbsp;{{plotList.length}}&nbsp;条记录
+          <div class="nav nav-tabs" style=" float:right;border-bottom: 0px;"
+               *ngIf="map && mapType === 'plot' && info.isEdit === 1">
+
+            <!--导入数据和导出数据--李景阳-->
+            <button class="importData icon smx-icon icon-plot_importdata" (click)="importData()" [disabled]="plotList.length < 5000?false:true" title="导入数据"></button>&nbsp;
+            <div class="exportData icon smx-icon icon-plot_exportdata" (click)="exportData()"  title="导出数据"></div>
+          </div>
+        </div>
+        <!--标绘信息查询--李景阳-->
+        <div class="createMapModal-search">
+          <input type="text" id="searchInput" class="smx_minp_lg smx-control" placeholder=" "
+                 (keyup.enter)="searchMessage()" [(ngModel)]="searchKey" maxlength="40"/>
+          <!--<a id="clearInput" class="createMapModal-search-clear" (click)="clearInput()" title="取消搜索"-->
+             <!--[ngStyle]="{'opacity': searchKey? 1:0 }">×</a>-->
+          <a id="clearInput" class="createMapModal-search-clear" (click)="clearInput()" title="取消搜索"
+             *ngIf="searchKey">×</a>
+          <div class="searchMessage" (click)="searchMessage()">查找</div>
+        </div>
+
+        <div class="list-wrap">
+          <div class="list-cover" *ngIf="coverShow"><span><i nz-icon [nzType]="'loading'"></i> 正在加载...</span></div>
+          <ul class="layer-list" id="layer-list">
+            <li [ngClass]="{'on': i === oindex}" (click)="editLayer(item, i, true)"
+                *ngFor="let item of plotList index as i;">
+              <div class="layer-name">
+                <i class="icon smx-icon icon-smx-point" aria-hidden="true" title="点"
+                   *ngIf="item.mode_type === 'draw_point'"></i>
+                <i class="icon smx-icon icon-smx-symbol" aria-hidden="true" title="图标"
+                   *ngIf="item.mode_type === 'draw_symbol'"></i>
+                <i class="icon smx-icon icon-smx-line" aria-hidden="true" title="线"
+                   *ngIf="item.mode_type === 'draw_line'"></i>
+                <i class="icon smx-icon icon-smx-fill" aria-hidden="true" title="面"
+                   *ngIf="item.mode_type === 'draw_box'"></i>
+                <i class="icon smx-icon icon-smx-fill" aria-hidden="true" title="面"
+                   *ngIf="item.mode_type === 'draw_circle'"></i>
+                <i class="icon smx-icon icon-smx-fill" aria-hidden="true" title="面"
+                   *ngIf="item.mode_type === 'draw_fill'"></i>
+                <i class="icon smx-icon icon-smx-arrow" aria-hidden="true" title="箭头"
+                   *ngIf="item.mode_type === 'draw_arrow'"></i>
+                <i class="icon smx-icon icon-smx-img" aria-hidden="true" title="图片"
+                   *ngIf="item.mode_type === 'draw_photo'"></i>
+                <i class="icon smx-icon icon-smx-word" aria-hidden="true" title="注记"
+                   *ngIf="item.mode_type === 'draw_words'"></i>
+                <span>{{item.name | plotMapPipe: 'name'}}</span>
+              </div>
+              <div class="icon-wrap" *ngIf="map && mapType === 'plot' && info.isEdit === 1">
+                <i class="fa fa-trash-o" title="删除"
+                   (click)="$event.stopPropagation(); deleteClick(delete, item, i);"></i>
+                <span class="hide" title="隐藏" *ngIf="item.content.status === 0"
+                      (click)="$event.stopPropagation(); showLayer(item)"></span>
+                <span class="show" title="显示" *ngIf="item.content.status === 1"
+                      (click)="$event.stopPropagation(); hideLayer(item)"></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <div class="slide-drawer" [ngClass]="{'show': slideOpen ,'show-view': info.isEdit === 0 }">
+      <app-prop-panel [plotInfo]="plotInfo"
+                      [plotId]="plotId"
+                      [updteKeyId]="updteKeyId"
+                      [interFaceList]="interFaceList"
+                      [plotInfo_keys]="plotInfo_keys"
+                      (changeWords)="changeWords($event)"
+      >
+      </app-prop-panel>
+      <span class="slide-btn" (click)="closeDrawer()"></span>
+    </div>
+  </div>
+
+  <div class="right-side">
+    <div style="height: 32px;background: #3b8cd0;z-index: 1;position: relative;"
+         *ngIf="map && mapType === 'plot' && info.isEdit === 1">
+      <app-toolbar [map]="map" [loaded]="loaded" [config]="basemap_config"
+                   (exportEvent)="reaseView($event)">
+      </app-toolbar>
+    </div>
+    <span class="mapLoading" [ngStyle]="{'display': loaded? 'none': ''}"></span>
+    <div class="plot-style-wrap" [ngStyle]="{'display':info.isEdit === 1 ?'block':'none'}">
+      <div class="plot-tools">
+        <plot-edit *ngIf="map && plotInfoIdList && info && plotStatus"
+                   [map]="map"
+                   [info]="info"
+                   [plotId]="visitInfo?.plotId"
+                   [plotStatus]="plotStatus"
+                   [interFaceList]="interFaceList"
+                   (drawChange)="drawChange($event)"
+                   (clickLayer)="clickLayer($event)"
+                   (plotSource)="getPlotList()"
+                   (addList)="addList($event)"
+                   [plotInfoIdList]="plotInfoIdList">
+        </plot-edit>
+      </div>
+      <div class="plot-style" *ngIf="map && mapType === 'plot' && info.isEdit === 1">
+        <app-circle-style [map]="map"
+                          [isUpdateStyle]="isUpdateStyle"
+                          [plotStyle]="plotInfo?.style.value"
+                          (sendChooseStyle)="receiveChooseStyle($event)"
+                          (plotEditChange)="plotEditChange($event)"
+                          *ngIf="plotInfo || plotType">
+        </app-circle-style>
+      </div>
+    </div>
+    <div style="position: absolute;width: 100%;top: 67px;bottom: 0;">
+      <div id="map" class="map"></div>
+    </div>
+  </div>
+</div>
+<!--打印处理页面--李景阳-->
+<div *ngIf="printStatus">
+  <img [src]="imgUrl" style="height: 100%;width: 100%;position: fixed;z-index: 9999;top: 0;bottom: 0;left: 0;right: 0;"
+       loading="lazy">
+</div>
+
+
+<!-- 删除提示 -->
+<ng-template #delete let-c="close" let-d="dismiss">
+  <div class="smx-modal-header">
+    <h4 class="modal-title">删除提醒</h4>
+    <span aria-hidden="true" class="close" (click)="d('Cross click')">&times;</span>
+  </div>
+  <div class="smx_center smx-modal-body">
+    <p style="text-align: center">删除后将不可恢复，您确定要删除吗？</p>
+  </div>
+  <div class="smx-modal-footer">
+    <button type="button" class="smx-btn smx-grid smx-outline-default" (click)="c('Close click')">取消</button>
+    <button type="button" class="smx-btn smx-grid smx-default" (click)="deleteplot(deleteItemInfo, oindex, c)">确定
+    </button>
+  </div>
+</ng-template>

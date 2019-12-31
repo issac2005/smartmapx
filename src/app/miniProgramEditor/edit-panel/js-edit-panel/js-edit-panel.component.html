@@ -1,0 +1,36 @@
+<div [ngClass]="{'jsWrap':true,'fullScreen':isFull}">
+  <div class="saveBar">
+    <i class="fa fa-code" (click)="codeFormat()" title="代码格式化"></i>
+    <button [disabled]="jsStatus === 'default'" *ngIf="isEdit" class="fa fa-save" title="保存" (click)="saveJs()"></button>
+    <i class="fa fa-expand" (click)="setFullScreen()" title="全屏" *ngIf="!isFull"></i>
+    <i class="fa fa-compress" (click)="setOriginScreen()" title="小屏" *ngIf="isFull"></i>
+  </div>
+  <div class="jsdiv">
+    <div id="jsEditor"></div>
+    <smx-editor #jseditor [mode]="'javascript'" [(ngModel)]="textJS" [smxReadOnly]="!isEdit" [smxFontSize]="fontSize" [smxFontFamily]="fontFamily" [smxTheme]="theme" (onChange)="receiveChange($event)"></smx-editor>
+  </div>
+  <nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="主题设置" (nzOnClose)="closeDraw()">
+  <!--<nz-drawer [nzMaskClosable]="false" [nzVisible]="visible" nzTitle="主题设置" (nzOnClose)="closeDraw()">-->
+    <div class="jsDraw">
+      <h5>主题</h5>
+      <div class="jsDraw-theme">
+        <span class="jsDraw-theme-item" *ngFor="let v of themes" (click)="updateTheme(v)"
+              [ngStyle]="{'background': v === theme?'#ccc':''}"
+              style="cursor:pointer;">{{v}}</span>
+      </div>
+      <h5>字号</h5>
+      <div class="jsDraw-font">
+        <smx-select [(ngModel)]="fontSize" [options]="fontSizeOptions"
+                    (ngModelChange)="updateFontSize($event)"></smx-select>
+      </div>
+      <h5>字体</h5>
+      <div class="jsDraw-font">
+        <smx-select [(ngModel)]="fontFamily" [options]="fontFamilyOptions"
+                    (ngModelChange)="updateFontFamily($event)"></smx-select>
+      </div>
+    </div>
+
+  </nz-drawer>
+</div>
+
+

@@ -1,0 +1,144 @@
+<div class="eds">
+  <div class="eds-edit">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th scope="col" align="center" class="eds-border">方案信息</th>
+        <th scope="col" align="center" class="eds-border">返回结果</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="eds-border eds-left">
+          <table>
+            <tbody>
+            <tr>
+              <td class="eds-no-border eds-title">方案名称:</td>
+              <td class="eds-no-border">
+                <input
+                  name="itemName"
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="name"
+                  placeholder="最多输入40个字符"
+                  maxlength="40"
+                  [disabled]="pageConfig.visit_type == 0 || pageConfig.visit_type == 2?false:true">
+              </td>
+            </tr>
+            <tr>
+              <td class="eds-no-border eds-title">方案描述:</td>
+              <td class="eds-no-border">
+                <textarea
+                  name="itenMemo"
+                  class="form-control"
+                  [(ngModel)]="description"
+                  placeholder="最多输入256个字符"
+                  maxlength="256"
+                  [disabled]="pageConfig.visit_type == 0 || pageConfig.visit_type == 2?false:true"
+                  style="height: 50px;">
+                </textarea>
+              </td>
+            </tr>
+            <tr>
+              <td class="eds-no-border eds-title">方案类型:</td>
+              <td class="eds-no-border">
+                <select class="form-control" [(ngModel)]="enType"
+                        [disabled]="pageConfig.visit_type == 0 || pageConfig.visit_type == 2?false:true">
+                  <option *ngFor="let i of enTypes" [value]="i.value">{{i.label}}</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td class="eds-no-border eds-title">sql语句:</td>
+              <td class="eds-no-border">
+                <textarea
+                  [disabled]="pageConfig.visit_type == 0 || pageConfig.visit_type == 2?false:true"
+                  rows="5" class="form-control" style="height: 80px;"
+                  [(ngModel)]="enSql">
+                </textarea>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+        <td rowspan="2" class="eds-border eds-info">
+          <textarea
+            [(ngModel)]="enInfo"
+            placeholder="请点击测试按钮"
+            [value]="enInfo" disabled>
+          </textarea>
+        </td>
+      </tr>
+      <tr class="eds-parameter">
+        <td class="eds-parameter-td">
+          <div class="eds-parameter-div">
+            <table class="table table-bordered">
+              <tbody>
+              <tr>
+                <th *ngIf="pageConfig.visit_type == 0 || pageConfig.visit_type == 2"
+                    align="center"
+                    class="eds-no-border">
+                  <i class="fa fa-plus" style="cursor: pointer" title="添加参数" (click)="addParam()"></i>
+                </th>
+                <th align="center" width="35%" class="eds-no-border">参数</th>
+                <th align="center" width="20%" class="eds-no-border">参数类型</th>
+                <th align="center" width="35%" class="eds-no-border">值</th>
+              </tr>
+              <tr *ngFor="let w of enData; index as i">
+                <td class="eds-no-border" align="center"
+                    *ngIf="pageConfig.visit_type == 0 || pageConfig.visit_type == 2">
+                  <span class="fa fa-trash"
+                        style="cursor: pointer"
+                        (click)="removeParam(i)">
+                  </span>
+                </td>
+                <td class="eds-no-border" width="35%">
+                  <input
+                    [disabled]="pageConfig.visit_type == 0 || pageConfig.visit_type == 2?false:true"
+                    class="form-control"
+                    type="text"
+                    [(ngModel)]="w.label"
+                    [placeholder]="'请输入第'+(i+1)+'个参数名'"
+                    style="width: 100%">
+                </td>
+                <td class="eds-no-border" width="20%">
+                  <select
+                    [disabled]="pageConfig.visit_type == 0 || pageConfig.visit_type == 2?false:true"
+                    class="form-control"
+                    [(ngModel)]="w.type">
+                    <option *ngFor="let type of paramTypes" [value]="type.value">
+                      {{type.label}}
+                    </option>
+                  </select>
+                </td>
+                <td class="eds-no-border" width="35%">
+                  <input class="form-control" type="text"
+                         [placeholder]="'请输入第'+(i+1)+'个参数值'"
+                         [type]="w.type"
+                         [(ngModel)]="w.value">
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="position:absolute;bottom: 10px;right: 10px">
+            <button type="button" class="btn btn-sm btn-primary"
+                    (click)="testSQL('test')">测试
+            </button>
+            <button
+              *ngIf="pageConfig.visit_type == 0 || pageConfig.visit_type == 2"
+              type="button" class="btn btn-sm btn-primary"
+              [disabled]="enTestStatus? false: true"
+              [title]="enTestStatus? '': '请先测试接口'"
+              (click)="testSQL('submit')">确定
+            </button>
+            <button type="button" class="btn btn-sm btn-primary"
+                    (click)="goBack()">{{pageConfig.visit_type == 2 ?'取消':'退出'}}
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

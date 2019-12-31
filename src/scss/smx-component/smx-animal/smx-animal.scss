@@ -1,0 +1,256 @@
+//@import "./animate.css";
+
+/*
+ 向竖直中间合并退出动画(任务中心)
+
+ animation: pflipOutUp 1000ms both;
+ */
+@keyframes pflipOutUp {
+  to {
+    transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+
+
+/*
+  从竖直中间打开入场动画(任务中心)
+
+  animation: pflipInUp 1000ms both;
+ */
+@keyframes pflipInUp {
+  from {
+    transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+
+
+/*
+  背景变换动画
+
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(-45deg, #EE7752, #e70a50, #044ad5, #06d596);
+   background-size: 400% 400%;
+   -webkit-animation: Gradient 15s ease infinite;
+   -moz-animation: Gradient 15s ease infinite;
+   animation: Gradient 15s ease infinite;
+ */
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+
+/*
+  进度条滚动效果
+
+      background-color: #32b6ff;
+      border: 1px solid #32b6ff;
+      box-shadow: 1vw 3vh 10vh rgba(50, 182, 255, 0.8);
+      background-image: linear-gradient(-45deg, transparent 0em, transparent 0.8em, #96D923 0.9em, #96D923 2.1em, transparent 2.1em, transparent 2.9em, #96D923 3.1em);
+      -webkit-animation: warning-animation 750ms infinite linear;
+      -moz-animation: warning-animation 750ms infinite linear;
+      animation: warning-animation 750ms infinite linear;
+
+ */
+@-webkit-keyframes warning-animation {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 3em 0;
+  }
+}
+
+@-moz-keyframes warning-animation {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 3em 0;
+  }
+}
+
+@keyframes warning-animation {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 3em 0;
+  }
+}
+
+
+/*
+  发光边框
+
+  animation: shadow-flash 2s infinite;
+ */
+@keyframes shadow-flash {
+  0% {
+    box-shadow: 0px 0px 0px #666;
+  }
+  50% {
+    box-shadow: 0px 0px 20px #666;
+  }
+  100% {
+    box-shadow: 0px 0px 0px #666;
+  }
+}
+
+
+/*
+  进入抖动
+
+ animation: rubberBand 1200ms both;
+ */
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+
+/*
+  左右摆动
+
+  -webkit-animation: error-swing infinite 2s ease-in-out alternate;
+  -moz-animation: error-swing infinite 2s ease-in-out alternate;
+  animation: error-swing infinite 2s ease-in-out alternate;
+ */
+@-webkit-keyframes error-swing {
+  0% {
+    -webkit-transform: rotate(1deg)
+  }
+  100% {
+    -webkit-transform: rotate(-2deg)
+  }
+}
+
+@-moz-keyframes error-swing {
+  0% {
+    -moz-transform: rotate(1deg)
+  }
+  100% {
+    -moz-transform: rotate(-2deg)
+  }
+}
+
+@keyframes error-swing {
+  0% {
+    transform: rotate(1deg)
+  }
+  100% {
+    transform: rotate(-2deg)
+  }
+}
+
+
+/*
+   转动
+
+  -webkit-animation: loading 1s infinite linear;
+  animation: loading 1s infinite linear;
+
+ */
+@keyframes loading {
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(360deg)
+  }
+}
+
+
+/*
+   右侧淡出
+
+   animation: fadeOutRight 1000ms both;
+ */
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+
+/*
+   右侧淡入
+
+  animation: fadeInRight 500ms both
+ */
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
